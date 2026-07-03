@@ -16,6 +16,10 @@ func reset() -> void:
 	health_changed.emit(health, MAX_HEALTH)
 
 
+func boss_defeated() -> void:
+	boss_died.emit()
+
+
 func damage_player(amount: int) -> void:
 	if health <= 0:
 		return
