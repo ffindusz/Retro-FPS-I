@@ -1,0 +1,86 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Shader" path="res://shaders/ps1_vertex_snap.gdshader" id="1_ps1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_floor"]
+shader = ExtResource("1_ps1")
+shader_parameter/albedo_color = Color(0.42, 0.42, 0.45, 1)
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/snap_resolution = 240.0
+shader_parameter/affine_strength = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wall"]
+shader = ExtResource("1_ps1")
+shader_parameter/albedo_color = Color(0.62, 0.55, 0.42, 1)
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/snap_resolution = 240.0
+shader_parameter/affine_strength = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_red"]
+shader = ExtResource("1_ps1")
+shader_parameter/albedo_color = Color(0.7, 0.3, 0.25, 1)
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/snap_resolution = 240.0
+shader_parameter/affine_strength = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_blue"]
+shader = ExtResource("1_ps1")
+shader_parameter/albedo_color = Color(0.3, 0.4, 0.7, 1)
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/snap_resolution = 240.0
+shader_parameter/affine_strength = 1.0
+
+[node name="Level01" type="Node3D"]
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="Floor" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(24, 1, 24)
+material = SubResource("ShaderMaterial_floor")
+
+[node name="WallN" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -12)
+use_collision = true
+size = Vector3(24, 4, 1)
+material = SubResource("ShaderMaterial_wall")
+
+[node name="WallS" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 12)
+use_collision = true
+size = Vector3(24, 4, 1)
+material = SubResource("ShaderMaterial_wall")
+
+[node name="WallE" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0)
+use_collision = true
+size = Vector3(1, 4, 24)
+material = SubResource("ShaderMaterial_wall")
+
+[node name="WallW" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0)
+use_collision = true
+size = Vector3(1, 4, 24)
+material = SubResource("ShaderMaterial_wall")
+
+[node name="Box1" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -3)
+use_collision = true
+size = Vector3(2, 1, 2)
+material = SubResource("ShaderMaterial_red")
+
+[node name="Box2" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, -5)
+use_collision = true
+size = Vector3(2, 2, 2)
+material = SubResource("ShaderMaterial_blue")
+
+[node name="Ramp" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 0.94, 0.342, 0, -0.342, 0.94, -5, 0.5, -3)
+use_collision = true
+size = Vector3(4, 0.5, 6)
+material = SubResource("ShaderMaterial_red")
+
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8)

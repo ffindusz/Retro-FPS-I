@@ -1,16 +1,8 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
-[ext_resource type="Shader" path="res://shaders/ps1_vertex_snap.gdshader" id="2_ps1"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cube"]
-shader = ExtResource("2_ps1")
-shader_parameter/albedo_color = Color(0.85, 0.35, 0.25, 1)
-shader_parameter/uv_scale = Vector2(1, 1)
-shader_parameter/snap_resolution = 240.0
-shader_parameter/affine_strength = 1.0
-
-[sub_resource type="BoxMesh" id="BoxMesh_test"]
+[ext_resource type="PackedScene" path="res://scenes/levels/level_01.tscn" id="2_level"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
 sky_top_color = Color(0.24, 0.32, 0.48, 1)
@@ -57,14 +49,10 @@ render_target_update_mode = 4
 environment = SubResource("Environment_main")
 
 [node name="Sun" type="DirectionalLight3D" parent="ViewportContainer/GameViewport/World"]
-transform = Transform3D(1, 0, 0, 0, 0.643, -0.766, 0, 0.766, 0.643, 0, 10, 0)
+transform = Transform3D(0.866025, 0.321394, -0.383022, 0, 0.766044, 0.642788, 0.5, -0.55667, 0.663414, 0, 10, 0)
 shadow_enabled = true
 
-[node name="Camera3D" type="Camera3D" parent="ViewportContainer/GameViewport/World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3)
+[node name="Level01" parent="ViewportContainer/GameViewport/World" instance=ExtResource("2_level")]
 
-[node name="TestCube" type="MeshInstance3D" parent="ViewportContainer/GameViewport/World"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("BoxMesh_test")
-surface_material_override/0 = SubResource("ShaderMaterial_cube")
+[node name="Player" parent="ViewportContainer/GameViewport/World" instance=ExtResource("3_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8)
