@@ -38,6 +38,11 @@ func _process(_delta: float) -> bool:
 		player.global_position = waypoints[stop][0]
 		player.rotation.y = deg_to_rad(waypoints[stop][1])
 		player.velocity = Vector3.ZERO
+	elif phase == FRAMES_PER_STOP - 3:
+		# Cycle weapons and fire so viewmodels/muzzle flash show in shots.
+		var wm: Node3D = player.get_node("Head/Camera3D/WeaponManager")
+		wm._select(stop % 3)
+		wm.current_weapon().try_fire(player.get_node("Head/Camera3D"), player)
 	elif phase == FRAMES_PER_STOP - 1:
 		var img: Image = root.get_texture().get_image()
 		img.save_png("res://tmp_shots/shot_%d.png" % _shot)

@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/projectile_rocket.gd" id="1_script"]
+[ext_resource type="Material" path="res://assets/materials/mat_gun_accent.tres" id="2_accent"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hit"]
+radius = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_body"]
+top_radius = 0.06
+bottom_radius = 0.06
+height = 0.3
+
+[node name="Rocket" type="Area3D"]
+collision_layer = 0
+collision_mask = 5
+script = ExtResource("1_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_hit")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+mesh = SubResource("CylinderMesh_body")
+surface_material_override/0 = ExtResource("2_accent")
+
+[node name="Glow" type="OmniLight3D" parent="."]
+light_color = Color(1, 0.6, 0.25, 1)
+omni_range = 4.0

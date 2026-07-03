@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/pistol.gd" id="1_script"]
+[ext_resource type="Material" path="res://assets/materials/mat_gunmetal.tres" id="2_metal"]
+[ext_resource type="Material" path="res://assets/materials/mat_gun_accent.tres" id="3_accent"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+size = Vector3(0.07, 0.11, 0.22)
+
+[sub_resource type="BoxMesh" id="BoxMesh_barrel"]
+size = Vector3(0.04, 0.04, 0.14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_grip"]
+size = Vector3(0.055, 0.14, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flash"]
+shading_mode = 0
+albedo_color = Color(1, 0.85, 0.4, 1)
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_flash"]
+size = Vector2(0.22, 0.22)
+
+[node name="Pistol" type="Node3D"]
+script = ExtResource("1_script")
+weapon_label = "PISTOL"
+damage = 12.0
+fire_interval = 0.16
+max_ammo = 72
+pellet_count = 1
+spread_degrees = 0.4
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, -0.1)
+mesh = SubResource("BoxMesh_body")
+surface_material_override/0 = ExtResource("2_metal")
+
+[node name="Barrel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.045, -0.25)
+mesh = SubResource("BoxMesh_barrel")
+surface_material_override/0 = ExtResource("3_accent")
+
+[node name="Grip" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.94, 0.342, 0, -0.342, 0.94, 0, -0.11, 0.02)
+mesh = SubResource("BoxMesh_grip")
+surface_material_override/0 = ExtResource("2_metal")
+
+[node name="MuzzleFlash" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.045, -0.36)
+visible = false
+
+[node name="Light" type="OmniLight3D" parent="MuzzleFlash"]
+light_color = Color(1, 0.8, 0.4, 1)
+light_energy = 2.0
+omni_range = 3.0
+
+[node name="Quad" type="MeshInstance3D" parent="MuzzleFlash"]
+mesh = SubResource("QuadMesh_flash")
+surface_material_override/0 = SubResource("StandardMaterial3D_flash")

@@ -20,6 +20,10 @@ extends CharacterBody3D
 @onready var camera: Camera3D = $Head/Camera3D
 
 
+func take_damage(amount: float, _from: Vector3 = Vector3.ZERO) -> void:
+	GameState.damage_player(int(amount))
+
+
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
