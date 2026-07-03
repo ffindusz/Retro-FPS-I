@@ -1,0 +1,14 @@
+# Godot 4 cache/import data
+.godot/
+
+# Engine binaries kept alongside the project (not part of the game)
+Godot_v*.exe
+
+# Export artifacts
+export/
+*.pck
+*.zip
+
+# OS cruft
+Thumbs.db
+desktop.ini

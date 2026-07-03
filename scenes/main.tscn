@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Shader" path="res://shaders/ps1_vertex_snap.gdshader" id="2_ps1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cube"]
+shader = ExtResource("2_ps1")
+shader_parameter/albedo_color = Color(0.85, 0.35, 0.25, 1)
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/snap_resolution = 240.0
+shader_parameter/affine_strength = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_test"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+sky_top_color = Color(0.24, 0.32, 0.48, 1)
+sky_horizon_color = Color(0.55, 0.46, 0.4, 1)
+ground_bottom_color = Color(0.15, 0.12, 0.1, 1)
+ground_horizon_color = Color(0.55, 0.46, 0.4, 1)
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_main")
+ambient_light_source = 3
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_main")
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 4
+
+[node name="GameViewport" type="SubViewport" parent="ViewportContainer"]
+handle_input_locally = false
+size = Vector2i(320, 240)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="ViewportContainer/GameViewport"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="ViewportContainer/GameViewport/World"]
+environment = SubResource("Environment_main")
+
+[node name="Sun" type="DirectionalLight3D" parent="ViewportContainer/GameViewport/World"]
+transform = Transform3D(1, 0, 0, 0, 0.643, -0.766, 0, 0.766, 0.643, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="ViewportContainer/GameViewport/World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3)
+
+[node name="TestCube" type="MeshInstance3D" parent="ViewportContainer/GameViewport/World"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_test")
+surface_material_override/0 = SubResource("ShaderMaterial_cube")
