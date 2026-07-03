@@ -55,4 +55,4 @@ shadow_enabled = true
 [node name="Level01" parent="ViewportContainer/GameViewport/World" instance=ExtResource("2_level")]
 
 [node name="Player" parent="ViewportContainer/GameViewport/World" instance=ExtResource("3_player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 22)

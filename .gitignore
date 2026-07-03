@@ -4,6 +4,9 @@
 # Engine binaries kept alongside the project (not part of the game)
 Godot_v*.exe
 
+# Debug screenshot output
+tmp_shots/
+
 # Export artifacts
 export/
 *.pck

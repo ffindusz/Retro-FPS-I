@@ -1,86 +1,257 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=5 format=3]
 
-[ext_resource type="Shader" path="res://shaders/ps1_vertex_snap.gdshader" id="1_ps1"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_floor"]
-shader = ExtResource("1_ps1")
-shader_parameter/albedo_color = Color(0.42, 0.42, 0.45, 1)
-shader_parameter/uv_scale = Vector2(1, 1)
-shader_parameter/snap_resolution = 240.0
-shader_parameter/affine_strength = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wall"]
-shader = ExtResource("1_ps1")
-shader_parameter/albedo_color = Color(0.62, 0.55, 0.42, 1)
-shader_parameter/uv_scale = Vector2(1, 1)
-shader_parameter/snap_resolution = 240.0
-shader_parameter/affine_strength = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_red"]
-shader = ExtResource("1_ps1")
-shader_parameter/albedo_color = Color(0.7, 0.3, 0.25, 1)
-shader_parameter/uv_scale = Vector2(1, 1)
-shader_parameter/snap_resolution = 240.0
-shader_parameter/affine_strength = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_blue"]
-shader = ExtResource("1_ps1")
-shader_parameter/albedo_color = Color(0.3, 0.4, 0.7, 1)
-shader_parameter/uv_scale = Vector2(1, 1)
-shader_parameter/snap_resolution = 240.0
-shader_parameter/affine_strength = 1.0
+[ext_resource type="Material" path="res://assets/materials/mat_wall.tres" id="1_wall"]
+[ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
+[ext_resource type="Material" path="res://assets/materials/mat_metal.tres" id="3_metal"]
+[ext_resource type="Material" path="res://assets/materials/mat_crate.tres" id="4_crate"]
 
 [node name="Level01" type="Node3D"]
 
-[node name="Geometry" type="Node3D" parent="."]
-
-[node name="Floor" type="CSGBox3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+[node name="LevelCSG" type="CSGCombiner3D" parent="."]
 use_collision = true
-size = Vector3(24, 1, 24)
-material = SubResource("ShaderMaterial_floor")
 
-[node name="WallN" type="CSGBox3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -12)
-use_collision = true
-size = Vector3(24, 4, 1)
-material = SubResource("ShaderMaterial_wall")
+[node name="ShellRoomA" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 20)
+size = Vector3(14, 6, 14)
+material = ExtResource("1_wall")
 
-[node name="WallS" type="CSGBox3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 12)
-use_collision = true
-size = Vector3(24, 4, 1)
-material = SubResource("ShaderMaterial_wall")
+[node name="ShellCorr1" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 10)
+size = Vector3(5, 5, 10)
+material = ExtResource("1_wall")
 
-[node name="WallE" type="CSGBox3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 0)
-use_collision = true
-size = Vector3(1, 4, 24)
-material = SubResource("ShaderMaterial_wall")
+[node name="ShellRoomB" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+size = Vector3(18, 7, 14)
+material = ExtResource("1_wall")
 
-[node name="WallW" type="CSGBox3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0)
-use_collision = true
-size = Vector3(1, 4, 24)
-material = SubResource("ShaderMaterial_wall")
+[node name="ShellCorr2" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.5, 0)
+size = Vector3(10, 5, 5)
+material = ExtResource("1_wall")
 
-[node name="Box1" type="CSGBox3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -3)
-use_collision = true
-size = Vector3(2, 1, 2)
-material = SubResource("ShaderMaterial_red")
+[node name="ShellWalkway" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 4.5, 0)
+size = Vector3(10, 4, 5)
+material = ExtResource("1_wall")
 
-[node name="Box2" type="CSGBox3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, -5)
-use_collision = true
-size = Vector3(2, 2, 2)
-material = SubResource("ShaderMaterial_blue")
+[node name="ShellRoomC" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 2.75, 0)
+size = Vector3(14, 7.5, 14)
+material = ExtResource("1_wall")
 
-[node name="Ramp" type="CSGBox3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 0.94, 0.342, 0, -0.342, 0.94, -5, 0.5, -3)
-use_collision = true
-size = Vector3(4, 0.5, 6)
-material = SubResource("ShaderMaterial_red")
+[node name="ShellCorr3" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -10)
+size = Vector3(5, 5, 10)
+material = ExtResource("1_wall")
 
-[node name="PlayerSpawn" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8)
+[node name="ShellArena" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -24)
+size = Vector3(22, 10, 22)
+material = ExtResource("1_wall")
+
+[node name="CutRoomA" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 20)
+operation = 2
+size = Vector3(12, 4, 12)
+material = ExtResource("1_wall")
+
+[node name="CutCorr1" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 10)
+operation = 2
+size = Vector3(3, 3, 9)
+material = ExtResource("1_wall")
+
+[node name="CutRoomB" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+operation = 2
+size = Vector3(16, 5, 12)
+material = ExtResource("1_wall")
+
+[node name="CutCorr2" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.5, 0)
+operation = 2
+size = Vector3(9, 3, 3)
+material = ExtResource("1_wall")
+
+[node name="CutWalkway" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 4.35, 0)
+operation = 2
+size = Vector3(9, 2.3, 3)
+material = ExtResource("1_wall")
+
+[node name="CutRoomC" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 2.75, 0)
+operation = 2
+size = Vector3(12, 5.5, 12)
+material = ExtResource("1_wall")
+
+[node name="CutCorr3" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -10)
+operation = 2
+size = Vector3(3, 3, 9)
+material = ExtResource("1_wall")
+
+[node name="CutArena" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -24)
+operation = 2
+size = Vector3(20, 12, 20)
+material = ExtResource("1_wall")
+
+[node name="CutWindowAW1" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 2.25, 17)
+operation = 2
+size = Vector3(2, 1.5, 2)
+material = ExtResource("1_wall")
+
+[node name="CutWindowAW2" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 2.25, 23)
+operation = 2
+size = Vector3(2, 1.5, 2)
+material = ExtResource("1_wall")
+
+[node name="CutWindowAE1" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 2.25, 17)
+operation = 2
+size = Vector3(2, 1.5, 2)
+material = ExtResource("1_wall")
+
+[node name="CutWindowAE2" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 2.25, 23)
+operation = 2
+size = Vector3(2, 1.5, 2)
+material = ExtResource("1_wall")
+
+[node name="FloorRoomA" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 20)
+size = Vector3(12, 0.25, 12)
+material = ExtResource("2_floor")
+
+[node name="FloorCorr1" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 10)
+size = Vector3(3, 0.25, 9)
+material = ExtResource("2_floor")
+
+[node name="FloorRoomB" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 0)
+size = Vector3(16, 0.25, 12)
+material = ExtResource("2_floor")
+
+[node name="FloorCorr2" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -0.075, 0)
+size = Vector3(9, 0.25, 3)
+material = ExtResource("2_floor")
+
+[node name="FloorRoomC" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, -0.075, 0)
+size = Vector3(12, 0.25, 12)
+material = ExtResource("2_floor")
+
+[node name="FloorCorr3" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, -10)
+size = Vector3(3, 0.25, 9)
+material = ExtResource("2_floor")
+
+[node name="FloorArena" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, -24)
+size = Vector3(20, 0.25, 20)
+material = ExtResource("2_floor")
+
+[node name="Ramp" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(0.928, 0.371, 0, -0.371, 0.928, 0, 0, 0, 1, 22.41, 1.37, -4.5)
+size = Vector3(8.62, 0.5, 4)
+material = ExtResource("3_metal")
+
+[node name="Landing" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 3.05, -2.25)
+size = Vector3(3, 0.3, 7.5)
+material = ExtResource("3_metal")
+
+[node name="Balcony" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3.05, 0)
+size = Vector3(2, 0.3, 8)
+material = ExtResource("3_metal")
+
+[node name="CrateB1" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.6, -3)
+size = Vector3(1.2, 1.2, 1.2)
+material = ExtResource("4_crate")
+
+[node name="CrateB2" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(0.906, 0, 0.423, 0, 1, 0, -0.423, 0, 0.906, -3.7, 0.6, -2.1)
+size = Vector3(1.2, 1.2, 1.2)
+material = ExtResource("4_crate")
+
+[node name="CrateB3" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, -4.4, 1.8, -2.55)
+size = Vector3(1.2, 1.2, 1.2)
+material = ExtResource("4_crate")
+
+[node name="CrateA1" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.6, 17)
+size = Vector3(1.2, 1.2, 1.2)
+material = ExtResource("4_crate")
+
+[node name="CrateC1" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.6, 4)
+size = Vector3(1.2, 1.2, 1.2)
+material = ExtResource("4_crate")
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="OmniRoomA" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 20)
+light_color = Color(1, 0.92, 0.8, 1)
+omni_range = 13.0
+
+[node name="OmniRoomB" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, 0)
+light_color = Color(1, 0.92, 0.8, 1)
+light_energy = 1.3
+omni_range = 17.0
+
+[node name="OmniCorr2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2.6, 0)
+light_color = Color(1, 0.85, 0.7, 1)
+omni_range = 9.0
+
+[node name="OmniWalkway" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 5, 0)
+light_color = Color(1, 0.85, 0.7, 1)
+omni_range = 8.0
+
+[node name="OmniRamp" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2.5, -4)
+light_color = Color(1, 0.85, 0.7, 1)
+omni_range = 8.0
+
+[node name="OmniRoomC" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 4.5, 0)
+light_color = Color(1, 0.92, 0.8, 1)
+omni_range = 15.0
+
+[node name="OmniArena" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -24)
+light_color = Color(1, 0.9, 0.85, 1)
+light_energy = 1.2
+omni_range = 26.0
+
+[node name="Spawns" type="Node3D" parent="."]
+
+[node name="PlayerSpawn" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 22)
+
+[node name="GruntSpawn1" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.1, -2)
+
+[node name="GruntSpawn2" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.1, 2)
+
+[node name="GruntSpawn3" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0.1, 1)
+
+[node name="GruntSpawn4" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -16)
+
+[node name="BossSpawn" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -27)
