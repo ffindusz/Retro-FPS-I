@@ -25,11 +25,16 @@ func _init() -> void:
 	_save("teleport", _gen_teleport())
 	_save("pickup", _gen_pickup())
 	_save("heal", _gen_heal())
+	_save("step", _gen_step())
+	_save("land", _gen_land())
+	# Music last: it is by far the slowest and consumes the RNG stream after
+	# everything else, keeping all earlier outputs byte-identical.
+	_save("music_ambient", _gen_music(), 11025)
 	print("SFX written to res://assets/audio/")
 	quit()
 
 
-func _save(sfx_name: String, samples: PackedFloat32Array) -> void:
+func _save(sfx_name: String, samples: PackedFloat32Array, rate := RATE) -> void:
 	var data := PackedByteArray()
 	data.resize(samples.size() * 2)
 	for i in samples.size():
@@ -37,7 +42,7 @@ func _save(sfx_name: String, samples: PackedFloat32Array) -> void:
 		data.encode_s16(i * 2, v)
 	var stream := AudioStreamWAV.new()
 	stream.format = AudioStreamWAV.FORMAT_16_BITS
-	stream.mix_rate = RATE
+	stream.mix_rate = rate
 	stream.stereo = false
 	stream.data = data
 	stream.save_to_wav("res://assets/audio/%s.wav" % sfx_name)
@@ -180,6 +185,85 @@ func _gen_heal() -> PackedFloat32Array:
 		var t := float(i) / RATE
 		var freq := 300.0 + 900.0 * t
 		out.append(sin(TAU * freq * t) * 0.5 * _env(t, dur, 1.1))
+	return out
+
+
+## Footstep: short lowpassed noise scuff.
+func _gen_step() -> PackedFloat32Array:
+	var dur := 0.09
+	var out := PackedFloat32Array()
+	var low := 0.0
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		low = lerpf(low, _rng.randf_range(-1.0, 1.0), 0.22)
+		out.append(low * 1.1 * _env(t, dur, 2.4))
+	return out
+
+
+## Landing thud: deeper noise burst + low sine knock.
+func _gen_land() -> PackedFloat32Array:
+	var dur := 0.2
+	var out := PackedFloat32Array()
+	var low := 0.0
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		low = lerpf(low, _rng.randf_range(-1.0, 1.0), 0.12)
+		var knock := sin(TAU * 70.0 * t) * 0.5
+		out.append((low * 1.3 + knock) * _env(t, dur, 2.0))
+	return out
+
+
+## Dark ambient music: a 19.2 s seamless loop of slowly crossfading minor
+## chord pads (Am -> F -> Dm -> E) over a pulsing sub bass. Every oscillator
+## and LFO frequency is quantized to whole cycles per loop so the seam is
+## click-free. Rendered at 11025 Hz for lo-fi warmth (and speed).
+func _gen_music() -> PackedFloat32Array:
+	var rate := 11025
+	var dur := 19.2
+	var chord_len := dur / 4.0
+	var fade := 1.0
+	# Quantize a frequency to complete whole cycles over the loop.
+	var q := func(f: float) -> float: return roundf(f * dur) / dur
+	var chords_hz := [
+		[110.0, 130.81, 164.81],  # Am
+		[87.31, 130.81, 174.61],  # F
+		[73.42, 110.0, 146.83],   # Dm
+		[82.41, 123.47, 164.81],  # E
+	]
+	# Precompute pad components: [freq, amp, lfo_freq, lfo_phase] per chord.
+	var comps := []
+	for c in 4:
+		var list := []
+		for k in 3:
+			var f: float = chords_hz[c][k]
+			list.append([q.call(f), 0.16, q.call(0.14 + 0.03 * k), float(k) * 2.1])
+			list.append([q.call(f * 1.006), 0.10, q.call(0.11 + 0.02 * k), float(k) * 1.3])
+		comps.append(list)
+	var bass_hz := [q.call(55.0), q.call(43.65), q.call(36.71), q.call(41.2)]
+	var n := int(dur * rate)
+	var out := PackedFloat32Array()
+	out.resize(n)
+	for i in n:
+		var t := float(i) / rate
+		var s := 0.0
+		for c in 4:
+			# Triangular crossfade window centered on this chord's slot,
+			# evaluated with wraparound so chord 0 fades in over the loop seam.
+			var center := (float(c) + 0.5) * chord_len
+			var dt: float = absf(fposmod(t - center + dur / 2.0, dur) - dur / 2.0)
+			var gain := clampf((chord_len / 2.0 + fade / 2.0 - dt) / fade, 0.0, 1.0)
+			if gain <= 0.0:
+				continue
+			for comp: Array in comps[c]:
+				var trem: float = 0.85 + 0.15 * sin(TAU * comp[2] * t + comp[3])
+				s += sin(TAU * comp[0] * t) * comp[1] * trem * gain
+		# Sub-bass pulse every 1.2 s, root of the chord the pulse starts in.
+		var pulse_t := fposmod(t, 1.2)
+		var pulse_start := t - pulse_t
+		var chord_idx := int(fposmod(pulse_start, dur) / chord_len) % 4
+		var env := exp(-3.0 * pulse_t) * minf(pulse_t / 0.012, 1.0)
+		s += sin(TAU * bass_hz[chord_idx] * t) * 0.5 * env
+		out[i] = s * 0.5
 	return out
 
 

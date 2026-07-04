@@ -1,6 +1,8 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_ctrl"]
+[ext_resource type="AudioStream" path="res://assets/audio/step.wav" id="6_step"]
+[ext_resource type="AudioStream" path="res://assets/audio/land.wav" id="7_land"]
 [ext_resource type="Script" path="res://scripts/player/weapon_manager.gd" id="2_wm"]
 [ext_resource type="PackedScene" path="res://scenes/weapons/weapon_pistol.tscn" id="3_pistol"]
 [ext_resource type="PackedScene" path="res://scenes/weapons/weapon_shotgun.tscn" id="4_shotgun"]
@@ -37,3 +39,11 @@ visible = false
 
 [node name="Launcher" parent="Head/Camera3D/WeaponManager" instance=ExtResource("5_launcher")]
 visible = false
+
+[node name="StepSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_step")
+volume_db = -8.0
+
+[node name="LandSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_land")
+volume_db = -4.0

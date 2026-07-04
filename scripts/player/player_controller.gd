@@ -21,16 +21,29 @@ extends CharacterBody3D
 @export var crouch_speed_factor := 0.55
 @export var crouch_head_height := 1.0
 
+@export_group("Feel")
+@export var bob_amplitude := 0.045
+@export var bob_frequency := 1.7  # bob-phase radians advanced per meter walked
+@export var step_distance := 2.1
+
 const HURT_SOUND := preload("res://assets/audio/hurt.wav")
 
 var _shake := 0.0
 var _crouching := false
 var _stand_height := 1.8
 var _stand_head_height := 1.6
+var _bob_phase := 0.0
+var _bob_blend := 0.0
+var _step_accum := 0.0
+var _land_dip := 0.0
+var _was_airborne := false
+var step_count := 0  # exposed for tests
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
 @onready var _collision: CollisionShape3D = $CollisionShape3D
+@onready var _step_sound: AudioStreamPlayer = $StepSound
+@onready var _land_sound: AudioStreamPlayer = $LandSound
 
 
 func take_damage(amount: float, _from: Vector3 = Vector3.ZERO) -> void:
@@ -68,10 +81,17 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	# Damage screen shake: random camera offset with quick decay.
 	_shake = maxf(_shake - delta * 1.6, 0.0)
-	camera.h_offset = randf_range(-_shake, _shake) * 0.35
-	camera.v_offset = randf_range(-_shake, _shake) * 0.35
-	# Smooth camera drop/rise between crouch and stand.
-	var target_head := crouch_head_height if _crouching else _stand_head_height
+	# View bob: a gentle figure-eight, blended in/out as the player
+	# starts/stops walking so the camera never freezes mid-swing.
+	var moving := is_on_floor() and Vector2(velocity.x, velocity.z).length() > 1.0
+	_bob_blend = lerpf(_bob_blend, 1.0 if moving else 0.0, minf(delta * 6.0, 1.0))
+	camera.h_offset = randf_range(-_shake, _shake) * 0.35 \
+			+ cos(_bob_phase * 0.5) * bob_amplitude * 0.5 * _bob_blend
+	camera.v_offset = randf_range(-_shake, _shake) * 0.35 \
+			+ sin(_bob_phase) * bob_amplitude * _bob_blend
+	# Smooth camera drop/rise between crouch and stand; landing dips it.
+	_land_dip = lerpf(_land_dip, 0.0, minf(delta * 8.0, 1.0))
+	var target_head := (crouch_head_height if _crouching else _stand_head_height) - _land_dip
 	head.position.y = lerpf(head.position.y, target_head, minf(delta * 12.0, 1.0))
 
 
@@ -86,11 +106,41 @@ func _physics_process(delta: float) -> void:
 		_accelerate(wish_dir, speed, ground_accel, delta)
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = jump_velocity
+			_step_accum = 0.0
 	else:
 		_accelerate(wish_dir, speed, air_accel, delta)
 		velocity.y -= gravity * delta
 
+	var fall_speed := -velocity.y  # captured before move_and_slide zeroes it
 	move_and_slide()
+
+	if is_on_floor():
+		if _was_airborne:
+			_on_landed(fall_speed)
+		var moved := Vector2(velocity.x, velocity.z).length() * delta
+		if moved > 0.001:
+			_bob_phase += moved * bob_frequency
+			_step_accum += moved
+			if _step_accum >= step_distance * (0.8 if _crouching else 1.0):
+				_step_accum = 0.0
+				_play_step()
+	_was_airborne = not is_on_floor()
+
+
+func _on_landed(fall_speed: float) -> void:
+	_step_accum = 0.0
+	if fall_speed < 3.0:
+		return
+	_land_dip = clampf(fall_speed * 0.022, 0.05, 0.22)
+	_land_sound.pitch_scale = randf_range(0.9, 1.05)
+	_land_sound.play()
+
+
+func _play_step() -> void:
+	step_count += 1
+	_step_sound.pitch_scale = randf_range(0.85, 1.15)
+	_step_sound.volume_db = -15.0 if _crouching else -8.0
+	_step_sound.play()
 
 
 func _update_crouch() -> void:

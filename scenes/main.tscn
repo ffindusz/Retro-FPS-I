@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="AudioStream" path="res://assets/audio/music_ambient.wav" id="6_music"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/start_screen.tscn" id="3_start"]
 [ext_resource type="PackedScene" path="res://scenes/ui/end_screen.tscn" id="4_end"]
@@ -60,6 +61,11 @@ environment = SubResource("Environment_main")
 [node name="Sun" type="DirectionalLight3D" parent="ViewportContainer/GameViewport/World"]
 transform = Transform3D(0.866025, 0.321394, -0.383022, 0, 0.766044, 0.642788, 0.5, -0.55667, 0.663414, 0, 10, 0)
 shadow_enabled = true
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_music")
+volume_db = -12.0
+autoplay = true
 
 [node name="Hud" parent="." instance=ExtResource("2_hud")]
 unique_name_in_owner = true
