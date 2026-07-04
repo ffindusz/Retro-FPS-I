@@ -12,6 +12,8 @@ func _init() -> void:
 	_gen_floor()
 	_gen_metal()
 	_gen_crate()
+	_gen_rock()
+	_gen_lava()
 	print("Textures written to res://assets/textures/")
 	quit()
 
@@ -161,6 +163,51 @@ func _gen_metal() -> void:
 				b = lerpf(b, 38.0, k)
 			_put(img, x, y, r, g, b)
 	img.save_png("res://assets/textures/metal_plate.png")
+
+
+## Cave rock: dark craggy multi-octave noise with crack veins.
+func _gen_rock() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 6006
+	var big := _make_noise(rng, 6)
+	var mid := _make_noise(rng, 14)
+	var vein := _make_noise(rng, 10)
+	var img := Image.create(SIZE, SIZE, false, Image.FORMAT_RGB8)
+	for y in SIZE:
+		for x in SIZE:
+			var u := float(x) / SIZE
+			var v := float(y) / SIZE
+			var n := _noise_at(big, 6, u, v) * 0.6 + _noise_at(mid, 14, u, v) * 0.4
+			var base := 52.0 + 52.0 * n + rng.randf_range(-6, 6)
+			# Dark crack veins where the vein noise crosses its midline.
+			if absf(_noise_at(vein, 10, u, v) - 0.5) < 0.035:
+				base *= 0.45
+			_put(img, x, y, base, base * 0.9, base * 0.8)
+	img.save_png("res://assets/textures/rock.png")
+
+
+## Lava: bright marbled orange with dark crust veins. Meant for an
+## unshaded material, so it reads as glowing.
+func _gen_lava() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 7007
+	var heat := _make_noise(rng, 5)
+	var crust := _make_noise(rng, 9)
+	var img := Image.create(SIZE, SIZE, false, Image.FORMAT_RGB8)
+	for y in SIZE:
+		for x in SIZE:
+			var u := float(x) / SIZE
+			var v := float(y) / SIZE
+			var h := _noise_at(heat, 5, u, v)
+			var r := 200.0 + 55.0 * h
+			var g := 55.0 + 130.0 * h * h
+			var b := 15.0 + 30.0 * h * h * h
+			if _noise_at(crust, 9, u, v) > 0.74:
+				r = 70.0
+				g = 28.0
+				b = 14.0
+			_put(img, x, y, r + rng.randf_range(-6, 6), g, b)
+	img.save_png("res://assets/textures/lava.png")
 
 
 ## Wooden crate: vertical planks with grain and knots, two riveted metal

@@ -96,20 +96,40 @@ func _process(_delta: float) -> bool:
 			_wait_until = Time.get_ticks_msec() + 800
 		21:
 			_key(KEY_SPACE)
+			_step = 30
+			_wait_until = Time.get_ticks_msec() + 800
+		30:
+			var l3 := world.get_node_or_null("Level03")
+			print("after pad2: Level03 (cavern) loaded=%s (expect true)" % (l3 != null))
+			for e in get_nodes_in_group("enemies"):
+				e.take_damage(99999.0)
+			_step = 31
+			_wait_until = Time.get_ticks_msec() + 700
+		31:
+			var sw: Node = world.get_node("Level03/Switch")
+			var tp: Node = world.get_node("Level03/Teleporter")
+			sw.take_damage(5.0)
+			print("L3 cleared + switch shot: teleporter active=%s (expect true)" % tp._active)
+			player.global_position = tp.global_position + Vector3(0, 0.3, 0)
+			player.velocity = Vector3.ZERO
+			_step = 32
+			_wait_until = Time.get_ticks_msec() + 800
+		32:
+			_key(KEY_SPACE)
 			_step = 2
 			_wait_until = Time.get_ticks_msec() + 800
 		2:
-			var l3 := world.get_node_or_null("Level03")
-			var boss: Node = world.get_node_or_null("Level03/Enemies/Boss")
-			var door: Node3D = world.get_node("Level03/SecretDoor")
+			var l4 := world.get_node_or_null("Level04")
+			var boss: Node = world.get_node_or_null("Level04/Enemies/Boss")
+			var door: Node3D = world.get_node("Level04/SecretDoor")
 			_door_y0 = door.position.y
-			print("after pad2: Level03 loaded=%s boss=%s (expect true true)"
-					% [l3 != null, boss != null])
+			print("after pad3: Level04 loaded=%s boss=%s (expect true true)"
+					% [l4 != null, boss != null])
 			boss.take_damage(9999.0)
 			_step = 3
 			_wait_until = Time.get_ticks_msec() + 3000
 		3:
-			var door: Node3D = world.get_node("Level03/SecretDoor")
+			var door: Node3D = world.get_node("Level04/SecretDoor")
 			print("door slid open: y %.2f -> %.2f (expect ~4 lower)" % [_door_y0, door.position.y])
 			player.global_position = Vector3(0, 0.3, -28)
 			player.velocity = Vector3.ZERO

@@ -25,6 +25,12 @@ const LEVEL_WAYPOINTS := {
 		[Vector3(22, 0.1, 0), -90.0],    # Mid-bridge
 	],
 	2: [
+		[Vector3(0, 0.1, 16), 0.0],      # Cave entry
+		[Vector3(0, 0.5, -1), 0.0],      # Grand cavern: lava lake + bridge
+		[Vector3(-9, 0.1, -6), 90.0],    # Gallery, facing the switch
+		[Vector3(0, 0.3, -12), 180.0],   # Looking back across the bridge
+	],
+	3: [
 		[Vector3(0, 0.1, 13), 0.0],      # Entry room
 		[Vector3(0, 0.6, -2), 0.0],      # Arena, facing the boss
 		[Vector3(0, 0.1, -18), 180.0],   # Facing the secret door in the south wall

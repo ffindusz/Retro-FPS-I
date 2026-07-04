@@ -26,11 +26,14 @@ mapping, and Bayer-dithered color quantization for the authentic wobble.
 | 1 / 2 / 3, mouse wheel | Switch weapon (pistol / shotgun / rocket launcher) |
 | Esc | Toggle mouse capture |
 
-Three levels: in each of the first two, find and **shoot the switch** to power
-the **teleporter** to the next level (health and ammo carry over). Level 3 is
-the **boss** — it enrages at half health. Killing it opens a secret room;
-claim the **pile of gold** inside to win. Dying restarts the level you died
-on. Rockets splash — including on you.
+Four levels: in each of the first three, clear all enemies, then find and
+**shoot the switch** to power the **teleporter** to the next level (health
+and ammo carry over). The themes shift as you descend — brick complex, metal
+installation, then a **volcanic cavern** whose lava burns anything that
+touches it (enemies included; mind the bridge). Level 4 is the **boss** — it
+enrages at half health. Killing it opens a secret room; claim the **pile of
+gold** inside to win. Dying restarts the level you died on. Rockets splash —
+including on you.
 
 **Pickups** are scattered through every level: medkits (+25 HP), bullets
 (+24), shells (+8), and rockets (+4). They refuse collection while you're
