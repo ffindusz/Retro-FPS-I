@@ -25,6 +25,9 @@ func set_result(win: bool) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_visible_in_tree() or Time.get_ticks_msec() < _accept_after_ms:
 		return
+	# Esc is the pause key; it should never count as "any key".
+	if event is InputEventKey and event.physical_keycode == KEY_ESCAPE:
+		return
 	var confirm: bool = (event is InputEventMouseButton and event.pressed) \
 			or (event is InputEventKey and event.pressed and not event.echo)
 	if confirm:

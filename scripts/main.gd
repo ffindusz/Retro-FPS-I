@@ -22,6 +22,7 @@ var _game_active := false
 @onready var _start_screen: Control = %StartScreen
 @onready var _end_screen: Control = %EndScreen
 @onready var _hud: Control = %Hud
+@onready var _pause_screen: Control = %PauseScreen
 
 
 func _ready() -> void:
@@ -31,6 +32,38 @@ func _ready() -> void:
 	GameState.game_won.connect(_on_game_won)
 	_start_screen.start_requested.connect(start_game)
 	_end_screen.restart_requested.connect(_on_restart)
+	_pause_screen.resume_requested.connect(_set_paused.bind(false))
+	_pause_screen.restart_requested.connect(_on_pause_restart)
+	_pause_screen.quit_requested.connect(_on_pause_quit)
+	_show_only(_start_screen)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Esc during play opens the pause screen (which then owns Esc until it
+	# closes; see its own input handler).
+	if event.is_action_pressed("ui_cancel") and _game_active and not get_tree().paused:
+		get_viewport().set_input_as_handled()
+		_set_paused(true)
+
+
+func _set_paused(paused: bool) -> void:
+	get_tree().paused = paused
+	_pause_screen.visible = paused
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if paused else Input.MOUSE_MODE_CAPTURED
+
+
+func _on_pause_restart() -> void:
+	get_tree().paused = false
+	_pause_screen.visible = false
+	start_game(_level_index)
+
+
+func _on_pause_quit() -> void:
+	get_tree().paused = false
+	_pause_screen.visible = false
+	_game_active = false
+	_clear_game()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_show_only(_start_screen)
 
 

@@ -70,12 +70,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		rotate_y(-motion.x * mouse_sensitivity)
 		head.rotation.x = clampf(head.rotation.x - motion.y * mouse_sensitivity,
 				-deg_to_rad(pitch_limit_deg), deg_to_rad(pitch_limit_deg))
-	elif event.is_action_pressed("ui_cancel"):
-		# Dev convenience: Esc toggles mouse capture.
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		else:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _process(delta: float) -> void:

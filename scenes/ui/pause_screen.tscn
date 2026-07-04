@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/pause_screen.gd" id="1_script"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 64
+font_color = Color(0.9, 0.9, 0.95, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_hint"]
+font_size = 20
+font_color = Color(0.7, 0.72, 0.8, 1)
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_offset = Vector2(2, 2)
+
+[node name="PauseScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="Title" type="Label" parent="Layout"]
+layout_mode = 2
+mouse_filter = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="Layout"]
+layout_mode = 2
+mouse_filter = 2
+text = "ESC / CLICK RESUME  ·  R RESTART LEVEL  ·  Q QUIT TO TITLE"
+label_settings = SubResource("LabelSettings_hint")
+horizontal_alignment = 1
