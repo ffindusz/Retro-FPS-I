@@ -36,10 +36,13 @@ var _check_timer := 0.0
 func _ready() -> void:
 	health = max_health
 	add_to_group("enemies")
-	_player = get_tree().get_first_node_in_group("player")
 
 
 func _physics_process(delta: float) -> void:
+	# Lazy player lookup: the level (with enemies) can enter the tree before
+	# the player does, and the player is replaced on restart.
+	if not is_instance_valid(_player):
+		_player = get_tree().get_first_node_in_group("player")
 	_state_time += delta
 	if not is_on_floor():
 		velocity.y -= gravity * delta

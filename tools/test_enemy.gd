@@ -22,8 +22,15 @@ func _report_once(key: String, msg: String) -> void:
 	print(msg)
 
 
+var _started := false
+
+
 func _process(_delta: float) -> bool:
 	if current_scene == null:
+		return false
+	if not _started:
+		_started = true
+		current_scene.start_game()
 		return false
 	var world := current_scene.get_node("ViewportContainer/GameViewport/World")
 	var player: CharacterBody3D = world.get_node("Player")

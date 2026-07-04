@@ -23,14 +23,23 @@ func _report_once(key: String, msg: String) -> void:
 		print(msg)
 
 
+var _started := false
+
+
 func _process(_delta: float) -> bool:
 	if current_scene == null:
 		return false
+	if not _started:
+		_started = true
+		current_scene.start_game()
+		return false
 	var world := current_scene.get_node("ViewportContainer/GameViewport/World")
-	var player: CharacterBody3D = world.get_node("Player")
+	var player: CharacterBody3D = world.get_node_or_null("Player")
 	var boss: CharacterBody3D = world.get_node_or_null("Level01/Enemies/Boss")
 	var gs: Node = root.get_node("GameState")
 	if not _placed:
+		if player == null:
+			return false
 		_placed = true
 		_start_ms = Time.get_ticks_msec()
 		gs.boss_died.connect(func() -> void: _win_signaled = true)
@@ -39,13 +48,15 @@ func _process(_delta: float) -> bool:
 		print("t=0.0s boss state=%d health=%.0f" % [boss.state, boss.health])
 		return false
 	var t := (Time.get_ticks_msec() - _start_ms) / 1000.0
-	if t > 2.0 and boss and not _killed:
+	if t > 2.0 and boss and player and not _killed:
 		_report_once("t1", "t=2.0s boss state=%d (expect 2-3) dist=%.1f" % [boss.state,
 				boss.global_position.distance_to(player.global_position)])
 	if t > 6.0 and boss and not _phase2_done:
 		_phase2_done = true
 		print("t=6.0s boss state=%d player health=%d (expect <100 from fireballs)"
 				% [boss.state, gs.health])
+		# Heal so the stationary test player can't die before the boss does.
+		gs.health = 100
 		boss.take_damage(210.0)
 		print("after 210 dmg: health=%.0f enraged=%s (expect true)" % [boss.health, boss._enraged])
 	if t > 8.0 and not _killed:

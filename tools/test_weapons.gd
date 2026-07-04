@@ -5,6 +5,7 @@ extends SceneTree
 
 var _n := 0
 var _fired := false
+var _started := false
 
 
 func _initialize() -> void:
@@ -12,8 +13,14 @@ func _initialize() -> void:
 
 
 func _process(_delta: float) -> bool:
+	if current_scene == null:
+		return false
+	if not _started:
+		_started = true
+		current_scene.start_game()
+		return false
 	_n += 1
-	if _n < 15 or current_scene == null:
+	if _n < 15:
 		return false
 	var player: CharacterBody3D = current_scene.get_node("ViewportContainer/GameViewport/World/Player")
 	var cam: Camera3D = player.get_node("Head/Camera3D")
