@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Material" path="res://assets/materials/mat_wall.tres" id="1_wall"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_grunt.tscn" id="5_grunt"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/boss.tscn" id="6_boss"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_spitter.tscn" id="7_spitter"]
 [ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
 [ext_resource type="Material" path="res://assets/materials/mat_metal.tres" id="3_metal"]
 [ext_resource type="Material" path="res://assets/materials/mat_crate.tres" id="4_crate"]
@@ -254,6 +255,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -16)
 
 [node name="Boss" parent="Enemies" instance=ExtResource("6_boss")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -27)
+
+[node name="Spitter1" parent="Enemies" instance=ExtResource("7_spitter")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3.35, 1.5)
+
+[node name="Spitter2" parent="Enemies" instance=ExtResource("7_spitter")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0.1, 3)
 
 [node name="Spawns" type="Node3D" parent="."]
 

@@ -11,6 +11,7 @@ const FRAMES_PER_STOP := 40
 var waypoints := [
 	[Vector3(0, 0.1, 22), 0.0],      # Room A (spawn), facing exit corridor
 	[Vector3(0, 0.1, 4), 0.0],       # Room B from corridor mouth
+	[Vector3(1, 0.1, 3), -76.0],     # Room B looking up at the balcony spitter
 	[Vector3(19, 0.1, 2), -25.0],    # Room C, facing the ramp
 	[Vector3(16, 3.4, 0), 90.0],     # Walkway over corridor 2, facing Room B
 	[Vector3(0, 0.1, -15), 0.0],     # Boss arena entrance
