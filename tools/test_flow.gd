@@ -39,7 +39,7 @@ func _process(_delta: float) -> bool:
 			var player := main.get_node_or_null("ViewportContainer/GameViewport/World/Player")
 			print("restarted: hud=%s player=%s health=%d (expect true true 100)"
 					% [main.get_node("Hud").visible, player != null, gs.health])
-			gs.boss_defeated()
+			gs.win_game()
 			_wait_ms = Time.get_ticks_msec() + 1600
 			_step = 4
 		4:

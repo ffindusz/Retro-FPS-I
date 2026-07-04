@@ -1,13 +1,21 @@
 extends Control
 ## Entry point and game-flow controller. Hosts the low-res PS1 SubViewport
-## and routes: start screen -> gameplay (level + player instanced into the
-## viewport) -> end screen (win/lose) -> restart.
+## and routes: start screen -> level 1 -> (switch + teleporter) -> level 2
+## -> level 3 boss -> secret gold room -> win screen. Death restarts the
+## level the player died on; the player node persists across level
+## transitions so health and ammo carry over.
 
-const LEVEL_SCENE := preload("res://scenes/levels/level_01.tscn")
+const LEVEL_SCENES: Array[PackedScene] = [
+	preload("res://scenes/levels/level_01.tscn"),
+	preload("res://scenes/levels/level_02.tscn"),
+	preload("res://scenes/levels/level_03.tscn"),
+]
 const PLAYER_SCENE := preload("res://scenes/player/player.tscn")
 
 var _level: Node3D
 var _player: CharacterBody3D
+var _level_index := 0
+var _restart_index := 0
 var _game_active := false
 
 @onready var _world: Node3D = %World
@@ -19,26 +27,60 @@ var _game_active := false
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	GameState.player_died.connect(_on_player_died)
-	GameState.boss_died.connect(_on_boss_died)
+	GameState.level_completed.connect(_on_level_completed)
+	GameState.game_won.connect(_on_game_won)
 	_start_screen.start_requested.connect(start_game)
-	_end_screen.restart_requested.connect(start_game)
+	_end_screen.restart_requested.connect(_on_restart)
 	_show_only(_start_screen)
 
 
-func start_game() -> void:
+func start_game(level_index := 0) -> void:
 	_clear_game()
 	GameState.reset()
-	_level = LEVEL_SCENE.instantiate()
-	_world.add_child(_level)
+	_level_index = level_index
+	_restart_index = level_index
+	_load_level()
 	_player = PLAYER_SCENE.instantiate()
 	_world.add_child(_player)
-	var spawn: Node3D = _level.get_node_or_null("Spawns/PlayerSpawn")
-	if spawn:
-		_player.global_position = spawn.global_position
+	_place_player_at_spawn()
 	_game_active = true
 	_show_only(_hud)
 	_hud.bind_player(_player)
+	_hud.show_banner("LEVEL %d" % (_level_index + 1))
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _load_level() -> void:
+	_level = LEVEL_SCENES[_level_index].instantiate()
+	_world.add_child(_level)
+
+
+func _place_player_at_spawn() -> void:
+	var spawn: Node3D = _level.get_node_or_null("Spawns/PlayerSpawn")
+	if spawn and is_instance_valid(_player):
+		_player.global_position = spawn.global_position
+		_player.velocity = Vector3.ZERO
+		_player.rotation.y = spawn.global_rotation.y
+
+
+func _on_level_completed() -> void:
+	if _game_active:
+		# Deferred: the teleporter fires from a physics callback, and the
+		# transition frees/adds scene-tree nodes.
+		_advance_level.call_deferred()
+
+
+func _advance_level() -> void:
+	if not _game_active or _level_index + 1 >= LEVEL_SCENES.size():
+		return
+	_level_index += 1
+	_restart_index = _level_index
+	if is_instance_valid(_level):
+		_level.name = String(_level.name) + "_dying"
+		_level.queue_free()
+	_load_level()
+	_place_player_at_spawn()
+	_hud.show_banner("LEVEL %d" % (_level_index + 1))
 
 
 func _on_player_died() -> void:
@@ -47,11 +89,16 @@ func _on_player_died() -> void:
 		_end_game(false)
 
 
-func _on_boss_died() -> void:
+func _on_game_won() -> void:
 	if _game_active:
 		_game_active = false
-		# Short beat so the boss's death topple is visible before the screen.
-		get_tree().create_timer(1.2).timeout.connect(_end_game.bind(true))
+		_restart_index = 0
+		# Short beat to savor the treasure before the screen.
+		get_tree().create_timer(1.0).timeout.connect(_end_game.bind(true))
+
+
+func _on_restart() -> void:
+	start_game(_restart_index)
 
 
 func _end_game(win: bool) -> void:
@@ -65,7 +112,7 @@ func _clear_game() -> void:
 	for node: Node in [_level, _player]:
 		if is_instance_valid(node):
 			# Rename before the deferred free so a fresh instance created this
-			# frame can claim the "Player"/"Level01" name (tools and debug
+			# frame can claim the "Player"/"Level0X" name (tools and debug
 			# paths rely on it).
 			node.name = String(node.name) + "_dying"
 			node.queue_free()

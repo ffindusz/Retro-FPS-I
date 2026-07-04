@@ -31,11 +31,11 @@ func _process(_delta: float) -> bool:
 		return false
 	if not _started:
 		_started = true
-		current_scene.start_game()
+		current_scene.start_game(2)  # boss lives in level 3 now
 		return false
 	var world := current_scene.get_node("ViewportContainer/GameViewport/World")
 	var player: CharacterBody3D = world.get_node_or_null("Player")
-	var boss: CharacterBody3D = world.get_node_or_null("Level01/Enemies/Boss")
+	var boss: CharacterBody3D = world.get_node_or_null("Level03/Enemies/Boss")
 	var gs: Node = root.get_node("GameState")
 	if not _placed:
 		if player == null:
@@ -43,7 +43,7 @@ func _process(_delta: float) -> bool:
 		_placed = true
 		_start_ms = Time.get_ticks_msec()
 		gs.boss_died.connect(func() -> void: _win_signaled = true)
-		player.global_position = Vector3(0, 0.1, -16)
+		player.global_position = Vector3(0, 0.1, -4)
 		player.velocity = Vector3.ZERO
 		print("t=0.0s boss state=%d health=%.0f" % [boss.state, boss.health])
 		return false

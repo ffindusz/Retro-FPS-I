@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Material" path="res://assets/materials/mat_wall.tres" id="1_wall"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_grunt.tscn" id="5_grunt"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/boss.tscn" id="6_boss"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_spitter.tscn" id="7_spitter"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/switch.tscn" id="8_switch"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/teleporter.tscn" id="9_teleporter"]
 [ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
 [ext_resource type="Material" path="res://assets/materials/mat_metal.tres" id="3_metal"]
 [ext_resource type="Material" path="res://assets/materials/mat_crate.tres" id="4_crate"]
@@ -253,8 +254,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0.1, 1)
 [node name="Grunt4" parent="Enemies" instance=ExtResource("5_grunt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -16)
 
-[node name="Boss" parent="Enemies" instance=ExtResource("6_boss")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -27)
+[node name="GruntArena1" parent="Enemies" instance=ExtResource("5_grunt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.1, -26)
+
+[node name="GruntArena2" parent="Enemies" instance=ExtResource("5_grunt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.1, -21)
 
 [node name="Spitter1" parent="Enemies" instance=ExtResource("7_spitter")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3.35, 1.5)
@@ -279,5 +283,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0.1, 1)
 [node name="GruntSpawn4" type="Marker3D" parent="Spawns"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -16)
 
-[node name="BossSpawn" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -27)
+[node name="Switch" parent="." instance=ExtResource("8_switch")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 8.02, 4.3, 3)
+teleporter_path = NodePath("../Teleporter")
+
+[node name="Teleporter" parent="." instance=ExtResource("9_teleporter")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24)

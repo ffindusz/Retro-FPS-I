@@ -4,15 +4,29 @@ extends Control
 
 var _weapon_manager: Node3D
 var _last_health := GameState.MAX_HEALTH
+var _banner_tween: Tween
 
 @onready var _health: Label = %HealthLabel
 @onready var _weapon: Label = %WeaponLabel
 @onready var _ammo: Label = %AmmoLabel
 @onready var _flash: ColorRect = %DamageFlash
+@onready var _banner: Label = %BannerLabel
 
 
 func _ready() -> void:
 	GameState.health_changed.connect(_on_health_changed)
+	GameState.announcement.connect(show_banner)
+
+
+## Fading top-center message: level names, "TELEPORTER ONLINE", etc.
+func show_banner(text: String) -> void:
+	if _banner_tween and _banner_tween.is_valid():
+		_banner_tween.kill()
+	_banner.text = text
+	_banner.modulate.a = 1.0
+	_banner_tween = create_tween()
+	_banner_tween.tween_interval(1.8)
+	_banner_tween.tween_property(_banner, "modulate:a", 0.0, 0.8)
 
 
 func bind_player(player: Node) -> void:

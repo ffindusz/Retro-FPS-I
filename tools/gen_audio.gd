@@ -19,6 +19,10 @@ func _init() -> void:
 	_save("enemy_hit", _gen_enemy_hit())
 	_save("enemy_die", _gen_enemy_die())
 	_save("boss_roar", _gen_boss_roar())
+	# New generators go LAST so earlier outputs stay byte-identical (the
+	# shared RNG stream is consumed in _init order).
+	_save("switch", _gen_switch())
+	_save("teleport", _gen_teleport())
 	print("SFX written to res://assets/audio/")
 	quit()
 
@@ -129,6 +133,29 @@ func _gen_enemy_die() -> PackedFloat32Array:
 		var t := float(i) / RATE
 		var freq := 320.0 - 650.0 * t
 		out.append(signf(sin(TAU * freq * t)) * 0.45 * _env(t, dur, 1.4))
+	return out
+
+
+## Switch flip: two-tone rising confirm blip.
+func _gen_switch() -> PackedFloat32Array:
+	var dur := 0.22
+	var out := PackedFloat32Array()
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		var freq := 620.0 if t < 0.09 else 930.0
+		out.append(signf(sin(TAU * freq * t)) * 0.4 * _env(t, dur, 1.0))
+	return out
+
+
+## Teleport: rising sine sweep with shimmer.
+func _gen_teleport() -> PackedFloat32Array:
+	var dur := 0.5
+	var out := PackedFloat32Array()
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		var freq := 180.0 + 1400.0 * t
+		var s := sin(TAU * freq * t) * 0.55 + sin(TAU * freq * 1.5 * t) * 0.25
+		out.append(s * _env(t, dur, 0.7))
 	return out
 
 

@@ -15,7 +15,7 @@ func set_result(win: bool) -> void:
 	if win:
 		_result.text = "YOU WIN"
 		_result.label_settings.font_color = Color(0.95, 0.8, 0.35)
-		_sub.text = "THE BOSS IS SCRAP METAL"
+		_sub.text = "THE PILE OF GOLD IS YOURS"
 	else:
 		_result.text = "YOU DIED"
 		_result.label_settings.font_color = Color(0.85, 0.2, 0.15)

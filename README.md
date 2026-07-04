@@ -26,13 +26,16 @@ mapping, and Bayer-dithered color quantization for the authentic wobble.
 | 1 / 2 / 3, mouse wheel | Switch weapon (pistol / shotgun / rocket launcher) |
 | Esc | Toggle mouse capture |
 
-Fight through the grunts, ride the ramp to the walkway over the corridor, and
-kill the **boss** in the open-air arena at the far end. It enrages at half
-health. Rockets splash — including on you.
+Three levels: in each of the first two, find and **shoot the switch** to power
+the **teleporter** to the next level (health and ammo carry over). Level 3 is
+the **boss** — it enrages at half health. Killing it opens a secret room;
+claim the **pile of gold** inside to win. Dying restarts the level you died
+on. Rockets splash — including on you.
 
 ## Project layout
 
-- `scenes/` — main scene + level, player, weapons, enemies, UI screens
+- `scenes/` — main scene + levels, player, weapons, enemies, UI screens, and
+  `level_objects/` (switch, teleporter, secret door, gold pile)
 - `scripts/` — gameplay code (`autoload/game_state.gd` is the flow singleton)
 - `shaders/` — `ps1_vertex_snap.gdshader` (world materials) and
   `ps1_post.gdshader` (dither/quantize post pass)

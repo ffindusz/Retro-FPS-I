@@ -5,6 +5,9 @@ extends Node
 signal health_changed(current: int, max_health: int)
 signal player_died
 signal boss_died
+signal level_completed
+signal game_won
+signal announcement(text: String)
 
 const MAX_HEALTH := 100
 
@@ -18,6 +21,18 @@ func reset() -> void:
 
 func boss_defeated() -> void:
 	boss_died.emit()
+
+
+func complete_level() -> void:
+	level_completed.emit()
+
+
+func win_game() -> void:
+	game_won.emit()
+
+
+func announce(text: String) -> void:
+	announcement.emit(text)
 
 
 func damage_player(amount: int) -> void:
