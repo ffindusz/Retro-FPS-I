@@ -1,5 +1,9 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=12 format=3]
 
+[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_health.tscn" id="10_health"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_bullets.tscn" id="11_bullets"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_shells.tscn" id="12_shells"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_rockets.tscn" id="13_rockets"]
 [ext_resource type="Material" path="res://assets/materials/mat_metal.tres" id="1_metal"]
 [ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
 [ext_resource type="Material" path="res://assets/materials/mat_crate.tres" id="3_crate"]
@@ -175,6 +179,26 @@ teleporter_path = NodePath("../Teleporter")
 
 [node name="Teleporter" parent="." instance=ExtResource("7_teleporter")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="Pickups" type="Node3D" parent="."]
+
+[node name="HealthArrival" parent="Pickups" instance=ExtResource("10_health")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.05, 18.5)
+
+[node name="ShellsCorr1" parent="Pickups" instance=ExtResource("12_shells")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 7)
+
+[node name="BulletsHall" parent="Pickups" instance=ExtResource("11_bullets")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0.05, -1)
+
+[node name="ShellsHall" parent="Pickups" instance=ExtResource("12_shells")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0.05, -6)
+
+[node name="RocketsPit" parent="Pickups" instance=ExtResource("13_rockets")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, -2.9, -2)
+
+[node name="HealthRim" parent="Pickups" instance=ExtResource("10_health")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0.05, 3)
 
 [node name="Lights" type="Node3D" parent="."]
 

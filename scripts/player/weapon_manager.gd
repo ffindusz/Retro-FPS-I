@@ -44,6 +44,12 @@ func current_weapon() -> WeaponBase:
 	return _weapons[_current]
 
 
+func add_ammo_for(index: int, amount: int) -> bool:
+	if index < 0 or index >= _weapons.size():
+		return false
+	return _weapons[index].add_ammo(amount)
+
+
 func _select(index: int) -> void:
 	if index >= _weapons.size():
 		return

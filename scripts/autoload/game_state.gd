@@ -35,6 +35,15 @@ func announce(text: String) -> void:
 	announcement.emit(text)
 
 
+func heal(amount: int) -> bool:
+	# False when already full (or dead) so pickups can refuse collection.
+	if health >= MAX_HEALTH or health <= 0:
+		return false
+	health = mini(health + amount, MAX_HEALTH)
+	health_changed.emit(health, MAX_HEALTH)
+	return true
+
+
 func damage_player(amount: int) -> void:
 	if health <= 0:
 		return

@@ -23,6 +23,8 @@ func _init() -> void:
 	# shared RNG stream is consumed in _init order).
 	_save("switch", _gen_switch())
 	_save("teleport", _gen_teleport())
+	_save("pickup", _gen_pickup())
+	_save("heal", _gen_heal())
 	print("SFX written to res://assets/audio/")
 	quit()
 
@@ -156,6 +158,28 @@ func _gen_teleport() -> PackedFloat32Array:
 		var freq := 180.0 + 1400.0 * t
 		var s := sin(TAU * freq * t) * 0.55 + sin(TAU * freq * 1.5 * t) * 0.25
 		out.append(s * _env(t, dur, 0.7))
+	return out
+
+
+## Ammo pickup: quick two-tone "chik-chunk".
+func _gen_pickup() -> PackedFloat32Array:
+	var dur := 0.14
+	var out := PackedFloat32Array()
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		var freq := 520.0 if t < 0.06 else 780.0
+		out.append(signf(sin(TAU * freq * t)) * 0.35 * _env(t, dur, 1.0))
+	return out
+
+
+## Health pickup: soft rising sine.
+func _gen_heal() -> PackedFloat32Array:
+	var dur := 0.28
+	var out := PackedFloat32Array()
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		var freq := 300.0 + 900.0 * t
+		out.append(sin(TAU * freq * t) * 0.5 * _env(t, dur, 1.1))
 	return out
 
 

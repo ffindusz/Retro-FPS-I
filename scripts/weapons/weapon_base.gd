@@ -42,6 +42,15 @@ func _process(delta: float) -> void:
 	position = _rest_position + Vector3(0.0, 0.0, _kick)
 
 
+func add_ammo(pickup_amount: int) -> bool:
+	# False when already full so ammo pickups can refuse collection.
+	if ammo >= max_ammo:
+		return false
+	ammo = mini(ammo + pickup_amount, max_ammo)
+	ammo_changed.emit(ammo)
+	return true
+
+
 func try_fire(camera: Camera3D, shooter: PhysicsBody3D) -> bool:
 	if _cooldown > 0.0:
 		return false

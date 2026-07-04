@@ -32,6 +32,10 @@ the **boss** — it enrages at half health. Killing it opens a secret room;
 claim the **pile of gold** inside to win. Dying restarts the level you died
 on. Rockets splash — including on you.
 
+**Pickups** are scattered through every level: medkits (+25 HP), bullets
+(+24), shells (+8), and rockets (+4). They refuse collection while you're
+already full, so they stay put for when you need them.
+
 ## Project layout
 
 - `scenes/` — main scene + levels, player, weapons, enemies, UI screens, and
