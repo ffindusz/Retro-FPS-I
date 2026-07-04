@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/weapons/launcher.gd" id="1_script"]
-[ext_resource type="Material" path="res://assets/materials/mat_gunmetal.tres" id="2_metal"]
+[ext_resource type="Material" path="res://assets/materials/mat_gun_dark.tres" id="2_metal"]
 [ext_resource type="Material" path="res://assets/materials/mat_gun_accent.tres" id="3_accent"]
 [ext_resource type="PackedScene" path="res://scenes/weapons/projectile_rocket.tscn" id="4_rocket"]
 [ext_resource type="AudioStream" path="res://assets/audio/launcher.wav" id="5_shot"]
