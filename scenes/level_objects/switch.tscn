@@ -33,3 +33,9 @@ surface_material_override/0 = ExtResource("2_metal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
 mesh = SubResource("BoxMesh_face")
 surface_material_override/0 = SubResource("StandardMaterial3D_face")
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.4)
+visible = false
+light_color = Color(0.95, 0.15, 0.1, 1)
+omni_range = 3.0

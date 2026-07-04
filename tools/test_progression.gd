@@ -36,10 +36,22 @@ func _process(_delta: float) -> bool:
 			var wm: Node3D = cam.get_node("WeaponManager")
 			wm.current_weapon().try_fire(cam, player)
 			_ammo_before = wm.current_weapon().ammo
+			# Locked switch must refuse while enemies are alive.
 			var sw: Node = world.get_node("Level01/Switch")
 			var tp: Node = world.get_node("Level01/Teleporter")
 			sw.take_damage(5.0)
-			print("L1 switch shot: teleporter active=%s (expect true)" % tp._active)
+			print("L1 locked switch shot: teleporter active=%s (expect false), enemies=%d"
+					% [tp._active, get_nodes_in_group("enemies").size()])
+			for e in get_nodes_in_group("enemies"):
+				e.take_damage(99999.0)
+			_step = 10
+			_wait_until = Time.get_ticks_msec() + 700
+		10:
+			var sw: Node = world.get_node("Level01/Switch")
+			var tp: Node = world.get_node("Level01/Teleporter")
+			print("L1 all enemies dead: switch state=%d (expect 1 ARMED)" % sw._state)
+			sw.take_damage(5.0)
+			print("L1 armed switch shot: teleporter active=%s (expect true)" % tp._active)
 			player.global_position = tp.global_position + Vector3(0, 0.3, 0)
 			player.velocity = Vector3.ZERO
 			_step = 1
@@ -49,10 +61,15 @@ func _process(_delta: float) -> bool:
 			var wm: Node3D = player.get_node("Head/Camera3D/WeaponManager")
 			print("after pad: Level02 loaded=%s (expect true), pistol ammo=%d (expect %d)"
 					% [l2 != null, wm.current_weapon().ammo, _ammo_before])
+			for e in get_nodes_in_group("enemies"):
+				e.take_damage(99999.0)
+			_step = 11
+			_wait_until = Time.get_ticks_msec() + 700
+		11:
 			var sw: Node = world.get_node("Level02/Switch")
 			var tp: Node = world.get_node("Level02/Teleporter")
 			sw.take_damage(5.0)
-			print("L2 switch shot: teleporter active=%s (expect true)" % tp._active)
+			print("L2 cleared + switch shot: teleporter active=%s (expect true)" % tp._active)
 			player.global_position = tp.global_position + Vector3(0, 0.3, 0)
 			player.velocity = Vector3.ZERO
 			_step = 2

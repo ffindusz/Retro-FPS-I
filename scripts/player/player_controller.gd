@@ -16,12 +16,21 @@ extends CharacterBody3D
 @export var jump_velocity := 8.0
 @export var gravity := 20.0
 
+@export_group("Crouch")
+@export var crouch_height := 1.2
+@export var crouch_speed_factor := 0.55
+@export var crouch_head_height := 1.0
+
 const HURT_SOUND := preload("res://assets/audio/hurt.wav")
 
 var _shake := 0.0
+var _crouching := false
+var _stand_height := 1.8
+var _stand_head_height := 1.6
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
+@onready var _collision: CollisionShape3D = $CollisionShape3D
 
 
 func take_damage(amount: float, _from: Vector3 = Vector3.ZERO) -> void:
@@ -32,6 +41,11 @@ func take_damage(amount: float, _from: Vector3 = Vector3.ZERO) -> void:
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	# Unique capsule so runtime crouch resizing can't leak into the packed
+	# scene's shared resource (and thus into the next respawned player).
+	_collision.shape = _collision.shape.duplicate()
+	_stand_height = (_collision.shape as CapsuleShape3D).height
+	_stand_head_height = head.position.y
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -56,22 +70,52 @@ func _process(delta: float) -> void:
 	_shake = maxf(_shake - delta * 1.6, 0.0)
 	camera.h_offset = randf_range(-_shake, _shake) * 0.35
 	camera.v_offset = randf_range(-_shake, _shake) * 0.35
+	# Smooth camera drop/rise between crouch and stand.
+	var target_head := crouch_head_height if _crouching else _stand_head_height
+	head.position.y = lerpf(head.position.y, target_head, minf(delta * 12.0, 1.0))
 
 
 func _physics_process(delta: float) -> void:
+	_update_crouch()
+	var speed := walk_speed * (crouch_speed_factor if _crouching else 1.0)
 	var input_2d := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var wish_dir := (transform.basis * Vector3(input_2d.x, 0.0, input_2d.y)).normalized()
 
 	if is_on_floor():
 		_apply_friction(delta)
-		_accelerate(wish_dir, walk_speed, ground_accel, delta)
+		_accelerate(wish_dir, speed, ground_accel, delta)
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = jump_velocity
 	else:
-		_accelerate(wish_dir, walk_speed, air_accel, delta)
+		_accelerate(wish_dir, speed, air_accel, delta)
 		velocity.y -= gravity * delta
 
 	move_and_slide()
+
+
+func _update_crouch() -> void:
+	var want := Input.is_action_pressed("crouch")
+	if want == _crouching:
+		return
+	if want:
+		_set_crouch(true)
+	elif _has_headroom():
+		_set_crouch(false)
+
+
+func _set_crouch(crouch: bool) -> void:
+	_crouching = crouch
+	var height := crouch_height if crouch else _stand_height
+	(_collision.shape as CapsuleShape3D).height = height
+	# Keep the capsule's feet on the floor while it shrinks from the top.
+	_collision.position.y = height / 2.0
+
+
+func _has_headroom() -> bool:
+	var from := global_position + Vector3(0, crouch_height - 0.1, 0)
+	var to := global_position + Vector3(0, _stand_height + 0.05, 0)
+	var query := PhysicsRayQueryParameters3D.create(from, to, 1, [get_rid()])
+	return get_world_3d().direct_space_state.intersect_ray(query).is_empty()
 
 
 func _accelerate(wish_dir: Vector3, wish_speed: float, accel: float, delta: float) -> void:

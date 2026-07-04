@@ -150,6 +150,9 @@ func _enter(new_state: State) -> void:
 func _die() -> void:
 	state = State.DEAD
 	died.emit(self)
+	# Leave the group immediately so kill-counting logic (switch arming)
+	# doesn't wait out the corpse-despawn delay.
+	remove_from_group("enemies")
 	Fx.spawn_sound(self, global_position + Vector3(0, 1, 0), DIE_SOUND)
 	# Corpse: no longer hittable or blocking, topples over, then despawns.
 	collision_layer = 0
