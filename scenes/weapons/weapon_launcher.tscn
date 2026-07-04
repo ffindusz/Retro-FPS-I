@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/weapons/launcher.gd" id="1_script"]
 [ext_resource type="Material" path="res://assets/materials/mat_gunmetal.tres" id="2_metal"]
 [ext_resource type="Material" path="res://assets/materials/mat_gun_accent.tres" id="3_accent"]
 [ext_resource type="PackedScene" path="res://scenes/weapons/projectile_rocket.tscn" id="4_rocket"]
+[ext_resource type="AudioStream" path="res://assets/audio/launcher.wav" id="5_shot"]
+[ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="6_click"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_tube"]
 top_radius = 0.075
@@ -58,3 +60,11 @@ omni_range = 4.0
 [node name="Quad" type="MeshInstance3D" parent="MuzzleFlash"]
 mesh = SubResource("QuadMesh_flash")
 surface_material_override/0 = SubResource("StandardMaterial3D_flash")
+
+[node name="ShotSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_shot")
+volume_db = -4.0
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_click")
+volume_db = -8.0

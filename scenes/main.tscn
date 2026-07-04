@@ -1,9 +1,15 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/start_screen.tscn" id="3_start"]
 [ext_resource type="PackedScene" path="res://scenes/ui/end_screen.tscn" id="4_end"]
+[ext_resource type="Shader" path="res://shaders/ps1_post.gdshader" id="5_post"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_post"]
+shader = ExtResource("5_post")
+shader_parameter/color_levels = 32.0
+shader_parameter/dither_strength = 1.0
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
 sky_top_color = Color(0.24, 0.32, 0.48, 1)
@@ -30,6 +36,7 @@ script = ExtResource("1_main")
 
 [node name="ViewportContainer" type="SubViewportContainer" parent="."]
 texture_filter = 1
+material = SubResource("ShaderMaterial_post")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

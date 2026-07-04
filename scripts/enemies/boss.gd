@@ -5,6 +5,7 @@ extends EnemyBase
 ## and a visor flare — the phase change.
 
 const FIREBALL := preload("res://scenes/weapons/projectile_fireball.tscn")
+const ROAR_SOUND := preload("res://assets/audio/boss_roar.wav")
 
 @export var volley_size := 3
 @export var enraged_volley_size := 5
@@ -80,6 +81,7 @@ func _enrage() -> void:
 	attack_interval *= 0.55
 	var mat: StandardMaterial3D = _visor.get_surface_override_material(0)
 	mat.albedo_color = Color(1.0, 0.9, 0.2)
+	Fx.spawn_sound(self, global_position + Vector3(0, 2.5, 0), ROAR_SOUND, 4.0)
 	Fx.spawn(self, global_position + Vector3(0, 2.8, 0), Color(1.0, 0.2, 0.6), 2.0, 0.35)
 	visual.scale = Vector3(1.25, 0.85, 1.25)
 	var tween := create_tween()

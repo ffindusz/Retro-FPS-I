@@ -16,12 +16,18 @@ extends CharacterBody3D
 @export var jump_velocity := 8.0
 @export var gravity := 20.0
 
+const HURT_SOUND := preload("res://assets/audio/hurt.wav")
+
+var _shake := 0.0
+
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
 
 
 func take_damage(amount: float, _from: Vector3 = Vector3.ZERO) -> void:
 	GameState.damage_player(int(amount))
+	_shake = minf(_shake + 0.25, 0.5)
+	Fx.spawn_sound(self, global_position, HURT_SOUND)
 
 
 func _ready() -> void:
@@ -43,6 +49,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _process(delta: float) -> void:
+	# Damage screen shake: random camera offset with quick decay.
+	_shake = maxf(_shake - delta * 1.6, 0.0)
+	camera.h_offset = randf_range(-_shake, _shake) * 0.35
+	camera.v_offset = randf_range(-_shake, _shake) * 0.35
 
 
 func _physics_process(delta: float) -> void:

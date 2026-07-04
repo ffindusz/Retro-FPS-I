@@ -24,6 +24,8 @@ var _kick := 0.0
 var _rest_position: Vector3
 
 @onready var _muzzle_flash: Node3D = get_node_or_null("MuzzleFlash")
+@onready var _shot_sound: AudioStreamPlayer = get_node_or_null("ShotSound")
+@onready var _click_sound: AudioStreamPlayer = get_node_or_null("ClickSound")
 
 
 func _ready() -> void:
@@ -41,11 +43,19 @@ func _process(delta: float) -> void:
 
 
 func try_fire(camera: Camera3D, shooter: PhysicsBody3D) -> bool:
-	if _cooldown > 0.0 or ammo <= 0:
+	if _cooldown > 0.0:
+		return false
+	if ammo <= 0:
+		# Dry fire: click at most a few times a second while held.
+		_cooldown = 0.3
+		if _click_sound:
+			_click_sound.play()
 		return false
 	ammo -= 1
 	_cooldown = fire_interval
 	_kick = 0.08
+	if _shot_sound:
+		_shot_sound.play()
 	_show_muzzle_flash()
 	_fire(camera, shooter)
 	fired.emit()

@@ -22,6 +22,9 @@ enum State { IDLE, NOTICE, CHASE, ATTACK, DEAD }
 ## Bit values: 1 = world, 2 = player. Other enemies never block LOS.
 const LOS_MASK := 0b11
 
+const HIT_SOUND := preload("res://assets/audio/enemy_hit.wav")
+const DIE_SOUND := preload("res://assets/audio/enemy_die.wav")
+
 var health: float
 var state: State = State.IDLE
 
@@ -147,6 +150,7 @@ func _enter(new_state: State) -> void:
 func _die() -> void:
 	state = State.DEAD
 	died.emit(self)
+	Fx.spawn_sound(self, global_position + Vector3(0, 1, 0), DIE_SOUND)
 	# Corpse: no longer hittable or blocking, topples over, then despawns.
 	collision_layer = 0
 	collision_mask = 1
@@ -187,6 +191,7 @@ func _can_see_player() -> bool:
 
 func _flash_hit() -> void:
 	Fx.spawn(self, global_position + Vector3(0, 1.1, 0), Color(0.9, 0.2, 0.15), 0.3)
+	Fx.spawn_sound(self, global_position + Vector3(0, 1.1, 0), HIT_SOUND, -4.0)
 	if visual == null:
 		return
 	visual.scale = Vector3(1.12, 0.9, 1.12)

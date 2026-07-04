@@ -13,6 +13,8 @@ extends Area3D
 ## Bit values: 2 = player, 4 = enemies.
 const SPLASH_MASK := 0b110
 
+const EXPLOSION_SOUND := preload("res://assets/audio/explosion.wav")
+
 var _dir := Vector3.FORWARD
 var _shooter: PhysicsBody3D
 var _exploded := false
@@ -49,6 +51,7 @@ func _explode(direct_hit: Node) -> void:
 		return
 	_exploded = true
 	Fx.spawn(self, global_position, Color(1.0, 0.55, 0.15), 1.4, 0.22)
+	Fx.spawn_sound(self, global_position, EXPLOSION_SOUND)
 	var q := PhysicsShapeQueryParameters3D.new()
 	var sphere := SphereShape3D.new()
 	sphere.radius = splash_radius
