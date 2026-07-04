@@ -13,6 +13,35 @@ const MAX_HEALTH := 100
 
 var health: int = MAX_HEALTH
 
+# Per-level tallies for the intermission/end-screen stats line.
+var kills := 0
+var total_enemies := 0
+var secrets_found := 0
+var total_secrets := 0
+var _level_start_ms := 0
+
+
+func begin_level_stats(enemy_count: int, secret_count: int) -> void:
+	kills = 0
+	secrets_found = 0
+	total_enemies = enemy_count
+	total_secrets = secret_count
+	_level_start_ms = Time.get_ticks_msec()
+
+
+func enemy_killed() -> void:
+	kills += 1
+
+
+func secret_found() -> void:
+	secrets_found += 1
+
+
+func stats_line() -> String:
+	var secs := (Time.get_ticks_msec() - _level_start_ms) / 1000
+	return "KILLS %d/%d   ·   SECRETS %d/%d   ·   TIME %d:%02d" \
+			% [kills, total_enemies, secrets_found, total_secrets, secs / 60, secs % 60]
+
 
 func reset() -> void:
 	health = MAX_HEALTH

@@ -150,6 +150,7 @@ func _enter(new_state: State) -> void:
 func _die() -> void:
 	state = State.DEAD
 	died.emit(self)
+	GameState.enemy_killed()
 	# Leave the group immediately so kill-counting logic (switch arming)
 	# doesn't wait out the corpse-despawn delay.
 	remove_from_group("enemies")

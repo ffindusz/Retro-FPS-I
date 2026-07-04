@@ -36,6 +36,11 @@ on. Rockets splash — including on you.
 (+24), shells (+8), and rockets (+4). They refuse collection while you're
 already full, so they stay put for when you need them.
 
+**Red barrels** explode when shot (and chain-react) — lure enemies close or
+clear clusters, but mind the splash. Each level also hides **secret areas**
+with bonus stashes; an intermission screen after every level tallies your
+kills, secrets, and time.
+
 ## Project layout
 
 - `scenes/` — main scene + levels, player, weapons, enemies, UI screens, and

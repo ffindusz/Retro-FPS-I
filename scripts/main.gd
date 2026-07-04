@@ -23,6 +23,7 @@ var _game_active := false
 @onready var _end_screen: Control = %EndScreen
 @onready var _hud: Control = %Hud
 @onready var _pause_screen: Control = %PauseScreen
+@onready var _intermission: Control = %Intermission
 
 
 func _ready() -> void:
@@ -35,6 +36,7 @@ func _ready() -> void:
 	_pause_screen.resume_requested.connect(_set_paused.bind(false))
 	_pause_screen.restart_requested.connect(_on_pause_restart)
 	_pause_screen.quit_requested.connect(_on_pause_quit)
+	_intermission.continue_requested.connect(_on_intermission_continue)
 	_show_only(_start_screen)
 
 
@@ -86,6 +88,18 @@ func start_game(level_index := 0) -> void:
 func _load_level() -> void:
 	_level = LEVEL_SCENES[_level_index].instantiate()
 	_world.add_child(_level)
+	GameState.begin_level_stats(
+			_count_in_level("enemies"), _count_in_level("secret_areas"))
+
+
+func _count_in_level(group: String) -> int:
+	# Filter to the fresh level: the outgoing level's nodes are still in
+	# their groups until the deferred free runs.
+	var count := 0
+	for node in get_tree().get_nodes_in_group(group):
+		if _level.is_ancestor_of(node):
+			count += 1
+	return count
 
 
 func _place_player_at_spawn() -> void:
@@ -98,9 +112,24 @@ func _place_player_at_spawn() -> void:
 
 func _on_level_completed() -> void:
 	if _game_active:
-		# Deferred: the teleporter fires from a physics callback, and the
-		# transition frees/adds scene-tree nodes.
-		_advance_level.call_deferred()
+		# Deferred: the teleporter fires from a physics callback.
+		_show_intermission.call_deferred()
+
+
+func _show_intermission() -> void:
+	if not _game_active:
+		return
+	get_tree().paused = true
+	_intermission.show_stats(_level_index + 1, GameState.stats_line())
+	_intermission.visible = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+func _on_intermission_continue() -> void:
+	get_tree().paused = false
+	_intermission.visible = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	_advance_level()
 
 
 func _advance_level() -> void:
@@ -137,6 +166,7 @@ func _on_restart() -> void:
 func _end_game(win: bool) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_end_screen.set_result(win)
+	_end_screen.set_stats(GameState.stats_line())
 	_show_only(_end_screen)
 	_clear_game()
 

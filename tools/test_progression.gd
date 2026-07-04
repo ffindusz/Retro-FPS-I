@@ -16,6 +16,19 @@ func _initialize() -> void:
 	change_scene_to_file("res://scenes/main.tscn")
 
 
+func _key(code: Key) -> void:
+	var press := InputEventKey.new()
+	press.keycode = code
+	press.physical_keycode = code
+	press.pressed = true
+	Input.parse_input_event(press)
+	var release := InputEventKey.new()
+	release.keycode = code
+	release.physical_keycode = code
+	release.pressed = false
+	Input.parse_input_event(release)
+
+
 func _process(_delta: float) -> bool:
 	if current_scene == null:
 		return false
@@ -54,8 +67,15 @@ func _process(_delta: float) -> bool:
 			print("L1 armed switch shot: teleporter active=%s (expect true)" % tp._active)
 			player.global_position = tp.global_position + Vector3(0, 0.3, 0)
 			player.velocity = Vector3.ZERO
+			_step = 20
+			_wait_until = Time.get_ticks_msec() + 800
+		20:
+			var inter := current_scene.get_node("Intermission")
+			print("intermission: visible=%s paused=%s stats=[%s]"
+					% [inter.visible, paused, inter.get_node("Layout/StatsLabel").text])
+			_key(KEY_SPACE)
 			_step = 1
-			_wait_until = Time.get_ticks_msec() + 1000
+			_wait_until = Time.get_ticks_msec() + 800
 		1:
 			var l2 := world.get_node_or_null("Level02")
 			var wm: Node3D = player.get_node("Head/Camera3D/WeaponManager")
@@ -72,8 +92,12 @@ func _process(_delta: float) -> bool:
 			print("L2 cleared + switch shot: teleporter active=%s (expect true)" % tp._active)
 			player.global_position = tp.global_position + Vector3(0, 0.3, 0)
 			player.velocity = Vector3.ZERO
+			_step = 21
+			_wait_until = Time.get_ticks_msec() + 800
+		21:
+			_key(KEY_SPACE)
 			_step = 2
-			_wait_until = Time.get_ticks_msec() + 1000
+			_wait_until = Time.get_ticks_msec() + 800
 		2:
 			var l3 := world.get_node_or_null("Level03")
 			var boss: Node = world.get_node_or_null("Level03/Enemies/Boss")

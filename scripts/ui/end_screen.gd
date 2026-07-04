@@ -8,6 +8,11 @@ var _accept_after_ms := 0
 
 @onready var _result: Label = $Layout/ResultLabel
 @onready var _sub: Label = $Layout/SubLabel
+@onready var _stats: Label = $Layout/StatsLabel
+
+
+func set_stats(text: String) -> void:
+	_stats.text = text
 
 
 func set_result(win: bool) -> void:

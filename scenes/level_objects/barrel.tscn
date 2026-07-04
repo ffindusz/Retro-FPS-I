@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/level_objects/barrel.gd" id="1_script"]
+[ext_resource type="Material" path="res://assets/materials/mat_barrel.tres" id="2_red"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_body"]
+height = 1.05
+radius = 0.42
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_body"]
+top_radius = 0.4
+bottom_radius = 0.4
+height = 1.0
+radial_segments = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_band"]
+shading_mode = 0
+albedo_color = Color(0.95, 0.78, 0.2, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_band"]
+top_radius = 0.41
+bottom_radius = 0.41
+height = 0.14
+radial_segments = 10
+
+[node name="Barrel" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.525, 0)
+shape = SubResource("CylinderShape3D_body")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("CylinderMesh_body")
+surface_material_override/0 = ExtResource("2_red")
+
+[node name="Band" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72, 0)
+mesh = SubResource("CylinderMesh_band")
+surface_material_override/0 = SubResource("StandardMaterial3D_band")

@@ -1,5 +1,7 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=15 format=3]
 
+[ext_resource type="PackedScene" path="res://scenes/level_objects/barrel.tscn" id="14_barrel"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/secret_area.tscn" id="15_secret"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_health.tscn" id="10_health"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_bullets.tscn" id="11_bullets"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_shells.tscn" id="12_shells"]
@@ -316,3 +318,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0.05, 1)
 
 [node name="HealthArena" parent="Pickups" instance=ExtResource("10_health")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.05, -28)
+
+[node name="HealthSecretC" parent="Pickups" instance=ExtResource("10_health")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0.05, -4.5)
+
+[node name="ShellsSecretB" parent="Pickups" instance=ExtResource("12_shells")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 2.45, -2.55)
+
+[node name="Barrels" type="Node3D" parent="."]
+
+[node name="Barrel1" parent="Barrels" instance=ExtResource("14_barrel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -4)
+
+[node name="Barrel2" parent="Barrels" instance=ExtResource("14_barrel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0, -5)
+
+[node name="Barrel3" parent="Barrels" instance=ExtResource("14_barrel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 0, -2)
+
+[node name="Barrel4" parent="Barrels" instance=ExtResource("14_barrel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -22)
+
+[node name="Barrel5" parent="Barrels" instance=ExtResource("14_barrel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -27)
+
+[node name="Secrets" type="Node3D" parent="."]
+
+[node name="SecretUnderLanding" parent="Secrets" instance=ExtResource("15_secret")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4, 1.2, -3)
+
+[node name="SecretCrateTop" parent="Secrets" instance=ExtResource("15_secret")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 3, -2.55)

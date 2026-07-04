@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="AudioStream" path="res://assets/audio/music_ambient.wav" id="6_music"]
 [ext_resource type="PackedScene" path="res://scenes/ui/pause_screen.tscn" id="7_pause"]
+[ext_resource type="PackedScene" path="res://scenes/ui/intermission.tscn" id="8_intermission"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/start_screen.tscn" id="3_start"]
 [ext_resource type="PackedScene" path="res://scenes/ui/end_screen.tscn" id="4_end"]
@@ -82,5 +83,9 @@ unique_name_in_owner = true
 visible = false
 
 [node name="PauseScreen" parent="." instance=ExtResource("7_pause")]
+unique_name_in_owner = true
+visible = false
+
+[node name="Intermission" parent="." instance=ExtResource("8_intermission")]
 unique_name_in_owner = true
 visible = false
