@@ -9,5 +9,5 @@ shader_parameter/albedo_color = Color(0.55, 0.32, 0.38, 1)
 shader_parameter/albedo_texture = ExtResource("2_tex")
 shader_parameter/uv_scale = Vector2(1, 1)
 shader_parameter/snap_resolution = 240.0
-shader_parameter/affine_strength = 1.0
+shader_parameter/affine_strength = 0.0
 shader_parameter/world_uv = 0.0

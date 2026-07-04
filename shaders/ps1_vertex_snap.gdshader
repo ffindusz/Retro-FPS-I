@@ -5,7 +5,7 @@ render_mode cull_back, specular_disabled;
 // Apply to world geometry, enemies, and props for the retro look.
 
 uniform vec4 albedo_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
-uniform sampler2D albedo_texture : source_color, hint_default_white, filter_nearest, repeat_enable;
+uniform sampler2D albedo_texture : source_color, hint_default_white, filter_nearest_mipmap, repeat_enable;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 // Vertical resolution of the virtual snapping grid. Lower = more wobble.
 uniform float snap_resolution = 240.0;

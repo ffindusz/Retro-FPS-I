@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://iq8uiuknupas"
-path="res://.godot/imported/metal_plate.png-def5040a2d20e88f7ad24dd1a917700b.ctex"
+uid="uid://1s6clornvexi"
+path="res://.godot/imported/crate.png-73a773ea84dc1a8d154844676e48fba3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/metal_plate.png"
-dest_files=["res://.godot/imported/metal_plate.png-def5040a2d20e88f7ad24dd1a917700b.ctex"]
+source_file="res://assets/textures/crate.png"
+dest_files=["res://.godot/imported/crate.png-73a773ea84dc1a8d154844676e48fba3.ctex"]
 
 [params]
 
