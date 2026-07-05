@@ -31,11 +31,11 @@ func _process(_delta: float) -> bool:
 		return false
 	if not _started:
 		_started = true
-		current_scene.start_game(3)  # boss lives in level 4 now
+		current_scene.start_game(4)  # boss lives in level 5 now
 		return false
 	var world := current_scene.get_node("ViewportContainer/GameViewport/World")
 	var player: CharacterBody3D = world.get_node_or_null("Player")
-	var boss: CharacterBody3D = world.get_node_or_null("Level04/Enemies/Boss")
+	var boss: CharacterBody3D = world.get_node_or_null("Level05/Enemies/Boss")
 	var gs: Node = root.get_node("GameState")
 	if not _placed:
 		if player == null:

@@ -14,6 +14,7 @@ func _init() -> void:
 	_gen_crate()
 	_gen_rock()
 	_gen_lava()
+	_gen_stone()
 	print("Textures written to res://assets/textures/")
 	quit()
 
@@ -163,6 +164,37 @@ func _gen_metal() -> void:
 				b = lerpf(b, 38.0, k)
 			_put(img, x, y, r, g, b)
 	img.save_png("res://assets/textures/metal_plate.png")
+
+
+## Citadel stone: pale weathered sandstone blocks with bevel + light grime.
+func _gen_stone() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 8008
+	var grime := _make_noise(rng, 7)
+	var img := Image.create(SIZE, SIZE, false, Image.FORMAT_RGB8)
+	for y in SIZE:
+		var row := y / 32
+		var offset := (row % 2) * 32
+		for x in SIZE:
+			var bx := (x + offset) % SIZE
+			var g := _noise_at(grime, 7, float(x) / SIZE, float(y) / SIZE)
+			var shade := 0.82 + 0.22 * g
+			if y % 32 < 2 or bx % 64 < 2:
+				var m := 96.0 * shade
+				_put(img, x, y, m, m * 0.95, m * 0.88)
+				continue
+			var block_id := (bx / 64) + row * 13
+			var tint := float((block_id * 2654435761) % 21) - 10.0
+			var lx := bx % 64
+			var ly := y % 32
+			var bevel := 1.0
+			if ly <= 3 or lx <= 4:
+				bevel = 1.12
+			elif ly >= 29 or lx >= 60:
+				bevel = 0.82
+			var base := (182.0 + tint + rng.randf_range(-6, 6)) * shade * bevel
+			_put(img, x, y, base, base * 0.94, base * 0.84)
+	img.save_png("res://assets/textures/stone.png")
 
 
 ## Cave rock: dark craggy multi-octave noise with crack veins.
