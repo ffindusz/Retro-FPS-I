@@ -27,6 +27,7 @@ func _init() -> void:
 	_save("heal", _gen_heal())
 	_save("step", _gen_step())
 	_save("land", _gen_land())
+	_save("plasma", _gen_plasma())  # pure tones: no RNG consumed
 	# Music last: it is by far the slowest and consumes the RNG stream after
 	# everything else, keeping all earlier outputs byte-identical.
 	_save("music_ambient", _gen_music(), 11025)
@@ -109,6 +110,18 @@ func _gen_click() -> PackedFloat32Array:
 	for i in int(dur * RATE):
 		var t := float(i) / RATE
 		out.append(signf(sin(TAU * 1400.0 * t)) * 0.3 * _env(t, dur, 1.0))
+	return out
+
+
+## Plasma rifle: quick descending zap.
+func _gen_plasma() -> PackedFloat32Array:
+	var dur := 0.08
+	var out := PackedFloat32Array()
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		var freq := 1250.0 - 8000.0 * t
+		var s := sin(TAU * freq * t) * 0.55 + signf(sin(TAU * freq * 0.5 * t)) * 0.2
+		out.append(s * _env(t, dur, 1.3))
 	return out
 
 

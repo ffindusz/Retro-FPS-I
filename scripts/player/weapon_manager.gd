@@ -27,6 +27,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		_select(1)
 	elif event.is_action_pressed("weapon_3"):
 		_select(2)
+	elif event.is_action_pressed("weapon_4"):
+		_select(3)
 	elif event.is_action_pressed("weapon_next"):
 		_select((_current + 1) % _weapons.size())
 	elif event.is_action_pressed("weapon_prev"):

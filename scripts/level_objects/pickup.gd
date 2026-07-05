@@ -3,7 +3,7 @@ extends Area3D
 ## Spinning floor pickup for health or ammo. Classic rule: refuses
 ## collection while the stat is already full, so it stays for later.
 
-enum Type { HEALTH, BULLETS, SHELLS, ROCKETS }
+enum Type { HEALTH, BULLETS, SHELLS, ROCKETS, CELLS }
 
 const HEAL_SOUND := preload("res://assets/audio/heal.wav")
 const PICKUP_SOUND := preload("res://assets/audio/pickup.wav")

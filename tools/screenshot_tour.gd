@@ -75,7 +75,7 @@ func _process(_delta: float) -> bool:
 	elif phase == FRAMES_PER_STOP - 3:
 		# Cycle weapons and fire so viewmodels/muzzle flash show in shots.
 		var wm: Node3D = player.get_node("Head/Camera3D/WeaponManager")
-		wm._select(stop % 3)
+		wm._select(stop % 4)
 		wm.current_weapon().try_fire(player.get_node("Head/Camera3D"), player)
 	elif phase == FRAMES_PER_STOP - 1:
 		var img: Image = root.get_texture().get_image()

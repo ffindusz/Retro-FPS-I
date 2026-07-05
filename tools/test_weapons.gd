@@ -27,7 +27,7 @@ func _process(_delta: float) -> bool:
 	var wm: Node3D = cam.get_node("WeaponManager")
 	if not _fired:
 		_fired = true
-		for i in 3:
+		for i in 4:
 			wm._select(i)
 			var w: Node3D = wm.current_weapon()
 			var ok: bool = w.try_fire(cam, player)

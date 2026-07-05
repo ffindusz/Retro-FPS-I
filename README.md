@@ -23,7 +23,7 @@ mapping, and Bayer-dithered color quantization for the authentic wobble.
 | Mouse | Look |
 | Space | Jump |
 | Left mouse | Fire |
-| 1 / 2 / 3, mouse wheel | Switch weapon (pistol / shotgun / rocket launcher) |
+| 1 / 2 / 3 / 4, mouse wheel | Switch weapon (pistol / shotgun / rockets / plasma rifle) |
 | Esc | Toggle mouse capture |
 
 Four levels: in each of the first three, clear all enemies, then find and
@@ -36,8 +36,9 @@ gold** inside to win. Dying restarts the level you died on. Rockets splash —
 including on you.
 
 **Pickups** are scattered through every level: medkits (+25 HP), bullets
-(+24), shells (+8), and rockets (+4). They refuse collection while you're
-already full, so they stay put for when you need them.
+(+24), shells (+8), rockets (+4), and plasma cells (+20). They refuse
+collection while you're already full, so they stay put for when you need
+them.
 
 **Red barrels** explode when shot (and chain-react) — lure enemies close or
 clear clusters, but mind the splash. Each level also hides **secret areas**

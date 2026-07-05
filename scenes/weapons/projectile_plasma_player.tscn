@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/projectile_rocket.gd" id="1_script"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hit"]
+radius = 0.14
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bolt"]
+shading_mode = 0
+albedo_color = Color(0.35, 0.9, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_body"]
+radius = 0.12
+height = 0.24
+radial_segments = 8
+rings = 4
+
+[node name="PlasmaBolt" type="Area3D"]
+collision_layer = 0
+collision_mask = 5
+script = ExtResource("1_script")
+speed = 28.0
+direct_damage = 9.0
+splash_damage = 4.0
+splash_radius = 0.8
+lifetime = 3.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_hit")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_body")
+surface_material_override/0 = SubResource("StandardMaterial3D_bolt")
+
+[node name="Glow" type="OmniLight3D" parent="."]
+light_color = Color(0.4, 0.9, 1, 1)
+omni_range = 3.5
