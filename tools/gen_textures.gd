@@ -15,6 +15,7 @@ func _init() -> void:
 	_gen_rock()
 	_gen_lava()
 	_gen_stone()
+	_gen_ice()
 	print("Textures written to res://assets/textures/")
 	quit()
 
@@ -164,6 +165,34 @@ func _gen_metal() -> void:
 				b = lerpf(b, 38.0, k)
 			_put(img, x, y, r, g, b)
 	img.save_png("res://assets/textures/metal_plate.png")
+
+
+## Ice: pale blue sheet with darker crack veins and sparkle specks.
+func _gen_ice() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 9009
+	var depth := _make_noise(rng, 5)
+	var vein := _make_noise(rng, 11)
+	var img := Image.create(SIZE, SIZE, false, Image.FORMAT_RGB8)
+	for y in SIZE:
+		for x in SIZE:
+			var u := float(x) / SIZE
+			var v := float(y) / SIZE
+			var d := _noise_at(depth, 5, u, v)
+			var base := 168.0 + 42.0 * d + rng.randf_range(-4, 4)
+			var r := base * 0.8
+			var g := base * 0.92
+			var b := base * 1.04
+			if absf(_noise_at(vein, 11, u, v) - 0.5) < 0.03:
+				r = 82.0
+				g = 118.0
+				b = 168.0
+			elif rng.randf() < 0.004:
+				r = 240.0
+				g = 248.0
+				b = 255.0
+			_put(img, x, y, r, g, b)
+	img.save_png("res://assets/textures/ice.png")
 
 
 ## Citadel stone: pale weathered sandstone blocks with bevel + light grime.

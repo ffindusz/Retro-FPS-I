@@ -29,6 +29,7 @@ extends CharacterBody3D
 const HURT_SOUND := preload("res://assets/audio/hurt.wav")
 
 var _shake := 0.0
+var _ice_zones := 0
 var _crouching := false
 var _stand_height := 1.8
 var _stand_head_height := 1.6
@@ -50,6 +51,16 @@ func take_damage(amount: float, _from: Vector3 = Vector3.ZERO) -> void:
 	GameState.damage_player(int(amount))
 	_shake = minf(_shake + 0.25, 0.5)
 	Fx.spawn_sound(self, global_position, HURT_SOUND)
+
+
+## Ice zones (Area3D) call these; while inside one, ground friction and
+## acceleration drop hard, so momentum carries the player.
+func enter_ice() -> void:
+	_ice_zones += 1
+
+
+func exit_ice() -> void:
+	_ice_zones = maxi(_ice_zones - 1, 0)
 
 
 func _ready() -> void:
@@ -95,9 +106,10 @@ func _physics_process(delta: float) -> void:
 	var input_2d := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var wish_dir := (transform.basis * Vector3(input_2d.x, 0.0, input_2d.y)).normalized()
 
+	var on_ice := _ice_zones > 0
 	if is_on_floor():
-		_apply_friction(delta)
-		_accelerate(wish_dir, speed, ground_accel, delta)
+		_apply_friction(delta, friction * (0.1 if on_ice else 1.0))
+		_accelerate(wish_dir, speed, ground_accel * (0.3 if on_ice else 1.0), delta)
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = jump_velocity
 			_step_accum = 0.0
@@ -173,14 +185,14 @@ func _accelerate(wish_dir: Vector3, wish_speed: float, accel: float, delta: floa
 	velocity += wish_dir * minf(accel * wish_speed * delta, add_speed)
 
 
-func _apply_friction(delta: float) -> void:
+func _apply_friction(delta: float, friction_amount: float) -> void:
 	var speed := Vector2(velocity.x, velocity.z).length()
 	if speed < 0.01:
 		velocity.x = 0.0
 		velocity.z = 0.0
 		return
 	# Exponential-ish decay: drop a fraction of current speed each tick.
-	var drop := speed * friction * delta
+	var drop := speed * friction_amount * delta
 	var scale := maxf(speed - drop, 0.0) / speed
 	velocity.x *= scale
 	velocity.z *= scale

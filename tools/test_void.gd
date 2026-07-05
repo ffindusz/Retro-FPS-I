@@ -17,7 +17,7 @@ func _process(_delta: float) -> bool:
 		return false
 	if not _started:
 		_started = true
-		current_scene.start_game(3)
+		current_scene.start_game(4)  # citadel is level 5 now
 		return false
 	if Time.get_ticks_msec() < _wait_until:
 		return false

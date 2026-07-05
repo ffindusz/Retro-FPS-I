@@ -31,12 +31,18 @@ const LEVEL_WAYPOINTS := {
 		[Vector3(0, 0.3, -12), 180.0],   # Looking back across the bridge
 	],
 	3: [
+		[Vector3(0, 0.1, 16), 0.0],      # Frozen cave entry
+		[Vector3(0, 0.3, 0), 0.0],       # Frozen hall: ice lake + icicles
+		[Vector3(-1, 0.3, -6), -65.0],   # Facing the freezing pool
+		[Vector3(-9, 0.3, -6), 90.0],    # Wing toward the switch
+	],
+	4: [
 		[Vector3(0, 0.1, 20), 0.0],      # Spawn platform, obelisks + bridge ahead
 		[Vector3(0, 0.3, 5), 0.0],       # Plaza with crenellations, tower right
 		[Vector3(0, 0.3, -7), 0.0],      # Long bridge to the switch tower
 		[Vector3(-10, 0.3, 0), 90.0],    # Bridge 3 toward the teleporter platform
 	],
-	4: [
+	5: [
 		[Vector3(0, 0.1, 13), 0.0],      # Entry room
 		[Vector3(0, 0.6, -2), 0.0],      # Arena, facing the boss
 		[Vector3(0, 0.1, -18), 180.0],   # Facing the secret door in the south wall
