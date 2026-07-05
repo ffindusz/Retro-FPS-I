@@ -5,7 +5,7 @@ extends StaticBody3D
 ## chain-react. A short random fuse makes chains ripple instead of firing
 ## on the same frame. Sits on the enemy layer so hitscan/rockets hit it.
 
-const EXPLOSION_SOUND := preload("res://assets/audio/explosion.wav")
+const EXPLOSION_SOUND := preload("res://assets/audio/barrel_boom.wav")
 
 ## Bit values: 2 = player, 4 = enemies + barrels.
 const SPLASH_MASK := 0b110
@@ -29,7 +29,7 @@ func take_damage(amount: float, _from: Vector3 = Vector3.ZERO) -> void:
 
 func _explode() -> void:
 	Fx.spawn(self, global_position + Vector3(0, 0.6, 0), Color(1.0, 0.55, 0.15), 1.6, 0.25)
-	Fx.spawn_sound(self, global_position, EXPLOSION_SOUND)
+	Fx.spawn_sound(self, global_position, EXPLOSION_SOUND, 5.0)
 	var query := PhysicsShapeQueryParameters3D.new()
 	var sphere := SphereShape3D.new()
 	sphere.radius = splash_radius

@@ -28,6 +28,7 @@ func _init() -> void:
 	_save("step", _gen_step())
 	_save("land", _gen_land())
 	_save("plasma", _gen_plasma())  # pure tones: no RNG consumed
+	_save("barrel_boom", _gen_barrel_boom())
 	# Music last: it is by far the slowest and consumes the RNG stream after
 	# everything else, keeping all earlier outputs byte-identical.
 	_save("music_ambient", _gen_music(), 11025)
@@ -110,6 +111,25 @@ func _gen_click() -> PackedFloat32Array:
 	for i in int(dur * RATE):
 		var t := float(i) / RATE
 		out.append(signf(sin(TAU * 1400.0 * t)) * 0.3 * _env(t, dur, 1.0))
+	return out
+
+
+## Barrel explosion: sharp metallic clang transient into a deep boom,
+## distinct from the rounder rocket explosion.
+func _gen_barrel_boom() -> PackedFloat32Array:
+	var dur := 0.55
+	var out := PackedFloat32Array()
+	var low := 0.0
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		# bright metallic crack for the first ~30 ms
+		var crack := _rng.randf_range(-1.0, 1.0) * maxf(1.0 - t / 0.03, 0.0)
+		# decaying metallic ring
+		var ring := sin(TAU * 640.0 * t) * 0.35 * exp(-t * 14.0)
+		# deep rumble body
+		low = lerpf(low, _rng.randf_range(-1.0, 1.0), 0.09)
+		var boom := (low * 2.0 + sin(TAU * (65.0 - 30.0 * t) * t) * 0.6) * _env(t, dur, 1.7)
+		out.append(clampf(crack * 0.9 + ring + boom, -1.0, 1.0))
 	return out
 
 
