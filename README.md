@@ -24,7 +24,8 @@ mapping, and Bayer-dithered color quantization for the authentic wobble.
 | Space | Jump |
 | Left mouse | Fire |
 | 1 / 2 / 3 / 4, mouse wheel | Switch weapon (pistol / shotgun / rockets / plasma rifle) |
-| Esc | Toggle mouse capture |
+| Esc | Pause (resume / restart level / quit to title) |
+| 1–6 on the title screen, F1–F6 anytime | Level-select cheat |
 
 Six levels: in each of the first five, clear all enemies, then find and
 **shoot the switch** to power the **teleporter** to the next level (health
