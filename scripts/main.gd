@@ -49,6 +49,19 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and _game_active and not get_tree().paused:
 		get_viewport().set_input_as_handled()
 		_set_paused(true)
+	elif event is InputEventKey and event.pressed and not event.echo \
+			and event.physical_keycode >= KEY_F1 and event.physical_keycode <= KEY_F6:
+		# Level-warp cheat for testing: F1-F6 jump to that level from
+		# anywhere (gameplay, pause, screens) with a fresh loadout.
+		get_viewport().set_input_as_handled()
+		_warp(event.physical_keycode - KEY_F1)
+
+
+func _warp(level_index: int) -> void:
+	get_tree().paused = false
+	_pause_screen.visible = false
+	_intermission.visible = false
+	start_game(level_index)
 
 
 func _set_paused(paused: bool) -> void:
@@ -73,6 +86,7 @@ func _on_pause_quit() -> void:
 
 
 func start_game(level_index := 0) -> void:
+	level_index = clampi(level_index, 0, LEVEL_SCENES.size() - 1)
 	_clear_game()
 	GameState.reset()
 	_level_index = level_index
