@@ -1,42 +1,13 @@
-extends SceneTree
+extends "res://tools/test_base.gd"
 ## Debug helper: pause screen test.
 ## Esc pauses (overlay visible, tree paused, health preserved), Esc resumes,
 ## R restarts the current level (health reset), Q quits to the title.
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/test_pause.gd
 
-var _started := false
-var _step := 0
-var _wait_until := 0
 
-
-func _initialize() -> void:
-	change_scene_to_file("res://scenes/main.tscn")
-
-
-func _key(code: Key) -> void:
-	var press := InputEventKey.new()
-	press.keycode = code
-	press.physical_keycode = code
-	press.pressed = true
-	Input.parse_input_event(press)
-	var release := InputEventKey.new()
-	release.keycode = code
-	release.physical_keycode = code
-	release.pressed = false
-	Input.parse_input_event(release)
-
-
-func _process(_delta: float) -> bool:
-	if current_scene == null:
-		return false
-	if not _started:
-		_started = true
-		current_scene.start_game()
-		return false
-	if Time.get_ticks_msec() < _wait_until:
-		return false
+func _tick(_delta: float) -> bool:
 	var pause_screen := current_scene.get_node("PauseScreen")
-	var gs: Node = root.get_node("GameState")
+	var gs: Node = root.get_node(GAME_STATE_PATH)
 	match _step:
 		0:
 			gs.damage_player(30)
@@ -69,8 +40,3 @@ func _process(_delta: float) -> bool:
 			print("pause test done")
 			return true
 	return false
-
-
-func _next(wait_ms: int) -> void:
-	_step += 1
-	_wait_until = Time.get_ticks_msec() + wait_ms

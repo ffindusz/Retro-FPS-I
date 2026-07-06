@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tools/test_base.gd"
 ## Debug helper: headless grunt AI test. Teleports the player in front of a
 ## grunt, watches the FSM advance (0 IDLE, 1 NOTICE, 2 CHASE, 3 ATTACK,
 ## 4 DEAD), confirms the player takes melee damage, then kills the grunt.
@@ -8,31 +8,10 @@ extends SceneTree
 var _placed := false
 var _start_ms := 0
 var _killed := false
-var _reported := {}
 
 
-func _initialize() -> void:
-	change_scene_to_file("res://scenes/main.tscn")
-
-
-func _report_once(key: String, msg: String) -> void:
-	if _reported.has(key):
-		return
-	_reported[key] = true
-	print(msg)
-
-
-var _started := false
-
-
-func _process(_delta: float) -> bool:
-	if current_scene == null:
-		return false
-	if not _started:
-		_started = true
-		current_scene.start_game()
-		return false
-	var world := current_scene.get_node("ViewportContainer/GameViewport/World")
+func _tick(_delta: float) -> bool:
+	var world := current_scene.get_node(WORLD_PATH)
 	var player: CharacterBody3D = world.get_node("Player")
 	var grunt: CharacterBody3D = world.get_node_or_null("Level01/Enemies/Grunt3")
 	if not _placed:
@@ -51,7 +30,7 @@ func _process(_delta: float) -> bool:
 	if t > 5.0 and not _killed:
 		_killed = true
 		print("t=5.0s grunt state=%d (expect 3 ATTACK) player health=%d (expect <100)"
-				% [grunt.state, root.get_node("GameState").health])
+				% [grunt.state, root.get_node(GAME_STATE_PATH).health])
 		grunt.take_damage(100.0)
 		print("after 100 dmg: state=%d (expect 4 DEAD)" % grunt.state)
 	if t > 7.5:

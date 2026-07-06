@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tools/test_base.gd"
 ## Debug helper: headless boss fight test. Teleports the player into the
 ## arena, verifies the boss notices/attacks with fireballs (player health
 ## drops from range), triggers the 50% phase change, kills the boss, and
@@ -10,33 +10,17 @@ var _start_ms := 0
 var _phase2_done := false
 var _killed := false
 var _win_signaled := false
-var _reported := {}
 
 
-func _initialize() -> void:
-	change_scene_to_file("res://scenes/main.tscn")
+func _boot_level_index() -> int:
+	return 5  # boss lives in level 6 now
 
 
-func _report_once(key: String, msg: String) -> void:
-	if not _reported.has(key):
-		_reported[key] = true
-		print(msg)
-
-
-var _started := false
-
-
-func _process(_delta: float) -> bool:
-	if current_scene == null:
-		return false
-	if not _started:
-		_started = true
-		current_scene.start_game(5)  # boss lives in level 6 now
-		return false
-	var world := current_scene.get_node("ViewportContainer/GameViewport/World")
+func _tick(_delta: float) -> bool:
+	var world := current_scene.get_node(WORLD_PATH)
 	var player: CharacterBody3D = world.get_node_or_null("Player")
 	var boss: CharacterBody3D = world.get_node_or_null("Level06/Enemies/Boss")
-	var gs: Node = root.get_node("GameState")
+	var gs: Node = root.get_node(GAME_STATE_PATH)
 	if not _placed:
 		if player == null:
 			return false

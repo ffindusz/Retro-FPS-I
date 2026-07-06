@@ -1,29 +1,17 @@
-extends SceneTree
+extends "res://tools/test_base.gd"
 ## Debug helper: sky citadel void test. Verifies totals, then walks the
 ## player off a platform edge — the kill zone should end the run.
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/test_void.gd
 
-var _started := false
-var _step := 0
-var _wait_until := 0
+
+func _boot_level_index() -> int:
+	return 4  # citadel is level 5 now
 
 
-func _initialize() -> void:
-	change_scene_to_file("res://scenes/main.tscn")
-
-
-func _process(_delta: float) -> bool:
-	if current_scene == null:
-		return false
-	if not _started:
-		_started = true
-		current_scene.start_game(4)  # citadel is level 5 now
-		return false
-	if Time.get_ticks_msec() < _wait_until:
-		return false
-	var world := current_scene.get_node("ViewportContainer/GameViewport/World")
+func _tick(_delta: float) -> bool:
+	var world := current_scene.get_node(WORLD_PATH)
 	var player: CharacterBody3D = world.get_node_or_null("Player")
-	var gs: Node = root.get_node("GameState")
+	var gs: Node = root.get_node(GAME_STATE_PATH)
 	match _step:
 		0:
 			print("citadel totals: enemies=%d secrets=%d (expect 6 2)"
@@ -31,8 +19,7 @@ func _process(_delta: float) -> bool:
 			# Step off the spawn platform into the void.
 			player.global_position = Vector3(9, 0.1, 20)
 			player.velocity = Vector3.ZERO
-			_step = 1
-			_wait_until = Time.get_ticks_msec() + 2500
+			_next(2500)
 		1:
 			var end := current_scene.get_node("EndScreen")
 			print("after void fall: end visible=%s text=%s (expect true YOU DIED)"

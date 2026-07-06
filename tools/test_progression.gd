@@ -1,46 +1,18 @@
-extends SceneTree
+extends "res://tools/test_base.gd"
 ## Debug helper: full campaign progression test.
 ## L1: shoot switch -> teleporter activates -> step on pad -> L2 loads with
 ## ammo persisted. L2: same -> L3. L3: kill boss -> secret door slides open
 ## -> touch the gold -> win screen.
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/test_progression.gd
 
-var _started := false
-var _step := 0
-var _wait_until := 0
 var _ammo_before := -1
 var _door_y0 := 0.0
 
 
-func _initialize() -> void:
-	change_scene_to_file("res://scenes/main.tscn")
-
-
-func _key(code: Key) -> void:
-	var press := InputEventKey.new()
-	press.keycode = code
-	press.physical_keycode = code
-	press.pressed = true
-	Input.parse_input_event(press)
-	var release := InputEventKey.new()
-	release.keycode = code
-	release.physical_keycode = code
-	release.pressed = false
-	Input.parse_input_event(release)
-
-
-func _process(_delta: float) -> bool:
-	if current_scene == null:
-		return false
-	if not _started:
-		_started = true
-		current_scene.start_game()
-		return false
-	if Time.get_ticks_msec() < _wait_until:
-		return false
-	var world := current_scene.get_node("ViewportContainer/GameViewport/World")
+func _tick(_delta: float) -> bool:
+	var world := current_scene.get_node(WORLD_PATH)
 	var player: CharacterBody3D = world.get_node_or_null("Player")
-	var gs: Node = root.get_node("GameState")
+	var gs: Node = root.get_node(GAME_STATE_PATH)
 	match _step:
 		0:
 			# Effectively invincible so ambient enemy hits can't derail the test.
