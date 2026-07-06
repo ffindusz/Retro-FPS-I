@@ -2,7 +2,7 @@ extends Control
 ## In-game HUD: health, current weapon + ammo, crosshair, damage flash.
 ## Weapon info is polled each frame — cheap, and immune to weapon switches.
 
-var _weapon_manager: Node3D
+var _weapon_manager: WeaponManager
 var _last_health := GameState.MAX_HEALTH
 var _banner_tween: Tween
 
@@ -29,8 +29,8 @@ func show_banner(text: String) -> void:
 	_banner_tween.tween_property(_banner, "modulate:a", 0.0, 0.8)
 
 
-func bind_player(player: Node) -> void:
-	_weapon_manager = player.get_node("Head/Camera3D/WeaponManager")
+func bind_player(player: PlayerController) -> void:
+	_weapon_manager = player.weapon_manager
 	_last_health = GameState.health
 	_health.text = "HP %d" % GameState.health
 

@@ -16,7 +16,7 @@ const LEVEL_SCENES: Array[PackedScene] = [
 const PLAYER_SCENE := preload("res://scenes/player/player.tscn")
 
 var _level: Node3D
-var _player: CharacterBody3D
+var _player: PlayerController
 var _level_index := 0
 var _restart_index := 0
 var _game_active := false
@@ -58,27 +58,31 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _warp(level_index: int) -> void:
-	get_tree().paused = false
-	_pause_screen.visible = false
+	_set_overlay(_pause_screen, false)
 	_intermission.visible = false
 	start_game(level_index)
 
 
+## Pause menu and intermission are full-screen overlays that stack on top of
+## active gameplay: showing one pauses the tree and frees the mouse; hiding
+## one (to resume gameplay) unpauses and recaptures it.
+func _set_overlay(overlay: Control, shown: bool) -> void:
+	get_tree().paused = shown
+	overlay.visible = shown
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if shown else Input.MOUSE_MODE_CAPTURED
+
+
 func _set_paused(paused: bool) -> void:
-	get_tree().paused = paused
-	_pause_screen.visible = paused
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if paused else Input.MOUSE_MODE_CAPTURED
+	_set_overlay(_pause_screen, paused)
 
 
 func _on_pause_restart() -> void:
-	get_tree().paused = false
-	_pause_screen.visible = false
+	_set_overlay(_pause_screen, false)
 	start_game(_level_index)
 
 
 func _on_pause_quit() -> void:
-	get_tree().paused = false
-	_pause_screen.visible = false
+	_set_overlay(_pause_screen, false)
 	_game_active = false
 	_clear_game()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -92,7 +96,7 @@ func start_game(level_index := 0) -> void:
 	_level_index = level_index
 	_restart_index = level_index
 	_load_level()
-	_player = PLAYER_SCENE.instantiate()
+	_player = PLAYER_SCENE.instantiate() as PlayerController
 	_world.add_child(_player)
 	_place_player_at_spawn()
 	_game_active = true
@@ -136,16 +140,12 @@ func _on_level_completed() -> void:
 func _show_intermission() -> void:
 	if not _game_active:
 		return
-	get_tree().paused = true
 	_intermission.show_stats(_level_index + 1, GameState.stats_line())
-	_intermission.visible = true
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	_set_overlay(_intermission, true)
 
 
 func _on_intermission_continue() -> void:
-	get_tree().paused = false
-	_intermission.visible = false
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	_set_overlay(_intermission, false)
 	_advance_level()
 
 

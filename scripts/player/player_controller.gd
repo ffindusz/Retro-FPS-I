@@ -42,6 +42,7 @@ var step_count := 0  # exposed for tests
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
+@onready var weapon_manager: WeaponManager = $Head/Camera3D/WeaponManager
 @onready var _collision: CollisionShape3D = $CollisionShape3D
 @onready var _step_sound: AudioStreamPlayer = $StepSound
 @onready var _land_sound: AudioStreamPlayer = $LandSound

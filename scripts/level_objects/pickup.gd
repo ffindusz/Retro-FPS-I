@@ -8,6 +8,11 @@ enum Type { HEALTH, BULLETS, SHELLS, ROCKETS, CELLS }
 const HEAL_SOUND := preload("res://assets/audio/heal.wav")
 const PICKUP_SOUND := preload("res://assets/audio/pickup.wav")
 
+const SPIN_SPEED := 2.2  ## Radians/sec.
+const FLOAT_SPEED := 0.003  ## Sine input scale applied to msec.
+const FLOAT_MIN_HEIGHT := 0.05
+const FLOAT_AMPLITUDE := 0.05
+
 @export var type := Type.HEALTH
 @export var amount := 25
 
@@ -22,8 +27,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	_visual.rotate_y(delta * 2.2)
-	_visual.position.y = 0.05 + (sin(Time.get_ticks_msec() * 0.003) + 1.0) * 0.05
+	_visual.rotate_y(delta * SPIN_SPEED)
+	_visual.position.y = FLOAT_MIN_HEIGHT \
+			+ (sin(Time.get_ticks_msec() * FLOAT_SPEED) + 1.0) * FLOAT_AMPLITUDE
 
 
 func _physics_process(_delta: float) -> void:
@@ -43,9 +49,9 @@ func _try_collect(body: Node3D) -> void:
 	if type == Type.HEALTH:
 		applied = GameState.heal(amount)
 	else:
-		var wm: WeaponManager = body.get_node_or_null("Head/Camera3D/WeaponManager")
-		if wm:
-			applied = wm.add_ammo_for_type(type, amount)
+		var pc := body as PlayerController
+		if pc:
+			applied = pc.weapon_manager.add_ammo_for_type(type, amount)
 	if not applied:
 		return
 	_taken = true
