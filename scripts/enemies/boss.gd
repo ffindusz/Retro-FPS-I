@@ -12,8 +12,6 @@ const ROAR_SOUND := preload("res://assets/audio/boss_roar.wav")
 @export var volley_spread_degrees := 22.0
 
 var _enraged := false
-var _strafe_dir := 1.0
-var _strafe_timer := 0.0
 
 @onready var _visor: MeshInstance3D = $Visual/Visor
 
@@ -41,10 +39,7 @@ func take_damage(amount: float, from: Vector3 = Vector3.ZERO) -> void:
 func _tick_attack(delta: float) -> void:
 	_face_player(delta)
 	_attack_timer -= delta
-	_strafe_timer -= delta
-	if _strafe_timer <= 0.0:
-		_strafe_timer = randf_range(1.2, 2.4)
-		_strafe_dir = -_strafe_dir
+	_update_strafe(delta, 1.2, 2.4)
 	if _distance_to_player() > attack_range * 1.15 or not _can_see_player():
 		_enter(State.CHASE)
 		return

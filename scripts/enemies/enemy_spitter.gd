@@ -8,17 +8,11 @@ const PLASMA := preload("res://scenes/weapons/projectile_plasma.tscn")
 ## Below this distance the spitter retreats while still firing.
 @export var preferred_range := 6.0
 
-var _strafe_dir := 1.0
-var _strafe_timer := 0.0
-
 
 func _tick_attack(delta: float) -> void:
 	_face_player(delta)
 	_attack_timer -= delta
-	_strafe_timer -= delta
-	if _strafe_timer <= 0.0:
-		_strafe_timer = randf_range(1.0, 2.0)
-		_strafe_dir = -_strafe_dir
+	_update_strafe(delta, 1.0, 2.0)
 	if _distance_to_player() > attack_range * 1.2 or not _can_see_player():
 		_enter(State.CHASE)
 		return

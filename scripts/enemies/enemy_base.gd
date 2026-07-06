@@ -33,6 +33,11 @@ var _state_time := 0.0
 var _attack_timer := 0.0
 var _check_timer := 0.0
 
+## Circle-strafe direction/timer shared by attack patterns that keep moving
+## instead of standing still (see boss.gd, enemy_spitter.gd).
+var _strafe_dir := 1.0
+var _strafe_timer := 0.0
+
 @onready var visual: Node3D = $Visual
 
 
@@ -171,6 +176,16 @@ func _face_player(delta: float) -> void:
 	var to := _player.global_position - global_position
 	var target_yaw := atan2(-to.x, -to.z)
 	rotation.y = lerp_angle(rotation.y, target_yaw, minf(turn_speed * delta, 1.0))
+
+
+## Counts down _strafe_timer and flips _strafe_dir on expiry, picking a new
+## random interval in [min_interval, max_interval]. Subclasses that circle
+## the player while attacking call this each tick with their own interval.
+func _update_strafe(delta: float, min_interval: float, max_interval: float) -> void:
+	_strafe_timer -= delta
+	if _strafe_timer <= 0.0:
+		_strafe_timer = randf_range(min_interval, max_interval)
+		_strafe_dir = -_strafe_dir
 
 
 func _distance_to_player() -> float:
