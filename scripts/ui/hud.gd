@@ -38,8 +38,9 @@ func bind_player(player: Node) -> void:
 func _process(delta: float) -> void:
 	if _weapon_manager and is_instance_valid(_weapon_manager):
 		var weapon: WeaponBase = _weapon_manager.current_weapon()
-		_weapon.text = weapon.weapon_label
-		_ammo.text = str(weapon.ammo)
+		if weapon:
+			_weapon.text = weapon.weapon_label
+			_ammo.text = str(weapon.ammo)
 	_flash.modulate.a = maxf(_flash.modulate.a - delta * 1.8, 0.0)
 
 

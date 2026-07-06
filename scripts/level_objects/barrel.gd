@@ -28,6 +28,8 @@ func take_damage(amount: float, _from: Vector3 = Vector3.ZERO) -> void:
 
 
 func _explode() -> void:
+	if not is_instance_valid(self):
+		return
 	Fx.spawn(self, global_position + Vector3(0, 0.6, 0), Color(1.0, 0.55, 0.15), 1.6, 0.25)
 	Fx.spawn_sound(self, global_position, EXPLOSION_SOUND, 5.0)
 	var query := PhysicsShapeQueryParameters3D.new()

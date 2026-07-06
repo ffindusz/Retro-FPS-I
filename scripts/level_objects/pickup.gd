@@ -43,10 +43,9 @@ func _try_collect(body: Node3D) -> void:
 	if type == Type.HEALTH:
 		applied = GameState.heal(amount)
 	else:
-		var wm: Node3D = body.get_node_or_null("Head/Camera3D/WeaponManager")
-		# Enum order matches weapon child order: BULLETS/SHELLS/ROCKETS -> 0/1/2.
+		var wm: WeaponManager = body.get_node_or_null("Head/Camera3D/WeaponManager")
 		if wm:
-			applied = wm.add_ammo_for(type - 1, amount)
+			applied = wm.add_ammo_for_type(type, amount)
 	if not applied:
 		return
 	_taken = true

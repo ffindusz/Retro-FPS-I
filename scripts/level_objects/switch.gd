@@ -71,6 +71,6 @@ func _flip() -> void:
 	Fx.spawn(self, global_position - global_basis.z * 0.3, Color(0.3, 1.0, 0.4), 0.5, 0.2)
 	activated.emit()
 	if not teleporter_path.is_empty():
-		var teleporter := get_node_or_null(teleporter_path)
+		var teleporter := get_node_or_null(teleporter_path) as Teleporter
 		if teleporter:
 			teleporter.activate()

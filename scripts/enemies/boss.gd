@@ -22,8 +22,11 @@ func _ready() -> void:
 	super()
 	# Unique visor material so the enrage tint can't leak into other
 	# instances (or future restarts) through the shared resource cache.
-	_visor.set_surface_override_material(0,
-			_visor.get_surface_override_material(0).duplicate())
+	var visor_mat := _visor.get_surface_override_material(0)
+	if visor_mat == null:
+		push_error("Boss visor has no surface_material_override/0 set in the scene.")
+		return
+	_visor.set_surface_override_material(0, visor_mat.duplicate())
 
 
 func take_damage(amount: float, from: Vector3 = Vector3.ZERO) -> void:
@@ -79,8 +82,9 @@ func _enrage() -> void:
 	_enraged = true
 	move_speed *= 1.5
 	attack_interval *= 0.55
-	var mat: StandardMaterial3D = _visor.get_surface_override_material(0)
-	mat.albedo_color = Color(1.0, 0.9, 0.2)
+	var mat := _visor.get_surface_override_material(0) as StandardMaterial3D
+	if mat:
+		mat.albedo_color = Color(1.0, 0.9, 0.2)
 	Fx.spawn_sound(self, global_position + Vector3(0, 2.5, 0), ROAR_SOUND, 4.0)
 	Fx.spawn(self, global_position + Vector3(0, 2.8, 0), Color(1.0, 0.2, 0.6), 2.0, 0.35)
 	visual.scale = Vector3(1.25, 0.85, 1.25)

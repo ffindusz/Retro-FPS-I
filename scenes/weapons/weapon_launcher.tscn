@@ -29,6 +29,7 @@ size = Vector2(0.4, 0.4)
 [node name="Launcher" type="Node3D"]
 script = ExtResource("1_script")
 weapon_label = "ROCKETS"
+ammo_type = 3
 fire_interval = 1.1
 max_ammo = 10
 projectile_scene = ExtResource("4_rocket")

@@ -26,6 +26,7 @@ size = Vector2(0.32, 0.32)
 [node name="Shotgun" type="Node3D"]
 script = ExtResource("1_script")
 weapon_label = "SHOTGUN"
+ammo_type = 2
 damage = 9.0
 fire_interval = 0.85
 max_ammo = 24

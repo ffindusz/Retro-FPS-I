@@ -7,6 +7,7 @@ signal fired
 signal ammo_changed(ammo: int)
 
 @export var weapon_label := "WEAPON"
+@export var ammo_type: Pickup.Type = Pickup.Type.BULLETS
 @export var damage := 10.0
 @export var fire_interval := 0.2
 @export var max_ammo := 50
