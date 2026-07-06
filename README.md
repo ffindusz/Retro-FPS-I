@@ -15,6 +15,17 @@ mapping, and Bayer-dithered color quantization for the authentic wobble.
    godot --path .
    ```
 
+On a fresh clone, `.godot/` (the import cache) doesn't exist yet — it's
+gitignored, machine-local derived data. Launching the game binary directly
+without it fails with cascading errors (missing audio, `WeaponBase` type not
+found, HUD script errors) because nothing has been imported. Build the cache
+once first, either by opening the project in the editor (which imports
+automatically), or headlessly:
+
+```
+godot --headless --editor --import
+```
+
 ## Playing
 
 | Input | Action |
@@ -67,5 +78,5 @@ godot --headless --path . -s tools/test_flow.gd
 ```
 
 All textures and SFX are generated deterministically by `tools/gen_textures.gd`
-and `tools/gen_audio.gd`; the outputs are committed, so a clean clone runs
-without any extra steps.
+and `tools/gen_audio.gd`; the outputs are committed, so a clean clone needs no
+regeneration — just the one-time import cache build described above.
