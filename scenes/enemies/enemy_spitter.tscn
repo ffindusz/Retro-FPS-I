@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3]
 
-[ext_resource type="Script" path="res://scripts/enemies/spitter.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_spitter.gd" id="1_script"]
 [ext_resource type="Material" path="res://assets/materials/mat_spitter.tres" id="2_skin"]
 [ext_resource type="Material" path="res://assets/materials/mat_gunmetal.tres" id="3_metal"]
 

@@ -1,8 +1,8 @@
-class_name RocketProjectile
+class_name Projectile
 extends Area3D
-## Straight-flying rocket. Detonates on contact (world or enemy) with
-## direct damage plus radial splash. Splash can hurt the shooter too —
-## classic rocket-jump-adjacent danger.
+## Straight-flying projectile (rocket, fireball, plasma bolt). Detonates on
+## contact (world or enemy) with direct damage plus radial splash. Splash
+## can hurt the shooter too — classic rocket-jump-adjacent danger.
 
 @export var speed := 18.0
 @export var direct_damage := 60.0
