@@ -52,19 +52,8 @@ func _explode(direct_hit: Node) -> void:
 	_exploded = true
 	Fx.spawn(self, global_position, Color(1.0, 0.55, 0.15), 1.4, 0.22)
 	Fx.spawn_sound(self, global_position, EXPLOSION_SOUND)
-	var q := PhysicsShapeQueryParameters3D.new()
-	var sphere := SphereShape3D.new()
-	sphere.radius = splash_radius
-	q.shape = sphere
-	q.transform = Transform3D(Basis(), global_position)
-	q.collision_mask = SPLASH_MASK
-	var results := get_world_3d().direct_space_state.intersect_shape(q, 16)
-	for r in results:
-		var body: Object = r.collider
-		if body == direct_hit or not body is Node3D:
-			continue
-		if body.has_method("take_damage"):
-			var dist: float = global_position.distance_to((body as Node3D).global_position)
-			var falloff := clampf(1.0 - dist / splash_radius, 0.15, 1.0)
-			body.take_damage(splash_damage * falloff, global_position)
+	# Splash can hurt the shooter too (see class doc), so only the body that
+	# already took direct damage is excluded here — not the shooter.
+	Fx.apply_splash_damage(self, global_position, splash_radius, splash_damage,
+			SPLASH_MASK, 0.15, direct_hit)
 	queue_free()

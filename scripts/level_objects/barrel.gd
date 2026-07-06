@@ -32,17 +32,6 @@ func _explode() -> void:
 		return
 	Fx.spawn(self, global_position + Vector3(0, 0.6, 0), Color(1.0, 0.55, 0.15), 1.6, 0.25)
 	Fx.spawn_sound(self, global_position, EXPLOSION_SOUND, 5.0)
-	var query := PhysicsShapeQueryParameters3D.new()
-	var sphere := SphereShape3D.new()
-	sphere.radius = splash_radius
-	query.shape = sphere
-	query.transform = Transform3D(Basis(), global_position)
-	query.collision_mask = SPLASH_MASK
-	query.exclude = [get_rid()]
-	for hit in get_world_3d().direct_space_state.intersect_shape(query, 16):
-		var body: Object = hit.collider
-		if body is Node3D and body.has_method("take_damage"):
-			var dist: float = global_position.distance_to((body as Node3D).global_position)
-			var falloff := clampf(1.0 - dist / splash_radius, 0.2, 1.0)
-			body.take_damage(splash_damage * falloff, global_position)
+	Fx.apply_splash_damage(self, global_position, splash_radius, splash_damage,
+			SPLASH_MASK, 0.2, null, [get_rid()])
 	queue_free()

@@ -44,3 +44,28 @@ static func spawn_sound(context: Node3D, pos: Vector3, stream: AudioStream,
 	player.global_position = pos
 	player.play()
 	player.finished.connect(player.queue_free)
+
+
+## Radial explosion damage with linear falloff (full `damage` at the center,
+## `falloff_min` fraction of it at the edge of `radius`). `skip_body` is
+## excluded from the hit loop (e.g. a body that already took direct damage);
+## `exclude_rids` is excluded at the physics-query level (e.g. the explosive
+## itself, so it doesn't damage its own collider).
+static func apply_splash_damage(context: Node3D, origin: Vector3, radius: float,
+		damage: float, mask: int, falloff_min: float, skip_body: Object = null,
+		exclude_rids: Array[RID] = []) -> void:
+	var query := PhysicsShapeQueryParameters3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = radius
+	query.shape = sphere
+	query.transform = Transform3D(Basis(), origin)
+	query.collision_mask = mask
+	query.exclude = exclude_rids
+	for hit in context.get_world_3d().direct_space_state.intersect_shape(query, 16):
+		var body: Object = hit.collider
+		if body == skip_body or not body is Node3D:
+			continue
+		if body.has_method("take_damage"):
+			var dist: float = origin.distance_to((body as Node3D).global_position)
+			var falloff := clampf(1.0 - dist / radius, falloff_min, 1.0)
+			body.take_damage(damage * falloff, origin)
