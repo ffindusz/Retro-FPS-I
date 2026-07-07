@@ -18,6 +18,12 @@ config/features=PackedStringArray("4.7", "Mobile")
 
 GameState="*res://scripts/autoload/game_state.gd"
 
+[layer_names]
+
+3d_physics/layer_1="world"
+3d_physics/layer_2="player"
+3d_physics/layer_3="enemies (and barrels)"
+
 [display]
 
 window/size/viewport_width=1280
@@ -92,6 +98,10 @@ weapon_prev={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":4,"canceled":false,"double_click":false,"script":null)
 ]
 }
+
+[physics]
+
+3d/default_gravity=20.0
 
 [rendering]
 

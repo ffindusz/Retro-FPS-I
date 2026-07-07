@@ -17,7 +17,9 @@ enum State { IDLE, NOTICE, CHASE, ATTACK, DEAD }
 @export var attack_interval := 1.1
 @export var notice_delay := 0.45
 @export var turn_speed := 8.0
-@export var gravity := 20.0
+## Defaults to the project's physics/3d/default_gravity (see project.godot)
+## rather than a separately hardcoded value.
+@export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 ## Bit values: 1 = world, 2 = player. Other enemies never block LOS.
 const LOS_MASK := 0b11

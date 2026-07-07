@@ -14,7 +14,9 @@ extends CharacterBody3D
 @export var air_accel := 1.5
 @export var friction := 6.0
 @export var jump_velocity := 8.0
-@export var gravity := 20.0
+## Defaults to the project's physics/3d/default_gravity (see project.godot)
+## rather than a separately hardcoded value.
+@export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @export_group("Crouch")
 @export var crouch_height := 1.2
