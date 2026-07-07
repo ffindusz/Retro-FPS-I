@@ -8,8 +8,13 @@ uniform vec4 albedo_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform sampler2D albedo_texture : source_color, hint_default_white, filter_nearest_mipmap, repeat_enable;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 // Vertical resolution of the virtual snapping grid. Lower = more wobble.
+// Matches the 320x240 SubViewport in main.tscn; keep them in sync if either
+// changes, or the wobble grid stops lining up with the actual pixel grid.
 uniform float snap_resolution = 240.0;
-// 0 = normal perspective-correct UVs, 1 = full PS1 affine warping.
+// 0 = normal perspective-correct UVs, 1 = full PS1 affine warping. Every
+// shipped material (assets/materials/*.tres) currently overrides this to
+// 0.0 — the wobble read as more legible without it — so this default of 1.0
+// only takes effect for a ShaderMaterial that doesn't set the parameter.
 uniform float affine_strength : hint_range(0.0, 1.0) = 1.0;
 // 1 = ignore mesh UVs and project world-space planar UVs per face.
 // Used on CSG level geometry so texel density is uniform (1 tile per

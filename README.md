@@ -67,9 +67,19 @@ kills, secrets, and time.
 - `shaders/` — `ps1_vertex_snap.gdshader` (world materials) and
   `ps1_post.gdshader` (dither/quantize post pass)
 - `assets/` — generated placeholder textures, SFX, and shared materials
-- `tools/` — headless dev scripts (`-s` runnable): texture/SFX generators,
-  smoke tests (`test_flow`, `test_weapons`, `test_enemy`, `test_boss`),
-  screenshot helpers
+- `tools/` — headless dev scripts (`-s` runnable): `gen_textures.gd`/
+  `gen_audio.gd` (deterministic asset generators), `probe_level.gd`
+  (CSG collision probe), `screenshot_tour.gd`/`screenshot_ui.gd` (visual
+  capture — run without `--headless`), and 15 smoke tests covering level
+  flow (`test_flow`, `test_progression`, `test_cheat`, `test_pause`),
+  combat/AI (`test_enemy`, `test_spitter`, `test_boss`, `test_weapons`),
+  and movement/hazards/stats (`test_crouch`, `test_feel`, `test_ice`,
+  `test_lava`, `test_void`, `test_pickups`, `test_stats`) — 14 of which
+  share their boot/wait/step boilerplate via `test_base.gd`
+- `project.godot` sets `rendering_method="mobile"` for performance headroom
+  at this resolution; despite the resulting `Mobile` feature tag,
+  `export_presets.cfg` only defines a Windows Desktop export — there's no
+  actual mobile export target
 
 Example headless test run:
 

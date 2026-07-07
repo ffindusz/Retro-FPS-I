@@ -12,7 +12,7 @@ func _tick(_delta: float) -> bool:
 	var gs: Node = root.get_node(GAME_STATE_PATH)
 	match _step:
 		0:
-			print("pickups in level 1: %d (expect 7)" % get_nodes_in_group("pickups").size())
+			print("pickups in level 1: %d (expect 10)" % get_nodes_in_group("pickups").size())
 			# Full health: medkit must refuse collection.
 			player.global_position = Vector3(-4.5, 0.3, 19)
 			player.velocity = Vector3.ZERO

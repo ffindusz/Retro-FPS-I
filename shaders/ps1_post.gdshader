@@ -8,6 +8,10 @@ shader_type canvas_item;
 uniform float color_levels : hint_range(4.0, 64.0) = 32.0;
 uniform float dither_strength : hint_range(0.0, 2.0) = 1.0;
 
+// A 4x4 ordered-dither matrix: 16 entries, values 0-15. The `4.0`/`4` tiling
+// below and the `16.0` normalization are both sized for THIS matrix — resize
+// BAYER (e.g. to 8x8) and update every literal below to match, or the index
+// math silently reads out of pattern.
 const float BAYER[16] = {
 	0.0, 8.0, 2.0, 10.0,
 	12.0, 4.0, 14.0, 6.0,
