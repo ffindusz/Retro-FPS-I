@@ -162,14 +162,21 @@ func _die() -> void:
 	# doesn't wait out the corpse-despawn delay.
 	remove_from_group("enemies")
 	Fx.spawn_sound(self, global_position + Vector3(0, 1, 0), DIE_SOUND)
-	# Corpse: no longer hittable or blocking, topples over, then despawns.
+	# Corpse: no longer hittable or blocking; despawns after the death
+	# presentation has had time to play out.
 	collision_layer = 0
 	collision_mask = 1
+	_death_visual()
+	# process_always=false so a paused game doesn't despawn corpses.
+	get_tree().create_timer(1.75, false).timeout.connect(queue_free)
+
+
+## Death presentation. Default: topple the visual over. Subclasses with a
+## skinned model override this to play a death clip instead.
+func _death_visual() -> void:
 	var tween := create_tween()
 	tween.tween_property(visual, "rotation:x", -PI / 2.0, 0.35) \
 			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	tween.tween_interval(1.4)
-	tween.tween_callback(queue_free)
 
 
 func _face_player(delta: float) -> void:
