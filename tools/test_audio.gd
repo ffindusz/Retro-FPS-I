@@ -1,14 +1,24 @@
 extends SceneTree
 ## Debug helper: audio output diagnostic. Prints the audio device state and
-## plays the rocket explosion + a few seconds of music. Run WITHOUT --headless
-## and LISTEN:
+## plays each key gameplay SFX in sequence over the music. Run WITHOUT
+## --headless and LISTEN:
 ##   Godot_v4.7-stable_win64_console.exe --path . -s tools/test_audio.gd
+
+const SEQUENCE := [
+	["pickup (ammo collect)", "res://assets/audio/pickup.wav"],
+	["heal (medkit collect)", "res://assets/audio/heal.wav"],
+	["hurt (player hit)", "res://assets/audio/hurt.wav"],
+	["player_die (death sting)", "res://assets/audio/player_die.wav"],
+	["explosion (rocket)", "res://assets/audio/explosion.wav"],
+]
+const STEP_MS := 1400
+const LEAD_IN_MS := 600
 
 var _t0 := 0
 var _started := false
-var _boomed_again := false
+var _index := 0
 var _music: AudioStreamPlayer
-var _boom: AudioStreamPlayer
+var _sfx: AudioStreamPlayer
 
 
 func _initialize() -> void:
@@ -20,9 +30,8 @@ func _initialize() -> void:
 	_music.stream = load("res://assets/audio/music_ambient.wav")
 	_music.volume_db = -6.0
 	root.add_child(_music)
-	_boom = AudioStreamPlayer.new()
-	_boom.stream = load("res://assets/audio/explosion.wav")
-	root.add_child(_boom)
+	_sfx = AudioStreamPlayer.new()
+	root.add_child(_sfx)
 
 
 func _process(_delta: float) -> bool:
@@ -31,11 +40,11 @@ func _process(_delta: float) -> bool:
 		_started = true
 		_t0 = Time.get_ticks_msec()
 		_music.play()
-		_boom.play()
 		return false
 	var t := Time.get_ticks_msec() - _t0
-	if t > 2500 and not _boomed_again:
-		_boomed_again = true
-		_boom.play()
-		print("music playing=%s boom playing=%s" % [_music.playing, _boom.playing])
-	return t > 6000
+	if _index < SEQUENCE.size() and t >= LEAD_IN_MS + _index * STEP_MS:
+		print("playing: ", SEQUENCE[_index][0])
+		_sfx.stream = load(SEQUENCE[_index][1])
+		_sfx.play()
+		_index += 1
+	return t > LEAD_IN_MS + SEQUENCE.size() * STEP_MS + 1200

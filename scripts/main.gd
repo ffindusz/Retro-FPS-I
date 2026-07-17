@@ -176,6 +176,9 @@ func _level_banner() -> String:
 func _on_player_died() -> void:
 	if _game_active:
 		_game_active = false
+		# Non-positional: the player node is about to be freed with the
+		# level, and the sting belongs to the death screen, not the world.
+		$DeathSting.play()
 		_end_game(false)
 
 

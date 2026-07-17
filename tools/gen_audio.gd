@@ -35,6 +35,9 @@ func _init() -> void:
 	# Music last: it is by far the slowest and consumes the RNG stream after
 	# everything else, keeping all earlier outputs byte-identical.
 	_save("music_ambient", _gen_music(), 11025)
+	# Added after music (not before) so the music's RNG stream — and with it
+	# every wav above — regenerates byte-identical.
+	_save("player_die", _gen_player_die())
 	print("SFX written to res://assets/audio/")
 	quit()
 
@@ -133,6 +136,22 @@ func _gen_barrel_boom() -> PackedFloat32Array:
 		low = lerpf(low, _rng.randf_range(-1.0, 1.0), 0.09)
 		var boom := (low * 2.0 + sin(TAU * (65.0 - 30.0 * t) * t) * 0.6) * _env(t, dur, 1.7)
 		out.append(clampf(crack * 0.9 + ring + boom, -1.0, 1.0))
+	return out
+
+
+## Player death: a long falling groan sinking into a dull final rumble,
+## clearly heavier than the short hurt yelp.
+func _gen_player_die() -> PackedFloat32Array:
+	var dur := 1.1
+	var out := PackedFloat32Array()
+	var low := 0.0
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		var freq := 210.0 - 130.0 * t
+		var groan := sin(TAU * freq * t) * 0.5 + sin(TAU * freq * 0.5 * t) * 0.3
+		low = lerpf(low, _rng.randf_range(-1.0, 1.0), 0.06)
+		var rumble := low * 0.9 * minf(t * 3.0, 1.0)
+		out.append(clampf(groan * _env(t, dur, 1.3) + rumble * _env(t, dur, 2.2), -1.0, 1.0))
 	return out
 
 
