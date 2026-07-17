@@ -1,30 +1,36 @@
 extends EnemyBase
-## Boss: large ranged enemy. Fires fireball volleys from a distance and
-## circle-strafes while attacking instead of standing still. At 50% health
-## it enrages: faster movement, shorter attack interval, wider volleys,
-## and a visor flare — the phase change.
+## Boss: hulking skeleton warrior. Hurls fireball volleys from a distance
+## and circle-strafes while attacking instead of standing still. At 50%
+## health it enrages: faster movement, shorter attack interval, wider
+## volleys, and an eye flare — the phase change.
 
 const FIREBALL := preload("res://scenes/weapons/projectile_fireball.tscn")
 const ROAR_SOUND := preload("res://assets/audio/boss_roar.wav")
+
+## Throw clip is 1.4s; sped up so a volley windup fits inside even the
+## enraged attack interval (1.7 * 0.55 = 0.94s).
+const THROW_SPEED := 1.5
 
 @export var volley_size := 3
 @export var enraged_volley_size := 5
 @export var volley_spread_degrees := 22.0
 
 var _enraged := false
-
-@onready var _visor: MeshInstance3D = $Visual/Visor
+var _eyes_mat: ShaderMaterial
 
 
 func _ready() -> void:
 	super()
-	# Unique visor material so the enrage tint can't leak into other
-	# instances (or future restarts) through the shared resource cache.
-	var visor_mat := _visor.get_surface_override_material(0)
-	if visor_mat == null:
-		push_error("Boss visor has no surface_material_override/0 set in the scene.")
+	_clip_attack_hold = "Walking_B"
+	# Per-instance override of the imported eye material so the enrage tint
+	# can't leak into other users of the shared mesh resource (the test
+	# stage display, future restarts).
+	var eyes: MeshInstance3D = visual.find_child("*_Eyes", true, false)
+	if eyes == null:
+		push_error("Boss model has no *_Eyes mesh for the enrage flare.")
 		return
-	_visor.set_surface_override_material(0, visor_mat.duplicate())
+	_eyes_mat = eyes.mesh.surface_get_material(0).duplicate()
+	eyes.set_surface_override_material(0, _eyes_mat)
 
 
 func take_damage(amount: float, from: Vector3 = Vector3.ZERO) -> void:
@@ -56,6 +62,7 @@ func _tick_attack(delta: float) -> void:
 func _do_attack() -> void:
 	if _player == null:
 		return
+	_play_one_shot("Throw", THROW_SPEED)
 	var count := enraged_volley_size if _enraged else volley_size
 	var from := global_position + Vector3(0, 2.6, 0) - global_basis.z * 1.2
 	var aim := (_player.global_position + Vector3(0, 0.9, 0) - from).normalized()
@@ -77,9 +84,8 @@ func _enrage() -> void:
 	_enraged = true
 	move_speed *= 1.5
 	attack_interval *= 0.55
-	var mat := _visor.get_surface_override_material(0) as StandardMaterial3D
-	if mat:
-		mat.albedo_color = Color(1.0, 0.9, 0.2)
+	if _eyes_mat != null:
+		_eyes_mat.set_shader_parameter("albedo_color", Color(1.0, 0.9, 0.2))
 	Fx.spawn_sound(self, global_position + Vector3(0, 2.5, 0), ROAR_SOUND, 4.0)
 	Fx.spawn(self, global_position + Vector3(0, 2.8, 0), Color(1.0, 0.2, 0.6), 2.0, 0.35)
 	visual.scale = Vector3(1.25, 0.85, 1.25)
