@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/weapons/launcher.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://assets/models/staff/staff.gltf" id="2_model"]
 [ext_resource type="PackedScene" path="res://scenes/weapons/projectile_rocket.tscn" id="4_rocket"]
-[ext_resource type="AudioStream" path="res://assets/audio/launcher.wav" id="5_shot"]
+[ext_resource type="AudioStream" path="res://assets/audio/staff_fire.wav" id="5_shot"]
 [ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="6_click"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flash"]

@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dsfc8uqkfhm40"
-path="res://.godot/imported/pistol.wav-ca66a085d3a5bea19f18b80619391498.sample"
+uid="uid://dji7134js7l4s"
+path="res://.godot/imported/crossbow.wav-6ef6fca2e4807e1f39eaea275f7a4168.sample"
 
 [deps]
 
-source_file="res://assets/audio/pistol.wav"
-dest_files=["res://.godot/imported/pistol.wav-ca66a085d3a5bea19f18b80619391498.sample"]
+source_file="res://assets/audio/crossbow.wav"
+dest_files=["res://.godot/imported/crossbow.wav-6ef6fca2e4807e1f39eaea275f7a4168.sample"]
 
 [params]
 

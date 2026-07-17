@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/weapons/launcher.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://assets/models/spellbook_open/spellbook_open.gltf" id="2_model"]
 [ext_resource type="PackedScene" path="res://scenes/weapons/projectile_plasma_player.tscn" id="3_bolt"]
-[ext_resource type="AudioStream" path="res://assets/audio/plasma.wav" id="4_shot"]
+[ext_resource type="AudioStream" path="res://assets/audio/tome_pulse.wav" id="4_shot"]
 [ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="5_click"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flash"]

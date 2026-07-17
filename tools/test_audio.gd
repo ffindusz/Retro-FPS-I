@@ -5,11 +5,15 @@ extends SceneTree
 ##   Godot_v4.7-stable_win64_console.exe --path . -s tools/test_audio.gd
 
 const SEQUENCE := [
+	["wand_zap (slot 1)", "res://assets/audio/wand_zap.wav"],
+	["crossbow (slot 2)", "res://assets/audio/crossbow.wav"],
+	["staff_fire (slot 3)", "res://assets/audio/staff_fire.wav"],
+	["tome_pulse (slot 4)", "res://assets/audio/tome_pulse.wav"],
 	["pickup (ammo collect)", "res://assets/audio/pickup.wav"],
 	["heal (medkit collect)", "res://assets/audio/heal.wav"],
 	["hurt (player hit)", "res://assets/audio/hurt.wav"],
 	["player_die (death sting)", "res://assets/audio/player_die.wav"],
-	["explosion (rocket)", "res://assets/audio/explosion.wav"],
+	["explosion (fireball)", "res://assets/audio/explosion.wav"],
 ]
 const STEP_MS := 1400
 const LEAD_IN_MS := 600

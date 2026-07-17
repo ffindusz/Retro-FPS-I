@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cu3cnd88pcf8o"
-path="res://.godot/imported/plasma.wav-160b3d5778c8bb5cde494171dfa71082.sample"
+uid="uid://bqaogogjutonv"
+path="res://.godot/imported/staff_fire.wav-ce8edff659eadb29f6cdbebd29305eae.sample"
 
 [deps]
 
-source_file="res://assets/audio/plasma.wav"
-dest_files=["res://.godot/imported/plasma.wav-160b3d5778c8bb5cde494171dfa71082.sample"]
+source_file="res://assets/audio/staff_fire.wav"
+dest_files=["res://.godot/imported/staff_fire.wav-ce8edff659eadb29f6cdbebd29305eae.sample"]
 
 [params]
 

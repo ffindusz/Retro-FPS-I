@@ -10,9 +10,13 @@ var _rng := RandomNumberGenerator.new()
 
 func _init() -> void:
 	_rng.seed = 4004
-	_save("pistol", _gen_pistol())
-	_save("shotgun", _gen_shotgun())
-	_save("launcher", _gen_launcher())
+	# The gun sounds were replaced by the Heretic-style weapon sounds saved
+	# after the music (wand_zap etc.), but their generators still run
+	# (unsaved) to burn their share of the RNG stream so everything below
+	# regenerates byte-identical. _gen_plasma consumed no RNG and is gone.
+	_gen_pistol()
+	_gen_shotgun()
+	_gen_launcher()
 	_save("explosion", _gen_explosion())
 	_save("click", _gen_click())
 	_save("hurt", _gen_hurt())
@@ -27,7 +31,6 @@ func _init() -> void:
 	_save("heal", _gen_heal())
 	_save("step", _gen_step())
 	_save("land", _gen_land())
-	_save("plasma", _gen_plasma())  # pure tones: no RNG consumed
 	# Barrels are decorative now and barrel_boom.wav was deleted, but the
 	# generator still runs (unsaved) to burn its share of the RNG stream so
 	# music_ambient.wav regenerates byte-identical.
@@ -38,6 +41,10 @@ func _init() -> void:
 	# Added after music (not before) so the music's RNG stream — and with it
 	# every wav above — regenerates byte-identical.
 	_save("player_die", _gen_player_die())
+	_save("wand_zap", _gen_wand_zap())
+	_save("crossbow", _gen_crossbow())
+	_save("staff_fire", _gen_staff_fire())
+	_save("tome_pulse", _gen_tome_pulse())  # pure tones: no RNG consumed
 	print("SFX written to res://assets/audio/")
 	quit()
 
@@ -155,15 +162,62 @@ func _gen_player_die() -> PackedFloat32Array:
 	return out
 
 
-## Plasma rifle: quick descending zap.
-func _gen_plasma() -> PackedFloat32Array:
-	var dur := 0.08
+## Wand: bright arcane zap — a steep falling shimmer with a sparkle tail.
+func _gen_wand_zap() -> PackedFloat32Array:
+	var dur := 0.14
 	var out := PackedFloat32Array()
 	for i in int(dur * RATE):
 		var t := float(i) / RATE
-		var freq := 1250.0 - 8000.0 * t
-		var s := sin(TAU * freq * t) * 0.55 + signf(sin(TAU * freq * 0.5 * t)) * 0.2
-		out.append(s * _env(t, dur, 1.3))
+		var freq := 1500.0 - 6200.0 * t
+		var s := sin(TAU * freq * t) * 0.55 + sin(TAU * freq * 1.5 * t) * 0.25
+		s += _rng.randf_range(-0.12, 0.12) * (1.0 - t / dur)
+		out.append(s * _env(t, dur, 1.4))
+	return out
+
+
+## Crossbow: string snap into a woody thunk.
+func _gen_crossbow() -> PackedFloat32Array:
+	var dur := 0.3
+	var out := PackedFloat32Array()
+	var low := 0.0
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		var snap := _rng.randf_range(-1.0, 1.0) * maxf(1.0 - t / 0.02, 0.0)
+		var twang := sin(TAU * 340.0 * t) * 0.4 * exp(-t * 30.0) \
+				+ sin(TAU * 170.0 * t) * 0.5 * exp(-t * 18.0)
+		low = lerpf(low, _rng.randf_range(-1.0, 1.0), 0.28)
+		var thunk := low * 0.9 * _env(t, dur, 2.6)
+		out.append(clampf(snap * 0.8 + twang + thunk, -1.0, 1.0))
+	return out
+
+
+## Fire staff: a breathy launch whoosh with an ember-crackle tail and a
+## low fireball body.
+func _gen_staff_fire() -> PackedFloat32Array:
+	var dur := 0.5
+	var out := PackedFloat32Array()
+	var low := 0.0
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		low = lerpf(low, _rng.randf_range(-1.0, 1.0), 0.18)
+		var whoosh := low * 1.3 * sin(PI * t / dur)
+		var crackle := 0.0
+		if _rng.randf() < 0.18:
+			crackle = _rng.randf_range(-0.5, 0.5) * (t / dur)
+		var body := sin(TAU * (110.0 - 50.0 * t) * t) * 0.35 * _env(t, dur, 1.5)
+		out.append(clampf(whoosh + crackle + body, -1.0, 1.0))
+	return out
+
+
+## Tome: a soft two-tone arcane chime, gentle enough for the rapid fire.
+func _gen_tome_pulse() -> PackedFloat32Array:
+	var dur := 0.09
+	var out := PackedFloat32Array()
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		var s := sin(TAU * 620.0 * t) * 0.4 + sin(TAU * 930.0 * t) * 0.3 \
+				+ sin(TAU * 1240.0 * t) * 0.15
+		out.append(s * _env(t, dur, 1.2))
 	return out
 
 

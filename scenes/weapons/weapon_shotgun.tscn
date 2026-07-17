@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/weapons/shotgun.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://assets/models/crossbow_2handed/crossbow_2handed.gltf" id="2_model"]
-[ext_resource type="AudioStream" path="res://assets/audio/shotgun.wav" id="4_shot"]
+[ext_resource type="AudioStream" path="res://assets/audio/crossbow.wav" id="4_shot"]
 [ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="5_click"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flash"]
