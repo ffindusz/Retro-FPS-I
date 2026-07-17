@@ -13,6 +13,7 @@ const CAST_CLIP := "Spellcast_Shoot"
 
 func _ready() -> void:
 	super()
+	voice_pitch = 1.15
 	_clip_attack_hold = "Spellcasting"
 
 

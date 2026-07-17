@@ -17,6 +17,9 @@ enum State { IDLE, NOTICE, CHASE, ATTACK, DEAD }
 @export var attack_interval := 1.1
 @export var notice_delay := 0.45
 @export var turn_speed := 8.0
+## Pitch of the bone rattle/crack/clatter vocalizations — bigger skeletons
+## speak lower (boss 0.7, mage 1.15).
+@export var voice_pitch := 1.0
 ## Defaults to the project's physics/3d/default_gravity (see project.godot)
 ## rather than a separately hardcoded value.
 @export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -29,8 +32,9 @@ const LOS_MASK := 0b11
 ## room quietly one sleeper at a time doesn't stay free.
 const WAKE_RADIUS := 8.0
 
-const HIT_SOUND := preload("res://assets/audio/enemy_hit.wav")
-const DIE_SOUND := preload("res://assets/audio/enemy_die.wav")
+const HIT_SOUND := preload("res://assets/audio/bone_hit.wav")
+const DIE_SOUND := preload("res://assets/audio/bone_die.wav")
+const RATTLE_SOUND := preload("res://assets/audio/bone_rattle.wav")
 const SWING_SOUND := preload("res://assets/audio/swing.wav")
 ## Shared by the spitter's bolts and the boss's volleys (see their
 ## _do_attack overrides).
@@ -217,6 +221,10 @@ func _enter(new_state: State) -> void:
 		_attack_timer = attack_interval * 0.5
 	elif new_state == State.NOTICE:
 		_play_one_shot(_clip_awaken, _awaken_speed)
+		# The rattle of stirring bones: doubles as the audible tell that a
+		# death woke the room's other sleepers (see _wake_nearby).
+		Fx.spawn_sound(self, global_position + Vector3(0, 0.6, 0),
+				RATTLE_SOUND, -6.0, voice_pitch)
 
 
 func _die() -> void:
@@ -226,7 +234,7 @@ func _die() -> void:
 	# Leave the group immediately so kill-counting logic (switch arming)
 	# doesn't wait out the corpse-despawn delay.
 	remove_from_group("enemies")
-	Fx.spawn_sound(self, global_position + Vector3(0, 1, 0), DIE_SOUND)
+	Fx.spawn_sound(self, global_position + Vector3(0, 1, 0), DIE_SOUND, 0.0, voice_pitch)
 	_wake_nearby()
 	# Corpse: no longer hittable or blocking; despawns after the death
 	# presentation has had time to play out.
@@ -296,7 +304,7 @@ func _can_see_player() -> bool:
 
 func _flash_hit() -> void:
 	Fx.spawn(self, global_position + Vector3(0, 1.1, 0), Color(0.9, 0.2, 0.15), 0.3)
-	Fx.spawn_sound(self, global_position + Vector3(0, 1.1, 0), HIT_SOUND, -4.0)
+	Fx.spawn_sound(self, global_position + Vector3(0, 1.1, 0), HIT_SOUND, -4.0, voice_pitch)
 	if visual == null:
 		return
 	visual.scale = Vector3(1.12, 0.9, 1.12)

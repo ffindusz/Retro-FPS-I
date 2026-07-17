@@ -21,6 +21,7 @@ var _eyes_mat: ShaderMaterial
 
 func _ready() -> void:
 	super()
+	voice_pitch = 0.7
 	_clip_attack_hold = "Walking_B"
 	# The boss looms upright while dormant instead of lying on the floor.
 	_clip_dormant = "Skeleton_Inactive_Standing_Pose"

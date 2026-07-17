@@ -32,13 +32,14 @@ static func spawn(context: Node3D, pos: Vector3, color: Color, size: float, life
 ## One-shot positional sound that outlives its emitter (e.g. exploding
 ## rockets, dying enemies).
 static func spawn_sound(context: Node3D, pos: Vector3, stream: AudioStream,
-		volume_db := 0.0) -> void:
+		volume_db := 0.0, pitch := 1.0) -> void:
 	var vp := context.get_viewport()
 	if vp == null:
 		return
 	var player := AudioStreamPlayer3D.new()
 	player.stream = stream
 	player.volume_db = volume_db
+	player.pitch_scale = pitch
 	player.max_distance = 60.0
 	vp.add_child(player)
 	player.global_position = pos

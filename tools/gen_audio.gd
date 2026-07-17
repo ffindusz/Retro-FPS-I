@@ -20,8 +20,11 @@ func _init() -> void:
 	_save("explosion", _gen_explosion())
 	_save("click", _gen_click())
 	_save("hurt", _gen_hurt())
-	_save("enemy_hit", _gen_enemy_hit())
-	_save("enemy_die", _gen_enemy_die())
+	# The generic enemy hit/die blips were replaced by the skeleton bone
+	# sounds saved after cast (bone_hit/bone_die), but their generators still
+	# run (unsaved) to burn their share of the RNG stream.
+	_gen_enemy_hit()
+	_gen_enemy_die()
 	_save("boss_roar", _gen_boss_roar())
 	# New generators go LAST so earlier outputs stay byte-identical (the
 	# shared RNG stream is consumed in _init order).
@@ -47,6 +50,9 @@ func _init() -> void:
 	_save("tome_pulse", _gen_tome_pulse())  # pure tones: no RNG consumed
 	_save("swing", _gen_swing())
 	_save("cast", _gen_cast())
+	_save("bone_rattle", _gen_bone_rattle())
+	_save("bone_hit", _gen_bone_hit())
+	_save("bone_die", _gen_bone_die())
 	print("SFX written to res://assets/audio/")
 	quit()
 
@@ -251,6 +257,74 @@ func _gen_cast() -> PackedFloat32Array:
 	return out
 
 
+## Mixes a damped woody knock (bone click) into `buf` at `start` seconds:
+## a fast-decaying resonant sine with a noise transient on top. The shared
+## primitive for the skeleton vocalizations below.
+func _add_click(buf: PackedFloat32Array, start: float, freq: float, amp: float) -> void:
+	var dur := 0.03
+	var s0 := int(start * RATE)
+	for i in int(dur * RATE):
+		var idx := s0 + i
+		if idx >= buf.size():
+			return
+		var t := float(i) / RATE
+		var s := sin(TAU * freq * t) * exp(-t * 160.0)
+		s += _rng.randf_range(-0.3, 0.3) * exp(-t * 400.0)
+		buf[idx] = clampf(buf[idx] + s * amp, -1.0, 1.0)
+
+
+## Skeleton awaken: a dry bone rattle that quickens as the bones stir, over
+## a faint rising moan.
+func _gen_bone_rattle() -> PackedFloat32Array:
+	var dur := 0.55
+	var out := PackedFloat32Array()
+	out.resize(int(dur * RATE))
+	var t := 0.06
+	var gap := 0.085
+	while t < dur - 0.05:
+		_add_click(out, t, _rng.randf_range(700.0, 1500.0), _rng.randf_range(0.25, 0.45))
+		t += gap
+		gap = maxf(gap * 0.82, 0.018)
+	for i in out.size():
+		var tt := float(i) / RATE
+		var moan := sin(TAU * (95.0 + 60.0 * tt / dur) * tt) * 0.16 * sin(PI * tt / dur)
+		out[i] = clampf(out[i] + moan, -1.0, 1.0)
+	return out
+
+
+## Skeleton pain: a sharp double bone-knock.
+func _gen_bone_hit() -> PackedFloat32Array:
+	var dur := 0.14
+	var out := PackedFloat32Array()
+	out.resize(int(dur * RATE))
+	_add_click(out, 0.0, 1050.0, 0.9)
+	_add_click(out, 0.045, 780.0, 0.7)
+	return out
+
+
+## Skeleton death: a collapsing clatter — knocks thinning out and falling in
+## pitch as the pile settles, over a soft floor thud.
+func _gen_bone_die() -> PackedFloat32Array:
+	var dur := 0.7
+	var out := PackedFloat32Array()
+	out.resize(int(dur * RATE))
+	var t := 0.0
+	var gap := 0.022
+	while t < 0.5:
+		var freq := _rng.randf_range(500.0, 1300.0) * (1.0 - 0.4 * t / 0.5)
+		_add_click(out, t, freq, _rng.randf_range(0.5, 0.9) * (1.0 - 0.6 * t / 0.5))
+		t += gap
+		gap *= 1.28
+	var thud_start := int(0.16 * RATE)
+	for i in int(0.3 * RATE):
+		var tt := float(i) / RATE
+		var idx := thud_start + i
+		if idx >= out.size():
+			break
+		out[idx] = clampf(out[idx] + sin(TAU * 85.0 * tt) * 0.5 * _env(tt, 0.3, 1.8), -1.0, 1.0)
+	return out
+
+
 ## Player pain: falling sine.
 func _gen_hurt() -> PackedFloat32Array:
 	var dur := 0.18
@@ -261,7 +335,8 @@ func _gen_hurt() -> PackedFloat32Array:
 	return out
 
 
-## Enemy hit: tiny mid blip.
+## Former enemy hit blip (replaced by bone_hit). No longer saved — kept only
+## as an RNG burn so later outputs stay byte-identical.
 func _gen_enemy_hit() -> PackedFloat32Array:
 	var dur := 0.07
 	var out := PackedFloat32Array()
@@ -271,7 +346,8 @@ func _gen_enemy_hit() -> PackedFloat32Array:
 	return out
 
 
-## Enemy death: longer falling square groan.
+## Former enemy death groan (replaced by bone_die). No longer saved — kept
+## only as an RNG burn so later outputs stay byte-identical.
 func _gen_enemy_die() -> PackedFloat32Array:
 	var dur := 0.35
 	var out := PackedFloat32Array()
