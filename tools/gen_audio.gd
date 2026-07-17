@@ -36,13 +36,14 @@ func _init() -> void:
 	_save("land", _gen_land())
 	# Barrels are decorative now and barrel_boom.wav was deleted, but the
 	# generator still runs (unsaved) to burn its share of the RNG stream so
-	# music_ambient.wav regenerates byte-identical.
+	# the wavs generated after it regenerate byte-identical.
 	_gen_barrel_boom()
-	# Music last: it is by far the slowest and consumes the RNG stream after
-	# everything else, keeping all earlier outputs byte-identical.
+	# Music: by far the slowest. It uses a PRIVATE RNG, so it neither
+	# consumes nor disturbs the shared stream — every other wav stays
+	# byte-identical no matter how the track changes.
 	_save("music_ambient", _gen_music(), 11025)
-	# Added after music (not before) so the music's RNG stream — and with it
-	# every wav above — regenerates byte-identical.
+	# Order below is load-bearing for the shared RNG stream: keep these in
+	# the order they were added so each regenerates byte-identical.
 	_save("player_die", _gen_player_die())
 	_save("wand_zap", _gen_wand_zap())
 	_save("crossbow", _gen_crossbow())
@@ -428,58 +429,169 @@ func _gen_land() -> PackedFloat32Array:
 	return out
 
 
-## Dark ambient music: a 19.2 s seamless loop of slowly crossfading minor
-## chord pads (Am -> F -> Dm -> E) over a pulsing sub bass. Every oscillator
-## and LFO frequency is quantized to whole cycles per loop so the seam is
-## click-free. Rendered at 11025 Hz for lo-fi warmth (and speed).
+## Dark fantasy music: a 40 s seamless 16-bar loop in E Phrygian — chord
+## pads (Em / F / Dm / G) crossfading at bar boundaries under a pulsing
+## eighth-note bass, a sparse haunting lead, and tom-and-rattle percussion.
+## Pad oscillators and LFOs are quantized to whole cycles per loop so the
+## seam is click-free; every event-based voice closes its envelope before
+## the loop point. Uses a PRIVATE RNG so the shared stream (and with it
+## every other wav) stays byte-identical. 11025 Hz for lo-fi warmth.
 func _gen_music() -> PackedFloat32Array:
 	var rate := 11025
-	var dur := 19.2
-	var chord_len := dur / 4.0
-	var fade := 1.0
+	var beat := 60.0 / 96.0  # 96 BPM
+	var bar := beat * 4.0
+	var bars := 16
+	var dur := bar * bars  # 40.0 s
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 1349
 	# Quantize a frequency to complete whole cycles over the loop.
 	var q := func(f: float) -> float: return roundf(f * dur) / dur
-	var chords_hz := [
-		[110.0, 130.81, 164.81],  # Am
-		[87.31, 130.81, 174.61],  # F
-		[73.42, 110.0, 146.83],   # Dm
-		[82.41, 123.47, 164.81],  # E
+	var triads := [
+		[82.41, 98.0, 123.47],   # Em
+		[87.31, 110.0, 130.81],  # F
+		[73.42, 87.31, 110.0],   # Dm
+		[98.0, 123.47, 146.83],  # G
 	]
-	# Precompute pad components: [freq, amp, lfo_freq, lfo_phase] per chord.
+	var bass_hz := [41.2, 43.65, 36.71, 49.0]
+	# Chord per bar. The last two Em bars resolve into bar 0's Em, so the
+	# seam crossfade blends identical pads.
+	var prog := [0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 1, 1, 3, 1, 0, 0]
+	# Pad components per chord type: [freq, amp, lfo_freq, lfo_phase], a
+	# straight layer + a detuned layer per triad note.
 	var comps := []
 	for c in 4:
 		var list := []
 		for k in 3:
-			var f: float = chords_hz[c][k]
-			list.append([q.call(f), 0.16, q.call(0.14 + 0.03 * k), float(k) * 2.1])
-			list.append([q.call(f * 1.006), 0.10, q.call(0.11 + 0.02 * k), float(k) * 1.3])
+			var f: float = triads[c][k]
+			list.append([q.call(f), 0.14, q.call(0.13 + 0.03 * k), float(k) * 2.1])
+			list.append([q.call(f * 1.007), 0.09, q.call(0.11 + 0.02 * k), float(k) * 1.3])
 		comps.append(list)
-	var bass_hz := [q.call(55.0), q.call(43.65), q.call(36.71), q.call(41.2)]
 	var n := int(dur * rate)
 	var out := PackedFloat32Array()
 	out.resize(n)
+	# Continuous pad, smoothstep-crossfaded over the last 0.5 s of each bar
+	# (wrapping 15 -> 0) so chord changes and the loop seam never click.
+	var fade := 0.5
 	for i in n:
 		var t := float(i) / rate
-		var s := 0.0
-		for c in 4:
-			# Triangular crossfade window centered on this chord's slot,
-			# evaluated with wraparound so chord 0 fades in over the loop seam.
-			var center := (float(c) + 0.5) * chord_len
-			var dt: float = absf(fposmod(t - center + dur / 2.0, dur) - dur / 2.0)
-			var gain := clampf((chord_len / 2.0 + fade / 2.0 - dt) / fade, 0.0, 1.0)
-			if gain <= 0.0:
-				continue
-			for comp: Array in comps[c]:
-				var trem: float = 0.85 + 0.15 * sin(TAU * comp[2] * t + comp[3])
-				s += sin(TAU * comp[0] * t) * comp[1] * trem * gain
-		# Sub-bass pulse every 1.2 s, root of the chord the pulse starts in.
-		var pulse_t := fposmod(t, 1.2)
-		var pulse_start := t - pulse_t
-		var chord_idx := int(fposmod(pulse_start, dur) / chord_len) % 4
-		var env := exp(-3.0 * pulse_t) * minf(pulse_t / 0.012, 1.0)
-		s += sin(TAU * bass_hz[chord_idx] * t) * 0.5 * env
-		out[i] = s * 0.5
+		var b := int(t / bar)
+		var tb := t - float(b) * bar
+		b = b % bars
+		var f := clampf((tb - (bar - fade)) / fade, 0.0, 1.0)
+		f = f * f * (3.0 - 2.0 * f)
+		var cur: int = prog[b]
+		var nxt: int = prog[(b + 1) % bars]
+		if f <= 0.0 or cur == nxt:
+			out[i] = _pad(comps[cur], t)
+		else:
+			out[i] = _pad(comps[cur], t) * (1.0 - f) + _pad(comps[nxt], t) * f
+	# Bass: eighth-note root pulses, accented on the downbeats.
+	for b in bars:
+		var root: float = bass_hz[prog[b]]
+		for e in 8:
+			var amp := 0.30 if e % 2 == 0 else 0.19
+			_add_pluck(out, rate, float(b) * bar + float(e) * beat * 0.5, root, amp)
+	# Lead: [start_beat, length_beats, freq]. Two eight-bar phrases — a low
+	# brooding statement, then a higher answer that peaks on the G bar.
+	var a3 := 220.0
+	var b3 := 246.94
+	var c4 := 261.63
+	var d4 := 293.66
+	var e4 := 329.63
+	var f4 := 349.23
+	var g4 := 392.0
+	var melody := [
+		[4, 3, e4], [7, 1, f4],
+		[8, 2, e4], [10, 2, c4], [12, 3, a3],
+		[20, 2, b3], [22, 2, c4],
+		[24, 3, d4], [27, 1, c4], [28, 2, a3], [30, 2, b3],
+		[32, 3, e4], [35, 1, g4], [36, 2, f4], [38, 2, e4],
+		[40, 3, f4], [43, 1, e4], [44, 2, c4], [46, 2, d4],
+		[48, 2, g4], [50, 2, d4],
+		[52, 2, f4], [54, 2, c4],
+		[56, 4, e4], [60, 3, b3],
+	]
+	for ev: Array in melody:
+		_add_lead(out, rate, float(ev[0]) * beat, float(ev[1]) * beat * 0.92, ev[2], 0.14)
+	# Percussion: low toms on beats 1 and 3, a pickup ending each 4-bar
+	# phrase, and offbeat rattle ticks through the loop's back half.
+	for b in bars:
+		var t0 := float(b) * bar
+		_add_tom(out, rate, t0, 0.40)
+		_add_tom(out, rate, t0 + 2.0 * beat, 0.30)
+		if b % 4 == 3:
+			_add_tom(out, rate, t0 + 3.5 * beat, 0.22)
+		if b >= 8:
+			_add_tick(out, rate, rng, t0 + 1.5 * beat, 0.10)
+			_add_tick(out, rate, rng, t0 + 3.5 * beat, 0.10)
+	for i in n:
+		out[i] = clampf(out[i] * 0.55, -1.0, 1.0)
 	return out
+
+
+## One pad voice: tremolo'd sines from a precomputed component list.
+func _pad(list: Array, t: float) -> float:
+	var s := 0.0
+	for comp: Array in list:
+		var trem: float = 0.85 + 0.15 * sin(TAU * comp[2] * t + comp[3])
+		s += sin(TAU * comp[0] * t) * comp[1] * trem
+	return s
+
+
+## Mixes a plucked bass note into `buf`: saw+sine with an exp-decay envelope.
+func _add_pluck(buf: PackedFloat32Array, rate: int, start: float,
+		freq: float, amp: float) -> void:
+	var dur := 0.28
+	var s0 := int(start * rate)
+	for i in int(dur * rate):
+		var idx := s0 + i
+		if idx >= buf.size():
+			return
+		var t := float(i) / rate
+		var s: float = (2.0 * fmod(freq * t, 1.0) - 1.0) * 0.6 + sin(TAU * freq * t) * 0.5
+		buf[idx] += s * amp * minf(t / 0.01, 1.0) * exp(-t * 9.0)
+
+
+## Mixes a lead note into `buf`: sine+saw blend with delay vibrato and a
+## trapezoid envelope that closes inside the note length.
+func _add_lead(buf: PackedFloat32Array, rate: int, start: float, dur: float,
+		freq: float, amp: float) -> void:
+	var s0 := int(start * rate)
+	for i in int(dur * rate):
+		var idx := s0 + i
+		if idx >= buf.size():
+			return
+		var t := float(i) / rate
+		var ph := TAU * freq * t + 0.35 * sin(TAU * 5.2 * t) * minf(t / 0.4, 1.0)
+		var s := sin(ph) * 0.8 + (2.0 * fmod(freq * t, 1.0) - 1.0) * 0.25
+		var env := minf(t / 0.06, 1.0) * clampf((dur - t) / 0.18, 0.0, 1.0)
+		buf[idx] += s * amp * env
+
+
+## Mixes a low tom hit into `buf`: a pitch-dropping sine thump.
+func _add_tom(buf: PackedFloat32Array, rate: int, start: float, amp: float) -> void:
+	var dur := 0.22
+	var s0 := int(start * rate)
+	for i in int(dur * rate):
+		var idx := s0 + i
+		if idx >= buf.size():
+			return
+		var t := float(i) / rate
+		buf[idx] += sin(TAU * (62.0 - 40.0 * t) * t) * amp * minf(t / 0.005, 1.0) * exp(-t * 16.0)
+
+
+## Mixes a dry rattle tick into `buf` (noise burst). `rng` is the music's
+## private stream — never the shared _rng.
+func _add_tick(buf: PackedFloat32Array, rate: int, rng: RandomNumberGenerator,
+		start: float, amp: float) -> void:
+	var dur := 0.03
+	var s0 := int(start * rate)
+	for i in int(dur * rate):
+		var idx := s0 + i
+		if idx >= buf.size():
+			return
+		var t := float(i) / rate
+		buf[idx] += rng.randf_range(-1.0, 1.0) * amp * exp(-t * 180.0)
 
 
 ## Boss enrage roar: detuned saws + noise.
