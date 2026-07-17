@@ -64,7 +64,9 @@ screen after every level tallies your kills, secrets, and time.
 - `scripts/` — gameplay code (`autoload/game_state.gd` is the flow singleton)
 - `shaders/` — `ps1_vertex_snap.gdshader` (world materials) and
   `ps1_post.gdshader` (dither/quantize post pass)
-- `assets/` — generated placeholder textures, SFX, and shared materials
+- `assets/` — generated placeholder textures, SFX, shared materials, and
+  external CC0 models (`models/`, see CREDITS.md); `scenes/props/` wraps the
+  models as placeable props (PS1 materials applied by `tools/import_prop.gd`)
 - `tools/` — headless dev scripts (`-s` runnable): `gen_textures.gd`/
   `gen_audio.gd` (deterministic asset generators), `probe_level.gd`
   (CSG collision probe), `screenshot_tour.gd`/`screenshot_ui.gd` (visual

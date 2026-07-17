@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/props/ambient_prop.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/models/skeleton_minion/skeleton_minion.glb" id="2_model"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_body"]
+height = 1.8
+radius = 0.35
+
+[node name="SkeletonProp" type="StaticBody3D"]
+collision_mask = 0
+script = ExtResource("1_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CylinderShape3D_body")
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0, 0)
