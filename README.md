@@ -37,6 +37,7 @@ godot --headless --editor --import
 | 1 / 2 / 3 / 4, mouse wheel | Switch weapon (pistol / shotgun / rockets / plasma rifle) |
 | Esc | Pause (resume / restart level / quit to title) |
 | 1–6 on the title screen, F1–F6 anytime | Level-select cheat |
+| 0 on the title screen | Model test stage (animated character viewer) |
 
 Six levels: in each of the first five, clear all enemies, then find and
 **shoot the switch** to power the **teleporter** to the next level (health
@@ -46,7 +47,7 @@ it (enemies included; mind the bridge), a **frozen cave** where the ice
 lake turns your footing into a skating rink (and the freezing pool bites),
 and a **sky citadel** of floating stone platforms where one wrong step off
 a bridge is the end. Level 6 is the **boss** — it enrages at half health.
-Killing it opens a secret room; claim the **pile of gold** inside to win.
+Killing it opens a secret room; claim the **chest of gold** inside to win.
 Dying restarts the level you died on. Rockets splash — including on you.
 
 **Pickups** are scattered through every level: medkits (+25 HP), bullets
@@ -70,12 +71,13 @@ screen after every level tallies your kills, secrets, and time.
 - `tools/` — headless dev scripts (`-s` runnable): `gen_textures.gd`/
   `gen_audio.gd` (deterministic asset generators), `probe_level.gd`
   (CSG collision probe), `screenshot_tour.gd`/`screenshot_ui.gd` (visual
-  capture — run without `--headless`), and 15 smoke tests covering level
+  capture — run without `--headless`), and 16 smoke tests covering level
   flow (`test_flow`, `test_progression`, `test_cheat`, `test_pause`),
   combat/AI (`test_enemy`, `test_spitter`, `test_boss`, `test_weapons`),
-  and movement/hazards/stats (`test_crouch`, `test_feel`, `test_ice`,
-  `test_lava`, `test_void`, `test_pickups`, `test_stats`) — 14 of which
-  share their boot/wait/step boilerplate via `test_base.gd`
+  movement/hazards/stats (`test_crouch`, `test_feel`, `test_ice`,
+  `test_lava`, `test_void`, `test_pickups`, `test_stats`), and the
+  external-model props (`test_props`) — all sharing their boot/wait/step
+  boilerplate via `test_base.gd`
 - `project.godot` sets `rendering_method="mobile"` for performance headroom
   at this resolution; despite the resulting `Mobile` feature tag,
   `export_presets.cfg` only defines a Windows Desktop export — there's no
@@ -90,3 +92,12 @@ godot --headless --path . -s tools/test_flow.gd
 All textures and SFX are generated deterministically by `tools/gen_textures.gd`
 and `tools/gen_audio.gd`; the outputs are committed, so a clean clone needs no
 regeneration — just the one-time import cache build described above.
+
+## Credits & licenses
+
+The 3D models under `assets/models/` (skeleton enemies, torch, gold chest)
+are **CC0 (public domain)** assets by [Kay Lousberg](https://kaylousberg.com)
+from the *KayKit Dungeon Remastered* and *KayKit Character Pack: Skeletons*
+packs — crediting is not required by the license, but happily given. See
+[CREDITS.md](CREDITS.md) for the per-file list and source links. Everything
+else (code, textures, audio) is made in-repo.
