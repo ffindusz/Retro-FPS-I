@@ -24,6 +24,11 @@ enum State { IDLE, NOTICE, CHASE, ATTACK, DEAD }
 ## Bit values: 1 = world, 2 = player. Other enemies never block LOS.
 const LOS_MASK := 0b11
 
+## Dying wakes dormant skeletons within this radius: the death rattle
+## alerts them regardless of line of sight (sound carries), so clearing a
+## room quietly one sleeper at a time doesn't stay free.
+const WAKE_RADIUS := 8.0
+
 const HIT_SOUND := preload("res://assets/audio/enemy_hit.wav")
 const DIE_SOUND := preload("res://assets/audio/enemy_die.wav")
 
@@ -217,6 +222,7 @@ func _die() -> void:
 	# doesn't wait out the corpse-despawn delay.
 	remove_from_group("enemies")
 	Fx.spawn_sound(self, global_position + Vector3(0, 1, 0), DIE_SOUND)
+	_wake_nearby()
 	# Corpse: no longer hittable or blocking; despawns after the death
 	# presentation has had time to play out.
 	collision_layer = 0
@@ -235,6 +241,14 @@ func _death_visual() -> void:
 	var tween := create_tween()
 	tween.tween_property(visual, "rotation:x", -PI / 2.0, 0.35) \
 			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+
+
+func _wake_nearby() -> void:
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		var other := enemy as EnemyBase
+		if other != null and other.state == State.IDLE \
+				and other.global_position.distance_to(global_position) <= WAKE_RADIUS:
+			other._enter(State.NOTICE)
 
 
 func _face_player(delta: float) -> void:
