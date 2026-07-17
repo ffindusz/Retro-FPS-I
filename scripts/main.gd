@@ -12,7 +12,12 @@ const LEVEL_SCENES: Array[PackedScene] = [
 	preload("res://scenes/levels/level_04.tscn"),
 	preload("res://scenes/levels/level_05.tscn"),
 	preload("res://scenes/levels/level_06.tscn"),
+	preload("res://scenes/levels/level_test.tscn"),
 ]
+## Model test stage (0 on the title screen). Outside the campaign flow: it
+## has no switch/teleporter, so it can never advance or complete, and level
+## 6 ends via the gold (win), so the campaign never reaches this index.
+const TEST_STAGE_INDEX := 6
 const PLAYER_SCENE := preload("res://scenes/player/player.tscn")
 
 var _level: Node3D
@@ -102,7 +107,7 @@ func start_game(level_index := 0) -> void:
 	_game_active = true
 	_show_only(_hud)
 	_hud.bind_player(_player)
-	_hud.show_banner("LEVEL %d" % (_level_index + 1))
+	_hud.show_banner(_level_banner())
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
@@ -159,7 +164,13 @@ func _advance_level() -> void:
 		_level.queue_free()
 	_load_level()
 	_place_player_at_spawn()
-	_hud.show_banner("LEVEL %d" % (_level_index + 1))
+	_hud.show_banner(_level_banner())
+
+
+func _level_banner() -> String:
+	if _level_index == TEST_STAGE_INDEX:
+		return "TEST STAGE"
+	return "LEVEL %d" % (_level_index + 1)
 
 
 func _on_player_died() -> void:

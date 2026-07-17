@@ -47,6 +47,11 @@ const LEVEL_WAYPOINTS := {
 		[Vector3(0, 0.6, -2), 0.0],      # Arena, facing the boss
 		[Vector3(0, 0.1, -18), 180.0],   # Facing the secret door in the south wall
 	],
+	6: [
+		[Vector3(0, 0.1, 4.5), 0.0],     # Model test stage: all four displays
+		[Vector3(-4, 0.1, -0.5), -25.0],  # Minion + warrior up close
+		[Vector3(4, 0.1, -0.5), 25.0],   # Mage + rogue up close
+	],
 }
 
 var waypoints: Array = []

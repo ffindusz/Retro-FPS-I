@@ -1,0 +1,109 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Material" path="res://assets/materials/mat_stone.tres" id="1_stone"]
+[ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
+[ext_resource type="Script" path="res://scripts/props/ambient_prop.gd" id="3_prop"]
+[ext_resource type="PackedScene" path="res://assets/models/skeleton_minion/skeleton_minion.glb" id="4_minion"]
+[ext_resource type="PackedScene" path="res://assets/models/skeleton_warrior/skeleton_warrior.glb" id="5_warrior"]
+[ext_resource type="PackedScene" path="res://assets/models/skeleton_mage/skeleton_mage.glb" id="6_mage"]
+[ext_resource type="PackedScene" path="res://assets/models/skeleton_rogue/skeleton_rogue.glb" id="7_rogue"]
+
+[node name="LevelTest" type="Node3D"]
+
+[node name="LevelCSG" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Shell" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+size = Vector3(22, 5.4, 14)
+material = ExtResource("1_stone")
+
+[node name="Cut" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+operation = 2
+size = Vector3(20, 4.4, 12)
+material = ExtResource("1_stone")
+
+[node name="Floor" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 0)
+size = Vector3(20, 0.25, 12)
+material = ExtResource("2_floor")
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="OmniMain" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6, 1)
+light_energy = 1.3
+omni_range = 20.0
+
+[node name="OmniBack" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -4)
+light_color = Color(1, 0.9, 0.8, 1)
+omni_range = 12.0
+
+[node name="Displays" type="Node3D" parent="."]
+
+[node name="DisplayMinion" type="Node3D" parent="Displays"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -3.5)
+script = ExtResource("3_prop")
+animation = "Idle"
+
+[node name="Model" parent="Displays/DisplayMinion" instance=ExtResource("4_minion")]
+
+[node name="DisplayWarrior" type="Node3D" parent="Displays"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3.5)
+script = ExtResource("3_prop")
+animation = "Idle_Combat"
+
+[node name="Model" parent="Displays/DisplayWarrior" instance=ExtResource("5_warrior")]
+
+[node name="DisplayMage" type="Node3D" parent="Displays"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3.5)
+script = ExtResource("3_prop")
+animation = "Spellcasting"
+
+[node name="Model" parent="Displays/DisplayMage" instance=ExtResource("6_mage")]
+
+[node name="DisplayRogue" type="Node3D" parent="Displays"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -3.5)
+script = ExtResource("3_prop")
+animation = "Walking_A"
+
+[node name="Model" parent="Displays/DisplayRogue" instance=ExtResource("7_rogue")]
+
+[node name="LabelMinion" type="Label3D" parent="Displays"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2.6, -3.5)
+text = "MINION
+Idle"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="LabelWarrior" type="Label3D" parent="Displays"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.6, -3.5)
+text = "WARRIOR
+Idle_Combat"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="LabelMage" type="Label3D" parent="Displays"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.6, -3.5)
+text = "MAGE
+Spellcasting"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="LabelRogue" type="Label3D" parent="Displays"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.6, -3.5)
+text = "ROGUE
+Walking_A"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="Spawns" type="Node3D" parent="."]
+
+[node name="PlayerSpawn" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 4.5)

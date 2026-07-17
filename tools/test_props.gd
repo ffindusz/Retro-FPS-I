@@ -4,7 +4,16 @@ extends "res://tools/test_base.gd"
 ## - the skeleton's imported AnimationPlayer is looping its ambient clip
 ## - the torch flicker AnimationPlayer is running
 ## - imported meshes carry PS1 ShaderMaterials (tools/import_prop.gd ran)
+## Then loads the model test stage and checks all four skeleton displays
+## are looping their showcase clips.
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/test_props.gd
+
+const STAGE_CLIPS := {
+	"DisplayMinion": "Idle",
+	"DisplayWarrior": "Idle_Combat",
+	"DisplayMage": "Spellcasting",
+	"DisplayRogue": "Walking_A",
+}
 
 
 func _tick(_delta: float) -> bool:
@@ -29,6 +38,15 @@ func _tick(_delta: float) -> bool:
 			var mesh: MeshInstance3D = skeleton.find_child("Skeleton_Minion_Body", true, false)
 			var mat := mesh.mesh.surface_get_material(0)
 			print("imported material: %s (expect ShaderMaterial)" % mat.get_class())
+			current_scene.start_game(6)
+			_next(500)
+		2:
+			var displays: Node3D = world.get_node_or_null("LevelTest/Displays")
+			for display_name: String in STAGE_CLIPS:
+				var ap: AnimationPlayer = displays.get_node(display_name) \
+						.find_child("AnimationPlayer", true, false)
+				print("%s: playing=%s anim=%s (expect true %s)" % [display_name,
+						ap.is_playing(), ap.current_animation, STAGE_CLIPS[display_name]])
 			print("props test done")
 			return true
 	return false
