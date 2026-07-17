@@ -212,16 +212,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -7)
 [node name="Barrels" type="Node3D" parent="."]
 
 [node name="Barrel1" parent="Barrels" instance=ExtResource("14_barrel")]
-transform = Transform3D(0.9659, 0, 0.2588, 0, 1, 0, -0.2588, 0, 0.9659, 4.2, 0, 12)
+transform = Transform3D(0.9659, 0, 0.2588, 0, 1, 0, -0.2588, 0, 0.9659, 4.35, 0, 19.2)
 
 [node name="Barrel2" parent="Barrels" instance=ExtResource("14_barrel")]
-transform = Transform3D(-0.45, 0, 0.7794, 0, 0.9, 0, -0.7794, 0, -0.45, -5.2, 0, -4.2)
+transform = Transform3D(-0.45, 0, 0.7794, 0, 0.9, 0, -0.7794, 0, -0.45, -7.9, 0, -7.2)
 
 [node name="Barrel3" parent="Barrels" instance=ExtResource("14_barrel")]
-transform = Transform3D(-0.7071, 0, -0.8426, 0, 1.1, 0, 0.8426, 0, -0.7071, 28.2, 0, -2)
+transform = Transform3D(-0.7071, 0, -0.8426, 0, 1.1, 0, 0.8426, 0, -0.7071, 28.25, 0, -6.25)
 
 [node name="Barrel4" parent="Barrels" instance=ExtResource("14_barrel")]
-transform = Transform3D(0.861, 0, -0.4015, 0, 0.95, 0, 0.4015, 0, 0.861, 20, -2.95, 3)
+transform = Transform3D(0, 0.475, 0.8227, 0.95, 0, 0, 0, 0.8227, -0.475, 17.8, -2.5225, 4.2)
 
 [node name="Secrets" type="Node3D" parent="."]
 
