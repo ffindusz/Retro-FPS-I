@@ -79,6 +79,19 @@ func _key(code: Key) -> void:
 	Input.parse_input_event(release)
 
 
+func _click(pos := Vector2(200, 150)) -> void:
+	var press := InputEventMouseButton.new()
+	press.button_index = MOUSE_BUTTON_LEFT
+	press.position = pos
+	press.pressed = true
+	Input.parse_input_event(press)
+	var release := InputEventMouseButton.new()
+	release.button_index = MOUSE_BUTTON_LEFT
+	release.position = pos
+	release.pressed = false
+	Input.parse_input_event(release)
+
+
 ## Prints msg the first time this key is seen; a no-op on repeat ticks.
 func _report_once(key: String, msg: String) -> void:
 	if _reported.has(key):
