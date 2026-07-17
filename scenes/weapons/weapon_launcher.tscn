@@ -1,22 +1,10 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/weapons/launcher.gd" id="1_script"]
-[ext_resource type="Material" path="res://assets/materials/mat_gun_dark.tres" id="2_metal"]
-[ext_resource type="Material" path="res://assets/materials/mat_gun_accent.tres" id="3_accent"]
+[ext_resource type="PackedScene" path="res://assets/models/staff/staff.gltf" id="2_model"]
 [ext_resource type="PackedScene" path="res://scenes/weapons/projectile_rocket.tscn" id="4_rocket"]
 [ext_resource type="AudioStream" path="res://assets/audio/launcher.wav" id="5_shot"]
 [ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="6_click"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_tube"]
-top_radius = 0.075
-bottom_radius = 0.075
-height = 0.6
-
-[sub_resource type="BoxMesh" id="BoxMesh_ring"]
-size = Vector3(0.18, 0.18, 0.05)
-
-[sub_resource type="BoxMesh" id="BoxMesh_grip"]
-size = Vector3(0.05, 0.12, 0.06)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flash"]
 shading_mode = 0
@@ -28,29 +16,17 @@ size = Vector2(0.4, 0.4)
 
 [node name="Launcher" type="Node3D"]
 script = ExtResource("1_script")
-weapon_label = "ROCKETS"
+weapon_label = "STAFF"
 ammo_type = 3
 fire_interval = 1.1
 max_ammo = 10
 projectile_scene = ExtResource("4_rocket")
 
-[node name="Tube" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, -0.15)
-mesh = SubResource("CylinderMesh_tube")
-surface_material_override/0 = ExtResource("2_metal")
-
-[node name="Ring" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.43)
-mesh = SubResource("BoxMesh_ring")
-surface_material_override/0 = ExtResource("3_accent")
-
-[node name="Grip" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.94, 0.342, 0, -0.342, 0.94, 0, -0.13, -0.02)
-mesh = SubResource("BoxMesh_grip")
-surface_material_override/0 = ExtResource("2_metal")
+[node name="Model" parent="." instance=ExtResource("2_model")]
+transform = Transform3D(0.32, 0, 0, 0, 0, 0.32, 0, -0.32, 0, 0, -0.02, 0.02)
 
 [node name="MuzzleFlash" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.42)
 visible = false
 
 [node name="Light" type="OmniLight3D" parent="MuzzleFlash"]

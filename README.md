@@ -34,7 +34,7 @@ godot --headless --editor --import
 | Mouse | Look |
 | Space | Jump |
 | Left mouse | Fire |
-| 1 / 2 / 3 / 4, mouse wheel | Switch weapon (pistol / shotgun / rockets / plasma rifle) |
+| 1 / 2 / 3 / 4, mouse wheel | Switch weapon (wand / crossbow / fire staff / tome) |
 | Esc | Pause (resume / restart level / quit to title) |
 | 1–6 on the title screen, F1–F6 anytime | Level-select cheat |
 | 0 on the title screen | Model test stage (animated character viewer) |
@@ -48,10 +48,10 @@ lake turns your footing into a skating rink (and the freezing pool bites),
 and a **sky citadel** of floating stone platforms where one wrong step off
 a bridge is the end. Level 6 is the **boss** — it enrages at half health.
 Killing it opens a secret room; claim the **chest of gold** inside to win.
-Dying restarts the level you died on. Rockets splash — including on you.
+Dying restarts the level you died on. Staff fireballs splash — including on you.
 
-**Pickups** are scattered through every level: medkits (+25 HP), bullets
-(+24), shells (+8), rockets (+4), and plasma cells (+20). They refuse
+**Pickups** are scattered through every level: potions (+25 HP), bolt boxes
+(+24), quarrel cases (+8), powder kegs (+4), and mana flasks (+20). They refuse
 collection while you're already full, so they stay put for when you need
 them.
 
@@ -95,9 +95,10 @@ regeneration — just the one-time import cache build described above.
 
 ## Credits & licenses
 
-The 3D models under `assets/models/` (skeleton enemies, torch, gold chest)
-are **CC0 (public domain)** assets by [Kay Lousberg](https://kaylousberg.com)
-from the *KayKit Dungeon Remastered* and *KayKit Character Pack: Skeletons*
-packs — crediting is not required by the license, but happily given. See
+The 3D models under `assets/models/` (skeleton enemies, weapons, props,
+pickups, gold chest) are **CC0 (public domain)** assets by
+[Kay Lousberg](https://kaylousberg.com) from the *KayKit Dungeon Remastered*,
+*Character Pack: Skeletons*, and *Character Pack: Adventurers* packs —
+crediting is not required by the license, but happily given. See
 [CREDITS.md](CREDITS.md) for the per-file list and source links. Everything
 else (code, textures, audio) is made in-repo.

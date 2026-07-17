@@ -1,19 +1,9 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/weapons/shotgun.gd" id="1_script"]
-[ext_resource type="Material" path="res://assets/materials/mat_gun_dark.tres" id="2_metal"]
-[ext_resource type="Material" path="res://assets/materials/mat_gun_wood.tres" id="3_wood"]
+[ext_resource type="PackedScene" path="res://assets/models/crossbow_2handed/crossbow_2handed.gltf" id="2_model"]
 [ext_resource type="AudioStream" path="res://assets/audio/shotgun.wav" id="4_shot"]
 [ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="5_click"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_barrel"]
-size = Vector3(0.06, 0.06, 0.55)
-
-[sub_resource type="BoxMesh" id="BoxMesh_pump"]
-size = Vector3(0.075, 0.05, 0.16)
-
-[sub_resource type="BoxMesh" id="BoxMesh_stock"]
-size = Vector3(0.06, 0.1, 0.2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flash"]
 shading_mode = 0
@@ -25,7 +15,7 @@ size = Vector2(0.32, 0.32)
 
 [node name="Shotgun" type="Node3D"]
 script = ExtResource("1_script")
-weapon_label = "SHOTGUN"
+weapon_label = "CROSSBOW"
 ammo_type = 2
 damage = 9.0
 fire_interval = 0.85
@@ -33,23 +23,11 @@ max_ammo = 24
 pellet_count = 7
 spread_degrees = 5.0
 
-[node name="Barrel" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -0.26)
-mesh = SubResource("BoxMesh_barrel")
-surface_material_override/0 = ExtResource("2_metal")
-
-[node name="Pump" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.045, -0.3)
-mesh = SubResource("BoxMesh_pump")
-surface_material_override/0 = ExtResource("3_wood")
-
-[node name="Stock" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.985, -0.174, 0, 0.174, 0.985, 0, -0.05, 0.08)
-mesh = SubResource("BoxMesh_stock")
-surface_material_override/0 = ExtResource("3_wood")
+[node name="Model" parent="." instance=ExtResource("2_model")]
+transform = Transform3D(-0.4, 0, 0, 0, 0.4, 0, 0, 0, -0.4, 0, -0.04, 0)
 
 [node name="MuzzleFlash" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -0.58)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, -0.5)
 visible = false
 
 [node name="Light" type="OmniLight3D" parent="MuzzleFlash"]
