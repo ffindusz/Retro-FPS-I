@@ -6,11 +6,16 @@ extends Control
 ## for a key that should short-circuit before the generic any-key check
 ## (e.g. start_screen's 1-6 level-select cheat); set _accept_after_ms for a
 ## grace period after showing (so a panic-click doesn't instantly confirm).
+##
+## Listens in _input, not _unhandled_input: the game's SubViewportContainer
+## consumes mouse clicks in the GUI pass (forwarding them into the game
+## viewport), so clicks would never reach _unhandled_input while the world
+## renders behind these screens. _input runs before the GUI pass.
 
 var _accept_after_ms := 0
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if not is_visible_in_tree() or Time.get_ticks_msec() < _accept_after_ms:
 		return
 	if event is InputEventKey and event.physical_keycode == KEY_ESCAPE:
