@@ -1,16 +1,24 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Material" path="res://assets/materials/mat_barrel.tres" id="2_wood"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_body"]
 height = 1.05
-radius = 0.42
+radius = 0.45
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_body"]
-top_radius = 0.4
-bottom_radius = 0.4
-height = 1.0
+[sub_resource type="CylinderMesh" id="CylinderMesh_lower"]
+top_radius = 0.45
+bottom_radius = 0.38
+height = 0.5
 radial_segments = 10
+cap_top = false
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_upper"]
+top_radius = 0.38
+bottom_radius = 0.45
+height = 0.5
+radial_segments = 10
+cap_bottom = false
 
 [node name="Barrel" type="StaticBody3D"]
 collision_mask = 0
@@ -19,7 +27,12 @@ collision_mask = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.525, 0)
 shape = SubResource("CylinderShape3D_body")
 
-[node name="Body" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("CylinderMesh_body")
+[node name="BodyLower" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("CylinderMesh_lower")
+surface_material_override/0 = ExtResource("2_wood")
+
+[node name="BodyUpper" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+mesh = SubResource("CylinderMesh_upper")
 surface_material_override/0 = ExtResource("2_wood")
