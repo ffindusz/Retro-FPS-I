@@ -45,6 +45,8 @@ func _init() -> void:
 	_save("crossbow", _gen_crossbow())
 	_save("staff_fire", _gen_staff_fire())
 	_save("tome_pulse", _gen_tome_pulse())  # pure tones: no RNG consumed
+	_save("swing", _gen_swing())
+	_save("cast", _gen_cast())
 	print("SFX written to res://assets/audio/")
 	quit()
 
@@ -218,6 +220,34 @@ func _gen_tome_pulse() -> PackedFloat32Array:
 		var s := sin(TAU * 620.0 * t) * 0.4 + sin(TAU * 930.0 * t) * 0.3 \
 				+ sin(TAU * 1240.0 * t) * 0.15
 		out.append(s * _env(t, dur, 1.2))
+	return out
+
+
+## Melee swing: a short airy whoosh (enemy punch, hit or miss).
+func _gen_swing() -> PackedFloat32Array:
+	var dur := 0.18
+	var out := PackedFloat32Array()
+	var low := 0.0
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		# Filter opens over the swing so the whoosh sweeps bright.
+		low = lerpf(low, _rng.randf_range(-1.0, 1.0), 0.25 + 0.35 * t / dur)
+		out.append(low * 0.9 * sin(PI * t / dur))
+	return out
+
+
+## Enemy spellcast: a rising arcane shimmer with a breathy release
+## (mage bolts, boss fireball volleys).
+func _gen_cast() -> PackedFloat32Array:
+	var dur := 0.3
+	var out := PackedFloat32Array()
+	var low := 0.0
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		var freq := 500.0 + 900.0 * t
+		var shimmer := sin(TAU * freq * t) * 0.4 + sin(TAU * freq * 1.5 * t) * 0.2
+		low = lerpf(low, _rng.randf_range(-1.0, 1.0), 0.2)
+		out.append(clampf((shimmer + low * 0.4) * _env(t, dur, 1.1), -1.0, 1.0))
 	return out
 
 

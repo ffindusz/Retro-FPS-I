@@ -9,6 +9,8 @@ const SEQUENCE := [
 	["crossbow (slot 2)", "res://assets/audio/crossbow.wav"],
 	["staff_fire (slot 3)", "res://assets/audio/staff_fire.wav"],
 	["tome_pulse (slot 4)", "res://assets/audio/tome_pulse.wav"],
+	["swing (enemy melee)", "res://assets/audio/swing.wav"],
+	["cast (enemy spell)", "res://assets/audio/cast.wav"],
 	["pickup (ammo collect)", "res://assets/audio/pickup.wav"],
 	["heal (medkit collect)", "res://assets/audio/heal.wav"],
 	["hurt (player hit)", "res://assets/audio/hurt.wav"],

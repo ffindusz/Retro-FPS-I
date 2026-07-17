@@ -69,6 +69,8 @@ func _do_attack() -> void:
 	_play_one_shot("Throw", THROW_SPEED)
 	var count := enraged_volley_size if _enraged else volley_size
 	var from := global_position + Vector3(0, 2.6, 0) - global_basis.z * 1.2
+	# Same cast stream as the mage, but louder to match the volley.
+	Fx.spawn_sound(self, from, CAST_SOUND, 2.0)
 	var aim := (_player.global_position + Vector3(0, 0.9, 0) - from).normalized()
 	for i in count:
 		var t := 0.0 if count == 1 else float(i) / float(count - 1) - 0.5

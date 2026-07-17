@@ -31,6 +31,10 @@ const WAKE_RADIUS := 8.0
 
 const HIT_SOUND := preload("res://assets/audio/enemy_hit.wav")
 const DIE_SOUND := preload("res://assets/audio/enemy_die.wav")
+const SWING_SOUND := preload("res://assets/audio/swing.wav")
+## Shared by the spitter's bolts and the boss's volleys (see their
+## _do_attack overrides).
+const CAST_SOUND := preload("res://assets/audio/cast.wav")
 
 var health: float
 var state: State = State.IDLE
@@ -199,6 +203,7 @@ func _tick_attack(delta: float) -> void:
 ## Default attack: melee swipe. Range re-checked with slack so a player
 ## backpedaling mid-swing can still be clipped.
 func _do_attack() -> void:
+	Fx.spawn_sound(self, global_position + Vector3(0, 1.2, 0), SWING_SOUND, -4.0)
 	if _player and _player.has_method("take_damage") \
 			and _distance_to_player() <= attack_range * 1.4:
 		_player.take_damage(attack_damage, global_position)

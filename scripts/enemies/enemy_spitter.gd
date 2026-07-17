@@ -41,6 +41,7 @@ func _do_attack() -> void:
 		return
 	_play_one_shot(CAST_CLIP)
 	var from := global_position + Vector3(0, 1.0, 0) - global_basis.z * 0.5
+	Fx.spawn_sound(self, from, CAST_SOUND, -4.0)
 	var aim := (_player.global_position + Vector3(0, 0.9, 0) - from).normalized()
 	var bolt: Node3D = PLASMA.instantiate()
 	get_parent().add_child(bolt)
