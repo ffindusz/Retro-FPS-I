@@ -28,7 +28,10 @@ func _init() -> void:
 	_save("step", _gen_step())
 	_save("land", _gen_land())
 	_save("plasma", _gen_plasma())  # pure tones: no RNG consumed
-	_save("barrel_boom", _gen_barrel_boom())
+	# Barrels are decorative now and barrel_boom.wav was deleted, but the
+	# generator still runs (unsaved) to burn its share of the RNG stream so
+	# music_ambient.wav regenerates byte-identical.
+	_gen_barrel_boom()
 	# Music last: it is by far the slowest and consumes the RNG stream after
 	# everything else, keeping all earlier outputs byte-identical.
 	_save("music_ambient", _gen_music(), 11025)
@@ -114,8 +117,8 @@ func _gen_click() -> PackedFloat32Array:
 	return out
 
 
-## Barrel explosion: sharp metallic clang transient into a deep boom,
-## distinct from the rounder rocket explosion.
+## Former barrel explosion (sharp metallic clang into a deep boom). No longer
+## saved — kept only as an RNG burn so later outputs stay byte-identical.
 func _gen_barrel_boom() -> PackedFloat32Array:
 	var dur := 0.55
 	var out := PackedFloat32Array()

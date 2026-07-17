@@ -22,7 +22,7 @@ GameState="*res://scripts/autoload/game_state.gd"
 
 3d_physics/layer_1="world"
 3d_physics/layer_2="player"
-3d_physics/layer_3="enemies (and barrels)"
+3d_physics/layer_3="enemies"
 
 [display]
 

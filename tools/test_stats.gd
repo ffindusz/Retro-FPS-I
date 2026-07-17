@@ -2,7 +2,7 @@ extends "res://tools/test_base.gd"
 ## Debug helper: stats, secrets, and barrel test in level 1.
 ## - kill/total tallies update (barrels don't count as enemies)
 ## - secret area triggers once
-## - a shot barrel explodes after its fuse and splashes the nearby player
+## - a decorative barrel is inert: still placed, not damageable, no splash
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/test_stats.gd
 
 
@@ -26,16 +26,14 @@ func _tick(_delta: float) -> bool:
 		2:
 			print("secret entered: found=%d/%d (expect 1/2)"
 					% [gs.secrets_found, gs.total_secrets])
-			# Stand near a barrel, then shoot it: fuse -> boom -> splash.
+			# Decorative barrel: still placed and solid, but inert.
 			gs.health = 100
-			player.global_position = Vector3(5, 0.3, -2)
-			player.velocity = Vector3.ZERO
-			world.get_node("Level01/Barrels/Barrel1").take_damage(12.0)
-			_next(700)
+			_next(300)
 		3:
-			var barrel := world.get_node_or_null("Level01/Barrels/Barrel1")
-			print("barrel shot: gone=%s player health=%d (expect true, <100 from splash)"
-					% [barrel == null, gs.health])
+			var barrel: StaticBody3D = world.get_node_or_null("Level01/Barrels/Barrel1")
+			print("barrel inert: exists=%s damageable=%s player health=%d (expect true, false, 100)"
+					% [barrel != null,
+					barrel != null and barrel.has_method("take_damage"), gs.health])
 			print("stats test done")
 			return true
 	return false

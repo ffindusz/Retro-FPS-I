@@ -1,6 +1,6 @@
 extends SceneTree
 ## Debug helper: audio output diagnostic. Prints the audio device state and
-## plays the barrel boom + a few seconds of music. Run WITHOUT --headless
+## plays the rocket explosion + a few seconds of music. Run WITHOUT --headless
 ## and LISTEN:
 ##   Godot_v4.7-stable_win64_console.exe --path . -s tools/test_audio.gd
 
@@ -21,7 +21,7 @@ func _initialize() -> void:
 	_music.volume_db = -6.0
 	root.add_child(_music)
 	_boom = AudioStreamPlayer.new()
-	_boom.stream = load("res://assets/audio/barrel_boom.wav")
+	_boom.stream = load("res://assets/audio/explosion.wav")
 	root.add_child(_boom)
 
 
