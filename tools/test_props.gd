@@ -35,7 +35,7 @@ func _tick(_delta: float) -> bool:
 			print("skeleton anim: playing=%s anim=%s loop=%s (expect true Idle 1)"
 					% [ap.is_playing(), ap.current_animation,
 					ap.get_animation("Idle").loop_mode])
-			var mesh: MeshInstance3D = skeleton.find_child("Skeleton_Minion_Body", true, false)
+			var mesh: MeshInstance3D = skeleton.find_child("Skeleton_Rogue_Body", true, false)
 			var mat := mesh.mesh.surface_get_material(0)
 			print("imported material: %s (expect ShaderMaterial)" % mat.get_class())
 			current_scene.start_game(6)
