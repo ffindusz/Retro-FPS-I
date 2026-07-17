@@ -1,22 +1,17 @@
-extends SceneTree
+extends "res://tools/test_base.gd"
 ## Debug helper: headless test of the full game flow.
 ## start screen -> mouse click starts the game -> player death -> lose
 ## screen -> restart -> boss win signal -> win screen.
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/test_flow.gd
 
-var _step := 0
-var _wait_ms := 0
+
+func _skip_auto_start() -> bool:
+	return true
 
 
-func _initialize() -> void:
-	change_scene_to_file("res://scenes/main.tscn")
-
-
-func _process(_delta: float) -> bool:
-	if current_scene == null:
-		return false
+func _tick(_delta: float) -> bool:
 	var main := current_scene
-	var gs: Node = root.get_node("GameState")
+	var gs: Node = root.get_node(GAME_STATE_PATH)
 	match _step:
 		0:
 			print("boot: start screen visible=%s hud=%s (expect true false)"
@@ -26,46 +21,33 @@ func _process(_delta: float) -> bool:
 			# clicks before they reached the start screen). The button stays
 			# held into the next step to prove the confirming click cannot
 			# double as a fire input (fire is polled, not event-driven).
-			var click := InputEventMouseButton.new()
-			click.button_index = MOUSE_BUTTON_LEFT
-			click.position = Vector2(200, 150)
-			click.pressed = true
-			Input.parse_input_event(click)
-			_wait_ms = Time.get_ticks_msec() + 300
-			_step = 1
+			_mouse_button(true)
+			_next(300)
 		1:
-			if Time.get_ticks_msec() < _wait_ms:
-				return false
-			var player := main.get_node_or_null("ViewportContainer/GameViewport/World/Player")
+			var player := main.get_node_or_null(WORLD_PATH + "/Player")
 			print("started by click: hud=%s player=%s health=%d (expect true true 100)"
 					% [main.get_node("Hud").visible, player != null, gs.health])
 			print("fire action while click still held: %s (expect false)"
 					% Input.is_action_pressed("fire"))
-			var release := InputEventMouseButton.new()
-			release.button_index = MOUSE_BUTTON_LEFT
-			release.position = Vector2(200, 150)
-			release.pressed = false
-			Input.parse_input_event(release)
+			_mouse_button(false)
 			gs.damage_player(150)
-			_step = 2
+			_next(300)
 		2:
 			var end := main.get_node("EndScreen")
 			print("after death: end visible=%s text=%s (expect true YOU DIED)"
 					% [end.visible, end.get_node("Layout/ResultLabel").text])
 			main.start_game()
-			_step = 3
+			_next(300)
 		3:
-			var player := main.get_node_or_null("ViewportContainer/GameViewport/World/Player")
+			var player := main.get_node_or_null(WORLD_PATH + "/Player")
 			print("restarted: hud=%s player=%s health=%d (expect true true 100)"
 					% [main.get_node("Hud").visible, player != null, gs.health])
 			gs.win_game()
-			_wait_ms = Time.get_ticks_msec() + 1600
-			_step = 4
+			_next(1600)
 		4:
-			if Time.get_ticks_msec() >= _wait_ms:
-				var end := main.get_node("EndScreen")
-				print("after win: end visible=%s text=%s (expect true YOU WIN)"
-						% [end.visible, end.get_node("Layout/ResultLabel").text])
-				print("flow test done")
-				return true
+			var end := main.get_node("EndScreen")
+			print("after win: end visible=%s text=%s (expect true YOU WIN)"
+					% [end.visible, end.get_node("Layout/ResultLabel").text])
+			print("flow test done")
+			return true
 	return false

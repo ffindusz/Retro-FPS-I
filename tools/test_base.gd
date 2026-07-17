@@ -1,7 +1,7 @@
 extends SceneTree
 ## Shared harness for the tools/test_*.gd headless smoke tests: default
 ## main-scene boot (change_scene_to_file + start_game), the "wait for a
-## real-time deadline, then run this step" gate, key-injection, and a
+## real-time deadline, then run this step" gate, key/mouse injection, and a
 ## dedup'd-print helper almost every test needs.
 ##
 ## Subclasses `extends "res://tools/test_base.gd"` and override _tick(delta)
@@ -79,17 +79,19 @@ func _key(code: Key) -> void:
 	Input.parse_input_event(release)
 
 
+## One half of a left click, for tests that need the button held across
+## steps; use _click() for a plain click.
+func _mouse_button(pressed: bool, pos := Vector2(200, 150)) -> void:
+	var ev := InputEventMouseButton.new()
+	ev.button_index = MOUSE_BUTTON_LEFT
+	ev.position = pos
+	ev.pressed = pressed
+	Input.parse_input_event(ev)
+
+
 func _click(pos := Vector2(200, 150)) -> void:
-	var press := InputEventMouseButton.new()
-	press.button_index = MOUSE_BUTTON_LEFT
-	press.position = pos
-	press.pressed = true
-	Input.parse_input_event(press)
-	var release := InputEventMouseButton.new()
-	release.button_index = MOUSE_BUTTON_LEFT
-	release.position = pos
-	release.pressed = false
-	Input.parse_input_event(release)
+	_mouse_button(true, pos)
+	_mouse_button(false, pos)
 
 
 ## Prints msg the first time this key is seen; a no-op on repeat ticks.
