@@ -26,6 +26,11 @@ func _input(event: InputEvent) -> void:
 			or (event is InputEventKey and event.pressed and not event.echo)
 	if confirm:
 		get_viewport().set_input_as_handled()
+		if event is InputEventMouseButton:
+			# The weapon manager POLLS is_action_pressed("fire"), which the
+			# handled flag doesn't reach — without this, the confirming click
+			# also fires a shot on the first captured-mouse frame.
+			Input.action_release("fire")
 		_on_confirm()
 
 

@@ -23,15 +23,14 @@ func _process(_delta: float) -> bool:
 					% [main.get_node("StartScreen").visible, main.get_node("Hud").visible])
 			# Start with a real mouse click so the full input pipeline is
 			# exercised (regression: the SubViewportContainer used to consume
-			# clicks before they reached the start screen).
+			# clicks before they reached the start screen). The button stays
+			# held into the next step to prove the confirming click cannot
+			# double as a fire input (fire is polled, not event-driven).
 			var click := InputEventMouseButton.new()
 			click.button_index = MOUSE_BUTTON_LEFT
 			click.position = Vector2(200, 150)
 			click.pressed = true
 			Input.parse_input_event(click)
-			var release: InputEventMouseButton = click.duplicate()
-			release.pressed = false
-			Input.parse_input_event(release)
 			_wait_ms = Time.get_ticks_msec() + 300
 			_step = 1
 		1:
@@ -40,6 +39,13 @@ func _process(_delta: float) -> bool:
 			var player := main.get_node_or_null("ViewportContainer/GameViewport/World/Player")
 			print("started by click: hud=%s player=%s health=%d (expect true true 100)"
 					% [main.get_node("Hud").visible, player != null, gs.health])
+			print("fire action while click still held: %s (expect false)"
+					% Input.is_action_pressed("fire"))
+			var release := InputEventMouseButton.new()
+			release.button_index = MOUSE_BUTTON_LEFT
+			release.position = Vector2(200, 150)
+			release.pressed = false
+			Input.parse_input_event(release)
 			gs.damage_player(150)
 			_step = 2
 		2:

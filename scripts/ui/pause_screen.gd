@@ -13,6 +13,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") \
 			or (event is InputEventMouseButton and event.pressed):
 		get_viewport().set_input_as_handled()
+		if event is InputEventMouseButton:
+			# See AnyKeyScreen: fire is polled, so the resuming click would
+			# otherwise shoot on the first unpaused frame.
+			Input.action_release("fire")
 		resume_requested.emit()
 	elif event is InputEventKey and event.pressed and not event.echo:
 		match event.physical_keycode:
