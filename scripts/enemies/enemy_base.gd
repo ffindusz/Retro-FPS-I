@@ -40,12 +40,52 @@ var _check_timer := 0.0
 var _strafe_dir := 1.0
 var _strafe_timer := 0.0
 
+## Animation driver for skinned models: if the Visual holds an imported
+## AnimationPlayer (grunt, spitter), these looping clips play per FSM state
+## and _death_visual() plays Death_A. Box-model enemies (boss) have no
+## AnimationPlayer and keep the tween-based presentation. Subclasses adjust
+## the clip names in _ready() and fire one-shots via _play_one_shot().
+const ANIM_BLEND := 0.15
+var _clip_idle := "Idle"         ## IDLE / NOTICE
+var _clip_run := "Running_A"     ## CHASE
+var _clip_attack_hold := "Idle"  ## ATTACK, between one-shot swings
+var _one_shot := ""              ## in-flight swing clip; never interrupted
+var _anim: AnimationPlayer
+
 @onready var visual: Node3D = $Visual
 
 
 func _ready() -> void:
 	health = max_health
 	add_to_group("enemies")
+	_anim = visual.find_child("AnimationPlayer", true, false)
+
+
+func _process(_delta: float) -> void:
+	if _anim == null:
+		return
+	match state:
+		State.DEAD:
+			pass  # _death_visual() played the death clip; hold the pose.
+		State.CHASE:
+			_ensure(_clip_run)
+		State.ATTACK:
+			if _one_shot == "" or _anim.current_animation != _one_shot \
+					or not _anim.is_playing():
+				_ensure(_clip_attack_hold)
+		_:
+			_ensure(_clip_idle)
+
+
+func _play_one_shot(clip: String, speed := 1.0) -> void:
+	if _anim != null:
+		_one_shot = clip
+		_anim.play(clip, ANIM_BLEND, speed)
+
+
+func _ensure(clip: String) -> void:
+	if _anim.current_animation != clip:
+		_anim.play(clip, ANIM_BLEND)
 
 
 func _physics_process(delta: float) -> void:
@@ -171,9 +211,12 @@ func _die() -> void:
 	get_tree().create_timer(1.75, false).timeout.connect(queue_free)
 
 
-## Death presentation. Default: topple the visual over. Subclasses with a
-## skinned model override this to play a death clip instead.
+## Death presentation: a death clip for skinned models, the topple tween
+## for box models.
 func _death_visual() -> void:
+	if _anim != null:
+		_anim.play("Death_A", ANIM_BLEND)
+		return
 	var tween := create_tween()
 	tween.tween_property(visual, "rotation:x", -PI / 2.0, 0.35) \
 			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)

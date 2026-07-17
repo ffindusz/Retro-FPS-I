@@ -1,12 +1,19 @@
 extends EnemyBase
-## Ranged skirmisher: spits plasma bolts from range and backpedals when the
-## player closes in — the opposite pressure to the melee grunt. Strafes
-## between shots like the boss, but fragile.
+## Ranged skirmisher: skeleton mage model. Spits plasma bolts from range and
+## backpedals when the player closes in — the opposite pressure to the melee
+## grunt. Strafes between shots like the boss, but fragile. Channels the
+## Spellcasting loop while skirmishing, with a cast one-shot per bolt.
 
 const PLASMA := preload("res://scenes/weapons/projectile_plasma.tscn")
+const CAST_CLIP := "Spellcast_Shoot"
 
 ## Below this distance the spitter retreats while still firing.
 @export var preferred_range := 6.0
+
+
+func _ready() -> void:
+	super()
+	_clip_attack_hold = "Spellcasting"
 
 
 func _tick_attack(delta: float) -> void:
@@ -32,6 +39,7 @@ func _tick_attack(delta: float) -> void:
 func _do_attack() -> void:
 	if _player == null:
 		return
+	_play_one_shot(CAST_CLIP)
 	var from := global_position + Vector3(0, 1.0, 0) - global_basis.z * 0.5
 	var aim := (_player.global_position + Vector3(0, 0.9, 0) - from).normalized()
 	var bolt: Node3D = PLASMA.instantiate()
