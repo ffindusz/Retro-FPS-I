@@ -6,6 +6,7 @@ extends SceneTree
 
 const MODELS := [
 	"res://assets/models/torch_mounted/torch_mounted.glb",
+	"res://assets/models/chest_gold/chest_gold.glb",
 	"res://assets/models/skeleton_minion/skeleton_minion.glb",
 	"res://assets/models/skeleton_warrior/skeleton_warrior.glb",
 	"res://assets/models/skeleton_mage/skeleton_mage.glb",
