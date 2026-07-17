@@ -13,6 +13,22 @@ const FLOAT_SPEED := 0.003  ## Sine input scale applied to msec.
 const FLOAT_MIN_HEIGHT := 0.05
 const FLOAT_AMPLITUDE := 0.05
 
+## Per-type glow halo (an unshaded additive billboard, NOT a light: the
+## whole level is one CSG mesh, so per-mesh light limits on the mobile
+## renderer would silently drop ten extra omnis). The imported prop models
+## (bottles, boxes, keg) would otherwise vanish into dark rooms, and the
+## color doubles as a legend — green health, amber bullets, orange shells,
+## red rockets, cyan cells.
+const TYPE_GLOW := {
+	Type.HEALTH: Color(0.45, 1.0, 0.55),
+	Type.BULLETS: Color(1.0, 0.85, 0.45),
+	Type.SHELLS: Color(1.0, 0.6, 0.3),
+	Type.ROCKETS: Color(1.0, 0.35, 0.25),
+	Type.CELLS: Color(0.4, 0.85, 1.0),
+}
+const GLOW_ALPHA := 0.3
+const GLOW_SIZE := 0.9
+
 @export var type := Type.HEALTH
 @export var amount := 25
 
@@ -24,6 +40,28 @@ var _taken := false
 func _ready() -> void:
 	add_to_group("pickups")
 	body_entered.connect(_try_collect)
+	var glow := MeshInstance3D.new()
+	var quad := QuadMesh.new()
+	quad.size = Vector2(GLOW_SIZE, GLOW_SIZE)
+	glow.mesh = quad
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	mat.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+	mat.albedo_color = Color(TYPE_GLOW[type], GLOW_ALPHA)
+	# Radial falloff so the quad reads as a soft halo, not a colored card.
+	var gradient := Gradient.new()
+	gradient.colors = PackedColorArray([Color.WHITE, Color(1, 1, 1, 0)])
+	var falloff := GradientTexture2D.new()
+	falloff.gradient = gradient
+	falloff.fill = GradientTexture2D.FILL_RADIAL
+	falloff.fill_from = Vector2(0.5, 0.5)
+	falloff.fill_to = Vector2(0.5, 0.0)
+	mat.albedo_texture = falloff
+	glow.material_override = mat
+	glow.position.y = 0.35
+	add_child(glow)
 
 
 func _process(delta: float) -> void:

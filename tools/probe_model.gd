@@ -7,6 +7,11 @@ extends SceneTree
 const MODELS := [
 	"res://assets/models/torch_mounted/torch_mounted.glb",
 	"res://assets/models/chest_gold/chest_gold.glb",
+	"res://assets/models/bottle_A_labeled_green/bottle_A_labeled_green.glb",
+	"res://assets/models/bottle_C_green/bottle_C_green.glb",
+	"res://assets/models/box_small/box_small.glb",
+	"res://assets/models/box_small_decorated/box_small_decorated.glb",
+	"res://assets/models/keg/keg.glb",
 	"res://assets/models/skeleton_minion/skeleton_minion.glb",
 	"res://assets/models/skeleton_warrior/skeleton_warrior.glb",
 	"res://assets/models/skeleton_mage/skeleton_mage.glb",

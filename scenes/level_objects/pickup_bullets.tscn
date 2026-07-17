@@ -1,25 +1,10 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/level_objects/pickup.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/models/box_small/box_small.glb" id="2_model"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_touch"]
 radius = 0.55
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_box"]
-albedo_color = Color(0.25, 0.28, 0.32, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_brass"]
-shading_mode = 0
-albedo_color = Color(0.85, 0.68, 0.25, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_box"]
-size = Vector3(0.45, 0.24, 0.32)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_round"]
-top_radius = 0.045
-bottom_radius = 0.045
-height = 0.22
-radial_segments = 6
 
 [node name="PickupBullets" type="Area3D"]
 collision_layer = 0
@@ -34,17 +19,5 @@ shape = SubResource("SphereShape3D_touch")
 
 [node name="Visual" type="Node3D" parent="."]
 
-[node name="Box" type="MeshInstance3D" parent="Visual"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17, 0)
-mesh = SubResource("BoxMesh_box")
-surface_material_override/0 = SubResource("StandardMaterial3D_box")
-
-[node name="Round1" type="MeshInstance3D" parent="Visual"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09, 0.4, 0)
-mesh = SubResource("CylinderMesh_round")
-surface_material_override/0 = SubResource("StandardMaterial3D_brass")
-
-[node name="Round2" type="MeshInstance3D" parent="Visual"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06, 0.4, 0.08)
-mesh = SubResource("CylinderMesh_round")
-surface_material_override/0 = SubResource("StandardMaterial3D_brass")
+[node name="Model" parent="Visual" instance=ExtResource("2_model")]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, 0, 0)

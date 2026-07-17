@@ -1,25 +1,10 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/level_objects/pickup.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/models/keg/keg.glb" id="2_model"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_touch"]
 radius = 0.55
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
-shading_mode = 0
-albedo_color = Color(0.95, 0.5, 0.16, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tip"]
-albedo_color = Color(0.4, 0.42, 0.48, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_rocket"]
-top_radius = 0.07
-bottom_radius = 0.07
-height = 0.42
-radial_segments = 6
-
-[sub_resource type="BoxMesh" id="BoxMesh_crate"]
-size = Vector3(0.45, 0.14, 0.3)
 
 [node name="PickupRockets" type="Area3D"]
 collision_layer = 0
@@ -34,17 +19,5 @@ shape = SubResource("SphereShape3D_touch")
 
 [node name="Visual" type="Node3D" parent="."]
 
-[node name="Crate" type="MeshInstance3D" parent="Visual"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
-mesh = SubResource("BoxMesh_crate")
-surface_material_override/0 = SubResource("StandardMaterial3D_tip")
-
-[node name="Rocket1" type="MeshInstance3D" parent="Visual"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0.4, 0)
-mesh = SubResource("CylinderMesh_rocket")
-surface_material_override/0 = SubResource("StandardMaterial3D_body")
-
-[node name="Rocket2" type="MeshInstance3D" parent="Visual"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.4, 0.05)
-mesh = SubResource("CylinderMesh_rocket")
-surface_material_override/0 = SubResource("StandardMaterial3D_body")
+[node name="Model" parent="Visual" instance=ExtResource("2_model")]
+transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, 0, 0, 0)
