@@ -12,6 +12,7 @@ func _init() -> void:
 	_gen_floor()
 	_gen_metal()
 	_gen_crate()
+	_gen_barrel_wood()
 	_gen_rock()
 	_gen_lava()
 	_gen_stone()
@@ -312,3 +313,56 @@ func _gen_crate() -> void:
 				base *= 0.55 + 0.09 * d
 			_put(img, x, y, base, base * 0.68, base * 0.42)
 	img.save_png("res://assets/textures/crate.png")
+
+
+## Barrel staves: narrow vertical oak strips, each shaded round (bright
+## middle, dark seams), with two dark iron hoops (no rivets) and contact
+## shadows where hoop meets wood. mat_barrel wraps this with uv_scale (2,1),
+## so 16 staves circle the cylinder; the hoop rows land near the ends of
+## each half of the two-cone barrel mesh.
+func _gen_barrel_wood() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 10010
+	var grain := _make_noise(rng, 32)
+	var weather := _make_noise(rng, 6)
+	# Deterministic knot placement: a knot on the occasional stave.
+	var knot_y := PackedInt32Array()
+	for s in 8:
+		knot_y.append(rng.randi_range(38, 92) if rng.randf() < 0.35 else -100)
+	var img := Image.create(SIZE, SIZE, false, Image.FORMAT_RGB8)
+	for y in SIZE:
+		for x in SIZE:
+			var stave := x / 16
+			var lx := x % 16
+			var in_hoop := (y >= 14 and y <= 27) or (y >= 100 and y <= 113)
+			if in_hoop:
+				var edge := (y == 14 or y == 27 or y == 100 or y == 113)
+				var glint := (y == 16 or y == 102)
+				var m := 56.0 + rng.randf_range(-3, 3)
+				if edge:
+					m *= 0.55
+				elif glint:
+					m *= 1.45
+				_put(img, x, y, m * 0.92, m * 0.95, m * 1.05)
+				continue
+			var w := _noise_at(weather, 6, float(x) / SIZE, float(y) / SIZE)
+			var shade := 0.84 + 0.26 * w
+			# Contact shadow where the wood meets a hoop.
+			if (y >= 12 and y <= 13) or (y >= 28 and y <= 29) \
+					or (y >= 98 and y <= 99) or (y >= 114 and y <= 115):
+				shade *= 0.78
+			if lx < 2:
+				_put(img, x, y,
+						(36.0 + rng.randf_range(-3, 3)) * shade, 25.0 * shade, 16.0 * shade)
+				continue
+			# Rounded stave: bright down the middle, falling off to the seams.
+			var curve := 0.78 + 0.34 * sin(PI * (float(lx) + 0.5) / 16.0)
+			var tint := float((stave * 2654435761) % 27) - 13.0
+			var g := _noise_at(grain, 32, float(x) / SIZE, float(y) / SIZE)
+			var base := (102.0 + tint + g * 12.0 + rng.randf_range(-4, 4)) * curve * shade
+			var ky := knot_y[stave]
+			var d := Vector2(lx - 8, y - ky).length()
+			if d < 4.0:
+				base *= 0.5 + 0.11 * d
+			_put(img, x, y, base, base * 0.62, base * 0.38)
+	img.save_png("res://assets/textures/barrel_wood.png")
