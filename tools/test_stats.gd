@@ -1,5 +1,5 @@
 extends "res://tools/test_base.gd"
-## Debug helper: stats, secrets, and barrel test in level 1.
+## Debug helper: stats, secrets, and decorative-barrel check in level 1.
 ## - kill/total tallies update (barrels don't count as enemies)
 ## - secret area triggers once
 ## - a decorative barrel is inert: still placed, not damageable, no splash
