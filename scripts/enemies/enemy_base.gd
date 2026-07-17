@@ -41,12 +41,21 @@ var _strafe_dir := 1.0
 var _strafe_timer := 0.0
 
 ## Animation driver for skinned models: if the Visual holds an imported
-## AnimationPlayer (grunt, spitter), these looping clips play per FSM state
-## and _death_visual() plays Death_A. Box-model enemies (boss) have no
-## AnimationPlayer and keep the tween-based presentation. Subclasses adjust
-## the clip names in _ready() and fire one-shots via _play_one_shot().
+## AnimationPlayer, these looping clips play per FSM state and
+## _death_visual() plays Death_A. Enemies without an AnimationPlayer keep
+## the tween-based presentation. Subclasses adjust the clip names in
+## _ready() and fire one-shots via _play_one_shot().
+##
+## Skeletons lie dormant while IDLE and rise on NOTICE (the awaken one-shot
+## is paced by _awaken_speed to fit inside notice_delay — keep the two in
+## sync). The FSM never returns to IDLE, so the dormant pose is only ever
+## the pre-encounter state; getting shot skips straight to CHASE, cutting
+## the awaken short (a rude awakening).
 const ANIM_BLEND := 0.15
-var _clip_idle := "Idle"         ## IDLE / NOTICE
+var _clip_dormant := "Skeletons_Inactive_Floor_Pose"  ## IDLE, pre-awaken
+var _clip_awaken := "Skeletons_Awaken_Floor"  ## one-shot on entering NOTICE
+var _awaken_speed := 2.0
+var _clip_idle := "Idle"         ## NOTICE after the awaken finishes
 var _clip_run := "Running_A"     ## CHASE
 var _clip_attack_hold := "Idle"  ## ATTACK, between one-shot swings
 var _one_shot := ""              ## in-flight swing clip; never interrupted
@@ -67,14 +76,18 @@ func _process(_delta: float) -> void:
 	match state:
 		State.DEAD:
 			pass  # _death_visual() played the death clip; hold the pose.
+		State.IDLE:
+			_ensure(_clip_dormant)
+		State.NOTICE:
+			if _one_shot == "" or _anim.current_animation != _one_shot \
+					or not _anim.is_playing():
+				_ensure(_clip_idle)
 		State.CHASE:
 			_ensure(_clip_run)
 		State.ATTACK:
 			if _one_shot == "" or _anim.current_animation != _one_shot \
 					or not _anim.is_playing():
 				_ensure(_clip_attack_hold)
-		_:
-			_ensure(_clip_idle)
 
 
 func _play_one_shot(clip: String, speed := 1.0) -> void:
@@ -192,6 +205,8 @@ func _enter(new_state: State) -> void:
 	if new_state == State.ATTACK:
 		# First swing comes after a short windup, not a full interval.
 		_attack_timer = attack_interval * 0.5
+	elif new_state == State.NOTICE:
+		_play_one_shot(_clip_awaken, _awaken_speed)
 
 
 func _die() -> void:

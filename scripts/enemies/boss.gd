@@ -22,6 +22,10 @@ var _eyes_mat: ShaderMaterial
 func _ready() -> void:
 	super()
 	_clip_attack_hold = "Walking_B"
+	# The boss looms upright while dormant instead of lying on the floor.
+	_clip_dormant = "Skeleton_Inactive_Standing_Pose"
+	_clip_awaken = "Skeletons_Awaken_Standing"
+	_awaken_speed = 1.4  # 1.0s clip into the 0.7s notice_delay
 	# Per-instance override of the imported eye material so the enrage tint
 	# can't leak into other users of the shared mesh resource (the test
 	# stage display, future restarts).
