@@ -37,17 +37,20 @@ godot --headless --editor --import
 | 1 / 2 / 3 / 4, mouse wheel | Switch weapon (wand / crossbow / fire staff / tome) |
 | Esc | Pause (resume / restart level / quit to title) |
 | O on the title or pause screen | Options (mouse sensitivity, music/SFX volume, PS1 dither filter) |
-| 1–6 on the title screen, F1–F6 anytime | Level-select cheat |
+| 1–7 on the title screen, F1–F7 anytime | Level-select cheat |
 | 0 on the title screen | Model test stage (animated character viewer) |
 
-Six levels: in each of the first five, clear all enemies, then find and
+Seven levels: in each of the first six, clear all enemies, then find and
 **shoot the switch** to power the **teleporter** to the next level (health
 and ammo carry over). The themes shift as you go — brick complex, metal
 installation, a **volcanic cavern** whose lava burns anything that touches
 it (enemies included; mind the bridge), a **frozen cave** where the ice
 lake turns your footing into a skating rink (and the freezing pool bites),
-and a **sky citadel** of floating stone platforms where one wrong step off
-a bridge is the end. Level 6 is the **boss** — it enrages at half health.
+a torch-lit **dungeon** whose dark catacombs crawl with **cloaked rogues**
+— hooded skeletons that stalk you near-invisibly and only materialize to
+strike (tag the shimmer to rip the cloak away) — and a **sky citadel** of
+floating stone platforms where one wrong step off a bridge is the end.
+Level 7 is the **boss** — it enrages at half health.
 Killing it opens a secret room; claim the **chest of gold** inside to win.
 Dying restarts the level you died on. Staff fireballs splash — including on you.
 
@@ -79,10 +82,11 @@ dither/quantize filter; settings persist to `user://settings.cfg`.
 - `tools/` — headless dev scripts (`-s` runnable): `gen_textures.gd`/
   `gen_audio.gd` (deterministic asset generators), `probe_level.gd`
   (CSG collision probe), `screenshot_tour.gd`/`screenshot_ui.gd` (visual
-  capture — run without `--headless`), and 17 smoke tests covering level
+  capture — run without `--headless`), and 18 smoke tests covering level
   flow (`test_flow`, `test_progression`, `test_cheat`, `test_pause`,
   `test_settings`),
-  combat/AI (`test_enemy`, `test_spitter`, `test_boss`, `test_weapons`),
+  combat/AI (`test_enemy`, `test_spitter`, `test_rogue`, `test_boss`,
+  `test_weapons`),
   movement/hazards/stats (`test_crouch`, `test_feel`, `test_ice`,
   `test_lava`, `test_void`, `test_pickups`, `test_stats`), and the
   external-model props (`test_props`) — all sharing their boot/wait/step

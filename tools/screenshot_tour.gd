@@ -37,17 +37,25 @@ const LEVEL_WAYPOINTS := {
 		[Vector3(-9, 0.3, -6), 90.0],    # Wing toward the switch
 	],
 	4: [
+		[Vector3(0, 0.1, 18.5), 0.0],    # Arrival crypt, banners behind
+		[Vector3(0, 0.1, 4), 0.0],       # Great hall through the pillars
+		[Vector3(7, 0.1, 0), -90.0],     # Facing the east cells
+		[Vector3(-12, 0.1, 0), 90.0],    # West corridor into the catacombs
+		[Vector3(-19, 0.1, 5), 0.0],     # Catacombs: rogues + skeleton props
+		[Vector3(-19, 0.1, -12.5), 0.0], # Treasury: switch + teleporter
+	],
+	5: [
 		[Vector3(0, 0.1, 20), 0.0],      # Spawn platform, obelisks + bridge ahead
 		[Vector3(0, 0.3, 5), 0.0],       # Plaza with crenellations, tower right
 		[Vector3(0, 0.3, -7), 0.0],      # Long bridge to the switch tower
 		[Vector3(-10, 0.3, 0), 90.0],    # Bridge 3 toward the teleporter platform
 	],
-	5: [
+	6: [
 		[Vector3(0, 0.1, 13), 0.0],      # Entry room
 		[Vector3(0, 0.6, -2), 0.0],      # Arena, facing the boss
 		[Vector3(0, 0.1, -18), 180.0],   # Facing the secret door in the south wall
 	],
-	6: [
+	7: [
 		[Vector3(0, 0.1, 4.5), 0.0],     # Model test stage: all four displays
 		[Vector3(-4, 0.1, -0.5), -25.0],  # Minion + warrior up close
 		[Vector3(4, 0.1, -0.5), 25.0],   # Mage + rogue up close

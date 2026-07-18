@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_rogue.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/models/skeleton_rogue/skeleton_rogue.glb" id="2_model"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.4
+height = 1.7
+
+[node name="EnemyRogue" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_script")
+max_health = 35.0
+move_speed = 5.2
+attack_range = 1.8
+attack_damage = 12.0
+attack_interval = 1.0
+notice_range = 15.0
+notice_delay = 0.55
+voice_pitch = 1.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Model" parent="Visual" instance=ExtResource("2_model")]
+transform = Transform3D(-0.8, 0, 0, 0, 0.8, 0, 0, 0, -0.8, 0, 0, 0)

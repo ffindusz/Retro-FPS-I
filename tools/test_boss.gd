@@ -13,13 +13,13 @@ var _win_signaled := false
 
 
 func _boot_level_index() -> int:
-	return 5  # boss lives in level 6 now
+	return 6  # boss lives in level 7 now
 
 
 func _tick(_delta: float) -> bool:
 	var world := current_scene.get_node(WORLD_PATH)
 	var player: CharacterBody3D = world.get_node_or_null("Player")
-	var boss: CharacterBody3D = world.get_node_or_null("Level06/Enemies/Boss")
+	var boss: CharacterBody3D = world.get_node_or_null("Level07/Enemies/Boss")
 	var gs: Node = root.get_node(GAME_STATE_PATH)
 	if not _placed:
 		if player == null:

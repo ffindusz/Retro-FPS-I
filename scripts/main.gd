@@ -12,12 +12,13 @@ const LEVEL_SCENES: Array[PackedScene] = [
 	preload("res://scenes/levels/level_04.tscn"),
 	preload("res://scenes/levels/level_05.tscn"),
 	preload("res://scenes/levels/level_06.tscn"),
+	preload("res://scenes/levels/level_07.tscn"),
 	preload("res://scenes/levels/level_test.tscn"),
 ]
 ## Model test stage (0 on the title screen). Outside the campaign flow: it
 ## has no switch/teleporter, so it can never advance or complete, and level
-## 6 ends via the gold (win), so the campaign never reaches this index.
-const TEST_STAGE_INDEX := 6
+## 7 ends via the gold (win), so the campaign never reaches this index.
+const TEST_STAGE_INDEX := 7
 const PLAYER_SCENE := preload("res://scenes/player/player.tscn")
 
 var _level: Node3D
@@ -63,8 +64,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		_set_paused(true)
 	elif event is InputEventKey and event.pressed and not event.echo \
-			and event.physical_keycode >= KEY_F1 and event.physical_keycode <= KEY_F6:
-		# Level-warp cheat for testing: F1-F6 jump to that level from
+			and event.physical_keycode >= KEY_F1 and event.physical_keycode <= KEY_F7:
+		# Level-warp cheat for testing: F1-F7 jump to that level from
 		# anywhere (gameplay, pause, screens) with a fresh loadout.
 		get_viewport().set_input_as_handled()
 		_warp(event.physical_keycode - KEY_F1)

@@ -5,7 +5,7 @@ extends "res://tools/test_base.gd"
 
 
 func _boot_level_index() -> int:
-	return 4  # citadel is level 5 now
+	return 5  # citadel is level 6 now
 
 
 func _tick(_delta: float) -> bool:
