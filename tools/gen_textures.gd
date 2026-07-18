@@ -18,6 +18,8 @@ func _init() -> void:
 	_gen_stone()
 	_gen_ice()
 	_gen_swirl()
+	_gen_burst_sheet()
+	_gen_muzzle_flash()
 	print("Textures written to res://assets/textures/")
 	quit()
 
@@ -219,6 +221,63 @@ func _gen_swirl() -> void:
 			var v := clampf((arms + core) * rim * (0.82 + 0.18 * g), 0.0, 1.0) * 255.0
 			_put(img, x, y, v, v, v)
 	img.save_png("res://assets/textures/swirl.png")
+
+
+## Impact burst spritesheet: 8 frames (4x2 grid of 64px cells) of an
+## expanding spark burst on black. shaders/burst.gdshader plays it
+## additively (black = transparent) with a per-effect tint in Fx.spawn.
+func _gen_burst_sheet() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 5005
+	var cell := 64
+	# Fixed spark directions shared by all frames so sparks fly straight.
+	var spokes := []
+	for k in 9:
+		spokes.append([rng.randf_range(0.0, TAU), rng.randf_range(0.85, 1.15)])
+	var img := Image.create(cell * 4, cell * 2, false, Image.FORMAT_RGB8)
+	for frame in 8:
+		var p := frame / 7.0
+		var ox := (frame % 4) * cell
+		var oy := (frame / 4) * cell
+		for y in cell:
+			for x in cell:
+				var cx := (float(x) + 0.5) / cell * 2.0 - 1.0
+				var cy := (float(y) + 0.5) / cell * 2.0 - 1.0
+				var r := sqrt(cx * cx + cy * cy)
+				# Flash core: bright, collapses quickly.
+				var core: float = exp(-pow(r / maxf(0.42 * (1.0 - 0.85 * p), 0.05), 2.0)) \
+						* (1.0 - p) * 1.4
+				# Shock ring expanding outward.
+				var ring_r := 0.12 + 0.8 * p
+				var ring: float = exp(-pow((r - ring_r) / 0.09, 2.0)) * (1.0 - p) * 0.55
+				# Sparks flying outward on the fixed spokes, shrinking as they go.
+				var sparks := 0.0
+				for s: Array in spokes:
+					var dot_r: float = 0.15 + 0.82 * p * s[1]
+					var dd: float = sqrt(pow(cx - cos(s[0]) * dot_r, 2.0)
+							+ pow(cy - sin(s[0]) * dot_r, 2.0))
+					sparks += exp(-pow(dd / (0.09 * (1.0 - 0.55 * p)), 2.0)) * (1.0 - p)
+				var v := clampf(core + ring + sparks, 0.0, 1.0) * 255.0
+				_put(img, ox + x, oy + y, v, v, v)
+	img.save_png("res://assets/textures/burst_sheet.png")
+
+
+## Muzzle flash: soft star on black for the viewmodel flash quads
+## (additive material, black = transparent, tinted per weapon).
+func _gen_muzzle_flash() -> void:
+	var img := Image.create(64, 64, false, Image.FORMAT_RGB8)
+	for y in 64:
+		for x in 64:
+			var cx := (float(x) + 0.5) / 64.0 * 2.0 - 1.0
+			var cy := (float(y) + 0.5) / 64.0 * 2.0 - 1.0
+			var r := sqrt(cx * cx + cy * cy)
+			var falloff := pow(maxf(1.0 - r, 0.0), 1.3)
+			var star: float = exp(-absf(cx * cy) * 26.0) * falloff
+			var diag: float = exp(-absf(cx * cx - cy * cy) * 13.0) * falloff * 0.5
+			var core: float = exp(-pow(r / 0.28, 2.0))
+			var v := clampf(star + diag + core, 0.0, 1.0) * 255.0
+			_put(img, x, y, v, v, v)
+	img.save_png("res://assets/textures/muzzle_flash.png")
 
 
 ## Citadel stone: pale weathered sandstone blocks with bevel + light grime.

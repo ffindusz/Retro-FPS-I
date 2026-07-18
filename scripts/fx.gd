@@ -1,7 +1,11 @@
 class_name Fx
 extends Object
 ## Helper for short-lived flash effects (bullet impacts, explosions).
-## Spawns an unshaded billboard quad + omni light that frees itself.
+## Spawns a billboard quad playing the generated burst spritesheet
+## (additive, tinted) plus an omni light that fades out, then frees itself.
+
+const BURST_SHADER := preload("res://shaders/burst.gdshader")
+const BURST_SHEET := preload("res://assets/textures/burst_sheet.png")
 
 
 static func spawn(context: Node3D, pos: Vector3, color: Color, size: float, life := 0.08) -> void:
@@ -16,17 +20,24 @@ static func spawn(context: Node3D, pos: Vector3, color: Color, size: float, life
 	fx.add_child(light)
 	var mesh := MeshInstance3D.new()
 	var quad := QuadMesh.new()
-	quad.size = Vector2(size, size)
+	# The burst artwork peaks at ~half the cell, so oversize the quad to
+	# keep the visual size the callers were tuned for.
+	quad.size = Vector2(size, size) * 1.7
 	mesh.mesh = quad
-	var mat := StandardMaterial3D.new()
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mat.albedo_color = color
-	mat.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+	var mat := ShaderMaterial.new()
+	mat.shader = BURST_SHADER
+	mat.set_shader_parameter("sheet", BURST_SHEET)
+	mat.set_shader_parameter("tint", Vector3(color.r, color.g, color.b))
 	mesh.material_override = mat
 	fx.add_child(mesh)
 	vp.add_child(fx)
 	fx.global_position = pos
-	fx.get_tree().create_timer(life).timeout.connect(fx.queue_free)
+	var tween := fx.create_tween().set_parallel(true)
+	tween.tween_method(
+			func(f: float) -> void: mat.set_shader_parameter("frame", f),
+			0.0, 8.0, life)
+	tween.tween_property(light, "light_energy", 0.0, life)
+	tween.chain().tween_callback(fx.queue_free)
 
 
 ## One-shot positional sound that outlives its emitter (e.g. exploding
