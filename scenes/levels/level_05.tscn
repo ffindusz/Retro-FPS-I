@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://scripts/level_objects/lava_area.gd" id="2_killzone"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_grunt.tscn" id="4_grunt"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_spitter.tscn" id="5_spitter"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/switch.tscn" id="6_switch"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/switch_floor.tscn" id="6_switch"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/teleporter.tscn" id="7_teleporter"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/barrel.tscn" id="8_barrel"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/secret_area.tscn" id="9_secret"]
@@ -138,7 +138,7 @@ tick_interval = 0.2
 shape = SubResource("BoxShape3D_void")
 
 [node name="Switch" parent="." instance=ExtResource("6_switch")]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 1.5, -24.95)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24.2)
 teleporter_path = NodePath("../Teleporter")
 
 [node name="Teleporter" parent="." instance=ExtResource("7_teleporter")]
