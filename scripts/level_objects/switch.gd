@@ -12,6 +12,7 @@ enum State { LOCKED, ARMED, FLIPPED }
 
 const SWITCH_SOUND := preload("res://assets/audio/switch.wav")
 const DUD_SOUND := preload("res://assets/audio/click.wav")
+const ARM_SOUND := preload("res://assets/audio/crystal_arm.wav")
 
 const ALBEDO_LOCKED := Color(0.17, 0.19, 0.23)
 const ALBEDO_ARMED := Color(0.16, 0.45, 0.3)
@@ -74,6 +75,8 @@ func _arm() -> void:
 	_light.visible = true
 	_glow.visible = true
 	_pulse.play("pulse")
+	# Positional, so the chime also hints where the crystal is.
+	Fx.spawn_sound(self, global_position, ARM_SOUND, 4.0)
 	GameState.announce("ALL ENEMIES DOWN - THE EMERALD AWAKENS")
 
 

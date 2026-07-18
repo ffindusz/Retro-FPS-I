@@ -54,6 +54,7 @@ func _init() -> void:
 	_save("bone_rattle", _gen_bone_rattle())
 	_save("bone_hit", _gen_bone_hit())
 	_save("bone_die", _gen_bone_die())
+	_save("crystal_arm", _gen_crystal_arm())  # pure tones: no RNG consumed
 	print("SFX written to res://assets/audio/")
 	quit()
 
@@ -592,6 +593,29 @@ func _add_tick(buf: PackedFloat32Array, rate: int, rng: RandomNumberGenerator,
 			return
 		var t := float(i) / rate
 		buf[idx] += rng.randf_range(-1.0, 1.0) * amp * exp(-t * 180.0)
+
+
+## Crystal arming (the emerald awakens): struck-crystal chime — detuned
+## partial pairs beat against each other for shimmer — over a low hum that
+## swells in beneath and fades with the ring-out. Pure tones: no RNG.
+func _gen_crystal_arm() -> PackedFloat32Array:
+	var dur := 1.5
+	var out := PackedFloat32Array()
+	# [freq, amplitude, decay power] — higher partials ring shorter.
+	var partials := [
+		[660.0, 0.30, 1.6], [663.5, 0.20, 1.6],
+		[990.0, 0.20, 2.2], [1567.0, 0.14, 3.0], [2217.0, 0.09, 4.0],
+	]
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		var s := 0.0
+		for p: Array in partials:
+			s += sin(TAU * p[0] * t) * p[1] * _env(t, dur, p[2])
+		var shimmer := 0.88 + 0.12 * sin(TAU * 5.5 * t)
+		var hum := (sin(TAU * 110.0 * t) * 0.16 + sin(TAU * 165.0 * t) * 0.10) \
+				* minf(t / 0.5, 1.0) * _env(t, dur, 1.2)
+		out.append((s * shimmer + hum) * minf(t / 0.04, 1.0))
+	return out
 
 
 ## Boss enrage roar: detuned saws + noise.
