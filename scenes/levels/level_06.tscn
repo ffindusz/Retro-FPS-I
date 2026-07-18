@@ -1,6 +1,7 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=22 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/props/banner_red.tscn" id="17_banner_red"]
+[ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="22_dust"]
 [ext_resource type="PackedScene" path="res://scenes/props/pillar_decorated.tscn" id="18_pillar_dec"]
 [ext_resource type="PackedScene" path="res://scenes/props/torch_unlit.tscn" id="19_torch_unlit"]
 [ext_resource type="PackedScene" path="res://scenes/props/sword_shield.tscn" id="20_sword_shield"]
@@ -232,3 +233,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -8)
 
 [node name="PlayerSpawn" type="Marker3D" parent="Spawns"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 13)
+
+[node name="AshArena" parent="." instance=ExtResource("22_dust")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, -12)
+amount = 32
+emission_box_extents = Vector3(10.5, 3.5, 10.5)

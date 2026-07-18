@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/props/pillar.tscn" id="17_pillar"]
+[ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="21_dust"]
 [ext_resource type="PackedScene" path="res://scenes/props/pillar_decorated.tscn" id="18_pillar_dec"]
 [ext_resource type="PackedScene" path="res://scenes/props/rubble_half.tscn" id="19_rubble_half"]
 [ext_resource type="PackedScene" path="res://scenes/props/banner_blue.tscn" id="20_banner_blue"]
@@ -247,3 +248,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.1, -1)
 
 [node name="PlayerSpawn" type="Marker3D" parent="Spawns"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 20)
+
+[node name="WindMotes" parent="." instance=ExtResource("21_dust")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+amount = 30
+lifetime = 8.0
+preprocess = 8.0
+emission_box_extents = Vector3(8, 1.8, 6)
+direction = Vector3(1, 0, 0)
+spread = 6.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0

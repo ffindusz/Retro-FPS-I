@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3]
+
+[sub_resource type="Gradient" id="Gradient_dot"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dot"]
+gradient = SubResource("Gradient_dot")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ember"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = SubResource("GradientTexture2D_dot")
+blend_mode = 1
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_ember"]
+material = SubResource("StandardMaterial3D_ember")
+size = Vector2(0.09, 0.09)
+
+[sub_resource type="Gradient" id="Gradient_life"]
+offsets = PackedFloat32Array(0, 0.15, 0.75, 1)
+colors = PackedColorArray(1, 0.7, 0.3, 0, 1, 0.65, 0.25, 1, 1, 0.35, 0.1, 0.8, 0.5, 0.1, 0.05, 0)
+
+[node name="Embers" type="CPUParticles3D"]
+amount = 40
+lifetime = 4.0
+preprocess = 4.0
+randomness = 0.4
+lifetime_randomness = 0.4
+mesh = SubResource("QuadMesh_ember")
+emission_shape = 2
+emission_box_extents = Vector3(5, 0.8, 3.5)
+direction = Vector3(0, 1, 0)
+spread = 25.0
+gravity = Vector3(0, 0.35, 0)
+initial_velocity_min = 0.4
+initial_velocity_max = 0.9
+tangential_accel_min = 0.15
+tangential_accel_max = 0.35
+scale_amount_min = 0.5
+color_ramp = SubResource("Gradient_life")

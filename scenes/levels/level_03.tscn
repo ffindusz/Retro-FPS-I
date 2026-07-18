@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Material" path="res://assets/materials/mat_rock.tres" id="1_rock"]
+[ext_resource type="PackedScene" path="res://scenes/props/embers.tscn" id="17_embers"]
 [ext_resource type="Material" path="res://assets/materials/mat_lava.tres" id="2_lava"]
 [ext_resource type="Script" path="res://scripts/level_objects/lava_area.gd" id="3_lavarea"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_grunt.tscn" id="4_grunt"]
@@ -247,3 +248,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.1, -19)
 
 [node name="PlayerSpawn" type="Marker3D" parent="Spawns"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 16)
+
+[node name="EmbersLava" parent="." instance=ExtResource("17_embers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -6.2)

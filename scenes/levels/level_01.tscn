@@ -1,6 +1,7 @@
-[gd_scene load_steps=26 format=3]
+[gd_scene load_steps=27 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/level_objects/barrel.tscn" id="14_barrel"]
+[ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="28_dust"]
 [ext_resource type="PackedScene" path="res://scenes/props/torch_mounted.tscn" id="17_torch"]
 [ext_resource type="PackedScene" path="res://scenes/props/skeleton_prop.tscn" id="18_skeleton"]
 [ext_resource type="PackedScene" path="res://scenes/props/banner_red.tscn" id="19_banner_red"]
@@ -420,3 +421,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4, 1.2, -3)
 
 [node name="SecretCrateTop" parent="Secrets" instance=ExtResource("15_secret")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 3, -2.55)
+
+[node name="DustRoomB" parent="." instance=ExtResource("28_dust")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
+
+[node name="DustArena" parent="." instance=ExtResource("28_dust")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -24)
+amount = 32
+emission_box_extents = Vector3(9, 3, 9)

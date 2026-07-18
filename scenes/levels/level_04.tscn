@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Material" path="res://assets/materials/mat_icerock.tres" id="1_icerock"]
+[ext_resource type="PackedScene" path="res://scenes/props/snowfall.tscn" id="20_snow"]
 [ext_resource type="Material" path="res://assets/materials/mat_ice.tres" id="2_ice"]
 [ext_resource type="Script" path="res://scripts/level_objects/ice_zone.gd" id="3_icezone"]
 [ext_resource type="Script" path="res://scripts/level_objects/lava_area.gd" id="4_hazard"]
@@ -259,3 +260,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.1, -19.5)
 
 [node name="PlayerSpawn" type="Marker3D" parent="Spawns"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 16)
+
+[node name="SnowfallHall" parent="." instance=ExtResource("20_snow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6, -6)
+
+[node name="SnowfallEntry" parent="." instance=ExtResource("20_snow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 14)
+amount = 20
+emission_box_extents = Vector3(4, 0.4, 3.5)
