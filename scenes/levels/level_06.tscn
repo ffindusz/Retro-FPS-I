@@ -1,5 +1,10 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=21 format=3]
 
+[ext_resource type="PackedScene" path="res://scenes/props/banner_red.tscn" id="17_banner_red"]
+[ext_resource type="PackedScene" path="res://scenes/props/pillar_decorated.tscn" id="18_pillar_dec"]
+[ext_resource type="PackedScene" path="res://scenes/props/torch_unlit.tscn" id="19_torch_unlit"]
+[ext_resource type="PackedScene" path="res://scenes/props/sword_shield.tscn" id="20_sword_shield"]
+[ext_resource type="PackedScene" path="res://scenes/props/rubble_large.tscn" id="21_rubble_large"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/barrel.tscn" id="14_barrel"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/secret_area.tscn" id="15_secret"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_cells.tscn" id="16_cells"]
@@ -116,6 +121,38 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, -24.5)
 
 [node name="GoldPile" parent="." instance=ExtResource("8_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -28)
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="BannerRedEntryW" parent="Props" instance=ExtResource("17_banner_red")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -3, 0, -0.02)
+
+[node name="BannerRedEntryE" parent="Props" instance=ExtResource("17_banner_red")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 3, 0, -0.02)
+
+[node name="TorchUnlitEntryW" parent="Props" instance=ExtResource("19_torch_unlit")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -5.5, 2.2, -0.02)
+
+[node name="TorchUnlitEntryE" parent="Props" instance=ExtResource("19_torch_unlit")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 5.5, 2.2, -0.02)
+
+[node name="BannerRedSecretW" parent="Props" instance=ExtResource("17_banner_red")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -23.98)
+
+[node name="BannerRedSecretE" parent="Props" instance=ExtResource("17_banner_red")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -23.98)
+
+[node name="SwordShieldDoor" parent="Props" instance=ExtResource("20_sword_shield")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9, -23.9)
+
+[node name="PillarDecArenaW" parent="Props" instance=ExtResource("18_pillar_dec")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -12)
+
+[node name="PillarDecArenaE" parent="Props" instance=ExtResource("18_pillar_dec")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -12)
+
+[node name="RubbleLargeCorner" parent="Props" instance=ExtResource("21_rubble_large")]
+transform = Transform3D(0.707, 0, -0.707, 0, 1, 0, 0.707, 0, 0.707, 9.8, 0, -21.8)
 
 [node name="Pickups" type="Node3D" parent="."]
 

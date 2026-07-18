@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Material" path="res://assets/materials/mat_stone.tres" id="1_stone"]
 [ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
@@ -7,6 +7,15 @@
 [ext_resource type="PackedScene" path="res://assets/models/skeleton_warrior/skeleton_warrior.glb" id="5_warrior"]
 [ext_resource type="PackedScene" path="res://assets/models/skeleton_mage/skeleton_mage.glb" id="6_mage"]
 [ext_resource type="PackedScene" path="res://assets/models/skeleton_rogue/skeleton_rogue.glb" id="7_rogue"]
+[ext_resource type="PackedScene" path="res://scenes/props/pillar.tscn" id="8_pillar"]
+[ext_resource type="PackedScene" path="res://scenes/props/pillar_decorated.tscn" id="9_pillar_dec"]
+[ext_resource type="PackedScene" path="res://scenes/props/banner_red.tscn" id="10_banner_red"]
+[ext_resource type="PackedScene" path="res://scenes/props/banner_blue.tscn" id="11_banner_blue"]
+[ext_resource type="PackedScene" path="res://scenes/props/sword_shield.tscn" id="12_sword_shield"]
+[ext_resource type="PackedScene" path="res://scenes/props/crates_stacked.tscn" id="13_crates"]
+[ext_resource type="PackedScene" path="res://scenes/props/torch_unlit.tscn" id="14_torch_unlit"]
+[ext_resource type="PackedScene" path="res://scenes/props/rubble_half.tscn" id="15_rubble_half"]
+[ext_resource type="PackedScene" path="res://scenes/props/rubble_large.tscn" id="16_rubble_large"]
 
 [node name="LevelTest" type="Node3D"]
 
@@ -99,6 +108,98 @@ billboard = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.6, -3.5)
 text = "ROGUE
 Walking_A"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="BannerRed" parent="Props" instance=ExtResource("10_banner_red")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -5.98)
+
+[node name="BannerBlue" parent="Props" instance=ExtResource("11_banner_blue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -5.98)
+
+[node name="SwordShield" parent="Props" instance=ExtResource("12_sword_shield")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, -5.9)
+
+[node name="TorchUnlit" parent="Props" instance=ExtResource("14_torch_unlit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2.2, -5.98)
+
+[node name="Pillar" parent="Props" instance=ExtResource("8_pillar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -1)
+
+[node name="PillarDecorated" parent="Props" instance=ExtResource("9_pillar_dec")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, 2.5)
+
+[node name="CratesStacked" parent="Props" instance=ExtResource("13_crates")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -1)
+
+[node name="RubbleHalf" parent="Props" instance=ExtResource("15_rubble_half")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8, 0, 4.2)
+
+[node name="RubbleLarge" parent="Props" instance=ExtResource("16_rubble_large")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, 5.7)
+
+[node name="LabelBannerRed" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 3.95, -5.6)
+text = "BANNER RED"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="LabelBannerBlue" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 3.95, -5.6)
+text = "BANNER BLUE"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="LabelSwordShield" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, -5.6)
+text = "SWORD+SHIELD"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="LabelTorchUnlit" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 3.2, -5.6)
+text = "TORCH UNLIT"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="LabelPillar" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 4.15, -1)
+text = "PILLAR"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="LabelPillarDecorated" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 4.15, 2.5)
+text = "PILLAR DECORATED"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="LabelCratesStacked" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2.7, -1)
+text = "CRATES STACKED"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="LabelRubbleHalf" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8, 3.9, 4.2)
+text = "RUBBLE HALF"
+font_size = 64
+outline_size = 12
+billboard = 1
+
+[node name="LabelRubbleLarge" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 3.9, 5.2)
+text = "RUBBLE LARGE"
 font_size = 64
 outline_size = 12
 billboard = 1

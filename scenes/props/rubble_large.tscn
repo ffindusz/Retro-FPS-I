@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/models/rubble_large/rubble_large.glb" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pile"]
+size = Vector3(7.4, 3.0, 2.6)
+
+[node name="RubbleLarge" type="StaticBody3D"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_pile")
+
+[node name="Model" parent="." instance=ExtResource("1_model")]

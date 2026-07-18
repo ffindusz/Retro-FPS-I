@@ -1,8 +1,17 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=26 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/level_objects/barrel.tscn" id="14_barrel"]
 [ext_resource type="PackedScene" path="res://scenes/props/torch_mounted.tscn" id="17_torch"]
 [ext_resource type="PackedScene" path="res://scenes/props/skeleton_prop.tscn" id="18_skeleton"]
+[ext_resource type="PackedScene" path="res://scenes/props/banner_red.tscn" id="19_banner_red"]
+[ext_resource type="PackedScene" path="res://scenes/props/banner_blue.tscn" id="20_banner_blue"]
+[ext_resource type="PackedScene" path="res://scenes/props/pillar.tscn" id="21_pillar"]
+[ext_resource type="PackedScene" path="res://scenes/props/pillar_decorated.tscn" id="22_pillar_dec"]
+[ext_resource type="PackedScene" path="res://scenes/props/crates_stacked.tscn" id="23_crates"]
+[ext_resource type="PackedScene" path="res://scenes/props/sword_shield.tscn" id="24_sword_shield"]
+[ext_resource type="PackedScene" path="res://scenes/props/rubble_half.tscn" id="25_rubble_half"]
+[ext_resource type="PackedScene" path="res://scenes/props/rubble_large.tscn" id="26_rubble_large"]
+[ext_resource type="PackedScene" path="res://scenes/props/torch_unlit.tscn" id="27_torch_unlit"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/secret_area.tscn" id="15_secret"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_cells.tscn" id="16_cells"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_health.tscn" id="10_health"]
@@ -341,6 +350,51 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 2.2, -5.98)
 
 [node name="SkeletonArena" parent="Props" instance=ExtResource("18_skeleton")]
 transform = Transform3D(-0.671, 0, -0.742, 0, 1, 0, 0.742, 0, -0.671, -8.2, 0, -31.3)
+
+[node name="BannerRedA1" parent="Props" instance=ExtResource("19_banner_red")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 14.02)
+
+[node name="BannerRedA2" parent="Props" instance=ExtResource("19_banner_red")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 14.02)
+
+[node name="CratesRoomA" parent="Props" instance=ExtResource("23_crates")]
+transform = Transform3D(0.94, 0, 0.342, 0, 1, 0, -0.342, 0, 0.94, -4.7, 0, 15.6)
+
+[node name="PillarB1" parent="Props" instance=ExtResource("21_pillar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8, 0, 4.3)
+
+[node name="PillarB2" parent="Props" instance=ExtResource("21_pillar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0, 4.3)
+
+[node name="SwordShieldB" parent="Props" instance=ExtResource("24_sword_shield")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -7.9, 1.7, 0)
+
+[node name="BannerBlueC1" parent="Props" instance=ExtResource("20_banner_blue")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 19, 0, 5.98)
+
+[node name="BannerBlueC2" parent="Props" instance=ExtResource("20_banner_blue")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 25, 0, 5.98)
+
+[node name="CratesRoomC" parent="Props" instance=ExtResource("23_crates")]
+transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, 26.8, 0, 1.8)
+
+[node name="PillarDecArena1" parent="Props" instance=ExtResource("22_pillar_dec")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -24)
+
+[node name="PillarDecArena2" parent="Props" instance=ExtResource("22_pillar_dec")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -24)
+
+[node name="RubbleLargeArena" parent="Props" instance=ExtResource("26_rubble_large")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 9.2, 0, -28)
+
+[node name="RubbleHalfArena" parent="Props" instance=ExtResource("25_rubble_half")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.6, 0, -16.2)
+
+[node name="TorchUnlitArenaW" parent="Props" instance=ExtResource("27_torch_unlit")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -2.2, 2.2, -14.02)
+
+[node name="TorchUnlitArenaE" parent="Props" instance=ExtResource("27_torch_unlit")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 2.2, 2.2, -14.02)
 
 [node name="Barrels" type="Node3D" parent="."]
 
