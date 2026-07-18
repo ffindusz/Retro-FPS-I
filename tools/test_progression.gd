@@ -39,8 +39,9 @@ func _tick(_delta: float) -> bool:
 			print("L1 armed switch shot: teleporter active=%s (expect true)" % tp._active)
 			player.global_position = tp.global_position + Vector3(0, 0.3, 0)
 			player.velocity = Vector3.ZERO
+			# Departure swell (0.45s) + intermission click grace (0.5s).
 			_step = 20
-			_wait_until = Time.get_ticks_msec() + 800
+			_wait_until = Time.get_ticks_msec() + 1400
 		20:
 			var inter := current_scene.get_node("Intermission")
 			print("intermission: visible=%s paused=%s stats=[%s]"
@@ -65,7 +66,7 @@ func _tick(_delta: float) -> bool:
 			player.global_position = tp.global_position + Vector3(0, 0.3, 0)
 			player.velocity = Vector3.ZERO
 			_step = 21
-			_wait_until = Time.get_ticks_msec() + 800
+			_wait_until = Time.get_ticks_msec() + 1400
 		21:
 			_key(KEY_SPACE)
 			_step = 30
@@ -85,7 +86,7 @@ func _tick(_delta: float) -> bool:
 			player.global_position = tp.global_position + Vector3(0, 0.3, 0)
 			player.velocity = Vector3.ZERO
 			_step = 32
-			_wait_until = Time.get_ticks_msec() + 800
+			_wait_until = Time.get_ticks_msec() + 1400
 		32:
 			_key(KEY_SPACE)
 			_step = 50
@@ -105,7 +106,7 @@ func _tick(_delta: float) -> bool:
 			player.global_position = tp.global_position + Vector3(0, 0.3, 0)
 			player.velocity = Vector3.ZERO
 			_step = 52
-			_wait_until = Time.get_ticks_msec() + 800
+			_wait_until = Time.get_ticks_msec() + 1400
 		52:
 			_key(KEY_SPACE)
 			_step = 40
@@ -125,7 +126,7 @@ func _tick(_delta: float) -> bool:
 			player.global_position = tp.global_position + Vector3(0, 0.3, 0)
 			player.velocity = Vector3.ZERO
 			_step = 42
-			_wait_until = Time.get_ticks_msec() + 800
+			_wait_until = Time.get_ticks_msec() + 1400
 		42:
 			_key(KEY_SPACE)
 			_step = 2

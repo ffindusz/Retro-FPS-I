@@ -43,6 +43,18 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.75, 0.08, 0.08, 1)
 
+[node name="TeleportFlash" type="ColorRect" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.78, 1, 0.95, 1)
+
 [node name="CrossCenter" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15

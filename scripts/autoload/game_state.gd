@@ -8,6 +8,7 @@ signal boss_died
 signal level_completed
 signal game_won
 signal announcement(text: String)
+signal teleport_flash
 
 const MAX_HEALTH := 100
 
@@ -62,6 +63,10 @@ func win_game() -> void:
 
 func announce(text: String) -> void:
 	announcement.emit(text)
+
+
+func flash_teleport() -> void:
+	teleport_flash.emit()
 
 
 func heal(amount: int) -> bool:

@@ -42,4 +42,15 @@ func _on_body_entered(body: Node3D) -> void:
 		return
 	_used = true
 	Fx.spawn_sound(self, global_position, TELEPORT_SOUND, 3.0)
-	GameState.complete_level()
+	GameState.flash_teleport()
+	# Departure: the vortex swells and flares while the screen whites out,
+	# then the level completes. Stop the idle pulse first - it animates the
+	# same properties the swell tween drives.
+	_pulse.stop()
+	var tween := create_tween().set_parallel(true)
+	tween.tween_property(_vortex, "scale", Vector3.ONE * 1.7, 0.45) \
+			.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.tween_property(_halo, "scale", Vector3.ONE * 1.9, 0.45) \
+			.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.tween_property(_light, "light_energy", 3.5, 0.45)
+	tween.chain().tween_callback(GameState.complete_level)

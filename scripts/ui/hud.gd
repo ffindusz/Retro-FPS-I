@@ -10,12 +10,25 @@ var _banner_tween: Tween
 @onready var _weapon: Label = %WeaponLabel
 @onready var _ammo: Label = %AmmoLabel
 @onready var _flash: ColorRect = %DamageFlash
+@onready var _teleport_flash: ColorRect = %TeleportFlash
 @onready var _banner: Label = %BannerLabel
 
 
 func _ready() -> void:
 	GameState.health_changed.connect(_on_health_changed)
 	GameState.announcement.connect(show_banner)
+	GameState.teleport_flash.connect(_on_teleport_flash)
+
+
+## Departure white-out: ramps up while the portal consumes the player,
+## then the tail fades back out over the arrival in the next level (the
+## tween pauses with the tree during the intermission).
+func _on_teleport_flash() -> void:
+	var tween := create_tween()
+	_teleport_flash.modulate.a = 0.0
+	tween.tween_property(_teleport_flash, "modulate:a", 1.0, 0.4)
+	tween.tween_interval(0.25)
+	tween.tween_property(_teleport_flash, "modulate:a", 0.0, 0.9)
 
 
 ## Fading top-center message: level names, "TELEPORTER ONLINE", etc.
