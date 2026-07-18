@@ -1,0 +1,143 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/options_screen.gd" id="1_script"]
+[ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="2_click"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 64
+font_color = Color(0.9, 0.9, 0.95, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_hint"]
+font_size = 20
+font_color = Color(0.7, 0.72, 0.8, 1)
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_offset = Vector2(2, 2)
+
+[node name="OptionsScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.75)
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 22
+alignment = 1
+
+[node name="Title" type="Label" parent="Layout"]
+layout_mode = 2
+mouse_filter = 2
+text = "OPTIONS"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+
+[node name="RowSensitivity" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Key" type="Label" parent="Layout/RowSensitivity"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 26
+text = "MOUSE SENSITIVITY"
+
+[node name="Value" type="Label" parent="Layout/RowSensitivity"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 26
+text = "[###-------] 100%"
+
+[node name="RowMusic" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Key" type="Label" parent="Layout/RowMusic"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 26
+text = "MUSIC VOLUME"
+
+[node name="Value" type="Label" parent="Layout/RowMusic"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 26
+text = "[##########] 100%"
+
+[node name="RowSfx" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Key" type="Label" parent="Layout/RowSfx"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 26
+text = "SFX VOLUME"
+
+[node name="Value" type="Label" parent="Layout/RowSfx"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 26
+text = "[##########] 100%"
+
+[node name="RowDither" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Key" type="Label" parent="Layout/RowDither"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 26
+text = "PS1 DITHER FILTER"
+
+[node name="Value" type="Label" parent="Layout/RowDither"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 26
+text = "ON"
+
+[node name="Hint" type="Label" parent="Layout"]
+layout_mode = 2
+mouse_filter = 2
+text = "W/S SELECT  ·  A/D ADJUST  ·  ESC BACK"
+label_settings = SubResource("LabelSettings_hint")
+horizontal_alignment = 1
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_click")
+volume_db = -10.0
+bus = &"SFX"

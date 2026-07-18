@@ -81,8 +81,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		# SubViewport scaling (plain `relative` arrives divided by the
 		# container's stretch factor, which would slow the look 4x).
 		var motion: Vector2 = event.screen_relative
-		rotate_y(-motion.x * mouse_sensitivity)
-		head.rotation.x = clampf(head.rotation.x - motion.y * mouse_sensitivity,
+		var sens := mouse_sensitivity * Settings.sensitivity
+		rotate_y(-motion.x * sens)
+		head.rotation.x = clampf(head.rotation.x - motion.y * sens,
 				-deg_to_rad(pitch_limit_deg), deg_to_rad(pitch_limit_deg))
 
 

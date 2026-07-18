@@ -56,6 +56,6 @@ horizontal_alignment = 1
 [node name="Hint" type="Label" parent="Layout"]
 layout_mode = 2
 mouse_filter = 2
-text = "ESC / CLICK RESUME  ·  R RESTART LEVEL  ·  Q QUIT TO TITLE"
+text = "ESC / CLICK RESUME  ·  R RESTART LEVEL  ·  O OPTIONS  ·  Q QUIT TO TITLE"
 label_settings = SubResource("LabelSettings_hint")
 horizontal_alignment = 1

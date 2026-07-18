@@ -25,6 +25,7 @@ var _player: PlayerController
 var _level_index := 0
 var _restart_index := 0
 var _game_active := false
+var _options_from_pause := false
 
 @onready var _world: Node3D = %World
 @onready var _start_screen: Control = %StartScreen
@@ -32,6 +33,8 @@ var _game_active := false
 @onready var _hud: Control = %Hud
 @onready var _pause_screen: Control = %PauseScreen
 @onready var _intermission: Control = %Intermission
+@onready var _options_screen: Control = %OptionsScreen
+@onready var _viewport_container: SubViewportContainer = $ViewportContainer
 
 
 func _ready() -> void:
@@ -40,11 +43,16 @@ func _ready() -> void:
 	GameState.level_completed.connect(_on_level_completed)
 	GameState.game_won.connect(_on_game_won)
 	_start_screen.start_requested.connect(start_game)
+	_start_screen.options_requested.connect(_open_options.bind(false))
 	_end_screen.restart_requested.connect(_on_restart)
 	_pause_screen.resume_requested.connect(_set_paused.bind(false))
 	_pause_screen.restart_requested.connect(_on_pause_restart)
+	_pause_screen.options_requested.connect(_open_options.bind(true))
 	_pause_screen.quit_requested.connect(_on_pause_quit)
 	_intermission.continue_requested.connect(_on_intermission_continue)
+	_options_screen.closed.connect(_on_options_closed)
+	Settings.changed.connect(_apply_video_settings)
+	_apply_video_settings()
 	_show_only(_start_screen)
 
 
@@ -63,9 +71,33 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _warp(level_index: int) -> void:
+	# close() restores whichever screen options was opened over; the
+	# start_game path below then hides everything game-flow-related anyway.
+	_options_screen.close()
 	_set_overlay(_pause_screen, false)
 	_intermission.visible = false
 	start_game(level_index)
+
+
+## The options screen swaps in for its opener (title or pause screen) so the
+## opener's own input handling can't fight it, and swaps back on close. The
+## tree pause state is left untouched: paused over pause, live over title.
+func _open_options(from_pause: bool) -> void:
+	_options_from_pause = from_pause
+	(_pause_screen if from_pause else _start_screen).visible = false
+	_options_screen.open()
+
+
+func _on_options_closed() -> void:
+	(_pause_screen if _options_from_pause else _start_screen).visible = true
+
+
+## Applies the video half of Settings; the audio half lives on the buses and
+## is applied by the Settings autoload itself.
+func _apply_video_settings() -> void:
+	var mat := _viewport_container.material as ShaderMaterial
+	mat.set_shader_parameter("dither_strength", 1.0 if Settings.dither else 0.0)
+	mat.set_shader_parameter("color_levels", 32.0 if Settings.dither else 256.0)
 
 
 ## Pause menu and intermission are full-screen overlays that stack on top of

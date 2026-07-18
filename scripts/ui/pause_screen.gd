@@ -4,6 +4,7 @@ extends Control
 
 signal resume_requested
 signal restart_requested
+signal options_requested
 signal quit_requested
 
 
@@ -23,6 +24,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_R:
 				get_viewport().set_input_as_handled()
 				restart_requested.emit()
+			KEY_O:
+				get_viewport().set_input_as_handled()
+				options_requested.emit()
 			KEY_Q:
 				get_viewport().set_input_as_handled()
 				quit_requested.emit()

@@ -48,6 +48,7 @@ static func spawn_sound(context: Node3D, pos: Vector3, stream: AudioStream,
 	if vp == null:
 		return
 	var player := AudioStreamPlayer3D.new()
+	player.bus = &"SFX"
 	player.stream = stream
 	player.volume_db = volume_db
 	player.pitch_scale = pitch

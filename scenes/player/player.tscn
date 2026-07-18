@@ -47,7 +47,9 @@ visible = false
 [node name="StepSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_step")
 volume_db = -8.0
+bus = &"SFX"
 
 [node name="LandSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_land")
 volume_db = -4.0
+bus = &"SFX"

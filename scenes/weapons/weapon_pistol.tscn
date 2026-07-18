@@ -46,7 +46,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_flash")
 [node name="ShotSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_shot")
 volume_db = -6.0
+bus = &"SFX"
 
 [node name="ClickSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_click")
 volume_db = -8.0
+bus = &"SFX"

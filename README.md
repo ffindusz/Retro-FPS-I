@@ -36,6 +36,7 @@ godot --headless --editor --import
 | Left mouse | Fire |
 | 1 / 2 / 3 / 4, mouse wheel | Switch weapon (wand / crossbow / fire staff / tome) |
 | Esc | Pause (resume / restart level / quit to title) |
+| O on the title or pause screen | Options (mouse sensitivity, music/SFX volume, PS1 dither filter) |
 | 1–6 on the title screen, F1–F6 anytime | Level-select cheat |
 | 0 on the title screen | Model test stage (animated character viewer) |
 
@@ -58,11 +59,18 @@ them.
 Each level also hides **secret areas** with bonus stashes; an intermission
 screen after every level tallies your kills, secrets, and time.
 
+The **options menu** (O on the title or pause screen) adjusts mouse
+sensitivity, music and SFX volume (separate audio buses), and the PS1
+dither/quantize filter; settings persist to `user://settings.cfg`.
+
 ## Project layout
 
 - `scenes/` — main scene + levels, player, weapons, enemies, UI screens, and
   `level_objects/` (switch, teleporter, secret door, gold pile)
-- `scripts/` — gameplay code (`autoload/game_state.gd` is the flow singleton)
+- `scripts/` — gameplay code (`autoload/game_state.gd` is the flow singleton,
+  `autoload/settings.gd` the persistent user settings — sensitivity, volumes,
+  dither — saved to `user://settings.cfg`; `default_bus_layout.tres` defines
+  the Music/SFX audio buses they control)
 - `shaders/` — `ps1_vertex_snap.gdshader` (world materials) and
   `ps1_post.gdshader` (dither/quantize post pass)
 - `assets/` — generated placeholder textures, SFX, shared materials, and
@@ -71,8 +79,9 @@ screen after every level tallies your kills, secrets, and time.
 - `tools/` — headless dev scripts (`-s` runnable): `gen_textures.gd`/
   `gen_audio.gd` (deterministic asset generators), `probe_level.gd`
   (CSG collision probe), `screenshot_tour.gd`/`screenshot_ui.gd` (visual
-  capture — run without `--headless`), and 16 smoke tests covering level
-  flow (`test_flow`, `test_progression`, `test_cheat`, `test_pause`),
+  capture — run without `--headless`), and 17 smoke tests covering level
+  flow (`test_flow`, `test_progression`, `test_cheat`, `test_pause`,
+  `test_settings`),
   combat/AI (`test_enemy`, `test_spitter`, `test_boss`, `test_weapons`),
   movement/hazards/stats (`test_crouch`, `test_feel`, `test_ice`,
   `test_lava`, `test_void`, `test_pickups`, `test_stats`), and the
