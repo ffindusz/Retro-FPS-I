@@ -1,19 +1,27 @@
 class_name Teleporter
 extends Area3D
-## Floor pad that sends the player to the next level once a switch has
-## activated it. Dark and inert until then.
+## Portal pad that sends the player to the next level once a crystal
+## switch has opened it. A dark inert dais until then; on activation a
+## swirling vortex (shaders/vortex.gdshader) appears above a slowly
+## churning pool, and stepping in completes the level.
 
 const TELEPORT_SOUND := preload("res://assets/audio/teleport.wav")
 
 var _active := false
 var _used := false
 
-@onready var _core: MeshInstance3D = $Core
+@onready var _pool: MeshInstance3D = $Pool
+@onready var _vortex: MeshInstance3D = $Vortex
+@onready var _halo: MeshInstance3D = $Halo
 @onready var _light: OmniLight3D = $Light
+@onready var _pulse: AnimationPlayer = $Pulse
 
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
+	_pool.visible = false
+	_vortex.visible = false
+	_halo.visible = false
 	_light.visible = false
 
 
@@ -21,11 +29,12 @@ func activate() -> void:
 	if _active:
 		return
 	_active = true
-	var mat: StandardMaterial3D = _core.get_surface_override_material(0).duplicate()
-	mat.albedo_color = Color(0.3, 1.0, 0.9)
-	_core.set_surface_override_material(0, mat)
+	_pool.visible = true
+	_vortex.visible = true
+	_halo.visible = true
 	_light.visible = true
-	GameState.announce("TELEPORTER ONLINE")
+	_pulse.play("pulse")
+	GameState.announce("THE PORTAL OPENS")
 
 
 func _on_body_entered(body: Node3D) -> void:

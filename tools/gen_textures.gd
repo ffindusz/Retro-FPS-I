@@ -17,6 +17,7 @@ func _init() -> void:
 	_gen_lava()
 	_gen_stone()
 	_gen_ice()
+	_gen_swirl()
 	print("Textures written to res://assets/textures/")
 	quit()
 
@@ -194,6 +195,30 @@ func _gen_ice() -> void:
 				b = 255.0
 			_put(img, x, y, r, g, b)
 	img.save_png("res://assets/textures/ice.png")
+
+
+## Portal vortex: grayscale three-armed spiral with bright core and dark rim,
+## rotated at runtime by shaders/vortex.gdshader (tint applied there too).
+func _gen_swirl() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 7007
+	var grain := _make_noise(rng, 12)
+	var img := Image.create(SIZE, SIZE, false, Image.FORMAT_RGB8)
+	for y in SIZE:
+		for x in SIZE:
+			var cx := (float(x) + 0.5) / SIZE - 0.5
+			var cy := (float(y) + 0.5) / SIZE - 0.5
+			var r := sqrt(cx * cx + cy * cy) * 2.0
+			var ang := atan2(cy, cx)
+			# Three arms winding tighter toward the center.
+			var arms := maxf(0.0, sin(ang * 3.0 + r * 9.0))
+			arms = pow(arms, 2.2) * (0.3 + 0.7 * (1.0 - minf(r, 1.0)))
+			var core := clampf(1.0 - r * 2.4, 0.0, 1.0)
+			var rim := 1.0 - smoothstep(0.78, 1.0, r)
+			var g := _noise_at(grain, 12, float(x) / SIZE, float(y) / SIZE)
+			var v := clampf((arms + core) * rim * (0.82 + 0.18 * g), 0.0, 1.0) * 255.0
+			_put(img, x, y, v, v, v)
+	img.save_png("res://assets/textures/swirl.png")
 
 
 ## Citadel stone: pale weathered sandstone blocks with bevel + light grime.
