@@ -1,10 +1,10 @@
 class_name ShootableSwitch
 extends StaticBody3D
-## Doom-style wall switch, gated on combat: it starts dark (LOCKED) and
-## only lights up red (ARMED, shootable) once every enemy in the level is
-## dead. Shooting it then flips it green and powers the wired teleporter.
-## Sits on the enemy collision layer so hitscan rays and rockets register
-## hits via take_damage().
+## Emerald crystal cluster, gated on combat: it starts as dull dark stone
+## (LOCKED) and begins to glow and pulse (ARMED, shootable) once every
+## enemy in the level is dead. Shooting it then makes it surge bright and
+## powers the wired teleporter. Sits on the enemy collision layer so
+## hitscan rays and rockets register hits via take_damage().
 
 signal activated
 
@@ -13,24 +13,33 @@ enum State { LOCKED, ARMED, FLIPPED }
 const SWITCH_SOUND := preload("res://assets/audio/switch.wav")
 const DUD_SOUND := preload("res://assets/audio/click.wav")
 
-const COLOR_LOCKED := Color(0.28, 0.29, 0.32)
-const COLOR_ARMED := Color(0.95, 0.15, 0.1)
-const COLOR_FLIPPED := Color(0.25, 1.0, 0.35)
+const ALBEDO_LOCKED := Color(0.17, 0.19, 0.23)
+const ALBEDO_ARMED := Color(0.16, 0.45, 0.3)
+const ALBEDO_FLIPPED := Color(0.6, 0.95, 0.75)
+const EMISSION_ARMED := Color(0.12, 0.95, 0.45)
+const EMISSION_FLIPPED := Color(0.75, 1.0, 0.85)
 
 @export var teleporter_path: NodePath
 
 var _state := State.LOCKED
-var _face_mat: StandardMaterial3D
+var _crystal_mat: StandardMaterial3D
 var _poll := 0.0
 
-@onready var _face: MeshInstance3D = $Face
+@onready var _crystal: Node3D = $Crystal
+@onready var _glow: MeshInstance3D = $Glow
 @onready var _light: OmniLight3D = $Light
+@onready var _pulse: AnimationPlayer = $Pulse
 
 
 func _ready() -> void:
-	_face_mat = _face.get_surface_override_material(0).duplicate()
-	_face.set_surface_override_material(0, _face_mat)
-	_face_mat.albedo_color = COLOR_LOCKED
+	# All shards share one material; duplicate it so state changes stay
+	# per-instance.
+	var shards := _crystal.find_children("*", "MeshInstance3D", true, false)
+	_crystal_mat = shards[0].get_surface_override_material(0).duplicate()
+	for shard: MeshInstance3D in shards:
+		shard.set_surface_override_material(0, _crystal_mat)
+	_crystal_mat.albedo_color = ALBEDO_LOCKED
+	_glow.visible = false
 	_light.visible = false
 
 
@@ -57,16 +66,26 @@ func take_damage(_amount: float, _from: Vector3 = Vector3.ZERO) -> void:
 
 func _arm() -> void:
 	_state = State.ARMED
-	_face_mat.albedo_color = COLOR_ARMED
-	_light.light_color = COLOR_ARMED
+	_crystal_mat.albedo_color = ALBEDO_ARMED
+	_crystal_mat.emission_enabled = true
+	_crystal_mat.emission = EMISSION_ARMED
+	_crystal_mat.emission_energy_multiplier = 1.5
+	_light.light_color = EMISSION_ARMED
 	_light.visible = true
-	GameState.announce("ALL ENEMIES DOWN - SWITCH ARMED")
+	_glow.visible = true
+	_pulse.play("pulse")
+	GameState.announce("ALL ENEMIES DOWN - THE EMERALD AWAKENS")
 
 
 func _flip() -> void:
 	_state = State.FLIPPED
-	_face_mat.albedo_color = COLOR_FLIPPED
-	_light.light_color = COLOR_FLIPPED
+	_pulse.stop()
+	_crystal_mat.albedo_color = ALBEDO_FLIPPED
+	_crystal_mat.emission = EMISSION_FLIPPED
+	_crystal_mat.emission_energy_multiplier = 2.2
+	_light.light_color = EMISSION_FLIPPED
+	_light.light_energy = 1.5
+	_glow.scale = Vector3.ONE * 1.25
 	Fx.spawn_sound(self, global_position, SWITCH_SOUND, 2.0)
 	Fx.spawn(self, global_position - global_basis.z * 0.3, Color(0.3, 1.0, 0.4), 0.5, 0.2)
 	activated.emit()
