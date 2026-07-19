@@ -51,7 +51,8 @@ var step_count := 0  # exposed for tests
 
 
 func take_damage(amount: float, _from: Vector3 = Vector3.ZERO) -> void:
-	GameState.damage_player(int(amount))
+	# Round, don't truncate: splash falloff fractions shouldn't lose a point.
+	GameState.damage_player(roundi(amount))
 	_shake = minf(_shake + 0.25, 0.5)
 	Fx.spawn_sound(self, global_position, HURT_SOUND)
 
@@ -174,7 +175,8 @@ func _set_crouch(crouch: bool) -> void:
 func _has_headroom() -> bool:
 	var from := global_position + Vector3(0, crouch_height - 0.1, 0)
 	var to := global_position + Vector3(0, _stand_height + 0.05, 0)
-	var query := PhysicsRayQueryParameters3D.create(from, to, 1, [get_rid()])
+	# World AND enemies: standing up under a skeleton shouldn't overlap it.
+	var query := PhysicsRayQueryParameters3D.create(from, to, 0b101, [get_rid()])
 	return get_world_3d().direct_space_state.intersect_ray(query).is_empty()
 
 

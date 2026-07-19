@@ -28,6 +28,9 @@ func setup(dir: Vector3, shooter: PhysicsBody3D) -> void:
 
 
 func _ready() -> void:
+	# Main frees this group on level teardown: rockets are parented to the
+	# viewport rather than the level, so they'd otherwise outlive it.
+	add_to_group("projectiles")
 	body_entered.connect(_on_body_entered)
 
 

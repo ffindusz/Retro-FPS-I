@@ -15,9 +15,9 @@ const LEVEL_SCENES: Array[PackedScene] = [
 	preload("res://scenes/levels/level_07.tscn"),
 	preload("res://scenes/levels/level_test.tscn"),
 ]
-## Model test stage (0 on the title screen). Outside the campaign flow: it
-## has no switch/teleporter, so it can never advance or complete, and level
-## 7 ends via the gold (win), so the campaign never reaches this index.
+## Model test stage (0 on the title screen). Outside the campaign flow:
+## _advance_level refuses to advance into it, and it has no switch/teleporter
+## of its own, so it can never advance or complete.
 const TEST_STAGE_INDEX := 7
 const PLAYER_SCENE := preload("res://scenes/player/player.tscn")
 
@@ -188,13 +188,16 @@ func _on_intermission_continue() -> void:
 
 
 func _advance_level() -> void:
-	if not _game_active or _level_index + 1 >= LEVEL_SCENES.size():
+	# Bounded by TEST_STAGE_INDEX, not LEVEL_SCENES.size(): the test stage
+	# rides along in the scene list but is never part of the campaign.
+	if not _game_active or _level_index + 1 >= TEST_STAGE_INDEX:
 		return
 	_level_index += 1
 	_restart_index = _level_index
 	if is_instance_valid(_level):
 		_level.name = String(_level.name) + "_dying"
 		_level.queue_free()
+	_clear_projectiles()
 	_load_level()
 	_place_player_at_spawn()
 	_hud.show_banner(_level_banner())
@@ -243,8 +246,17 @@ func _clear_game() -> void:
 			# paths rely on it).
 			node.name = String(node.name) + "_dying"
 			node.queue_free()
+	_clear_projectiles()
 	_level = null
 	_player = null
+
+
+func _clear_projectiles() -> void:
+	# Player rockets are parented to the game viewport (not the level), so
+	# without this a rocket in flight would survive level teardown and keep
+	# flying — and exploding — into the next level or the menus.
+	for projectile in get_tree().get_nodes_in_group("projectiles"):
+		projectile.queue_free()
 
 
 func _show_only(screen: Control) -> void:

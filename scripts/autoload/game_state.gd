@@ -19,7 +19,13 @@ var kills := 0
 var total_enemies := 0
 var secrets_found := 0
 var total_secrets := 0
-var _level_start_ms := 0
+var _level_time := 0.0
+
+
+func _process(delta: float) -> void:
+	# Game-time level timer: _process pauses with the tree, so the pause menu
+	# and intermission don't inflate the TIME stat (wall clock would).
+	_level_time += delta
 
 
 func begin_level_stats(enemy_count: int, secret_count: int) -> void:
@@ -27,7 +33,7 @@ func begin_level_stats(enemy_count: int, secret_count: int) -> void:
 	secrets_found = 0
 	total_enemies = enemy_count
 	total_secrets = secret_count
-	_level_start_ms = Time.get_ticks_msec()
+	_level_time = 0.0
 
 
 func enemy_killed() -> void:
@@ -39,7 +45,7 @@ func secret_found() -> void:
 
 
 func stats_line() -> String:
-	var secs := (Time.get_ticks_msec() - _level_start_ms) / 1000
+	var secs := int(_level_time)
 	return "KILLS %d/%d   ·   SECRETS %d/%d   ·   TIME %d:%02d" \
 			% [kills, total_enemies, secrets_found, total_secrets, secs / 60, secs % 60]
 

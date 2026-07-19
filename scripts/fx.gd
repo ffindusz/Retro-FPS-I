@@ -7,17 +7,27 @@ extends Object
 const BURST_SHADER := preload("res://shaders/burst.gdshader")
 const BURST_SHEET := preload("res://assets/textures/burst_sheet.png")
 
+## Cap on concurrent flash lights: the Mobile renderer clips per-mesh light
+## counts, so e.g. a shotgun blast's seven impact omnis could silently knock
+## out level lighting. Past the cap, flashes spawn without their light.
+const MAX_LIGHTS := 6
+static var _live_lights := 0
+
 
 static func spawn(context: Node3D, pos: Vector3, color: Color, size: float, life := 0.08) -> void:
 	var vp := context.get_viewport()
 	if vp == null:
 		return
 	var fx := Node3D.new()
-	var light := OmniLight3D.new()
-	light.light_color = color
-	light.light_energy = 2.0
-	light.omni_range = maxf(size * 8.0, 2.0)
-	fx.add_child(light)
+	var light: OmniLight3D
+	if _live_lights < MAX_LIGHTS:
+		_live_lights += 1
+		fx.tree_exited.connect(func() -> void: _live_lights -= 1)
+		light = OmniLight3D.new()
+		light.light_color = color
+		light.light_energy = 2.0
+		light.omni_range = maxf(size * 8.0, 2.0)
+		fx.add_child(light)
 	var mesh := MeshInstance3D.new()
 	var quad := QuadMesh.new()
 	# The burst artwork peaks at ~half the cell, so oversize the quad to
@@ -36,7 +46,8 @@ static func spawn(context: Node3D, pos: Vector3, color: Color, size: float, life
 	tween.tween_method(
 			func(f: float) -> void: mat.set_shader_parameter("frame", f),
 			0.0, 8.0, life)
-	tween.tween_property(light, "light_energy", 0.0, life)
+	if light != null:
+		tween.tween_property(light, "light_energy", 0.0, life)
 	tween.chain().tween_callback(fx.queue_free)
 
 
@@ -74,11 +85,20 @@ static func apply_splash_damage(context: Node3D, origin: Vector3, radius: float,
 	query.transform = Transform3D(Basis(), origin)
 	query.collision_mask = mask
 	query.exclude = exclude_rids
-	for hit in context.get_world_3d().direct_space_state.intersect_shape(query, 16):
+	var space := context.get_world_3d().direct_space_state
+	for hit in space.intersect_shape(query, 16):
 		var body: Object = hit.collider
-		if body == skip_body or not body is Node3D:
+		if body == skip_body or not body is Node3D or not body.has_method("take_damage"):
 			continue
-		if body.has_method("take_damage"):
-			var dist: float = origin.distance_to((body as Node3D).global_position)
-			var falloff := clampf(1.0 - dist / radius, falloff_min, 1.0)
-			body.take_damage(damage * falloff, origin)
+		var target: Vector3 = (body as Node3D).global_position
+		# Occlusion: splash doesn't wrap around world geometry (layer 1). The
+		# ray aims at mid-height (body origins sit at the feet); a hit on the
+		# target itself (bodies that also occupy layer 1, e.g. rubble) still
+		# counts as visible.
+		var ray := PhysicsRayQueryParameters3D.create(
+				origin, target + Vector3(0, 0.9, 0), 1, exclude_rids)
+		var los := space.intersect_ray(ray)
+		if not los.is_empty() and los.collider != body:
+			continue
+		var falloff := clampf(1.0 - origin.distance_to(target) / radius, falloff_min, 1.0)
+		body.take_damage(damage * falloff, origin)

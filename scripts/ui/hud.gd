@@ -21,10 +21,11 @@ func _ready() -> void:
 
 
 ## Departure white-out: ramps up while the portal consumes the player,
-## then the tail fades back out over the arrival in the next level (the
-## tween pauses with the tree during the intermission).
+## then the tail fades back out over the arrival in the next level. The HUD
+## inherits Main's PROCESS_MODE_ALWAYS, so the tween must opt into pausing
+## with the tree or the fade would be consumed behind the intermission.
 func _on_teleport_flash() -> void:
-	var tween := create_tween()
+	var tween := create_tween().set_pause_mode(Tween.TWEEN_PAUSE_STOP)
 	_teleport_flash.modulate.a = 0.0
 	tween.tween_property(_teleport_flash, "modulate:a", 1.0, 0.4)
 	tween.tween_interval(0.25)
@@ -37,7 +38,9 @@ func show_banner(text: String) -> void:
 		_banner_tween.kill()
 	_banner.text = text
 	_banner.modulate.a = 1.0
-	_banner_tween = create_tween()
+	# TWEEN_PAUSE_STOP for the same reason as the teleport flash: the HUD
+	# never pauses, but banners shouldn't fade behind pause overlays.
+	_banner_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_STOP)
 	_banner_tween.tween_interval(1.8)
 	_banner_tween.tween_property(_banner, "modulate:a", 0.0, 0.8)
 
@@ -54,7 +57,10 @@ func _process(delta: float) -> void:
 		if weapon:
 			_weapon.text = weapon.weapon_label
 			_ammo.text = str(weapon.ammo)
-	_flash.modulate.a = maxf(_flash.modulate.a - delta * 1.8, 0.0)
+	# The HUD processes while the tree is paused; freeze the damage-flash
+	# decay so it doesn't silently drain behind pause overlays.
+	if not get_tree().paused:
+		_flash.modulate.a = maxf(_flash.modulate.a - delta * 1.8, 0.0)
 
 
 func _on_health_changed(current: int, _max_health: int) -> void:

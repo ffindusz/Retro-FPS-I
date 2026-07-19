@@ -1,9 +1,10 @@
 extends StaticBody3D
 ## Blastable rubble heap sealing a passage (the dungeon's secret nook).
-## Sits on the enemy collision layer like the switch, so hitscan rays and
-## rocket splash register hits via take_damage() while the player and
-## enemies still collide with it (their masks include that layer). Wand
-## zaps chip it down; one staff fireball blows it open in one go.
+## Sits on BOTH the world and enemy collision layers: the enemy layer lets
+## hitscan rays and rocket splash register hits via take_damage(), while the
+## world layer makes it genuinely solid — enemy bolts burst on it instead of
+## sailing through, it blocks enemy line of sight, and it occludes splash.
+## Pistol shots chip it down; one rocket blows it open in one go.
 
 @export var max_health := 60.0
 

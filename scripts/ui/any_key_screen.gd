@@ -20,9 +20,16 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventKey and event.physical_keycode == KEY_ESCAPE:
 		return
+	# Function keys belong to global handlers (main.gd's F1-F7 level warp),
+	# so they fall through instead of counting as "any key".
+	if event is InputEventKey and event.physical_keycode >= KEY_F1 \
+			and event.physical_keycode <= KEY_F12:
+		return
 	if _on_special_key(event):
 		return
-	var confirm: bool = (event is InputEventMouseButton and event.pressed) \
+	# Wheel scrolls arrive as mouse-button presses; only real buttons confirm.
+	var confirm: bool = (event is InputEventMouseButton and event.pressed
+					and event.button_index <= MOUSE_BUTTON_MIDDLE) \
 			or (event is InputEventKey and event.pressed and not event.echo)
 	if confirm:
 		get_viewport().set_input_as_handled()

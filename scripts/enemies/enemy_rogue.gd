@@ -26,7 +26,9 @@ const CLOAK_SOUND := preload("res://assets/audio/cast.wav")
 
 var cloaked := false  # exposed for tests
 
-var _reveal_until_ms := 0
+## Game-time countdown (ticks in _physics_process, so pausing doesn't eat
+## the reveal window the way a wall-clock deadline would).
+var _reveal_timer := 0.0
 var _meshes: Array[GeometryInstance3D] = []
 
 
@@ -43,6 +45,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	_reveal_timer = maxf(_reveal_timer - delta, 0.0)
 	_update_cloak()
 
 
@@ -61,14 +64,14 @@ func _do_attack() -> void:
 
 func _update_cloak() -> void:
 	var want := state == State.CHASE \
-			and Time.get_ticks_msec() >= _reveal_until_ms \
+			and _reveal_timer <= 0.0 \
 			and _distance_to_player() > decloak_range
 	if want != cloaked:
 		_set_cloak(want)
 
 
 func _reveal(secs: float) -> void:
-	_reveal_until_ms = Time.get_ticks_msec() + int(secs * 1000.0)
+	_reveal_timer = maxf(_reveal_timer, secs)
 	if cloaked:
 		_set_cloak(false)
 

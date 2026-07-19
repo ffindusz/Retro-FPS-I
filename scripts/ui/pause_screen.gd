@@ -11,8 +11,10 @@ signal quit_requested
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_visible_in_tree():
 		return
+	# Wheel scrolls arrive as mouse-button presses; only real buttons resume.
 	if event.is_action_pressed("ui_cancel") \
-			or (event is InputEventMouseButton and event.pressed):
+			or (event is InputEventMouseButton and event.pressed
+					and event.button_index <= MOUSE_BUTTON_MIDDLE):
 		get_viewport().set_input_as_handled()
 		if event is InputEventMouseButton:
 			# See AnyKeyScreen: fire is polled, so the resuming click would

@@ -204,12 +204,28 @@ func _tick_attack(delta: float) -> void:
 		_do_attack()
 
 
-## Default attack: melee swipe. Range re-checked with slack so a player
-## backpedaling mid-swing can still be clipped.
+## Seconds between the swing starting (sound + animation) and the damage
+## check, so the hit lands roughly when the strike visually connects.
+const MELEE_HIT_DELAY := 0.3
+
+
+## Default attack: melee swipe. The damage check is deferred to the moment
+## the swing connects; process_always=false so pausing doesn't skip it.
 func _do_attack() -> void:
 	Fx.spawn_sound(self, global_position + Vector3(0, 1.2, 0), SWING_SOUND, -4.0)
-	if _player and _player.has_method("take_damage") \
-			and _distance_to_player() <= attack_range * 1.4:
+	get_tree().create_timer(MELEE_HIT_DELAY, false).timeout.connect(_melee_connect)
+
+
+## Range re-checked with slack so a player backpedaling mid-swing can still
+## be clipped — but dying mid-swing (or the player escaping) whiffs it.
+func _melee_connect() -> void:
+	# is_instance_valid, not a null check: unlike the per-tick handlers this
+	# runs from a timer, after _player may have been freed without a lazy
+	# re-lookup happening in between.
+	if state == State.DEAD or not is_instance_valid(_player) \
+			or not _player.has_method("take_damage"):
+		return
+	if _distance_to_player() <= attack_range * 1.4:
 		_player.take_damage(attack_damage, global_position)
 
 
