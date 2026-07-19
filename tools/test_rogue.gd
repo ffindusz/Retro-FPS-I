@@ -3,7 +3,8 @@ extends "res://tools/test_base.gd"
 ## player across the great hall from Rogue1, watches it wake and cloak while
 ## chasing (mesh transparency up), verifies damage rips the cloak away, that
 ## it decloaks inside strike range and stabs (player health drops), then
-## kills it.
+## kills it. Afterwards blasts the rubble blockade sealing the secret nook
+## and confirms the freed passage lets the secret trigger.
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/test_rogue.gd
 
 var _placed := false
@@ -11,6 +12,8 @@ var _start_ms := 0
 var _saw_cloaked := false
 var _hit_done := false
 var _killed := false
+var _blasted := false
+var _entered_nook := false
 
 
 func _boot_level_index() -> int:
@@ -74,8 +77,24 @@ func _tick(_delta: float) -> bool:
 		rogue.take_damage(999.0)
 		print("after kill: state=%d cloaked=%s (expect 4 DEAD, false)"
 				% [rogue.state, rogue.cloaked])
-	if t > 9.5:
+	if t > 9.5 and not _blasted:
+		_blasted = true
 		print("rogue freed after death: %s (expect true)" % str(not is_instance_valid(rogue)))
+		var rubble: Node = world.get_node("Level05/Props/RubbleBlockade")
+		rubble.take_damage(30.0)
+		print("rubble after 30 dmg: alive=%s (expect true, takes 60)"
+				% str(is_instance_valid(rubble) and not rubble.is_queued_for_deletion()))
+		rubble.take_damage(999.0)
+	if t > 10.3 and not _entered_nook:
+		_entered_nook = true
+		var rubble: Node = world.get_node_or_null("Level05/Props/RubbleBlockade")
+		print("rubble after blast: freed=%s (expect true)" % str(rubble == null))
+		# Walk into the opened nook; the secret area should trigger.
+		player.global_position = Vector3(-25.5, 0.1, 4)
+		player.velocity = Vector3.ZERO
+	if t > 11.3:
+		print("secret behind rubble found: %d/%d (expect 1/2)"
+				% [gs.secrets_found, gs.total_secrets])
 		print("rogue test done")
 		return true
 	return false

@@ -23,7 +23,7 @@
 [ext_resource type="PackedScene" path="res://scenes/props/pillar_decorated.tscn" id="21_pillar_dec"]
 [ext_resource type="PackedScene" path="res://scenes/props/crates_stacked.tscn" id="22_crates"]
 [ext_resource type="PackedScene" path="res://scenes/props/rubble_half.tscn" id="23_rubble_half"]
-[ext_resource type="PackedScene" path="res://scenes/props/rubble_large.tscn" id="24_rubble_large"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/rubble_blockade.tscn" id="24_rubble_blockade"]
 [ext_resource type="PackedScene" path="res://scenes/props/skeleton_prop.tscn" id="25_skeleton"]
 [ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="26_dust"]
 
@@ -370,7 +370,7 @@ transform = Transform3D(0.5, 0, 0.866, 0, 1, 0, -0.866, 0, 0.5, 13.6, 0, 2)
 [node name="RubbleHalfCata" parent="Props" instance=ExtResource("23_rubble_half")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 5.5)
 
-[node name="RubbleLargeNook" parent="Props" instance=ExtResource("24_rubble_large")]
+[node name="RubbleBlockade" parent="Props" instance=ExtResource("24_rubble_blockade")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -23.6, 0, 4)
 
 [node name="SkeletonCata1" parent="Props" instance=ExtResource("25_skeleton")]
