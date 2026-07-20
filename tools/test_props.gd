@@ -1,7 +1,6 @@
 extends "res://tools/test_base.gd"
 ## Debug helper: external-model prop check in level 1.
-## - prop wrapper scenes are placed and load (torches, skeleton)
-## - the skeleton's imported AnimationPlayer is looping its ambient clip
+## - prop wrapper scenes are placed and load (torches, rubble remains)
 ## - the torch flicker AnimationPlayer is running
 ## - imported meshes carry PS1 ShaderMaterials (tools/import_prop.gd ran)
 ## Then loads the model test stage and checks all four skeleton displays
@@ -27,19 +26,18 @@ func _tick(_delta: float) -> bool:
 		1:
 			var props: Node3D = world.get_node_or_null("Level01/Props")
 			var torch := props.get_node_or_null("TorchCorr3West")
-			var skeleton := props.get_node_or_null("SkeletonArena")
-			print("props placed: torches=%s skeleton=%s (expect true true)"
+			var remains := props.get_node_or_null("SkeletonArena")
+			print("props placed: torches=%s remains=%s (expect true true)"
 					% [torch != null and props.get_node_or_null("TorchCorr3East") != null,
-					skeleton != null])
+					remains != null])
 			var flicker: AnimationPlayer = torch.get_node("Flicker")
 			print("torch flicker: playing=%s anim=%s (expect true flicker)"
 					% [flicker.is_playing(), flicker.current_animation])
-			var ap: AnimationPlayer = skeleton.find_child("AnimationPlayer", true, false)
-			print("skeleton anim: playing=%s anim=%s loop=%s (expect true Idle 1)"
-					% [ap.is_playing(), ap.current_animation,
-					ap.get_animation("Idle").loop_mode])
-			var mesh: MeshInstance3D = skeleton.find_child("Skeleton_Rogue_Body", true, false)
-			var mat := mesh.mesh.surface_get_material(0)
+			# The remains prop is now a static rubble pile (no AnimationPlayer),
+			# swapped off the skeleton_rogue model that enemy_rogue uses. Still
+			# verify its imported mesh carries a PS1 ShaderMaterial.
+			var meshes := remains.find_children("*", "MeshInstance3D", true, false)
+			var mat := (meshes[0] as MeshInstance3D).mesh.surface_get_material(0)
 			print("imported material: %s (expect ShaderMaterial)" % mat.get_class())
 			current_scene.start_game(7)
 			_next(500)
