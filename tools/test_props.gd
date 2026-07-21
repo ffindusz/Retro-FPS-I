@@ -26,7 +26,7 @@ func _tick(_delta: float) -> bool:
 		1:
 			var props: Node3D = world.get_node_or_null("Level01/Props")
 			var torch := props.get_node_or_null("TorchCorr3West")
-			var remains := props.get_node_or_null("SkeletonArena")
+			var remains := props.get_node_or_null("RemainsArena")
 			print("props placed: torches=%s remains=%s (expect true true)"
 					% [torch != null and props.get_node_or_null("TorchCorr3East") != null,
 					remains != null])

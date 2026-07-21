@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" path="res://scenes/level_objects/barrel.tscn" id="14_barrel"]
 [ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="28_dust"]
 [ext_resource type="PackedScene" path="res://scenes/props/torch_mounted.tscn" id="17_torch"]
-[ext_resource type="PackedScene" path="res://scenes/props/skeleton_prop.tscn" id="18_skeleton"]
+[ext_resource type="PackedScene" path="res://scenes/props/remains_prop.tscn" id="18_remains"]
 [ext_resource type="PackedScene" path="res://scenes/props/banner_red.tscn" id="19_banner_red"]
 [ext_resource type="PackedScene" path="res://scenes/props/banner_blue.tscn" id="20_banner_blue"]
 [ext_resource type="PackedScene" path="res://scenes/props/pillar.tscn" id="21_pillar"]
@@ -349,7 +349,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 2.2, -5.98)
 [node name="TorchCorr3East" parent="Props" instance=ExtResource("17_torch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 2.2, -5.98)
 
-[node name="SkeletonArena" parent="Props" instance=ExtResource("18_skeleton")]
+[node name="RemainsArena" parent="Props" instance=ExtResource("18_remains")]
 transform = Transform3D(-0.671, 0, -0.742, 0, 1, 0, 0.742, 0, -0.671, -8.2, 0, -31.3)
 
 [node name="BannerRedA1" parent="Props" instance=ExtResource("19_banner_red")]
