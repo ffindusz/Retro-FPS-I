@@ -60,7 +60,14 @@ collection while you're already full, so they stay put for when you need
 them.
 
 Each level also hides **secret areas** with bonus stashes; an intermission
-screen after every level tallies your kills, secrets, and time.
+screen after every level tallies your kills, secrets, gold, and time.
+
+**Treasure & score:** gold gems and chests are stashed on hard-to-reach
+ledges, in hidden rooms, and out over deadly drops — shoot a chest open, or
+find the wall lever that unseals a vault. Every piece adds to your run
+score, which carries across levels; clear the whole campaign for the biggest
+haul. Your all-time best is saved and shown on the title and end screens
+(`user://scores.cfg`), so treasure hunting is a high-score chase.
 
 The **options menu** (O on the title or pause screen) adjusts mouse
 sensitivity, music and SFX volume (separate audio buses), and the PS1

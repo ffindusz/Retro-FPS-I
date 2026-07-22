@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Material" path="res://assets/materials/mat_rock.tres" id="1_rock"]
 [ext_resource type="PackedScene" path="res://scenes/props/embers.tscn" id="17_embers"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" path="res://scenes/level_objects/barrel.tscn" id="8_barrel"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/secret_area.tscn" id="9_secret"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_cells.tscn" id="16_cells"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_gold.tscn" id="40_gold"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_health.tscn" id="10_health"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_bullets.tscn" id="11_bullets"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_shells.tscn" id="12_shells"]
@@ -156,6 +157,15 @@ transform = Transform3D(-0.9165, 0, -0.08018, 0, 0.92, 0, 0.08018, 0, -0.9165, -
 transform = Transform3D(0.342, 0, -0.9397, 0, 1, 0, 0.9397, 0, 0.342, 4.2, 0, 14.8)
 
 [node name="Pickups" type="Node3D" parent="."]
+
+[node name="GoldIsland1" parent="Pickups" instance=ExtResource("40_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6, 0.7, -8.6)
+
+[node name="GoldIsland2" parent="Pickups" instance=ExtResource("40_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2, 0.7, -8.6)
+
+[node name="GoldAlcove" parent="Pickups" instance=ExtResource("40_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8, 0.4, -10.6)
 
 [node name="HealthEntry" parent="Pickups" instance=ExtResource("10_health")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.05, 15)
