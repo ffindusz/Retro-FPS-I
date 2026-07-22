@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="AudioStream" path="res://assets/audio/music_ambient.wav" id="6_music"]
@@ -10,6 +10,13 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/start_screen.tscn" id="3_start"]
 [ext_resource type="PackedScene" path="res://scenes/ui/end_screen.tscn" id="4_end"]
 [ext_resource type="Shader" path="res://shaders/ps1_post.gdshader" id="5_post"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fps"]
+font_size = 20
+font_color = Color(0.5, 1, 0.6, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.85)
+shadow_offset = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_post"]
 shader = ExtResource("5_post")
@@ -100,3 +107,20 @@ visible = false
 [node name="OptionsScreen" parent="." instance=ExtResource("10_options")]
 unique_name_in_owner = true
 visible = false
+
+[node name="FpsLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = 34.0
+grow_horizontal = 0
+mouse_filter = 2
+text = "FPS 60"
+label_settings = SubResource("LabelSettings_fps")
+horizontal_alignment = 2

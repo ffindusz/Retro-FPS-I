@@ -39,6 +39,7 @@ godot --headless --editor --import
 | O on the title or pause screen | Options (mouse sensitivity, music/SFX volume, PS1 dither filter) |
 | 1–7 on the title screen, F1–F7 anytime | Level-select cheat |
 | 0 on the title screen | Model test stage (animated character viewer) |
+| F8 | Toggle the FPS counter (debug / level checking) |
 
 Seven levels: in each of the first six, clear all enemies, then find and
 **shoot the switch** to power the **teleporter** to the next level (health

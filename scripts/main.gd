@@ -27,6 +27,7 @@ var _level_index := 0
 var _restart_index := 0
 var _game_active := false
 var _options_from_pause := false
+var _fps_accum := 0.0
 
 @onready var _world: Node3D = %World
 @onready var _start_screen: Control = %StartScreen
@@ -36,6 +37,7 @@ var _options_from_pause := false
 @onready var _intermission: Control = %Intermission
 @onready var _options_screen: Control = %OptionsScreen
 @onready var _viewport_container: SubViewportContainer = $ViewportContainer
+@onready var _fps_label: Label = %FpsLabel
 
 
 func _ready() -> void:
@@ -58,6 +60,18 @@ func _ready() -> void:
 	_show_only(_start_screen)
 
 
+## Updates the debug FPS readout a few times a second (readable, not flickering)
+## while it is toggled on. Main is PROCESS_MODE_ALWAYS, so this ticks in menus
+## and while paused too.
+func _process(delta: float) -> void:
+	if not _fps_label.visible:
+		return
+	_fps_accum += delta
+	if _fps_accum >= 0.25:
+		_fps_accum = 0.0
+		_fps_label.text = "FPS %d" % Engine.get_frames_per_second()
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	# Esc during play opens the pause screen (which then owns Esc until it
 	# closes; see its own input handler).
@@ -70,6 +84,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		# anywhere (gameplay, pause, screens) with a fresh loadout.
 		get_viewport().set_input_as_handled()
 		_warp(event.physical_keycode - KEY_F1)
+	elif event is InputEventKey and event.pressed and not event.echo \
+			and event.physical_keycode == KEY_F8:
+		# Debug FPS readout toggle, for level and performance checking.
+		get_viewport().set_input_as_handled()
+		_fps_label.visible = not _fps_label.visible
 
 
 func _warp(level_index: int) -> void:
