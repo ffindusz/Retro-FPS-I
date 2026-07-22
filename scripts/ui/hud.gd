@@ -7,6 +7,7 @@ var _last_health := GameState.MAX_HEALTH
 var _banner_tween: Tween
 
 @onready var _health: Label = %HealthLabel
+@onready var _score: Label = %ScoreLabel
 @onready var _weapon: Label = %WeaponLabel
 @onready var _ammo: Label = %AmmoLabel
 @onready var _flash: ColorRect = %DamageFlash
@@ -16,8 +17,10 @@ var _banner_tween: Tween
 
 func _ready() -> void:
 	GameState.health_changed.connect(_on_health_changed)
+	GameState.score_changed.connect(_on_score_changed)
 	GameState.announcement.connect(show_banner)
 	GameState.teleport_flash.connect(_on_teleport_flash)
+	_score.text = "GOLD %d" % GameState.score
 
 
 ## Departure white-out: ramps up while the portal consumes the player,
@@ -68,3 +71,7 @@ func _on_health_changed(current: int, _max_health: int) -> void:
 		_flash.modulate.a = 0.5
 	_last_health = current
 	_health.text = "HP %d" % current
+
+
+func _on_score_changed(score: int) -> void:
+	_score.text = "GOLD %d" % score

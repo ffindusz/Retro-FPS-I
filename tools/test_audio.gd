@@ -16,6 +16,7 @@ const SEQUENCE := [
 	["bone_die (skeleton death)", "res://assets/audio/bone_die.wav"],
 	["crystal_arm (emerald awakens)", "res://assets/audio/crystal_arm.wav"],
 	["pickup (ammo collect)", "res://assets/audio/pickup.wav"],
+	["coin (gold collect)", "res://assets/audio/coin.wav"],
 	["heal (medkit collect)", "res://assets/audio/heal.wav"],
 	["hurt (player hit)", "res://assets/audio/hurt.wav"],
 	["player_die (death sting)", "res://assets/audio/player_die.wav"],

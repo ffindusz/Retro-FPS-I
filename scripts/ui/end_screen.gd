@@ -7,10 +7,20 @@ signal restart_requested
 @onready var _result: Label = $Layout/ResultLabel
 @onready var _sub: Label = $Layout/SubLabel
 @onready var _stats: Label = $Layout/StatsLabel
+@onready var _score: Label = $Layout/ScoreLabel
 
 
 func set_stats(text: String) -> void:
 	_stats.text = text
+
+
+## The run's treasure total, plus the all-time best (or a "NEW BEST!" flourish
+## when this run set it). Gold-colored via its own LabelSettings in the scene.
+func set_score(score: int, best: int, new_best: bool) -> void:
+	if new_best:
+		_score.text = "SCORE %d   ·   NEW BEST!" % score
+	else:
+		_score.text = "SCORE %d   ·   BEST %d" % [score, best]
 
 
 func set_result(win: bool) -> void:

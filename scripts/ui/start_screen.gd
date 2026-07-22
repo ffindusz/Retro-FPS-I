@@ -10,6 +10,14 @@ signal options_requested
 ## levels in Main.LEVEL_SCENES).
 const TEST_STAGE_INDEX := 7
 
+@onready var _best: Label = $Layout/BestLabel
+
+
+## Shows the saved best score (blank until one exists). Main refreshes this
+## whenever the title returns to view, so it reflects a just-set record.
+func show_best(best: int) -> void:
+	_best.text = "BEST %d" % best if best > 0 else ""
+
 
 func _on_special_key(event: InputEvent) -> bool:
 	if not (event is InputEventKey and event.pressed and not event.echo):

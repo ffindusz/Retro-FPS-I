@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/start_screen.gd" id="1_script"]
 
@@ -18,6 +18,12 @@ shadow_offset = Vector2(2, 2)
 [sub_resource type="LabelSettings" id="LabelSettings_hint"]
 font_size = 17
 font_color = Color(0.55, 0.58, 0.68, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_best"]
+font_size = 24
+font_color = Color(1, 0.82, 0.32, 1)
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_offset = Vector2(2, 2)
 
 [node name="StartScreen" type="Control"]
 layout_mode = 3
@@ -62,6 +68,13 @@ layout_mode = 2
 mouse_filter = 2
 text = "CLICK OR PRESS ANY KEY TO START"
 label_settings = SubResource("LabelSettings_sub")
+horizontal_alignment = 1
+
+[node name="BestLabel" type="Label" parent="Layout"]
+layout_mode = 2
+mouse_filter = 2
+text = ""
+label_settings = SubResource("LabelSettings_best")
 horizontal_alignment = 1
 
 [node name="Hint" type="Label" parent="Layout"]

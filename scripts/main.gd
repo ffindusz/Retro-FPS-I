@@ -54,6 +54,7 @@ func _ready() -> void:
 	_options_screen.closed.connect(_on_options_closed)
 	Settings.changed.connect(_apply_video_settings)
 	_apply_video_settings()
+	_start_screen.show_best(GameState.high_score)
 	_show_only(_start_screen)
 
 
@@ -124,6 +125,7 @@ func _on_pause_quit() -> void:
 	_game_active = false
 	_clear_game()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	_start_screen.show_best(GameState.high_score)
 	_show_only(_start_screen)
 
 
@@ -148,7 +150,8 @@ func _load_level() -> void:
 	_level = LEVEL_SCENES[_level_index].instantiate()
 	_world.add_child(_level)
 	GameState.begin_level_stats(
-			_count_in_level("enemies"), _count_in_level("secret_areas"))
+			_count_in_level("enemies"), _count_in_level("secret_areas"),
+			_count_in_level("gold"))
 
 
 func _count_in_level(group: String) -> int:
@@ -232,8 +235,10 @@ func _on_restart() -> void:
 
 func _end_game(win: bool) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	var new_best := GameState.finalize_run()
 	_end_screen.set_result(win)
 	_end_screen.set_stats(GameState.stats_line())
+	_end_screen.set_score(GameState.score, GameState.high_score, new_best)
 	_show_only(_end_screen)
 	_clear_game()
 

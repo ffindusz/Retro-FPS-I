@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3]
+[gd_scene load_steps=26 format=3]
 
 [ext_resource type="Material" path="res://assets/materials/mat_stone.tres" id="1_stone"]
 [ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" path="res://scenes/level_objects/rubble_blockade.tscn" id="24_rubble_blockade"]
 [ext_resource type="PackedScene" path="res://scenes/props/remains_prop.tscn" id="25_remains"]
 [ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="26_dust"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_gold.tscn" id="27_gold"]
 
 [node name="Level05" type="Node3D"]
 
@@ -294,6 +295,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.5, 0.05, 4)
 
 [node name="RocketsNook" parent="Pickups" instance=ExtResource("14_rockets")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.2, 0.05, 4.6)
+
+[node name="GoldNook1" parent="Pickups" instance=ExtResource("27_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.3, 0.4, 3.2)
+
+[node name="GoldNook2" parent="Pickups" instance=ExtResource("27_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.6, 0.4, 4.6)
+
+[node name="GoldNook3" parent="Pickups" instance=ExtResource("27_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.8, 0.4, 5.4)
+
+[node name="GoldNook4" parent="Pickups" instance=ExtResource("27_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.6, 0.4, 3.2)
+
+[node name="GoldNook5" parent="Pickups" instance=ExtResource("27_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.4, 0.4, 4.0)
 
 [node name="ShellsTreasury" parent="Pickups" instance=ExtResource("13_shells")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 0.05, -12.5)

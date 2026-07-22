@@ -55,6 +55,7 @@ func _init() -> void:
 	_save("bone_hit", _gen_bone_hit())
 	_save("bone_die", _gen_bone_die())
 	_save("crystal_arm", _gen_crystal_arm())  # pure tones: no RNG consumed
+	_save("coin", _gen_coin())  # pure tones: no RNG consumed
 	print("SFX written to res://assets/audio/")
 	quit()
 
@@ -615,6 +616,28 @@ func _gen_crystal_arm() -> PackedFloat32Array:
 		var hum := (sin(TAU * 110.0 * t) * 0.16 + sin(TAU * 165.0 * t) * 0.10) \
 				* minf(t / 0.5, 1.0) * _env(t, dur, 1.2)
 		out.append((s * shimmer + hum) * minf(t / 0.04, 1.0))
+	return out
+
+
+## Coin pickup: a bright metallic "ching" — a struck-metal partial cluster
+## with a detuned pair beating for coin glint, over a quick ring-out. Higher
+## partials add sparkle and decay faster. Pure tones: no RNG consumed.
+func _gen_coin() -> PackedFloat32Array:
+	var dur := 0.34
+	var out := PackedFloat32Array()
+	# [freq, amp, decay power].
+	var partials := [
+		[1318.0, 0.34, 2.2], [1322.0, 0.24, 2.2],
+		[1976.0, 0.18, 3.0], [2637.0, 0.10, 4.0],
+	]
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		var s := 0.0
+		for p: Array in partials:
+			s += sin(TAU * p[0] * t) * p[1] * _env(t, dur, p[2])
+		var shimmer := 0.9 + 0.1 * sin(TAU * 7.0 * t)
+		# 4 ms fade-in avoids a click on the sharp attack.
+		out.append(s * shimmer * minf(t / 0.004, 1.0))
 	return out
 
 
