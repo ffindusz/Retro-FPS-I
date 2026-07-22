@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3]
+[gd_scene load_steps=29 format=3]
 
 [ext_resource type="Material" path="res://assets/materials/mat_stone.tres" id="1_stone"]
 [ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
@@ -27,6 +27,9 @@
 [ext_resource type="PackedScene" path="res://scenes/props/remains_prop.tscn" id="25_remains"]
 [ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="26_dust"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_gold.tscn" id="27_gold"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/shootable_chest.tscn" id="28_chest"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/secret_door.tscn" id="29_door"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/secret_lever.tscn" id="30_lever"]
 
 [node name="Level05" type="Node3D"]
 
@@ -81,6 +84,11 @@ material = ExtResource("1_stone")
 [node name="ShellTreasury" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 2.5, -16)
 size = Vector3(12, 6, 12)
+material = ExtResource("1_stone")
+
+[node name="ShellSecret" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 25.5)
+size = Vector3(9, 5, 7)
 material = ExtResource("1_stone")
 
 [node name="CutArrival" type="CSGBox3D" parent="LevelCSG"]
@@ -143,6 +151,18 @@ operation = 2
 size = Vector3(10, 4.7, 10)
 material = ExtResource("1_stone")
 
+[node name="CutSecret" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 25.8)
+operation = 2
+size = Vector3(6, 3.7, 5.6)
+material = ExtResource("1_stone")
+
+[node name="CutSecretDoor" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 21.9)
+operation = 2
+size = Vector3(2.4, 2.9, 2.4)
+material = ExtResource("1_stone")
+
 [node name="FloorArrival" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 16)
 size = Vector3(10.1, 0.25, 10.1)
@@ -191,6 +211,11 @@ material = ExtResource("2_floor")
 [node name="FloorTreasury" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, -0.075, -16)
 size = Vector3(10.1, 0.25, 10.1)
+material = ExtResource("2_floor")
+
+[node name="FloorSecret" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 25.8)
+size = Vector3(6.1, 0.25, 5.7)
 material = ExtResource("2_floor")
 
 [node name="PillarHall1" type="CSGBox3D" parent="LevelCSG"]
@@ -311,6 +336,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.6, 0.4, 3.2)
 [node name="GoldNook5" parent="Pickups" instance=ExtResource("27_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.4, 0.4, 4.0)
 
+[node name="GoldVault1" parent="Pickups" instance=ExtResource("27_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 0.4, 25.0)
+
+[node name="GoldVault2" parent="Pickups" instance=ExtResource("27_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, 0.4, 25.0)
+
+[node name="GoldVault3" parent="Pickups" instance=ExtResource("27_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 26.8)
+
+[node name="GoldVault4" parent="Pickups" instance=ExtResource("27_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.4, 27.5)
+
 [node name="ShellsTreasury" parent="Pickups" instance=ExtResource("13_shells")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 0.05, -12.5)
 
@@ -332,6 +369,9 @@ transform = Transform3D(0.09413, 0, -1.076, 0, 1.08, 0, 1.076, 0, 0.09413, -22.7
 
 [node name="SecretNook" parent="Secrets" instance=ExtResource("10_secret")]
 transform = Transform3D(2.5, 0, 0, 0, 1.2, 0, 0, 0, 2, -25.5, 1, 4)
+
+[node name="SecretVaultArea" parent="Secrets" instance=ExtResource("10_secret")]
+transform = Transform3D(2.5, 0, 0, 0, 1.2, 0, 0, 0, 2, 0, 1, 25.8)
 
 [node name="SecretCrateTop" parent="Secrets" instance=ExtResource("10_secret")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.2, 3, -5.05)
@@ -419,7 +459,24 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -16.5, 2.2, -11.02)
 [node name="CratesTreasury" parent="Props" instance=ExtResource("22_crates")]
 transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, -15.7, 0, -19.4)
 
+[node name="ChestTreasury" parent="Props" instance=ExtResource("28_chest")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -20)
+
+[node name="SecretDoorVault" parent="Props" instance=ExtResource("29_door")]
+transform = Transform3D(0.55, 0, 0, 0, 0.75, 0, 0, 0, 1, 0, 1.35, 22)
+open_on_boss_death = false
+
+[node name="SecretLeverArrival" parent="Props" instance=ExtResource("30_lever")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -5, 0, 16)
+door_path = NodePath("../SecretDoorVault")
+
 [node name="Lights" type="Node3D" parent="."]
+
+[node name="OmniSecretVault" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, 25.8)
+light_color = Color(1, 0.9, 0.72, 1)
+light_energy = 1.1
+omni_range = 8.0
 
 [node name="OmniArrival" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 16)
