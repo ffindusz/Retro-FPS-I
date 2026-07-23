@@ -37,7 +37,7 @@ var _fps_accum := 0.0
 @onready var _intermission: Control = %Intermission
 @onready var _options_screen: Control = %OptionsScreen
 @onready var _viewport_container: SubViewportContainer = $ViewportContainer
-@onready var _fps_label: Label = %FpsLabel
+@onready var _debug_stats: Label = %DebugStats
 
 
 func _ready() -> void:
@@ -60,16 +60,38 @@ func _ready() -> void:
 	_show_only(_start_screen)
 
 
-## Updates the debug FPS readout a few times a second (readable, not flickering)
-## while it is toggled on. Main is PROCESS_MODE_ALWAYS, so this ticks in menus
-## and while paused too.
+## Refreshes the debug stats overlay a few times a second (readable, not
+## flickering) while it is toggled on. Main is PROCESS_MODE_ALWAYS, so this
+## ticks in menus and while paused too.
 func _process(delta: float) -> void:
-	if not _fps_label.visible:
+	if not _debug_stats.visible:
 		return
 	_fps_accum += delta
 	if _fps_accum >= 0.25:
 		_fps_accum = 0.0
-		_fps_label.text = "FPS %d" % Engine.get_frames_per_second()
+		_debug_stats.text = _debug_text()
+
+
+func _debug_text() -> String:
+	var fps := int(Engine.get_frames_per_second())
+	var lines := PackedStringArray([
+		"FPS %d  (%.1f ms)" % [fps, 1000.0 / maxf(fps, 1)],
+		"DRAW %d  PRIMS %s" % [
+			int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)),
+			_short(int(Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME)))],
+		"NODES %d" % int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT)),
+	])
+	# Player pos/yaw is the handy bit for level checking (place things at coords).
+	if _game_active and is_instance_valid(_player):
+		var p := _player.global_position
+		lines.append("POS %.1f  %.1f  %.1f" % [p.x, p.y, p.z])
+		lines.append("YAW %d°" % wrapi(roundi(rad_to_deg(_player.rotation.y)), 0, 360))
+	return "\n".join(lines)
+
+
+## Compact large counts, e.g. 12345 -> "12.3k".
+func _short(n: int) -> String:
+	return "%.1fk" % (n / 1000.0) if n >= 1000 else str(n)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -86,9 +108,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_warp(event.physical_keycode - KEY_F1)
 	elif event is InputEventKey and event.pressed and not event.echo \
 			and event.physical_keycode == KEY_F8:
-		# Debug FPS readout toggle, for level and performance checking.
+		# Debug stats overlay toggle, for level and performance checking.
 		get_viewport().set_input_as_handled()
-		_fps_label.visible = not _fps_label.visible
+		_debug_stats.visible = not _debug_stats.visible
 
 
 func _warp(level_index: int) -> void:
