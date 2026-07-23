@@ -7,6 +7,10 @@ extends StaticBody3D
 ## the lid up, bursts coins, and banks the reward.
 
 @export var value := 300
+## Turn off in light-crowded rooms: the level is one CSG mesh and the mobile
+## renderer drops omnis over its per-object limit, so an extra glow light there
+## makes nearby lights flicker. The chest still reads by its gold model.
+@export var glow := true
 
 const COIN_SOUND := preload("res://assets/audio/coin.wav")
 
@@ -15,6 +19,7 @@ var _opened := false
 
 func _ready() -> void:
 	add_to_group("gold")
+	$Glow.visible = glow
 
 
 func take_damage(_amount: float, _from: Vector3 = Vector3.ZERO) -> void:

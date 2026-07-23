@@ -461,6 +461,7 @@ transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, -15.7, 0, -1
 
 [node name="ChestTreasury" parent="Props" instance=ExtResource("28_chest")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -20)
+glow = false
 
 [node name="SecretDoorVault" parent="Props" instance=ExtResource("29_door")]
 transform = Transform3D(0.55, 0, 0, 0, 0.75, 0, 0, 0, 1, 0, 1.35, 22)
