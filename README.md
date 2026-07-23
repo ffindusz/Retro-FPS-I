@@ -99,10 +99,14 @@ dither/quantize filter; settings persist to `user://settings.cfg`.
   `test_lava`, `test_void`, `test_pickups`, `test_stats`), and the
   external-model props (`test_props`) — all sharing their boot/wait/step
   boilerplate via `test_base.gd`
-- `project.godot` sets `rendering_method="mobile"` for performance headroom
-  at this resolution; despite the resulting `Mobile` feature tag,
-  `export_presets.cfg` only defines a Windows Desktop export — there's no
-  actual mobile export target
+- `project.godot` uses `rendering_method="forward_plus"`. The mobile renderer
+  caps omni lights per object, and since each level is one big CSG mesh, its
+  many torch/room lights exceeded the cap and flickered as the renderer
+  swapped which ones were active; Forward+ (clustered lighting, no per-object
+  cap) fixes that. At 320×240 the extra cost is negligible. Forward+ renders
+  those omnis brighter, so `main.tscn`'s Environment dials `tonemap_exposure`
+  and `ambient_light_energy` down to keep the original PS1 gloom.
+  `export_presets.cfg` only defines a Windows Desktop export
 
 Example headless test run:
 

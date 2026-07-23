@@ -36,6 +36,8 @@ sky_material = SubResource("ProceduralSkyMaterial_sky")
 background_mode = 2
 sky = SubResource("Sky_main")
 ambient_light_source = 3
+ambient_light_energy = 0.4
+tonemap_exposure = 0.62
 
 [node name="Main" type="Control"]
 process_mode = 3
