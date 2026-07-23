@@ -5,11 +5,6 @@ extends StaticBody3D
 ## enemy in the level is dead. Shooting it then makes it surge bright and
 ## powers the wired teleporter. Sits on the enemy collision layer so
 ## hitscan rays and rockets register hits via take_damage().
-##
-## Self-lights via the crystal's emission + an additive billboard Glow, NOT a
-## scene light: levels are one big CSG mesh and the mobile renderer silently
-## drops omnis over its per-object limit, so a real light here flickered as the
-## camera moved (see the same note in pickup.gd).
 
 signal activated
 
@@ -33,6 +28,7 @@ var _poll := 0.0
 
 @onready var _crystal: Node3D = $Crystal
 @onready var _glow: MeshInstance3D = $Glow
+@onready var _light: OmniLight3D = $Light
 @onready var _pulse: AnimationPlayer = $Pulse
 
 
@@ -45,6 +41,7 @@ func _ready() -> void:
 		shard.set_surface_override_material(0, _crystal_mat)
 	_crystal_mat.albedo_color = ALBEDO_LOCKED
 	_glow.visible = false
+	_light.visible = false
 
 
 func _process(delta: float) -> void:
@@ -73,8 +70,9 @@ func _arm() -> void:
 	_crystal_mat.albedo_color = ALBEDO_ARMED
 	_crystal_mat.emission_enabled = true
 	_crystal_mat.emission = EMISSION_ARMED
-	# Brighter emission than when it drove a real light, so it still reads.
-	_crystal_mat.emission_energy_multiplier = 2.5
+	_crystal_mat.emission_energy_multiplier = 1.5
+	_light.light_color = EMISSION_ARMED
+	_light.visible = true
 	_glow.visible = true
 	_pulse.play("pulse")
 	# Positional, so the chime also hints where the crystal is.
@@ -87,7 +85,9 @@ func _flip() -> void:
 	_pulse.stop()
 	_crystal_mat.albedo_color = ALBEDO_FLIPPED
 	_crystal_mat.emission = EMISSION_FLIPPED
-	_crystal_mat.emission_energy_multiplier = 3.5
+	_crystal_mat.emission_energy_multiplier = 2.2
+	_light.light_color = EMISSION_FLIPPED
+	_light.light_energy = 1.5
 	_glow.scale = Vector3.ONE * 1.25
 	Fx.spawn_sound(self, global_position, SWITCH_SOUND, 2.0)
 	Fx.spawn(self, global_position - global_basis.z * 0.3, Color(0.3, 1.0, 0.4), 0.5, 0.2)
