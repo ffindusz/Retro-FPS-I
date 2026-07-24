@@ -6,8 +6,9 @@ extends "res://tools/test_base.gd"
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/test_treasure.gd
 
 # Per level 1..7: loose/hoard gems + shootable chests. Every level is now a
-# treasure hunt; level 5 stays the densest showcase.
-const EXPECTED := [8, 8, 8, 8, 10, 7, 7]
+# treasure hunt; levels 1 and 3 also hide a lever-gated vault (chest + gems),
+# like level 5's showcase vault.
+const EXPECTED := [12, 8, 12, 8, 10, 7, 7]
 
 var _lvl := 0
 var _loaded := false
