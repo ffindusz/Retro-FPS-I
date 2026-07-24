@@ -58,15 +58,18 @@ func take_damage(_amount: float, _from: Vector3 = Vector3.ZERO) -> void:
 	if _thrown:
 		return
 	_thrown = true
-	# Swing the handle down; recolor the glow from "armed" amber to "thrown".
+	# Swing the handle outward (-X is toward the room for a +Z-into-room
+	# wall mount); recolor the glow from "armed" amber to "thrown".
 	var tween := create_tween()
-	tween.tween_property(_handle, "rotation:x", deg_to_rad(72), 0.25) \
+	tween.tween_property(_handle, "rotation:x", deg_to_rad(-72), 0.25) \
 			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	_light.light_color = thrown_glow
 	_glow_mat.albedo_color = Color(thrown_glow, 0.4)
 	if _plate_mat != null:
 		_plate_mat.emission = thrown_glow
-	Fx.spawn(self, global_position + Vector3(0, 1.05, 0.3), thrown_glow, 0.5, 0.2)
+	# Local offset so the burst sits in front of the handle whichever wall
+	# the lever hangs on (a world-space offset drifts sideways along the wall).
+	Fx.spawn(self, to_global(Vector3(0, 1.05, 0.3)), thrown_glow, 0.5, 0.2)
 	Fx.spawn_sound(self, global_position, THROW_SOUND, 2.0)
 	GameState.announce("A MECHANISM GRINDS...")
 	# Duck-typed rather than `as SecretDoor`: a class_name reference here would
