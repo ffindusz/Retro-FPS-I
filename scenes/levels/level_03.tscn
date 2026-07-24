@@ -91,6 +91,7 @@ material = ExtResource("1_rock")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 1.5, -10.5)
 operation = 2
 size = Vector3(4, 3, 3)
+material = ExtResource("1_rock")
 
 [node name="CutVault" type="CSGBox3D" parent="LevelCSG"]
 operation = 2
