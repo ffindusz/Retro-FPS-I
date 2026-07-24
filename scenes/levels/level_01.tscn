@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3]
+[gd_scene load_steps=30 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/level_objects/barrel.tscn" id="14_barrel"]
 [ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="28_dust"]
@@ -25,7 +25,6 @@
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_rockets.tscn" id="13_rockets"]
 [ext_resource type="Material" path="res://assets/materials/mat_wall.tres" id="1_wall"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_grunt.tscn" id="5_grunt"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_spitter.tscn" id="7_spitter"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/switch.tscn" id="8_switch"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/teleporter.tscn" id="9_teleporter"]
 [ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
@@ -305,10 +304,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.1, -26)
 [node name="GruntArena2" parent="Enemies" instance=ExtResource("5_grunt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.1, -21)
 
-[node name="Spitter1" parent="Enemies" instance=ExtResource("7_spitter")]
+[node name="GruntBalcony" parent="Enemies" instance=ExtResource("5_grunt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3.35, 1.5)
 
-[node name="Spitter2" parent="Enemies" instance=ExtResource("7_spitter")]
+[node name="GruntRoomC" parent="Enemies" instance=ExtResource("5_grunt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0.1, 3)
 
 [node name="Spawns" type="Node3D" parent="."]
