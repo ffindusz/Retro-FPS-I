@@ -21,6 +21,10 @@ const LEVEL_SCENES: Array[PackedScene] = [
 const TEST_STAGE_INDEX := 7
 const PLAYER_SCENE := preload("res://scenes/player/player.tscn")
 
+## Grace between touching the gold and accepting the end-screen confirm, so
+## a shot fired (or key mashed) at the winning moment can't skip the payoff.
+const WIN_CONFIRM_GRACE_MS := 900
+
 var _level: Node3D
 var _player: PlayerController
 var _level_index := 0
@@ -28,6 +32,8 @@ var _restart_index := 0
 var _game_active := false
 var _options_from_pause := false
 var _fps_accum := 0.0
+var _win_pending := false
+var _win_ready_ms := 0
 
 @onready var _world: Node3D = %World
 @onready var _start_screen: Control = %StartScreen
@@ -111,6 +117,23 @@ func _unhandled_input(event: InputEvent) -> void:
 		# Debug stats overlay toggle, for level and performance checking.
 		get_viewport().set_input_as_handled()
 		_debug_stats.visible = not _debug_stats.visible
+	elif _win_pending and Time.get_ticks_msec() >= _win_ready_ms \
+			and _is_win_confirm(event):
+		# The savor beat ends on a deliberate click/key, not a timer.
+		get_viewport().set_input_as_handled()
+		Input.action_release("fire")
+		_win_pending = false
+		_end_game(true)
+
+
+## Mirrors AnyKeyScreen's idea of "any key": Esc stays the pause/back key
+## and wheel scrolls don't count as clicks.
+func _is_win_confirm(event: InputEvent) -> bool:
+	if event is InputEventKey:
+		return event.pressed and not event.echo \
+				and event.physical_keycode != KEY_ESCAPE
+	return event is InputEventMouseButton and event.pressed \
+			and event.button_index <= MOUSE_BUTTON_MIDDLE
 
 
 func _warp(level_index: int) -> void:
@@ -172,6 +195,7 @@ func _on_pause_quit() -> void:
 
 func start_game(level_index := 0) -> void:
 	level_index = clampi(level_index, 0, LEVEL_SCENES.size() - 1)
+	_win_pending = false
 	_clear_game()
 	GameState.reset()
 	_level_index = level_index
@@ -266,8 +290,17 @@ func _on_game_won() -> void:
 	if _game_active:
 		_game_active = false
 		_restart_index = 0
-		# Short beat to savor the treasure before the screen.
-		get_tree().create_timer(1.0).timeout.connect(_end_game.bind(true))
+		# Savor the treasure: the world stays live around the opened chest
+		# and the credits screen waits for a deliberate click/key (handled in
+		# _unhandled_input) instead of a timer. A hint appears once the
+		# confirm grace has passed.
+		_win_pending = true
+		_win_ready_ms = Time.get_ticks_msec() + WIN_CONFIRM_GRACE_MS
+		GameState.announce("THE TREASURE IS YOURS")
+		get_tree().create_timer(WIN_CONFIRM_GRACE_MS / 1000.0).timeout.connect(
+				func() -> void:
+					if _win_pending:
+						_hud.show_banner("CLICK OR PRESS ANY KEY"))
 
 
 func _on_restart() -> void:

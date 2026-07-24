@@ -1,19 +1,20 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/weapons/projectile.gd" id="1_script"]
+[ext_resource type="Shader" path="res://shaders/projectile_flame.gdshader" id="2_flame"]
+[ext_resource type="Texture2D" path="res://assets/textures/flame_sheet.png" id="3_sheet"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_hit"]
 radius = 0.18
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_plasma"]
-shading_mode = 0
-albedo_color = Color(0.35, 1, 0.45, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_flame"]
+shader = ExtResource("2_flame")
+shader_parameter/sheet = ExtResource("3_sheet")
+shader_parameter/tint = Color(0.42, 1, 0.5, 1)
+shader_parameter/fps = 12.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_body"]
-radius = 0.15
-height = 0.3
-radial_segments = 8
-rings = 4
+[sub_resource type="QuadMesh" id="QuadMesh_body"]
+size = Vector2(0.55, 0.55)
 
 [node name="Plasma" type="Area3D"]
 collision_layer = 0
@@ -29,8 +30,8 @@ lifetime = 4.0
 shape = SubResource("SphereShape3D_hit")
 
 [node name="Body" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_body")
-surface_material_override/0 = SubResource("StandardMaterial3D_plasma")
+mesh = SubResource("QuadMesh_body")
+surface_material_override/0 = SubResource("ShaderMaterial_flame")
 
 [node name="Glow" type="OmniLight3D" parent="."]
 light_color = Color(0.4, 1, 0.5, 1)

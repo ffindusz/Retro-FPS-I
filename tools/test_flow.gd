@@ -43,11 +43,21 @@ func _tick(_delta: float) -> bool:
 			print("restarted: hud=%s player=%s health=%d (expect true true 100)"
 					% [main.get_node("Hud").visible, player != null, gs.health])
 			gs.win_game()
-			_next(1600)
+			# The win now lingers on the treasure until a confirm; wait out
+			# the grace, then check the screen hasn't shown on its own.
+			_next(1400)
 		4:
 			var end := main.get_node("EndScreen")
-			print("after win: end visible=%s text=%s (expect true YOU WIN)"
-					% [end.visible, end.get_node("Layout/ResultLabel").text])
+			print("during savor beat: end visible=%s (expect false, awaits confirm)"
+					% end.visible)
+			_key(KEY_SPACE)
+			_next(400)
+		5:
+			var end := main.get_node("EndScreen")
+			print("after win confirm: end visible=%s text=%s credits=%s "
+					% [end.visible, end.get_node("Layout/ResultLabel").text,
+					end.get_node("Layout/CreditsLabel").visible]
+					+ "(expect true YOU WIN true)")
 			print("flow test done")
 			return true
 	return false

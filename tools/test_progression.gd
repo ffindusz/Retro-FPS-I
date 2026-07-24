@@ -168,12 +168,23 @@ func _tick(_delta: float) -> bool:
 			print("door slid open: y %.2f -> %.2f (expect ~4 lower)" % [_door_y0, door.position.y])
 			player.global_position = Vector3(0, 0.3, -28)
 			player.velocity = Vector3.ZERO
-			_step = 4
+			# Chest-open beat + win-confirm grace, then the savor lingers
+			# until a key press.
+			_step = 5
 			_wait_until = Time.get_ticks_msec() + 2200
+		5:
+			var end := current_scene.get_node("EndScreen")
+			print("during savor beat: end visible=%s (expect false, awaits confirm)"
+					% end.visible)
+			_key(KEY_SPACE)
+			_step = 4
+			_wait_until = Time.get_ticks_msec() + 400
 		4:
 			var end := current_scene.get_node("EndScreen")
-			print("after gold: end visible=%s text=%s (expect true YOU WIN)"
-					% [end.visible, end.get_node("Layout/ResultLabel").text])
+			print("after gold + confirm: end visible=%s text=%s credits=%s "
+					% [end.visible, end.get_node("Layout/ResultLabel").text,
+					end.get_node("Layout/CreditsLabel").visible]
+					+ "(expect true YOU WIN true)")
 			print("progression test done")
 			return true
 	return false

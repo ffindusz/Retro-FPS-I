@@ -19,6 +19,7 @@ func _init() -> void:
 	_gen_ice()
 	_gen_swirl()
 	_gen_burst_sheet()
+	_gen_flame_sheet()
 	_gen_muzzle_flash()
 	print("Textures written to res://assets/textures/")
 	quit()
@@ -260,6 +261,47 @@ func _gen_burst_sheet() -> void:
 				var v := clampf(core + ring + sparks, 0.0, 1.0) * 255.0
 				_put(img, ox + x, oy + y, v, v, v)
 	img.save_png("res://assets/textures/burst_sheet.png")
+
+
+## Projectile flame spritesheet: 8 looping frames (4x2 grid of 64px cells)
+## of a roiling flame ball on black. shaders/projectile_flame.gdshader
+## cycles the frames additively (black = transparent) with a per-projectile
+## tint — orange boss fireballs, green spitter plasma, cyan player bolts.
+func _gen_flame_sheet() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 4004
+	var grain := _make_noise(rng, 9)
+	var cell := 64
+	var img := Image.create(cell * 4, cell * 2, false, Image.FORMAT_RGB8)
+	for frame in 8:
+		var phase := TAU * frame / 8.0
+		var ox := (frame % 4) * cell
+		var oy := (frame / 4) * cell
+		for y in cell:
+			for x in cell:
+				var cx := (float(x) + 0.5) / cell * 2.0 - 1.0
+				var cy := (float(y) + 0.5) / cell * 2.0 - 1.0
+				var r := sqrt(cx * cx + cy * cy)
+				var ang := atan2(cy, cx)
+				# Lobed, wobbling rim; every term is periodic in phase so
+				# frame 7 rolls seamlessly back into frame 0.
+				var edge := 0.62 + 0.10 * sin(3.0 * ang + phase) \
+						+ 0.07 * sin(5.0 * ang - 2.0 * phase + 1.3) \
+						+ 0.05 * sin(7.0 * ang + 3.0 * phase + 2.6)
+				# Body: bright center falling off to the rim, hot core on top.
+				var body := clampf((edge - r) / (edge * 0.75), 0.0, 1.0)
+				var core: float = exp(-pow(r / 0.3, 2.0)) * 1.1
+				# Faint halo licking past the rim.
+				var halo: float = exp(-pow(maxf(r - edge, 0.0) / 0.16, 2.0)) * 0.3
+				# Roiling surface: grain sampled in coordinates that rotate
+				# with the phase, so the ball churns as the loop plays (a
+				# full turn per loop keeps it seamless).
+				var gu := (cx * cos(phase) - cy * sin(phase)) * 0.5 + 0.5
+				var gv := (cx * sin(phase) + cy * cos(phase)) * 0.5 + 0.5
+				var g := _noise_at(grain, 9, gu, gv)
+				var v := clampf(body * (0.72 + 0.42 * g) + halo + core, 0.0, 1.0) * 255.0
+				_put(img, ox + x, oy + y, v, v, v)
+	img.save_png("res://assets/textures/flame_sheet.png")
 
 
 ## Muzzle flash: soft star on black for the viewmodel flash quads

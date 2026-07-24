@@ -1,6 +1,7 @@
 extends AnyKeyScreen
 ## Win/lose screen. Brief input grace period so a panic-click at the moment
-## of death doesn't instantly restart.
+## of death doesn't instantly restart. The win variant doubles as the
+## credits: the CreditsLabel block only shows on a victory.
 
 signal restart_requested
 
@@ -8,6 +9,7 @@ signal restart_requested
 @onready var _sub: Label = $Layout/SubLabel
 @onready var _stats: Label = $Layout/StatsLabel
 @onready var _score: Label = $Layout/ScoreLabel
+@onready var _credits: Label = $Layout/CreditsLabel
 
 
 func set_stats(text: String) -> void:
@@ -25,6 +27,7 @@ func set_score(score: int, best: int, new_best: bool) -> void:
 
 func set_result(win: bool) -> void:
 	_accept_after_ms = Time.get_ticks_msec() + 700
+	_credits.visible = win
 	if win:
 		_result.text = "YOU WIN"
 		_result.label_settings.font_color = Color(0.95, 0.8, 0.35)
