@@ -10,6 +10,9 @@ signal boss_died
 signal level_completed
 signal game_won
 signal announcement(text: String)
+## Short, low-key notice for collecting an item (e.g. "+100 GOLD"), shown
+## separately from the big announcement banner.
+signal pickup_message(text: String)
 signal teleport_flash
 
 const MAX_HEALTH := 100
@@ -67,6 +70,13 @@ func collect_gold(value: int) -> void:
 	gold_found += 1
 	score += value
 	score_changed.emit(score)
+	pickup_message.emit("+%d GOLD" % value)
+
+
+## Emits a pickup notice; health/ammo pickups call this (gold goes through
+## collect_gold, which emits its own).
+func notify_pickup(text: String) -> void:
+	pickup_message.emit(text)
 
 
 func stats_line() -> String:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_script"]
 [ext_resource type="Script" path="res://scripts/ui/compass.gd" id="2_compass"]
@@ -27,6 +27,12 @@ font_size = 28
 font_color = Color(1, 0.82, 0.32, 1)
 shadow_size = 3
 shadow_color = Color(0, 0, 0, 0.8)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pickup"]
+font_size = 22
+font_color = Color(0.68, 0.64, 0.53, 1)
+shadow_color = Color(0, 0, 0, 0.7)
 shadow_offset = Vector2(2, 2)
 
 [node name="Hud" type="Control"]
@@ -96,15 +102,37 @@ script = ExtResource("2_compass")
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
-offset_top = 48.0
-offset_bottom = 96.0
+anchor_bottom = 1.0
+offset_top = -196.0
+offset_bottom = -148.0
 grow_horizontal = 2
+grow_vertical = 0
 mouse_filter = 2
 text = "LEVEL 1"
 label_settings = SubResource("LabelSettings_big")
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PickupLabel" type="Label" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -144.0
+offset_bottom = -114.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+text = "+100 GOLD"
+label_settings = SubResource("LabelSettings_pickup")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ScoreLabel" type="Label" parent="."]
 unique_name_in_owner = true

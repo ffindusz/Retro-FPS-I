@@ -6,6 +6,7 @@ var _weapon_manager: WeaponManager
 var _player: PlayerController
 var _last_health := GameState.MAX_HEALTH
 var _banner_tween: Tween
+var _pickup_tween: Tween
 
 @onready var _health: Label = %HealthLabel
 @onready var _score: Label = %ScoreLabel
@@ -14,6 +15,7 @@ var _banner_tween: Tween
 @onready var _flash: ColorRect = %DamageFlash
 @onready var _teleport_flash: ColorRect = %TeleportFlash
 @onready var _banner: Label = %BannerLabel
+@onready var _pickup: Label = %PickupLabel
 @onready var _compass: Control = %Compass
 
 
@@ -21,6 +23,7 @@ func _ready() -> void:
 	GameState.health_changed.connect(_on_health_changed)
 	GameState.score_changed.connect(_on_score_changed)
 	GameState.announcement.connect(show_banner)
+	GameState.pickup_message.connect(show_pickup)
 	GameState.teleport_flash.connect(_on_teleport_flash)
 	_score.text = "GOLD %d" % GameState.score
 
@@ -48,6 +51,18 @@ func show_banner(text: String) -> void:
 	_banner_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_STOP)
 	_banner_tween.tween_interval(1.8)
 	_banner_tween.tween_property(_banner, "modulate:a", 0.0, 0.8)
+
+
+## Brief, low-key pickup notice below the banner ("+100 GOLD"). Shorter than a
+## banner so a run of pickups reads as a quick flicker, not a wall of text.
+func show_pickup(text: String) -> void:
+	if _pickup_tween and _pickup_tween.is_valid():
+		_pickup_tween.kill()
+	_pickup.text = text
+	_pickup.modulate.a = 1.0
+	_pickup_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_STOP)
+	_pickup_tween.tween_interval(0.9)
+	_pickup_tween.tween_property(_pickup, "modulate:a", 0.0, 0.5)
 
 
 func bind_player(player: PlayerController) -> void:

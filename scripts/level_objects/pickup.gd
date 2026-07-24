@@ -32,6 +32,16 @@ const TYPE_GLOW := {
 const GLOW_ALPHA := 0.3
 const GLOW_SIZE := 0.9
 
+## Pickup-notice labels for the non-gold types (gold speaks for itself via
+## collect_gold). Ammo names match the pickup legend in TYPE_GLOW.
+const TYPE_NAME := {
+	Type.HEALTH: "HEALTH",
+	Type.BULLETS: "BULLETS",
+	Type.SHELLS: "SHELLS",
+	Type.ROCKETS: "ROCKETS",
+	Type.CELLS: "CELLS",
+}
+
 @export var type := Type.HEALTH
 @export var amount := 25
 
@@ -102,6 +112,9 @@ func _try_collect(body: Node3D) -> void:
 	if not applied:
 		return
 	_taken = true
+	# Gold announces itself from collect_gold; the rest post their own notice.
+	if type != Type.GOLD:
+		GameState.notify_pickup("+%d %s" % [amount, TYPE_NAME[type]])
 	var color := Color(0.6, 1.0, 0.7) if type == Type.HEALTH else Color(1.0, 0.9, 0.5)
 	var sound := PICKUP_SOUND
 	if type == Type.HEALTH:
