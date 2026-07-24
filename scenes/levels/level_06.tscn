@@ -119,14 +119,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -3, 12)
 size = Vector3(3, 1, 3)
 material = ExtResource("1_stone")
 
-[node name="ReturnStone1" type="CSGBox3D" parent="LevelCSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, -2.4, 13.5)
-size = Vector3(1.6, 0.8, 1.6)
+[node name="ReturnStep1" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -2.5, 12)
+size = Vector3(1.8, 0.8, 1.8)
 material = ExtResource("1_stone")
 
-[node name="ReturnStone2" type="CSGBox3D" parent="LevelCSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1.3, 12.8)
-size = Vector3(1.6, 0.8, 1.6)
+[node name="ReturnStep2" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, -2.1, 12)
+size = Vector3(1.8, 0.8, 1.8)
+material = ExtResource("1_stone")
+
+[node name="ReturnStep3" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4, -1.7, 12)
+size = Vector3(1.8, 0.8, 1.8)
+material = ExtResource("1_stone")
+
+[node name="ReturnStep4" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, -1.3, 12)
+size = Vector3(1.8, 0.8, 1.8)
+material = ExtResource("1_stone")
+
+[node name="ReturnStep5" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, -0.9, 12)
+size = Vector3(1.8, 0.8, 1.8)
+material = ExtResource("1_stone")
+
+[node name="ReturnStep6" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.5, 12)
+size = Vector3(1.8, 0.8, 1.8)
 material = ExtResource("1_stone")
 
 [node name="VoidKillZone" type="Area3D" parent="."]
