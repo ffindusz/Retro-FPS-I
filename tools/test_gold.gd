@@ -38,10 +38,16 @@ func _tick(_delta: float) -> bool:
 		2:
 			print("after 2 gems: score=%d gold_found=%d/%d (expect 200 2/10)"
 					% [gs.score, gs.gold_found, gs.total_gold])
-			world.get_node("Level05/Props/ChestTreasury").take_damage(999.0)
-			_next(400)
+			# Shoot the chest from the +z (room) side; a gem pops toward there.
+			var chest: Node3D = world.get_node("Level05/Props/ChestTreasury")
+			chest.take_damage(999.0, chest.global_position + Vector3(0, 1, 2))
+			# Stand where the gem lands so walking over it banks the reward.
+			var land := chest.global_position + Vector3(0, 0.3, 1)
+			player.global_position = land
+			player.velocity = Vector3.ZERO
+			_next(900)
 		3:
-			print("after chest: score=%d gold_found=%d (expect 500 3)"
+			print("after chest gem collected: score=%d gold_found=%d (expect 500 3)"
 					% [gs.score, gs.gold_found])
 			# Shoot the arrival lever; its linked secret door should open.
 			var door: Node3D = world.get_node("Level05/Props/SecretDoorVault")
