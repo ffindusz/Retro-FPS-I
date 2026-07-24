@@ -14,6 +14,10 @@ extends CharacterBody3D
 @export var air_accel := 1.5
 @export var friction := 6.0
 @export var jump_velocity := 8.0
+## Tallest ledge the player walks straight up (thresholds, kerbs, low steps)
+## instead of stalling until they jump. Also the floor-snap distance, so small
+## down-steps stay smooth rather than launching the player into a brief fall.
+@export var step_height := 0.4
 ## Defaults to the project's physics/3d/default_gravity (see project.godot)
 ## rather than a separately hardcoded value.
 @export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -74,6 +78,9 @@ func _ready() -> void:
 	_collision.shape = _collision.shape.duplicate()
 	_stand_height = (_collision.shape as CapsuleShape3D).height
 	_stand_head_height = head.position.y
+	# Keep the feet glued to the floor within a step's height so walking down a
+	# small ledge doesn't bounce the player into a brief fall.
+	floor_snap_length = step_height
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -122,8 +129,17 @@ func _physics_process(delta: float) -> void:
 		_accelerate(wish_dir, speed, air_accel, delta)
 		velocity.y -= gravity * delta
 
+	var was_grounded := is_on_floor()
+	# Intended horizontal move, captured before move_and_slide cancels it against
+	# a wall -- the step probe and the momentum we carry onto a ledge use it.
+	var pre_horizontal := Vector3(velocity.x, 0.0, velocity.z)
 	var fall_speed := -velocity.y  # captured before move_and_slide zeroes it
 	move_and_slide()
+
+	# Walk over low ledges the slide stalled against (but only when already on
+	# the ground, so it never doubles as a mid-air boost or fights a jump).
+	if was_grounded and is_on_floor():
+		_try_step_up(pre_horizontal, delta)
 
 	if is_on_floor():
 		if _was_airborne:
@@ -136,6 +152,42 @@ func _physics_process(delta: float) -> void:
 				_step_accum = 0.0
 				_play_step()
 	_was_airborne = not is_on_floor()
+
+
+## Lifts the player onto a low ledge that blocked this frame's slide: probe
+## up, forward, then back down, and if there's solid footing within step_height
+## snap the feet onto it. Bails on a real drop so it never launches into air.
+func _try_step_up(horizontal: Vector3, delta: float) -> void:
+	var speed := horizontal.length()
+	if speed < 0.5:
+		return
+	var dir := horizontal / speed
+	# Detect a block just ahead (a touch past this frame's travel).
+	var probe := dir * clampf(speed * delta + 0.05, 0.06, 0.5)
+	if not test_move(global_transform, probe):
+		return  # path ahead is clear -- no step to climb
+	# Step forward far enough to clear the ledge lip (past the capsule radius),
+	# so the player lands squarely on top instead of teetering on the edge.
+	var radius := (_collision.shape as CapsuleShape3D).radius
+	var forward := dir * (radius + 0.2)
+	# Lift a step and try that forward move. Clear => obstacle is no taller than
+	# a step (a low ceiling above it fails this too); a collision => it's a wall.
+	var lifted := global_transform
+	lifted.origin += Vector3.UP * step_height
+	if test_move(lifted, forward):
+		return  # obstacle is taller than a step, not a ledge
+	lifted.origin += forward
+	# Settle onto the ledge top; require solid ground within a step, so a gap or
+	# cliff edge leaves the player where they were instead of floating forward.
+	var landing := KinematicCollision3D.new()
+	if not test_move(lifted, Vector3.DOWN * (step_height + 0.02), landing):
+		return
+	lifted.origin += Vector3.DOWN * landing.get_travel().length()
+	global_position = lifted.origin
+	# Carry the intended momentum onto the ledge; the slide had cancelled it
+	# against the wall we just stepped over.
+	velocity.x = horizontal.x
+	velocity.z = horizontal.z
 
 
 func _on_landed(fall_speed: float) -> void:
