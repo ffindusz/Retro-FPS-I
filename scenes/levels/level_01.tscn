@@ -213,6 +213,31 @@ transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, -4.4, 1.8, -
 size = Vector3(1.2, 1.2, 1.2)
 material = ExtResource("4_crate")
 
+[node name="CrateStep1" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 0.2, 0.8)
+size = Vector3(1.6, 0.4, 0.9)
+material = ExtResource("4_crate")
+
+[node name="CrateStep2" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 0.4, 0.2)
+size = Vector3(1.6, 0.8, 0.9)
+material = ExtResource("4_crate")
+
+[node name="CrateStep3" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 0.6, -0.4)
+size = Vector3(1.6, 1.2, 0.9)
+material = ExtResource("4_crate")
+
+[node name="CrateStep4" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 0.8, -1)
+size = Vector3(1.6, 1.6, 0.9)
+material = ExtResource("4_crate")
+
+[node name="CrateStep5" type="CSGBox3D" parent="LevelCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 1, -1.6)
+size = Vector3(1.6, 2, 0.9)
+material = ExtResource("4_crate")
+
 [node name="CrateA1" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.6, 17)
 size = Vector3(1.2, 1.2, 1.2)
@@ -343,13 +368,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3.5, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4, 0.4, -3)
 
 [node name="GoldCrateTop" parent="Pickups" instance=ExtResource("40_gold")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 3.4, -2.55)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 2.8, -2.55)
 
 [node name="GoldUnderLandingB" parent="Pickups" instance=ExtResource("40_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 0.4, -3)
 
 [node name="GoldCrateTopB" parent="Pickups" instance=ExtResource("40_gold")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 3.4, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 2.8, -2)
 
 [node name="GoldRoomA" parent="Pickups" instance=ExtResource("40_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.05, 19)
@@ -495,7 +520,7 @@ transform = Transform3D(0, -0.9516, 0.4437, 1.05, 0, 0, 0, 0.4437, 0.9516, -7.4,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4, 1.2, -3)
 
 [node name="SecretCrateTop" parent="Secrets" instance=ExtResource("15_secret")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 3, -2.55)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 2.7, -2.55)
 
 [node name="SecretVaultArea" parent="Secrets" instance=ExtResource("15_secret")]
 transform = Transform3D(2, 0, 0, 0, 1.2, 0, 0, 0, 2, 0, 1, 31.5)
