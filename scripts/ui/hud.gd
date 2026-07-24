@@ -3,6 +3,7 @@ extends Control
 ## Weapon info is polled each frame — cheap, and immune to weapon switches.
 
 var _weapon_manager: WeaponManager
+var _player: PlayerController
 var _last_health := GameState.MAX_HEALTH
 var _banner_tween: Tween
 
@@ -13,6 +14,7 @@ var _banner_tween: Tween
 @onready var _flash: ColorRect = %DamageFlash
 @onready var _teleport_flash: ColorRect = %TeleportFlash
 @onready var _banner: Label = %BannerLabel
+@onready var _compass: Control = %Compass
 
 
 func _ready() -> void:
@@ -49,6 +51,7 @@ func show_banner(text: String) -> void:
 
 
 func bind_player(player: PlayerController) -> void:
+	_player = player
 	_weapon_manager = player.weapon_manager
 	_last_health = GameState.health
 	_health.text = "HP %d" % GameState.health
@@ -60,6 +63,8 @@ func _process(delta: float) -> void:
 		if weapon:
 			_weapon.text = weapon.weapon_label
 			_ammo.text = str(weapon.ammo)
+	if _player and is_instance_valid(_player):
+		_compass.set_heading(_player.rotation.y)
 	# The HUD processes while the tree is paused; freeze the damage-flash
 	# decay so it doesn't silently drain behind pause overlays.
 	if not get_tree().paused:
