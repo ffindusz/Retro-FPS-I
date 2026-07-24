@@ -5,8 +5,9 @@ extends "res://tools/test_base.gd"
 ## also confirms every level still loads with the added pickups.
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/test_treasure.gd
 
-# Per level 1..7: nook/vault gems + chests. Level 5 is the showcase (10).
-const EXPECTED := [3, 3, 3, 3, 10, 4, 3]
+# Per level 1..7: loose/hoard gems + shootable chests. Every level is now a
+# treasure hunt; level 5 stays the densest showcase.
+const EXPECTED := [8, 8, 8, 8, 10, 7, 7]
 
 var _lvl := 0
 var _loaded := false
@@ -23,8 +24,9 @@ func _tick(_delta: float) -> bool:
 		_loaded = true
 		_next(300)
 		return false
-	print("level %d gold total: total_gold=%d (expect %d)"
-			% [_lvl + 1, gs.total_gold, EXPECTED[_lvl]])
+	var tag := "" if gs.total_gold == EXPECTED[_lvl] else "   <-- MISMATCH!"
+	print("level %d gold total: total_gold=%d (expect %d)%s"
+			% [_lvl + 1, gs.total_gold, EXPECTED[_lvl], tag])
 	_lvl += 1
 	if _lvl >= EXPECTED.size():
 		print("treasure test done")
