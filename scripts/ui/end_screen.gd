@@ -35,7 +35,7 @@ func set_result(win: bool) -> void:
 	else:
 		_result.text = "YOU DIED"
 		_result.label_settings.font_color = Color(0.85, 0.2, 0.15)
-		_sub.text = "THE FACILITY CLAIMS ANOTHER"
+		_sub.text = "THE DUNGEON CLAIMS ANOTHER SOUL"
 
 
 func _on_confirm() -> void:
