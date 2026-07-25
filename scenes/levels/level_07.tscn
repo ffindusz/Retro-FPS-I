@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3]
+[gd_scene load_steps=25 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/props/banner_red.tscn" id="17_banner_red"]
 [ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="22_dust"]
@@ -20,6 +20,7 @@
 [ext_resource type="Material" path="res://assets/materials/mat_crate.tres" id="3_crate"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_grunt.tscn" id="4_grunt"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_spitter.tscn" id="5_spitter"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_rogue.tscn" id="42_rogue"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/boss.tscn" id="6_boss"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/secret_door.tscn" id="7_door"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/gold_pile.tscn" id="8_gold"]
@@ -252,6 +253,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.1, -8)
 
 [node name="Spitter1" parent="Enemies" instance=ExtResource("5_spitter")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -8)
+
+[node name="Rogue1" parent="Enemies" instance=ExtResource("42_rogue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0.1, -18)
+
+[node name="Rogue2" parent="Enemies" instance=ExtResource("42_rogue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.1, -18)
 
 [node name="Spawns" type="Node3D" parent="."]
 

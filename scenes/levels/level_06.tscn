@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/props/pillar.tscn" id="17_pillar"]
 [ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="21_dust"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/level_objects/lava_area.gd" id="2_killzone"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_grunt.tscn" id="4_grunt"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_spitter.tscn" id="5_spitter"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_rogue.tscn" id="42_rogue"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/switch_floor.tscn" id="6_switch"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/teleporter.tscn" id="7_teleporter"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/barrel.tscn" id="8_barrel"]
@@ -286,6 +287,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.1, -23.5)
 
 [node name="Spitter3" parent="Enemies" instance=ExtResource("5_spitter")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.1, -1)
+
+[node name="Rogue1" parent="Enemies" instance=ExtResource("42_rogue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -8)
+
+[node name="Rogue2" parent="Enemies" instance=ExtResource("42_rogue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.1, -0.5)
 
 [node name="Spawns" type="Node3D" parent="."]
 
