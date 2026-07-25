@@ -43,6 +43,7 @@ var _bob_phase := 0.0
 var _bob_blend := 0.0
 var _step_accum := 0.0
 var _land_dip := 0.0
+var _step_smooth := 0.0  # camera lag after a step-up, decays for a smooth rise
 var _was_airborne := false
 var step_count := 0  # exposed for tests
 
@@ -106,9 +107,12 @@ func _process(delta: float) -> void:
 			+ cos(_bob_phase * 0.5) * bob_amplitude * 0.5 * _bob_blend
 	camera.v_offset = randf_range(-_shake, _shake) * 0.35 \
 			+ sin(_bob_phase) * bob_amplitude * _bob_blend
-	# Smooth camera drop/rise between crouch and stand; landing dips it.
+	# Smooth camera drop/rise between crouch and stand; landing dips it, and a
+	# step-up leaves the camera lagged so it rises smoothly instead of snapping.
 	_land_dip = lerpf(_land_dip, 0.0, minf(delta * 8.0, 1.0))
-	var target_head := (crouch_head_height if _crouching else _stand_head_height) - _land_dip
+	_step_smooth = lerpf(_step_smooth, 0.0, minf(delta * 9.0, 1.0))
+	var target_head := (crouch_head_height if _crouching else _stand_head_height) \
+			- _land_dip - _step_smooth
 	head.position.y = lerpf(head.position.y, target_head, minf(delta * 12.0, 1.0))
 
 
@@ -183,6 +187,10 @@ func _try_step_up(horizontal: Vector3, delta: float) -> void:
 	if not test_move(lifted, Vector3.DOWN * (step_height + 0.02), landing):
 		return
 	lifted.origin += Vector3.DOWN * landing.get_travel().length()
+	# Leave the camera behind by however far the feet jumped up, capped, so the
+	# view rises smoothly (see _process) instead of snapping -- climbing stairs
+	# should read as a walk, not a series of teleports.
+	_step_smooth = minf(_step_smooth + (lifted.origin.y - global_position.y), 0.6)
 	global_position = lifted.origin
 	# Carry the intended momentum onto the ledge; the slide had cancelled it
 	# against the wall we just stepped over.
