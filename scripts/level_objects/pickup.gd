@@ -4,7 +4,7 @@ extends Area3D
 ## health/ammo: refuses collection while the stat is already full, so it stays
 ## for later. Gold is treasure — it always collects and adds to the run score.
 
-enum Type { HEALTH, BULLETS, SHELLS, ROCKETS, CELLS, GOLD }
+enum Type { POTION, CRYSTALS, QUARRELS, EMBERS, MANA, GOLD }
 
 const HEAL_SOUND := preload("res://assets/audio/heal.wav")
 const PICKUP_SOUND := preload("res://assets/audio/pickup.wav")
@@ -19,14 +19,14 @@ const FLOAT_AMPLITUDE := 0.05
 ## whole level is one CSG mesh, so per-mesh light limits on the mobile
 ## renderer would silently drop ten extra omnis). The imported prop models
 ## (bottles, boxes, keg) would otherwise vanish into dark rooms, and the
-## color doubles as a legend — green health, amber bullets, orange shells,
-## red rockets, cyan cells, gold treasure.
+## color doubles as a legend — green potion, amber crystals, orange quarrels,
+## red embers, cyan mana, gold treasure.
 const TYPE_GLOW := {
-	Type.HEALTH: Color(0.45, 1.0, 0.55),
-	Type.BULLETS: Color(1.0, 0.85, 0.45),
-	Type.SHELLS: Color(1.0, 0.6, 0.3),
-	Type.ROCKETS: Color(1.0, 0.35, 0.25),
-	Type.CELLS: Color(0.4, 0.85, 1.0),
+	Type.POTION: Color(0.45, 1.0, 0.55),
+	Type.CRYSTALS: Color(1.0, 0.85, 0.45),
+	Type.QUARRELS: Color(1.0, 0.6, 0.3),
+	Type.EMBERS: Color(1.0, 0.35, 0.25),
+	Type.MANA: Color(0.4, 0.85, 1.0),
 	Type.GOLD: Color(1.0, 0.82, 0.3),
 }
 const GLOW_ALPHA := 0.3
@@ -35,14 +35,14 @@ const GLOW_SIZE := 0.9
 ## Pickup-notice labels for the non-gold types (gold speaks for itself via
 ## collect_gold). Ammo names match the pickup legend in TYPE_GLOW.
 const TYPE_NAME := {
-	Type.HEALTH: "HEALTH",
-	Type.BULLETS: "BULLETS",
-	Type.SHELLS: "SHELLS",
-	Type.ROCKETS: "ROCKETS",
-	Type.CELLS: "CELLS",
+	Type.POTION: "POTION",
+	Type.CRYSTALS: "CRYSTALS",
+	Type.QUARRELS: "QUARRELS",
+	Type.EMBERS: "EMBERS",
+	Type.MANA: "MANA",
 }
 
-@export var type := Type.HEALTH
+@export var type := Type.POTION
 @export var amount := 25
 
 var _taken := false
@@ -100,7 +100,7 @@ func _try_collect(body: Node3D) -> void:
 	if _taken or not body.is_in_group("player"):
 		return
 	var applied := false
-	if type == Type.HEALTH:
+	if type == Type.POTION:
 		applied = GameState.heal(amount)
 	elif type == Type.GOLD:
 		GameState.collect_gold(amount)
@@ -115,9 +115,9 @@ func _try_collect(body: Node3D) -> void:
 	# Gold announces itself from collect_gold; the rest post their own notice.
 	if type != Type.GOLD:
 		GameState.notify_pickup("+%d %s" % [amount, TYPE_NAME[type]])
-	var color := Color(0.6, 1.0, 0.7) if type == Type.HEALTH else Color(1.0, 0.9, 0.5)
+	var color := Color(0.6, 1.0, 0.7) if type == Type.POTION else Color(1.0, 0.9, 0.5)
 	var sound := PICKUP_SOUND
-	if type == Type.HEALTH:
+	if type == Type.POTION:
 		sound = HEAL_SOUND
 	elif type == Type.GOLD:
 		sound = COIN_SOUND

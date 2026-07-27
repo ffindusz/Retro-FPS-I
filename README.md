@@ -55,10 +55,10 @@ Level 7 is the **boss** — it enrages at half health.
 Killing it opens a secret room; claim the **chest of gold** inside to win.
 Dying restarts the level you died on. Staff fireballs splash — including on you.
 
-**Pickups** are scattered through every level: potions (+25 HP), bolt boxes
-(+24), quarrel cases (+8), powder kegs (+4), and mana flasks (+20). They refuse
-collection while you're already full, so they stay put for when you need
-them.
+**Pickups** are scattered through every level: POTION (+25 HP), CRYSTALS
+(+24, wand), QUARRELS (+8, crossbow), EMBERS (+4, fire staff), and MANA (+20,
+tome). They refuse collection while you're already full, so they stay put for
+when you need them.
 
 Each level also hides **secret areas** with bonus stashes; an intermission
 screen after every level tallies your kills, secrets, gold, and time.
