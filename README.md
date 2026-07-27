@@ -93,8 +93,8 @@ dither/quantize filter; settings persist to `user://settings.cfg`.
   capture — run without `--headless`), and 18 smoke tests covering level
   flow (`test_flow`, `test_progression`, `test_cheat`, `test_pause`,
   `test_settings`),
-  combat/AI (`test_enemy`, `test_spitter`, `test_rogue`, `test_boss`,
-  `test_weapons`),
+  combat/AI (`test_enemy`, `test_spitter`, `test_wake` (cross-type
+  wake-on-death), `test_rogue`, `test_boss`, `test_weapons`),
   movement/hazards/stats (`test_crouch`, `test_feel`, `test_ice`,
   `test_lava`, `test_void`, `test_pickups`, `test_stats`), and the
   external-model props (`test_props`) — all sharing their boot/wait/step
