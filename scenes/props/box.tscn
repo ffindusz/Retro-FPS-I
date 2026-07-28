@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/models/box_large/box_large.gltf" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_box"]
+size = Vector3(1.2, 1.2, 1.2)
+
+[node name="Box" type="StaticBody3D"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("BoxShape3D_box")
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)

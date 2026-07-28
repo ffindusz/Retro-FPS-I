@@ -3,7 +3,7 @@
 [ext_resource type="Material" path="res://assets/materials/mat_stone.tres" id="1_stone"]
 [ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
 [ext_resource type="Material" path="res://assets/materials/mat_wall.tres" id="3_wall"]
-[ext_resource type="Material" path="res://assets/materials/mat_crate.tres" id="4_crate"]
+[ext_resource type="PackedScene" path="res://scenes/props/box.tscn" id="44_box"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_grunt.tscn" id="5_grunt"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_spitter.tscn" id="6_spitter"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_rogue.tscn" id="7_rogue"]
@@ -238,21 +238,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, 3)
 size = Vector3(1.2, 6, 1.2)
 material = ExtResource("3_wall")
 
-[node name="CrateHall1" type="CSGBox3D" parent="LevelCSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.8, 0.6, -4.8)
-size = Vector3(1.2, 1.2, 1.2)
-material = ExtResource("4_crate")
-
-[node name="CrateHall2" type="CSGBox3D" parent="LevelCSG"]
-transform = Transform3D(0.906, 0, 0.423, 0, 1, 0, -0.423, 0, 0.906, -7.5, 0.6, -5.3)
-size = Vector3(1.2, 1.2, 1.2)
-material = ExtResource("4_crate")
-
-[node name="CrateHall3" type="CSGBox3D" parent="LevelCSG"]
-transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, -8.2, 1.79, -5.05)
-size = Vector3(1.2, 1.2, 1.2)
-material = ExtResource("4_crate")
-
 [node name="Switch" parent="." instance=ExtResource("8_switch")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -24.02, 1.3, -16)
 teleporter_path = NodePath("../Teleporter")
@@ -377,6 +362,15 @@ transform = Transform3D(2.5, 0, 0, 0, 1.2, 0, 0, 0, 2, 0, 1, 25.8)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.2, 3, -5.05)
 
 [node name="Props" type="Node3D" parent="."]
+
+[node name="BoxHall1" parent="Props" instance=ExtResource("44_box")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.8, 0, -4.8)
+
+[node name="BoxHall2" parent="Props" instance=ExtResource("44_box")]
+transform = Transform3D(0.906, 0, 0.423, 0, 1, 0, -0.423, 0, 0.906, -7.5, 0, -5.3)
+
+[node name="BoxHall3" parent="Props" instance=ExtResource("44_box")]
+transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, -8.2, 1.19, -5.05)
 
 [node name="BannerRedArrival1" parent="Props" instance=ExtResource("19_banner_red")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -3, 0, 20.98)

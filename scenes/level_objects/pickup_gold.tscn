@@ -14,12 +14,13 @@ emission_enabled = true
 emission = Color(1, 0.7, 0.22, 1)
 emission_energy_multiplier = 0.55
 
-[sub_resource type="SphereMesh" id="SphereMesh_gem"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_coin"]
 material = SubResource("StandardMaterial3D_gold")
-radius = 0.16
-height = 0.44
-radial_segments = 6
-rings = 3
+top_radius = 0.13
+bottom_radius = 0.13
+height = 0.03
+radial_segments = 12
+rings = 0
 
 [node name="PickupGold" type="Area3D"]
 collision_layer = 0
@@ -34,5 +35,33 @@ shape = SubResource("SphereShape3D_touch")
 
 [node name="Visual" type="Node3D" parent="."]
 
-[node name="Model" type="MeshInstance3D" parent="Visual"]
-mesh = SubResource("SphereMesh_gem")
+[node name="Model" type="Node3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+
+[node name="Coin1" type="MeshInstance3D" parent="Visual/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+mesh = SubResource("CylinderMesh_coin")
+
+[node name="Coin2" type="MeshInstance3D" parent="Visual/Model"]
+transform = Transform3D(0.9968, 0.0799, 0, -0.0799, 0.9968, 0, 0, 0, 1, 0.015, 0.05, 0.01)
+mesh = SubResource("CylinderMesh_coin")
+
+[node name="Coin3" type="MeshInstance3D" parent="Visual/Model"]
+transform = Transform3D(1, 0, 0, 0, 0.9968, 0.0799, 0, -0.0799, 0.9968, -0.01, 0.08, 0.015)
+mesh = SubResource("CylinderMesh_coin")
+
+[node name="Coin4" type="MeshInstance3D" parent="Visual/Model"]
+transform = Transform3D(0.9968, -0.0799, 0, 0.0799, 0.9968, 0, 0, 0, 1, 0.012, 0.11, -0.012)
+mesh = SubResource("CylinderMesh_coin")
+
+[node name="Coin5" type="MeshInstance3D" parent="Visual/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008, 0.14, 0.006)
+mesh = SubResource("CylinderMesh_coin")
+
+[node name="Coin6" type="MeshInstance3D" parent="Visual/Model"]
+transform = Transform3D(0.9968, 0, 0.0799, 0, 1, 0, -0.0799, 0, 0.9968, 0.2, 0.015, 0.07)
+mesh = SubResource("CylinderMesh_coin")
+
+[node name="Coin7" type="MeshInstance3D" parent="Visual/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18, 0.015, -0.1)
+mesh = SubResource("CylinderMesh_coin")
