@@ -21,7 +21,8 @@ var _eyes_mat: ShaderMaterial
 
 func _ready() -> void:
 	super()
-	voice_pitch = 0.7
+	# voice_pitch is NOT set here -- it is an @export on EnemyBase and would
+	# stomp the scene/Inspector value. The boss's 0.7 lives in boss.tscn.
 	_clip_attack_hold = "Walking_B"
 	# The boss looms upright while dormant instead of lying on the floor.
 	_clip_dormant = "Skeleton_Inactive_Standing_Pose"

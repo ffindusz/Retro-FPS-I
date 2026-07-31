@@ -13,7 +13,9 @@ const CAST_CLIP := "Spellcast_Shoot"
 
 func _ready() -> void:
 	super()
-	voice_pitch = 1.15
+	# voice_pitch is NOT set here: it is an @export on EnemyBase, so assigning
+	# it after super() would silently overwrite whatever the scene or the
+	# Inspector set. The mage's 1.15 lives in enemy_spitter.tscn instead.
 	_clip_attack_hold = "Spellcasting"
 
 

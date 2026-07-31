@@ -17,6 +17,7 @@ notice_range = 15.0
 attack_range = 12.0
 attack_interval = 1.8
 notice_delay = 1.15
+voice_pitch = 1.15
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=733862557]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
