@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=22 format=3]
 
 [ext_resource type="Material" path="res://assets/materials/mat_rock.tres" id="1_rock"]
 [ext_resource type="PackedScene" path="res://scenes/props/embers.tscn" id="17_embers"]
@@ -19,11 +19,13 @@
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_crystals.tscn" id="11_bullets"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_quarrels.tscn" id="12_shells"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_embers.tscn" id="13_rockets"]
+[ext_resource type="Script" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lava"]
 size = Vector3(9.7, 1.2, 6.6)
 
 [node name="Level03" type="Node3D"]
+script = ExtResource("99_levelroot")
 
 [node name="LevelCSG" type="CSGCombiner3D" parent="."]
 use_collision = true

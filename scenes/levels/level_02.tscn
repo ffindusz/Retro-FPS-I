@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=19 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/props/crates_stacked.tscn" id="17_crates"]
 [ext_resource type="PackedScene" path="res://scenes/props/rubble_half.tscn" id="18_rubble_half"]
@@ -17,8 +17,10 @@
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_grunt.tscn" id="4_grunt"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/switch.tscn" id="6_switch"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/teleporter.tscn" id="7_teleporter"]
+[ext_resource type="Script" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
 [node name="Level02" type="Node3D"]
+script = ExtResource("99_levelroot")
 
 [node name="LevelCSG" type="CSGCombiner3D" parent="."]
 use_collision = true

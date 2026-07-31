@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3]
+[gd_scene load_steps=30 format=3]
 
 [ext_resource type="Material" path="res://assets/materials/mat_stone.tres" id="1_stone"]
 [ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
@@ -30,8 +30,10 @@
 [ext_resource type="PackedScene" path="res://scenes/level_objects/shootable_chest.tscn" id="28_chest"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/secret_door.tscn" id="29_door"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/secret_lever.tscn" id="30_lever"]
+[ext_resource type="Script" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
 [node name="Level05" type="Node3D"]
+script = ExtResource("99_levelroot")
 
 [node name="LevelCSG" type="CSGCombiner3D" parent="."]
 use_collision = true

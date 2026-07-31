@@ -62,8 +62,23 @@ func _ready() -> void:
 	_options_screen.closed.connect(_on_options_closed)
 	Settings.changed.connect(_apply_video_settings)
 	_apply_video_settings()
-	_start_screen.show_best(GameState.high_score)
-	_show_only(_start_screen)
+	# A level run on its own (F6 in the editor) bounces through here rather
+	# than rigging up its own player/HUD/viewport; see LevelRoot.
+	var standalone := LevelRoot.take_pending_scene_path()
+	if standalone.is_empty():
+		_start_screen.show_best(GameState.high_score)
+		_show_only(_start_screen)
+	else:
+		start_game(_index_of_scene(standalone))
+
+
+## Maps a level scene path back to its campaign index, for standalone runs.
+func _index_of_scene(path: String) -> int:
+	for i in LEVEL_SCENES.size():
+		if LEVEL_SCENES[i].resource_path == path:
+			return i
+	push_warning("Level %s is not in LEVEL_SCENES; starting the campaign." % path)
+	return 0
 
 
 ## Refreshes the debug stats overlay a few times a second (readable, not
@@ -272,6 +287,9 @@ func _advance_level() -> void:
 
 
 func _level_banner() -> String:
+	var root := _level as LevelRoot
+	if root and not root.display_name.is_empty():
+		return root.display_name
 	if _level_index == TEST_STAGE_INDEX:
 		return "TEST STAGE"
 	return "LEVEL %d" % (_level_index + 1)

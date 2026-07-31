@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3]
+[gd_scene load_steps=32 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/level_objects/barrel.tscn" id="14_barrel"]
 [ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="28_dust"]
@@ -31,8 +31,10 @@
 [ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
 [ext_resource type="Material" path="res://assets/materials/mat_metal.tres" id="3_metal"]
 [ext_resource type="Material" path="res://assets/materials/mat_crate.tres" id="4_crate"]
+[ext_resource type="Script" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
 [node name="Level01" type="Node3D"]
+script = ExtResource("99_levelroot")
 
 [node name="LevelCSG" type="CSGCombiner3D" parent="."]
 use_collision = true

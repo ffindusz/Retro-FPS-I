@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3]
+[gd_scene load_steps=26 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/props/banner_red.tscn" id="17_banner_red"]
 [ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="22_dust"]
@@ -24,8 +24,10 @@
 [ext_resource type="PackedScene" path="res://scenes/enemies/boss.tscn" id="6_boss"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/secret_door.tscn" id="7_door"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/gold_pile.tscn" id="8_gold"]
+[ext_resource type="Script" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
 [node name="Level07" type="Node3D"]
+script = ExtResource("99_levelroot")
 
 [node name="LevelCSG" type="CSGCombiner3D" parent="."]
 use_collision = true

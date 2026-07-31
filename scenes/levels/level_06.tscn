@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/props/pillar.tscn" id="17_pillar"]
 [ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="21_dust"]
@@ -21,11 +21,13 @@
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_mana.tscn" id="16_cells"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_gold.tscn" id="40_gold"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/shootable_chest.tscn" id="41_chest"]
+[ext_resource type="Script" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_void"]
 size = Vector3(80, 6, 80)
 
 [node name="Level06" type="Node3D"]
+script = ExtResource("99_levelroot")
 
 [node name="LevelCSG" type="CSGCombiner3D" parent="."]
 use_collision = true
