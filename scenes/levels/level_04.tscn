@@ -1,24 +1,24 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene format=3 uid="uid://c81u0hu83ra14"]
 
-[ext_resource type="Material" path="res://assets/materials/mat_icerock.tres" id="1_icerock"]
-[ext_resource type="PackedScene" path="res://scenes/props/snowfall.tscn" id="20_snow"]
-[ext_resource type="Material" path="res://assets/materials/mat_ice.tres" id="2_ice"]
-[ext_resource type="Script" path="res://scripts/level_objects/ice_zone.gd" id="3_icezone"]
-[ext_resource type="Script" path="res://scripts/level_objects/lava_area.gd" id="4_hazard"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_grunt.tscn" id="5_grunt"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_spitter.tscn" id="6_spitter"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/switch.tscn" id="7_switch"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/teleporter.tscn" id="8_teleporter"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/barrel.tscn" id="9_barrel"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/secret_area.tscn" id="10_secret"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_potion.tscn" id="11_health"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_crystals.tscn" id="12_bullets"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_quarrels.tscn" id="13_shells"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_embers.tscn" id="14_rockets"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_mana.tscn" id="15_cells"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_gold.tscn" id="40_gold"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/shootable_chest.tscn" id="41_chest"]
-[ext_resource type="Script" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
+[ext_resource type="Material" uid="uid://dknx60qx44217" path="res://assets/materials/mat_icerock.tres" id="1_icerock"]
+[ext_resource type="Material" uid="uid://bsfhtqbf07wa1" path="res://assets/materials/mat_ice.tres" id="2_ice"]
+[ext_resource type="Script" uid="uid://boyu1k1rolopo" path="res://scripts/level_objects/ice_zone.gd" id="3_icezone"]
+[ext_resource type="Script" uid="uid://b4vscmn52fu7g" path="res://scripts/level_objects/lava_area.gd" id="4_hazard"]
+[ext_resource type="PackedScene" uid="uid://dbvkhofjimn0d" path="res://scenes/enemies/enemy_grunt.tscn" id="5_grunt"]
+[ext_resource type="PackedScene" uid="uid://ily2yc62crjo" path="res://scenes/enemies/enemy_spitter.tscn" id="6_spitter"]
+[ext_resource type="PackedScene" uid="uid://c4hxka6hh4tgm" path="res://scenes/level_objects/switch.tscn" id="7_switch"]
+[ext_resource type="PackedScene" uid="uid://b1rirpfqr5cp0" path="res://scenes/level_objects/teleporter.tscn" id="8_teleporter"]
+[ext_resource type="PackedScene" uid="uid://dnfmqhdoe7mx6" path="res://scenes/level_objects/barrel.tscn" id="9_barrel"]
+[ext_resource type="PackedScene" uid="uid://c6635ko8lxquk" path="res://scenes/level_objects/secret_area.tscn" id="10_secret"]
+[ext_resource type="PackedScene" uid="uid://c4w5gmsdttg8" path="res://scenes/level_objects/pickup_potion.tscn" id="11_health"]
+[ext_resource type="PackedScene" uid="uid://c5b218yktxcmt" path="res://scenes/level_objects/pickup_crystals.tscn" id="12_bullets"]
+[ext_resource type="PackedScene" uid="uid://cex7mrd5iiyfg" path="res://scenes/level_objects/pickup_quarrels.tscn" id="13_shells"]
+[ext_resource type="PackedScene" uid="uid://bp65ced70v7s1" path="res://scenes/level_objects/pickup_embers.tscn" id="14_rockets"]
+[ext_resource type="PackedScene" uid="uid://d4nqed72apr37" path="res://scenes/level_objects/pickup_mana.tscn" id="15_cells"]
+[ext_resource type="PackedScene" uid="uid://b0f43tuwrd2qo" path="res://scenes/props/snowfall.tscn" id="20_snow"]
+[ext_resource type="PackedScene" uid="uid://bt7u6o7tty2gv" path="res://scenes/level_objects/pickup_gold.tscn" id="40_gold"]
+[ext_resource type="PackedScene" uid="uid://uyul8lb8e6rs" path="res://scenes/level_objects/shootable_chest.tscn" id="41_chest"]
+[ext_resource type="Script" uid="uid://djut4agw0ji75" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_water"]
 transparency = 1
@@ -31,112 +31,110 @@ size = Vector3(5.7, 1, 4.2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_icezone"]
 size = Vector3(18, 2.2, 14)
 
-[node name="Level04" type="Node3D"]
+[node name="Level04" type="Node3D" unique_id=887700029]
 script = ExtResource("99_levelroot")
 
-[node name="LevelCSG" type="CSGCombiner3D" parent="."]
+[node name="LevelCSG" type="CSGCombiner3D" parent="." unique_id=1392153300]
 use_collision = true
 
-[node name="ShellRock" type="CSGBox3D" parent="LevelCSG"]
+[node name="ShellRock" type="CSGBox3D" parent="LevelCSG" unique_id=2115885321]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.75, -3)
 size = Vector3(40, 10.5, 44)
 material = ExtResource("1_icerock")
 
-[node name="CutEntry" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutEntry" type="CSGBox3D" parent="LevelCSG" unique_id=298070140]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 14)
 operation = 2
 size = Vector3(10, 4.4, 9)
 material = ExtResource("1_icerock")
 
-[node name="CutEntry2" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutEntry2" type="CSGBox3D" parent="LevelCSG" unique_id=2087939829]
 transform = Transform3D(0.906, 0, -0.423, 0, 1, 0, 0.423, 0, 0.906, 0, 2.1, 13.5)
 operation = 2
 size = Vector3(9, 4.2, 8)
 material = ExtResource("1_icerock")
 
-[node name="CutPassage1" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutPassage1" type="CSGBox3D" parent="LevelCSG" unique_id=813604054]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 6.5)
 operation = 2
 size = Vector3(3.6, 3.2, 11)
 material = ExtResource("1_icerock")
 
-[node name="CutHall" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutHall" type="CSGBox3D" parent="LevelCSG" unique_id=1123240266]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -6)
 operation = 2
 size = Vector3(20, 6, 16)
 material = ExtResource("1_icerock")
 
-[node name="CutHall2" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutHall2" type="CSGBox3D" parent="LevelCSG" unique_id=972192163]
 transform = Transform3D(0.951, 0, -0.309, 0, 1, 0, 0.309, 0, 0.951, 0, 2.8, -6)
 operation = 2
 size = Vector3(17, 5.6, 13)
 material = ExtResource("1_icerock")
 
-[node name="CutWing" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutWing" type="CSGBox3D" parent="LevelCSG" unique_id=1453859534]
 transform = Transform3D(0.966, 0, 0.259, 0, 1, 0, -0.259, 0, 0.966, -13, 1.8, -6)
 operation = 2
 size = Vector3(9, 3.6, 6.5)
 material = ExtResource("1_icerock")
 
-[node name="CutPassage2" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutPassage2" type="CSGBox3D" parent="LevelCSG" unique_id=438248705]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -16)
 operation = 2
 size = Vector3(3.4, 3.2, 7)
 material = ExtResource("1_icerock")
 
-[node name="CutGrotto" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutGrotto" type="CSGBox3D" parent="LevelCSG" unique_id=362388561]
 transform = Transform3D(0.99, 0, -0.139, 0, 1, 0, 0.139, 0, 0.99, 0, 2, -20)
 operation = 2
 size = Vector3(9, 4, 7)
 material = ExtResource("1_icerock")
 
-[node name="CutAlcove" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutAlcove" type="CSGBox3D" parent="LevelCSG" unique_id=876149900]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 1.5, -3)
 operation = 2
 size = Vector3(4, 3, 3)
 material = ExtResource("1_icerock")
 
-[node name="IceFloor" type="CSGBox3D" parent="LevelCSG"]
+[node name="IceFloor" type="CSGBox3D" parent="LevelCSG" unique_id=931487357]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.025, -6)
 size = Vector3(18, 0.15, 14)
 material = ExtResource("2_ice")
 
-[node name="CutPool" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutPool" type="CSGBox3D" parent="LevelCSG" unique_id=757266288]
 transform = Transform3D(0.985, 0, 0.174, 0, 1, 0, -0.174, 0, 0.985, 5.5, -0.65, -9)
 operation = 2
 size = Vector3(6, 1.5, 4.5)
 material = ExtResource("1_icerock")
 
-[node name="Icicle1" type="CSGCylinder3D" parent="LevelCSG"]
+[node name="Icicle1" type="CSGCylinder3D" parent="LevelCSG" unique_id=207219049]
 transform = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, -4, 5, -9)
-radius = 0.5
-height = 2.0
-cone = true
 sides = 7
+cone = true
 material = ExtResource("1_icerock")
 
-[node name="Icicle2" type="CSGCylinder3D" parent="LevelCSG"]
+[node name="Icicle2" type="CSGCylinder3D" parent="LevelCSG" unique_id=1726258809]
 transform = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, 2, 5, -2)
 radius = 0.45
 height = 1.8
-cone = true
 sides = 7
+cone = true
 material = ExtResource("1_icerock")
 
-[node name="Icicle3" type="CSGCylinder3D" parent="LevelCSG"]
+[node name="Icicle3" type="CSGCylinder3D" parent="LevelCSG" unique_id=1194985794]
 transform = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, 6.5, 5, -6)
 radius = 0.4
 height = 1.6
-cone = true
 sides = 7
+cone = true
 material = ExtResource("1_icerock")
 
-[node name="WaterSurface" type="CSGBox3D" parent="."]
+[node name="WaterSurface" type="CSGBox3D" parent="." unique_id=474721051]
 transform = Transform3D(0.985, 0, 0.174, 0, 1, 0, -0.174, 0, 0.985, 5.5, -0.35, -9)
 size = Vector3(5.7, 0.2, 4.2)
 material = SubResource("StandardMaterial3D_water")
 
-[node name="WaterArea" type="Area3D" parent="."]
+[node name="WaterArea" type="Area3D" parent="." unique_id=471757366]
 transform = Transform3D(0.985, 0, 0.174, 0, 1, 0, -0.174, 0, 0.985, 5.5, -0.5, -9)
 collision_layer = 0
 collision_mask = 6
@@ -144,155 +142,153 @@ script = ExtResource("4_hazard")
 damage_per_tick = 4.0
 tick_interval = 0.5
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WaterArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WaterArea" unique_id=2072825399]
 shape = SubResource("BoxShape3D_water")
 
-[node name="IceZone" type="Area3D" parent="."]
+[node name="IceZone" type="Area3D" parent="." unique_id=1964405096]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -6)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("3_icezone")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="IceZone"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="IceZone" unique_id=1546804969]
 shape = SubResource("BoxShape3D_icezone")
 
-[node name="Switch" parent="." instance=ExtResource("7_switch")]
+[node name="Switch" parent="." unique_id=921106079 instance=ExtResource("7_switch")]
 transform = Transform3D(0.259, 0, -0.966, 0, 1, 0, 0.966, 0, 0.259, -16.5, 1.4, -6.4)
 teleporter_path = NodePath("../Teleporter")
 
-[node name="Teleporter" parent="." instance=ExtResource("8_teleporter")]
+[node name="Teleporter" parent="." unique_id=1028714629 instance=ExtResource("8_teleporter")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19.8)
 
-[node name="Barrels" type="Node3D" parent="."]
+[node name="Barrels" type="Node3D" parent="." unique_id=1608283797]
 
-[node name="Barrel1" parent="Barrels" instance=ExtResource("9_barrel")]
+[node name="Barrel1" parent="Barrels" unique_id=1869605632 instance=ExtResource("9_barrel")]
 transform = Transform3D(0, -0.8927, -0.3249, 0.95, 0, 0, 0, -0.3249, 0.8927, 7.6, 0.4775, -1)
 
-[node name="Barrel2" parent="Barrels" instance=ExtResource("9_barrel")]
+[node name="Barrel2" parent="Barrels" unique_id=989343194 instance=ExtResource("9_barrel")]
 transform = Transform3D(-0.8273, 0, 0.6942, 0, 1.08, 0, -0.6942, 0, -0.8273, -11.4, 0, -3.9)
 
-[node name="Barrel3" parent="Barrels" instance=ExtResource("9_barrel")]
+[node name="Barrel3" parent="Barrels" unique_id=872846008 instance=ExtResource("9_barrel")]
 transform = Transform3D(-0.08716, 0, -0.9962, 0, 1, 0, 0.9962, 0, -0.08716, 4.2, 0, 16.2)
 
-[node name="Pickups" type="Node3D" parent="."]
+[node name="Pickups" type="Node3D" parent="." unique_id=1802220160]
 
-[node name="GoldPool1" parent="Pickups" instance=ExtResource("40_gold")]
+[node name="GoldPool1" parent="Pickups" unique_id=282042977 instance=ExtResource("40_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, -0.9, -9)
 
-[node name="GoldPool2" parent="Pickups" instance=ExtResource("40_gold")]
+[node name="GoldPool2" parent="Pickups" unique_id=773244087 instance=ExtResource("40_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, -0.9, -9)
 
-[node name="GoldAlcove" parent="Pickups" instance=ExtResource("40_gold")]
+[node name="GoldAlcove" parent="Pickups" unique_id=1645080094 instance=ExtResource("40_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8, 0.4, -3.1)
 
-[node name="GoldPool3" parent="Pickups" instance=ExtResource("40_gold")]
+[node name="GoldPool3" parent="Pickups" unique_id=999926295 instance=ExtResource("40_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -0.9, -9.4)
 
-[node name="GoldAlcoveB" parent="Pickups" instance=ExtResource("40_gold")]
+[node name="GoldAlcoveB" parent="Pickups" unique_id=126457811 instance=ExtResource("40_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8, 0.4, -2.7)
 
-[node name="GoldWing" parent="Pickups" instance=ExtResource("40_gold")]
+[node name="GoldWing" parent="Pickups" unique_id=607709337 instance=ExtResource("40_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.05, -7.4)
 
-[node name="GoldGrotto" parent="Pickups" instance=ExtResource("40_gold")]
+[node name="GoldGrotto" parent="Pickups" unique_id=811095423 instance=ExtResource("40_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.05, -19.1)
 
-[node name="ChestWing" parent="Pickups" instance=ExtResource("41_chest")]
+[node name="ChestWing" parent="Pickups" unique_id=109479774 instance=ExtResource("41_chest")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -7.5)
 
-[node name="HealthEntry" parent="Pickups" instance=ExtResource("11_health")]
+[node name="HealthEntry" parent="Pickups" unique_id=982853920 instance=ExtResource("11_health")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.05, 15.2)
 
-[node name="ShellsHall" parent="Pickups" instance=ExtResource("13_shells")]
+[node name="ShellsHall" parent="Pickups" unique_id=505810631 instance=ExtResource("13_shells")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -4)
 
-[node name="BulletsWing" parent="Pickups" instance=ExtResource("12_bullets")]
+[node name="BulletsWing" parent="Pickups" unique_id=1726515177 instance=ExtResource("12_bullets")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.05, -7.8)
 
-[node name="CellsGrotto" parent="Pickups" instance=ExtResource("15_cells")]
+[node name="CellsGrotto" parent="Pickups" unique_id=1975546271 instance=ExtResource("15_cells")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.05, -19.5)
 
-[node name="RocketsLake" parent="Pickups" instance=ExtResource("14_rockets")]
+[node name="RocketsLake" parent="Pickups" unique_id=1239370805 instance=ExtResource("14_rockets")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -8)
 
-[node name="HealthAlcove" parent="Pickups" instance=ExtResource("11_health")]
+[node name="HealthAlcove" parent="Pickups" unique_id=665605905 instance=ExtResource("11_health")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3, 0.05, -3.2)
 
-[node name="RocketsPool" parent="Pickups" instance=ExtResource("14_rockets")]
+[node name="RocketsPool" parent="Pickups" unique_id=908656515 instance=ExtResource("14_rockets")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, -1.3, -9)
 
-[node name="Secrets" type="Node3D" parent="."]
+[node name="Secrets" type="Node3D" parent="." unique_id=162024657]
 
-[node name="SecretAlcove" parent="Secrets" instance=ExtResource("10_secret")]
+[node name="SecretAlcove" parent="Secrets" unique_id=1337779617 instance=ExtResource("10_secret")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8, 1.2, -3.1)
 
-[node name="SecretPool" parent="Secrets" instance=ExtResource("10_secret")]
+[node name="SecretPool" parent="Secrets" unique_id=85713936 instance=ExtResource("10_secret")]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.5, 5.5, -0.8, -9)
 
-[node name="Lights" type="Node3D" parent="."]
+[node name="Lights" type="Node3D" parent="." unique_id=827233598]
 
-[node name="OmniEntry" type="OmniLight3D" parent="Lights"]
+[node name="OmniEntry" type="OmniLight3D" parent="Lights" unique_id=2004957264]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, 14)
 light_color = Color(0.75, 0.85, 1, 1)
 omni_range = 12.0
 
-[node name="OmniHall" type="OmniLight3D" parent="Lights"]
+[node name="OmniHall" type="OmniLight3D" parent="Lights" unique_id=1182360630]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6, -6)
 light_color = Color(0.75, 0.85, 1, 1)
 light_energy = 1.1
 omni_range = 18.0
 
-[node name="OmniWing" type="OmniLight3D" parent="Lights"]
+[node name="OmniWing" type="OmniLight3D" parent="Lights" unique_id=544022654]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 2.8, -6)
 light_color = Color(0.75, 0.85, 1, 1)
 omni_range = 10.0
 
-[node name="OmniGrotto" type="OmniLight3D" parent="Lights"]
+[node name="OmniGrotto" type="OmniLight3D" parent="Lights" unique_id=161191428]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -19.8)
 light_color = Color(0.75, 0.85, 1, 1)
 omni_range = 10.0
 
-[node name="OmniPool" type="OmniLight3D" parent="Lights"]
+[node name="OmniPool" type="OmniLight3D" parent="Lights" unique_id=986698797]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0.4, -9)
 light_color = Color(0.5, 0.8, 1, 1)
 light_energy = 0.9
 omni_range = 7.0
 
-[node name="OmniAlcove" type="OmniLight3D" parent="Lights"]
+[node name="OmniAlcove" type="OmniLight3D" parent="Lights" unique_id=2083942805]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8, 1.8, -3)
 light_color = Color(0.75, 0.85, 1, 1)
 light_energy = 0.7
-omni_range = 5.0
 
-[node name="Enemies" type="Node3D" parent="."]
+[node name="Enemies" type="Node3D" parent="." unique_id=476937513]
 
-[node name="Grunt1" parent="Enemies" instance=ExtResource("5_grunt")]
+[node name="Grunt1" parent="Enemies" unique_id=631048499 instance=ExtResource("5_grunt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.1, 11)
 
-[node name="Grunt2" parent="Enemies" instance=ExtResource("5_grunt")]
+[node name="Grunt2" parent="Enemies" unique_id=1127062697 instance=ExtResource("5_grunt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.1, -4)
 
-[node name="Grunt3" parent="Enemies" instance=ExtResource("5_grunt")]
+[node name="Grunt3" parent="Enemies" unique_id=903500178 instance=ExtResource("5_grunt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.1, -7)
 
-[node name="Grunt4" parent="Enemies" instance=ExtResource("5_grunt")]
+[node name="Grunt4" parent="Enemies" unique_id=2081426721 instance=ExtResource("5_grunt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.1, -12.5)
 
-[node name="Spitter1" parent="Enemies" instance=ExtResource("6_spitter")]
+[node name="Spitter1" parent="Enemies" unique_id=1061830428 instance=ExtResource("6_spitter")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.1, -12.5)
 
-[node name="Spitter2" parent="Enemies" instance=ExtResource("6_spitter")]
+[node name="Spitter2" parent="Enemies" unique_id=2123266250 instance=ExtResource("6_spitter")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.1, -19.5)
 
-[node name="Spawns" type="Node3D" parent="."]
+[node name="Spawns" type="Node3D" parent="." unique_id=107136494]
 
-[node name="PlayerSpawn" type="Marker3D" parent="Spawns"]
+[node name="PlayerSpawn" type="Marker3D" parent="Spawns" unique_id=1734922813]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 16)
 
-[node name="SnowfallHall" parent="." instance=ExtResource("20_snow")]
+[node name="SnowfallHall" parent="." unique_id=95348190 instance=ExtResource("20_snow")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6, -6)
 
-[node name="SnowfallEntry" parent="." instance=ExtResource("20_snow")]
+[node name="SnowfallEntry" parent="." unique_id=1299276684 instance=ExtResource("20_snow")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 14)
 amount = 20
-emission_box_extents = Vector3(4, 0.4, 3.5)

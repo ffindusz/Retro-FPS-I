@@ -1,212 +1,198 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene format=3 uid="uid://cslx1gtrhjmfc"]
 
-[ext_resource type="Material" path="res://assets/materials/mat_stone.tres" id="1_stone"]
-[ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
-[ext_resource type="Script" path="res://scripts/props/ambient_prop.gd" id="3_prop"]
-[ext_resource type="PackedScene" path="res://assets/models/skeleton_minion/skeleton_minion.glb" id="4_minion"]
-[ext_resource type="PackedScene" path="res://assets/models/skeleton_warrior/skeleton_warrior.glb" id="5_warrior"]
-[ext_resource type="PackedScene" path="res://assets/models/skeleton_mage/skeleton_mage.glb" id="6_mage"]
-[ext_resource type="PackedScene" path="res://assets/models/skeleton_rogue/skeleton_rogue.glb" id="7_rogue"]
-[ext_resource type="PackedScene" path="res://scenes/props/pillar.tscn" id="8_pillar"]
-[ext_resource type="PackedScene" path="res://scenes/props/pillar_decorated.tscn" id="9_pillar_dec"]
-[ext_resource type="PackedScene" path="res://scenes/props/banner_red.tscn" id="10_banner_red"]
-[ext_resource type="PackedScene" path="res://scenes/props/banner_blue.tscn" id="11_banner_blue"]
-[ext_resource type="PackedScene" path="res://scenes/props/sword_shield.tscn" id="12_sword_shield"]
-[ext_resource type="PackedScene" path="res://scenes/props/crates_stacked.tscn" id="13_crates"]
-[ext_resource type="PackedScene" path="res://scenes/props/torch_unlit.tscn" id="14_torch_unlit"]
-[ext_resource type="PackedScene" path="res://scenes/props/rubble_half.tscn" id="15_rubble_half"]
-[ext_resource type="PackedScene" path="res://scenes/props/rubble_large.tscn" id="16_rubble_large"]
-[ext_resource type="Script" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
+[ext_resource type="Material" uid="uid://cj5agp183d14c" path="res://assets/materials/mat_stone.tres" id="1_stone"]
+[ext_resource type="Material" uid="uid://bjenlij0mum81" path="res://assets/materials/mat_floor.tres" id="2_floor"]
+[ext_resource type="Script" uid="uid://dot066js4yuxb" path="res://scripts/props/ambient_prop.gd" id="3_prop"]
+[ext_resource type="PackedScene" uid="uid://lgnsx010m7jk" path="res://assets/models/skeleton_minion/skeleton_minion.glb" id="4_minion"]
+[ext_resource type="PackedScene" uid="uid://c3crl5pnqiij5" path="res://assets/models/skeleton_warrior/skeleton_warrior.glb" id="5_warrior"]
+[ext_resource type="PackedScene" uid="uid://drtk2mdqjxthx" path="res://assets/models/skeleton_mage/skeleton_mage.glb" id="6_mage"]
+[ext_resource type="PackedScene" uid="uid://de7qyv4scp4rn" path="res://assets/models/skeleton_rogue/skeleton_rogue.glb" id="7_rogue"]
+[ext_resource type="PackedScene" uid="uid://c1wwbsjyl2pc7" path="res://scenes/props/pillar.tscn" id="8_pillar"]
+[ext_resource type="PackedScene" uid="uid://dcykufcv3i7c4" path="res://scenes/props/pillar_decorated.tscn" id="9_pillar_dec"]
+[ext_resource type="PackedScene" uid="uid://dloyfma3kitfj" path="res://scenes/props/banner_red.tscn" id="10_banner_red"]
+[ext_resource type="PackedScene" uid="uid://ciuv5jhwuw4c2" path="res://scenes/props/banner_blue.tscn" id="11_banner_blue"]
+[ext_resource type="PackedScene" uid="uid://blnu30s4xnj6u" path="res://scenes/props/sword_shield.tscn" id="12_sword_shield"]
+[ext_resource type="PackedScene" uid="uid://kur4axmba685" path="res://scenes/props/crates_stacked.tscn" id="13_crates"]
+[ext_resource type="PackedScene" uid="uid://ceegoklnyv8sk" path="res://scenes/props/torch_unlit.tscn" id="14_torch_unlit"]
+[ext_resource type="PackedScene" uid="uid://d1o38vmf62vlq" path="res://scenes/props/rubble_half.tscn" id="15_rubble_half"]
+[ext_resource type="PackedScene" uid="uid://ur4kwwuvw6p3" path="res://scenes/props/rubble_large.tscn" id="16_rubble_large"]
+[ext_resource type="Script" uid="uid://djut4agw0ji75" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
-[node name="LevelTest" type="Node3D"]
+[node name="LevelTest" type="Node3D" unique_id=558079908]
 script = ExtResource("99_levelroot")
 
-[node name="LevelCSG" type="CSGCombiner3D" parent="."]
+[node name="LevelCSG" type="CSGCombiner3D" parent="." unique_id=593596031]
 use_collision = true
 
-[node name="Shell" type="CSGBox3D" parent="LevelCSG"]
+[node name="Shell" type="CSGBox3D" parent="LevelCSG" unique_id=1075944416]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
 size = Vector3(22, 5.4, 14)
 material = ExtResource("1_stone")
 
-[node name="Cut" type="CSGBox3D" parent="LevelCSG"]
+[node name="Cut" type="CSGBox3D" parent="LevelCSG" unique_id=1535060919]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
 operation = 2
 size = Vector3(20, 4.4, 12)
 material = ExtResource("1_stone")
 
-[node name="Floor" type="CSGBox3D" parent="LevelCSG"]
+[node name="Floor" type="CSGBox3D" parent="LevelCSG" unique_id=722620891]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 0)
 size = Vector3(20, 0.25, 12)
 material = ExtResource("2_floor")
 
-[node name="Lights" type="Node3D" parent="."]
+[node name="Lights" type="Node3D" parent="." unique_id=1298605400]
 
-[node name="OmniMain" type="OmniLight3D" parent="Lights"]
+[node name="OmniMain" type="OmniLight3D" parent="Lights" unique_id=1943797570]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6, 1)
 light_energy = 1.3
 omni_range = 20.0
 
-[node name="OmniBack" type="OmniLight3D" parent="Lights"]
+[node name="OmniBack" type="OmniLight3D" parent="Lights" unique_id=1289346306]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -4)
 light_color = Color(1, 0.9, 0.8, 1)
 omni_range = 12.0
 
-[node name="Displays" type="Node3D" parent="."]
+[node name="Displays" type="Node3D" parent="." unique_id=1277203502]
 
-[node name="DisplayMinion" type="Node3D" parent="Displays"]
+[node name="DisplayMinion" type="Node3D" parent="Displays" unique_id=1866259190]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -3.5)
 script = ExtResource("3_prop")
-animation = "Idle"
 
-[node name="Model" parent="Displays/DisplayMinion" instance=ExtResource("4_minion")]
+[node name="Model" parent="Displays/DisplayMinion" unique_id=2047666827 instance=ExtResource("4_minion")]
 
-[node name="DisplayWarrior" type="Node3D" parent="Displays"]
+[node name="DisplayWarrior" type="Node3D" parent="Displays" unique_id=854219015]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3.5)
 script = ExtResource("3_prop")
 animation = "Idle_Combat"
 
-[node name="Model" parent="Displays/DisplayWarrior" instance=ExtResource("5_warrior")]
+[node name="Model" parent="Displays/DisplayWarrior" unique_id=297956938 instance=ExtResource("5_warrior")]
 
-[node name="DisplayMage" type="Node3D" parent="Displays"]
+[node name="DisplayMage" type="Node3D" parent="Displays" unique_id=653211763]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3.5)
 script = ExtResource("3_prop")
 animation = "Spellcasting"
 
-[node name="Model" parent="Displays/DisplayMage" instance=ExtResource("6_mage")]
+[node name="Model" parent="Displays/DisplayMage" unique_id=407406843 instance=ExtResource("6_mage")]
 
-[node name="DisplayRogue" type="Node3D" parent="Displays"]
+[node name="DisplayRogue" type="Node3D" parent="Displays" unique_id=1694065028]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -3.5)
 script = ExtResource("3_prop")
 animation = "Walking_A"
 
-[node name="Model" parent="Displays/DisplayRogue" instance=ExtResource("7_rogue")]
+[node name="Model" parent="Displays/DisplayRogue" unique_id=399919757 instance=ExtResource("7_rogue")]
 
-[node name="LabelMinion" type="Label3D" parent="Displays"]
+[node name="LabelMinion" type="Label3D" parent="Displays" unique_id=1912406053]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2.6, -3.5)
+billboard = 1
 text = "MINION
 Idle"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="LabelWarrior" type="Label3D" parent="Displays"]
+[node name="LabelWarrior" type="Label3D" parent="Displays" unique_id=2090009860]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.6, -3.5)
+billboard = 1
 text = "WARRIOR
 Idle_Combat"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="LabelMage" type="Label3D" parent="Displays"]
+[node name="LabelMage" type="Label3D" parent="Displays" unique_id=1923968011]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.6, -3.5)
+billboard = 1
 text = "MAGE
 Spellcasting"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="LabelRogue" type="Label3D" parent="Displays"]
+[node name="LabelRogue" type="Label3D" parent="Displays" unique_id=453375834]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.6, -3.5)
+billboard = 1
 text = "ROGUE
 Walking_A"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="Props" type="Node3D" parent="."]
+[node name="Props" type="Node3D" parent="." unique_id=20429895]
 
-[node name="BannerRed" parent="Props" instance=ExtResource("10_banner_red")]
+[node name="BannerRed" parent="Props" unique_id=1428813132 instance=ExtResource("10_banner_red")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -5.98)
 
-[node name="BannerBlue" parent="Props" instance=ExtResource("11_banner_blue")]
+[node name="BannerBlue" parent="Props" unique_id=1336884106 instance=ExtResource("11_banner_blue")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -5.98)
 
-[node name="SwordShield" parent="Props" instance=ExtResource("12_sword_shield")]
+[node name="SwordShield" parent="Props" unique_id=318909013 instance=ExtResource("12_sword_shield")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, -5.9)
 
-[node name="TorchUnlit" parent="Props" instance=ExtResource("14_torch_unlit")]
+[node name="TorchUnlit" parent="Props" unique_id=2049602277 instance=ExtResource("14_torch_unlit")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2.2, -5.98)
 
-[node name="Pillar" parent="Props" instance=ExtResource("8_pillar")]
+[node name="Pillar" parent="Props" unique_id=2019981177 instance=ExtResource("8_pillar")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -1)
 
-[node name="PillarDecorated" parent="Props" instance=ExtResource("9_pillar_dec")]
+[node name="PillarDecorated" parent="Props" unique_id=1568843567 instance=ExtResource("9_pillar_dec")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, 2.5)
 
-[node name="CratesStacked" parent="Props" instance=ExtResource("13_crates")]
+[node name="CratesStacked" parent="Props" unique_id=2077452503 instance=ExtResource("13_crates")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -1)
 
-[node name="RubbleHalf" parent="Props" instance=ExtResource("15_rubble_half")]
+[node name="RubbleHalf" parent="Props" unique_id=1664338830 instance=ExtResource("15_rubble_half")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8, 0, 4.2)
 
-[node name="RubbleLarge" parent="Props" instance=ExtResource("16_rubble_large")]
+[node name="RubbleLarge" parent="Props" unique_id=1343397248 instance=ExtResource("16_rubble_large")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, 5.7)
 
-[node name="LabelBannerRed" type="Label3D" parent="Props"]
+[node name="LabelBannerRed" type="Label3D" parent="Props" unique_id=1802749787]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 3.95, -5.6)
+billboard = 1
 text = "BANNER RED"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="LabelBannerBlue" type="Label3D" parent="Props"]
+[node name="LabelBannerBlue" type="Label3D" parent="Props" unique_id=1052219344]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 3.95, -5.6)
+billboard = 1
 text = "BANNER BLUE"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="LabelSwordShield" type="Label3D" parent="Props"]
+[node name="LabelSwordShield" type="Label3D" parent="Props" unique_id=1523041167]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, -5.6)
+billboard = 1
 text = "SWORD+SHIELD"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="LabelTorchUnlit" type="Label3D" parent="Props"]
+[node name="LabelTorchUnlit" type="Label3D" parent="Props" unique_id=1270865988]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 3.2, -5.6)
+billboard = 1
 text = "TORCH UNLIT"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="LabelPillar" type="Label3D" parent="Props"]
+[node name="LabelPillar" type="Label3D" parent="Props" unique_id=1818912206]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 4.15, -1)
+billboard = 1
 text = "PILLAR"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="LabelPillarDecorated" type="Label3D" parent="Props"]
+[node name="LabelPillarDecorated" type="Label3D" parent="Props" unique_id=148404227]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 4.15, 2.5)
+billboard = 1
 text = "PILLAR DECORATED"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="LabelCratesStacked" type="Label3D" parent="Props"]
+[node name="LabelCratesStacked" type="Label3D" parent="Props" unique_id=1341271591]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2.7, -1)
+billboard = 1
 text = "CRATES STACKED"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="LabelRubbleHalf" type="Label3D" parent="Props"]
+[node name="LabelRubbleHalf" type="Label3D" parent="Props" unique_id=1413770322]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8, 3.9, 4.2)
+billboard = 1
 text = "RUBBLE HALF"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="LabelRubbleLarge" type="Label3D" parent="Props"]
+[node name="LabelRubbleLarge" type="Label3D" parent="Props" unique_id=596744422]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 3.9, 5.2)
+billboard = 1
 text = "RUBBLE LARGE"
 font_size = 64
-outline_size = 12
-billboard = 1
 
-[node name="Spawns" type="Node3D" parent="."]
+[node name="Spawns" type="Node3D" parent="." unique_id=2046596850]
 
-[node name="PlayerSpawn" type="Marker3D" parent="Spawns"]
+[node name="PlayerSpawn" type="Marker3D" parent="Spawns" unique_id=2042046298]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 4.5)

@@ -1,24 +1,24 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://uyul8lb8e6rs"]
 
-[ext_resource type="Script" path="res://scripts/level_objects/shootable_chest.gd" id="1_script"]
-[ext_resource type="PackedScene" path="res://assets/models/chest_gold/chest_gold.glb" id="2_model"]
+[ext_resource type="Script" uid="uid://b1wovudi0x1eo" path="res://scripts/level_objects/shootable_chest.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://cbg5otvl2fvvq" path="res://assets/models/chest_gold/chest_gold.glb" id="2_model"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_body"]
 size = Vector3(1.82, 1.12, 1.26)
 
-[node name="ShootableChest" type="StaticBody3D"]
+[node name="ShootableChest" type="StaticBody3D" unique_id=1720567741]
 collision_layer = 5
 collision_mask = 0
 script = ExtResource("1_script")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=420956917]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56, 0)
 shape = SubResource("BoxShape3D_body")
 
-[node name="Model" parent="." instance=ExtResource("2_model")]
+[node name="Model" parent="." unique_id=217685978 instance=ExtResource("2_model")]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
 
-[node name="Glow" type="OmniLight3D" parent="."]
+[node name="Glow" type="OmniLight3D" parent="." unique_id=138008847]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 light_color = Color(1, 0.85, 0.4, 1)
 light_energy = 0.8

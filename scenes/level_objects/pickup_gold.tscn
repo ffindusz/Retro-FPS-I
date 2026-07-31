@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://bt7u6o7tty2gv"]
 
-[ext_resource type="Script" path="res://scripts/level_objects/pickup.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://gv4vqtpksp2i" path="res://scripts/level_objects/pickup.gd" id="1_script"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_touch"]
 radius = 0.55
@@ -22,46 +22,46 @@ height = 0.03
 radial_segments = 12
 rings = 0
 
-[node name="PickupGold" type="Area3D"]
+[node name="PickupGold" type="Area3D" unique_id=1119604962]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_script")
 type = 5
 amount = 100
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1205142446]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("SphereShape3D_touch")
 
-[node name="Visual" type="Node3D" parent="."]
+[node name="Visual" type="Node3D" parent="." unique_id=916662290]
 
-[node name="Model" type="Node3D" parent="Visual"]
+[node name="Model" type="Node3D" parent="Visual" unique_id=1737418287]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
 
-[node name="Coin1" type="MeshInstance3D" parent="Visual/Model"]
+[node name="Coin1" type="MeshInstance3D" parent="Visual/Model" unique_id=1325004641]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
 mesh = SubResource("CylinderMesh_coin")
 
-[node name="Coin2" type="MeshInstance3D" parent="Visual/Model"]
+[node name="Coin2" type="MeshInstance3D" parent="Visual/Model" unique_id=440141955]
 transform = Transform3D(0.9968, 0.0799, 0, -0.0799, 0.9968, 0, 0, 0, 1, 0.015, 0.05, 0.01)
 mesh = SubResource("CylinderMesh_coin")
 
-[node name="Coin3" type="MeshInstance3D" parent="Visual/Model"]
+[node name="Coin3" type="MeshInstance3D" parent="Visual/Model" unique_id=404046701]
 transform = Transform3D(1, 0, 0, 0, 0.9968, 0.0799, 0, -0.0799, 0.9968, -0.01, 0.08, 0.015)
 mesh = SubResource("CylinderMesh_coin")
 
-[node name="Coin4" type="MeshInstance3D" parent="Visual/Model"]
+[node name="Coin4" type="MeshInstance3D" parent="Visual/Model" unique_id=1995292012]
 transform = Transform3D(0.9968, -0.0799, 0, 0.0799, 0.9968, 0, 0, 0, 1, 0.012, 0.11, -0.012)
 mesh = SubResource("CylinderMesh_coin")
 
-[node name="Coin5" type="MeshInstance3D" parent="Visual/Model"]
+[node name="Coin5" type="MeshInstance3D" parent="Visual/Model" unique_id=622963683]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008, 0.14, 0.006)
 mesh = SubResource("CylinderMesh_coin")
 
-[node name="Coin6" type="MeshInstance3D" parent="Visual/Model"]
+[node name="Coin6" type="MeshInstance3D" parent="Visual/Model" unique_id=1495458921]
 transform = Transform3D(0.9968, 0, 0.0799, 0, 1, 0, -0.0799, 0, 0.9968, 0.2, 0.015, 0.07)
 mesh = SubResource("CylinderMesh_coin")
 
-[node name="Coin7" type="MeshInstance3D" parent="Visual/Model"]
+[node name="Coin7" type="MeshInstance3D" parent="Visual/Model" unique_id=1589503985]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18, 0.015, -0.1)
 mesh = SubResource("CylinderMesh_coin")

@@ -1,0 +1,30 @@
+# Keep Godot's text formats LF in the working tree, on every platform.
+#
+# Without this, core.autocrlf=true rewrites them to CRLF on checkout, and that
+# is not cosmetic here: a .tscn stores a multi-line string property as literal
+# lines, so opening a CRLF-converted scene in the editor parses the value as
+# "MINION\r\nIdle" and saves the stray carriage return back into the string.
+# (Godot itself always writes these files with LF.)
+#
+# It also ends the churn where every .import file showed as modified forever:
+# Godot wrote LF, git wanted CRLF, and the two never agreed.
+*.tscn   text eol=lf
+*.tres   text eol=lf
+*.gd     text eol=lf
+*.uid    text eol=lf
+*.import text eol=lf
+*.godot  text eol=lf
+*.cfg    text eol=lf
+*.gdshader text eol=lf
+*.md     text eol=lf
+*.gltf   text eol=lf
+
+# Binary assets: never touch these.
+*.png  binary
+*.wav  binary
+*.ogg  binary
+*.bin  binary
+*.glb  binary
+*.exe  binary
+*.pck  binary
+*.zip  binary

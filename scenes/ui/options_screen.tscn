@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://davcneuxl5c0p"]
 
-[ext_resource type="Script" path="res://scripts/ui/options_screen.gd" id="1_script"]
-[ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="2_click"]
+[ext_resource type="Script" uid="uid://bk2b08oi7ivrt" path="res://scripts/ui/options_screen.gd" id="1_script"]
+[ext_resource type="AudioStream" uid="uid://c80owpd04xbf1" path="res://assets/audio/click.wav" id="2_click"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font_size = 64
@@ -16,7 +16,7 @@ font_color = Color(0.7, 0.72, 0.8, 1)
 shadow_color = Color(0, 0, 0, 0.6)
 shadow_offset = Vector2(2, 2)
 
-[node name="OptionsScreen" type="Control"]
+[node name="OptionsScreen" type="Control" unique_id=676486440]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,7 +26,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_script")
 
-[node name="Bg" type="ColorRect" parent="."]
+[node name="Bg" type="ColorRect" parent="." unique_id=560907878]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,7 +36,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.75)
 
-[node name="Layout" type="VBoxContainer" parent="."]
+[node name="Layout" type="VBoxContainer" parent="." unique_id=1624175735]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -47,97 +47,87 @@ mouse_filter = 2
 theme_override_constants/separation = 22
 alignment = 1
 
-[node name="Title" type="Label" parent="Layout"]
+[node name="Title" type="Label" parent="Layout" unique_id=869426755]
 layout_mode = 2
-mouse_filter = 2
 text = "OPTIONS"
 label_settings = SubResource("LabelSettings_title")
 horizontal_alignment = 1
 
-[node name="RowSensitivity" type="HBoxContainer" parent="Layout"]
+[node name="RowSensitivity" type="HBoxContainer" parent="Layout" unique_id=1111538123]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="Key" type="Label" parent="Layout/RowSensitivity"]
+[node name="Key" type="Label" parent="Layout/RowSensitivity" unique_id=1525594411]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 26
 text = "MOUSE SENSITIVITY"
 
-[node name="Value" type="Label" parent="Layout/RowSensitivity"]
+[node name="Value" type="Label" parent="Layout/RowSensitivity" unique_id=2076310553]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 26
 text = "[###-------] 100%"
 
-[node name="RowMusic" type="HBoxContainer" parent="Layout"]
+[node name="RowMusic" type="HBoxContainer" parent="Layout" unique_id=1541914971]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="Key" type="Label" parent="Layout/RowMusic"]
+[node name="Key" type="Label" parent="Layout/RowMusic" unique_id=1579735801]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 26
 text = "MUSIC VOLUME"
 
-[node name="Value" type="Label" parent="Layout/RowMusic"]
+[node name="Value" type="Label" parent="Layout/RowMusic" unique_id=443015180]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 26
 text = "[##########] 100%"
 
-[node name="RowSfx" type="HBoxContainer" parent="Layout"]
+[node name="RowSfx" type="HBoxContainer" parent="Layout" unique_id=1349648645]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="Key" type="Label" parent="Layout/RowSfx"]
+[node name="Key" type="Label" parent="Layout/RowSfx" unique_id=1359714019]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 26
 text = "SFX VOLUME"
 
-[node name="Value" type="Label" parent="Layout/RowSfx"]
+[node name="Value" type="Label" parent="Layout/RowSfx" unique_id=1288589811]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 26
 text = "[##########] 100%"
 
-[node name="RowDither" type="HBoxContainer" parent="Layout"]
+[node name="RowDither" type="HBoxContainer" parent="Layout" unique_id=1022428993]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="Key" type="Label" parent="Layout/RowDither"]
+[node name="Key" type="Label" parent="Layout/RowDither" unique_id=367029665]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 26
 text = "PS1 DITHER FILTER"
 
-[node name="Value" type="Label" parent="Layout/RowDither"]
+[node name="Value" type="Label" parent="Layout/RowDither" unique_id=810598528]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 26
 text = "ON"
 
-[node name="Hint" type="Label" parent="Layout"]
+[node name="Hint" type="Label" parent="Layout" unique_id=836410611]
 layout_mode = 2
-mouse_filter = 2
 text = "W/S SELECT  ·  A/D ADJUST  ·  ESC BACK"
 label_settings = SubResource("LabelSettings_hint")
 horizontal_alignment = 1
 
-[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+[node name="ClickSound" type="AudioStreamPlayer" parent="." unique_id=659441194]
 stream = ExtResource("2_click")
 volume_db = -10.0
 bus = &"SFX"

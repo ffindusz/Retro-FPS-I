@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://bp65ced70v7s1"]
 
-[ext_resource type="Script" path="res://scripts/level_objects/pickup.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://gv4vqtpksp2i" path="res://scripts/level_objects/pickup.gd" id="1_script"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_touch"]
 radius = 0.55
@@ -19,38 +19,38 @@ height = 0.16
 radial_segments = 5
 rings = 3
 
-[node name="PickupEmbers" type="Area3D"]
+[node name="PickupEmbers" type="Area3D" unique_id=19171793]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_script")
 type = 3
 amount = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=49336284]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("SphereShape3D_touch")
 
-[node name="Visual" type="Node3D" parent="."]
+[node name="Visual" type="Node3D" parent="." unique_id=1089093529]
 
-[node name="Model" type="Node3D" parent="Visual"]
+[node name="Model" type="Node3D" parent="Visual" unique_id=827589094]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
 
-[node name="Ember1" type="MeshInstance3D" parent="Visual/Model"]
+[node name="Ember1" type="MeshInstance3D" parent="Visual/Model" unique_id=284076017]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
 mesh = SubResource("SphereMesh_ember")
 
-[node name="Ember2" type="MeshInstance3D" parent="Visual/Model"]
+[node name="Ember2" type="MeshInstance3D" parent="Visual/Model" unique_id=1371678105]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0.11, 0.06, 0.04)
 mesh = SubResource("SphereMesh_ember")
 
-[node name="Ember3" type="MeshInstance3D" parent="Visual/Model"]
+[node name="Ember3" type="MeshInstance3D" parent="Visual/Model" unique_id=1063905838]
 transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, -0.09, 0.06, -0.06)
 mesh = SubResource("SphereMesh_ember")
 
-[node name="Ember4" type="MeshInstance3D" parent="Visual/Model"]
+[node name="Ember4" type="MeshInstance3D" parent="Visual/Model" unique_id=945635680]
 transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0.03, 0.18, -0.08)
 mesh = SubResource("SphereMesh_ember")
 
-[node name="Ember5" type="MeshInstance3D" parent="Visual/Model"]
+[node name="Ember5" type="MeshInstance3D" parent="Visual/Model" unique_id=1415693807]
 transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -0.05, 0.14, 0.09)
 mesh = SubResource("SphereMesh_ember")

@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://docra1gb4pj25"]
 
-[ext_resource type="Script" path="res://scripts/ui/end_screen.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://ch15y6i0piqnm" path="res://scripts/ui/end_screen.gd" id="1_script"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_result"]
 font_size = 72
@@ -26,13 +26,13 @@ shadow_color = Color(0, 0, 0, 0.6)
 shadow_offset = Vector2(2, 2)
 
 [sub_resource type="LabelSettings" id="LabelSettings_credits"]
+line_spacing = 14.0
 font_size = 20
 font_color = Color(0.72, 0.74, 0.82, 1)
-line_spacing = 14.0
 shadow_color = Color(0, 0, 0, 0.6)
 shadow_offset = Vector2(2, 2)
 
-[node name="EndScreen" type="Control"]
+[node name="EndScreen" type="Control" unique_id=918906939]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,7 +42,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_script")
 
-[node name="Bg" type="ColorRect" parent="."]
+[node name="Bg" type="ColorRect" parent="." unique_id=1507716678]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,7 +52,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.05, 0.05, 0.07, 1)
 
-[node name="Layout" type="VBoxContainer" parent="."]
+[node name="Layout" type="VBoxContainer" parent="." unique_id=440354353]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -63,38 +63,31 @@ mouse_filter = 2
 theme_override_constants/separation = 26
 alignment = 1
 
-[node name="ResultLabel" type="Label" parent="Layout"]
+[node name="ResultLabel" type="Label" parent="Layout" unique_id=2058733297]
 layout_mode = 2
-mouse_filter = 2
 text = "YOU DIED"
 label_settings = SubResource("LabelSettings_result")
 horizontal_alignment = 1
 
-[node name="SubLabel" type="Label" parent="Layout"]
+[node name="SubLabel" type="Label" parent="Layout" unique_id=864064316]
 layout_mode = 2
-mouse_filter = 2
 text = "..."
 label_settings = SubResource("LabelSettings_sub")
 horizontal_alignment = 1
 
-[node name="StatsLabel" type="Label" parent="Layout"]
+[node name="StatsLabel" type="Label" parent="Layout" unique_id=1900108799]
 layout_mode = 2
-mouse_filter = 2
-text = ""
 label_settings = SubResource("LabelSettings_hint")
 horizontal_alignment = 1
 
-[node name="ScoreLabel" type="Label" parent="Layout"]
+[node name="ScoreLabel" type="Label" parent="Layout" unique_id=925485661]
 layout_mode = 2
-mouse_filter = 2
-text = ""
 label_settings = SubResource("LabelSettings_score")
 horizontal_alignment = 1
 
-[node name="CreditsLabel" type="Label" parent="Layout"]
-layout_mode = 2
-mouse_filter = 2
+[node name="CreditsLabel" type="Label" parent="Layout" unique_id=47633775]
 visible = false
+layout_mode = 2
 text = "A RETRO FPS BY FLORIAN ZWERINA
 
 SKELETONS & DUNGEON PROPS - KAYKIT (CC0)
@@ -104,9 +97,8 @@ MADE WITH GODOT 4"
 label_settings = SubResource("LabelSettings_credits")
 horizontal_alignment = 1
 
-[node name="Hint" type="Label" parent="Layout"]
+[node name="Hint" type="Label" parent="Layout" unique_id=1633377335]
 layout_mode = 2
-mouse_filter = 2
 text = "CLICK OR PRESS ANY KEY TO RESTART"
 label_settings = SubResource("LabelSettings_hint")
 horizontal_alignment = 1

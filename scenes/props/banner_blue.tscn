@@ -1,7 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://ciuv5jhwuw4c2"]
 
-[ext_resource type="PackedScene" path="res://assets/models/banner_blue/banner_blue.glb" id="1_model"]
+[ext_resource type="PackedScene" uid="uid://bho11ursyd5t0" path="res://assets/models/banner_blue/banner_blue.glb" id="1_model"]
 
-[node name="BannerBlue" type="Node3D"]
+[node name="BannerBlue" type="Node3D" unique_id=97573108]
 
-[node name="Model" parent="." instance=ExtResource("1_model")]
+[node name="Model" parent="." unique_id=1628384838 instance=ExtResource("1_model")]

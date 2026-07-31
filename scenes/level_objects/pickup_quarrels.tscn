@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://cex7mrd5iiyfg"]
 
-[ext_resource type="Script" path="res://scripts/level_objects/pickup.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://gv4vqtpksp2i" path="res://scripts/level_objects/pickup.gd" id="1_script"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_touch"]
 radius = 0.55
@@ -8,12 +8,6 @@ radius = 0.55
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_shaft"]
 albedo_color = Color(0.45, 0.29, 0.16, 1)
 roughness = 0.9
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tip"]
-albedo_color = Color(0.75, 0.77, 0.82, 1)
-metallic = 0.8
-metallic_specular = 0.7
-roughness = 0.3
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_shaft"]
 material = SubResource("StandardMaterial3D_shaft")
@@ -23,6 +17,12 @@ height = 0.5
 radial_segments = 6
 rings = 0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tip"]
+albedo_color = Color(0.75, 0.77, 0.82, 1)
+metallic = 0.8
+metallic_specular = 0.7
+roughness = 0.3
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_tip"]
 material = SubResource("StandardMaterial3D_tip")
 top_radius = 0.0
@@ -31,49 +31,49 @@ height = 0.12
 radial_segments = 6
 rings = 0
 
-[node name="PickupQuarrels" type="Area3D"]
+[node name="PickupQuarrels" type="Area3D" unique_id=742817723]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_script")
 type = 2
 amount = 8
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1679805478]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("SphereShape3D_touch")
 
-[node name="Visual" type="Node3D" parent="."]
+[node name="Visual" type="Node3D" parent="." unique_id=10047994]
 
-[node name="Model" type="Node3D" parent="Visual"]
+[node name="Model" type="Node3D" parent="Visual" unique_id=119209589]
 
-[node name="Bolt1" type="Node3D" parent="Visual/Model"]
+[node name="Bolt1" type="Node3D" parent="Visual/Model" unique_id=1942155761]
 
-[node name="Shaft" type="MeshInstance3D" parent="Visual/Model/Bolt1"]
+[node name="Shaft" type="MeshInstance3D" parent="Visual/Model/Bolt1" unique_id=1759380946]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0)
 mesh = SubResource("CylinderMesh_shaft")
 
-[node name="Tip" type="MeshInstance3D" parent="Visual/Model/Bolt1"]
+[node name="Tip" type="MeshInstance3D" parent="Visual/Model/Bolt1" unique_id=1903975652]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.59, 0)
 mesh = SubResource("CylinderMesh_tip")
 
-[node name="Bolt2" type="Node3D" parent="Visual/Model"]
+[node name="Bolt2" type="Node3D" parent="Visual/Model" unique_id=1336631136]
 transform = Transform3D(0.9689, 0.2474, 0, -0.2474, 0.9689, 0, 0, 0, 1, 0.09, 0, 0.06)
 
-[node name="Shaft" type="MeshInstance3D" parent="Visual/Model/Bolt2"]
+[node name="Shaft" type="MeshInstance3D" parent="Visual/Model/Bolt2" unique_id=107057370]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0)
 mesh = SubResource("CylinderMesh_shaft")
 
-[node name="Tip" type="MeshInstance3D" parent="Visual/Model/Bolt2"]
+[node name="Tip" type="MeshInstance3D" parent="Visual/Model/Bolt2" unique_id=1848727673]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.59, 0)
 mesh = SubResource("CylinderMesh_tip")
 
-[node name="Bolt3" type="Node3D" parent="Visual/Model"]
+[node name="Bolt3" type="Node3D" parent="Visual/Model" unique_id=1870958501]
 transform = Transform3D(0.9689, -0.2474, 0, 0.2474, 0.9689, 0, 0, 0, 1, -0.09, 0, -0.06)
 
-[node name="Shaft" type="MeshInstance3D" parent="Visual/Model/Bolt3"]
+[node name="Shaft" type="MeshInstance3D" parent="Visual/Model/Bolt3" unique_id=1891605379]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0)
 mesh = SubResource("CylinderMesh_shaft")
 
-[node name="Tip" type="MeshInstance3D" parent="Visual/Model/Bolt3"]
+[node name="Tip" type="MeshInstance3D" parent="Visual/Model/Bolt3" unique_id=1757534704]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.59, 0)
 mesh = SubResource("CylinderMesh_tip")

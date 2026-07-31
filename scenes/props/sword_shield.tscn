@@ -1,7 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://blnu30s4xnj6u"]
 
-[ext_resource type="PackedScene" path="res://assets/models/sword_shield/sword_shield.glb" id="1_model"]
+[ext_resource type="PackedScene" uid="uid://ftufmdvtsqpm" path="res://assets/models/sword_shield/sword_shield.glb" id="1_model"]
 
-[node name="SwordShield" type="Node3D"]
+[node name="SwordShield" type="Node3D" unique_id=566022982]
 
-[node name="Model" parent="." instance=ExtResource("1_model")]
+[node name="Model" parent="." unique_id=1120463200 instance=ExtResource("1_model")]

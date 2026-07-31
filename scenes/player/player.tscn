@@ -1,55 +1,53 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene format=3 uid="uid://dgldlklmnie6b"]
 
-[ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_ctrl"]
-[ext_resource type="PackedScene" path="res://scenes/weapons/weapon_plasma.tscn" id="8_plasma"]
-[ext_resource type="AudioStream" path="res://assets/audio/step.wav" id="6_step"]
-[ext_resource type="AudioStream" path="res://assets/audio/land.wav" id="7_land"]
-[ext_resource type="Script" path="res://scripts/player/weapon_manager.gd" id="2_wm"]
-[ext_resource type="PackedScene" path="res://scenes/weapons/weapon_pistol.tscn" id="3_pistol"]
-[ext_resource type="PackedScene" path="res://scenes/weapons/weapon_shotgun.tscn" id="4_shotgun"]
-[ext_resource type="PackedScene" path="res://scenes/weapons/weapon_launcher.tscn" id="5_launcher"]
+[ext_resource type="Script" uid="uid://tl6t14sooo0p" path="res://scripts/player/player_controller.gd" id="1_ctrl"]
+[ext_resource type="Script" uid="uid://by7ksgphfv5mn" path="res://scripts/player/weapon_manager.gd" id="2_wm"]
+[ext_resource type="PackedScene" uid="uid://o8ce0edhhjfe" path="res://scenes/weapons/weapon_pistol.tscn" id="3_pistol"]
+[ext_resource type="PackedScene" uid="uid://bdpqni482hcnn" path="res://scenes/weapons/weapon_shotgun.tscn" id="4_shotgun"]
+[ext_resource type="PackedScene" uid="uid://cjjmop4eg4wbu" path="res://scenes/weapons/weapon_launcher.tscn" id="5_launcher"]
+[ext_resource type="AudioStream" uid="uid://t8mg1kcq67gi" path="res://assets/audio/step.wav" id="6_step"]
+[ext_resource type="AudioStream" uid="uid://c65ellvq2emwr" path="res://assets/audio/land.wav" id="7_land"]
+[ext_resource type="PackedScene" uid="uid://srfotoac0j6q" path="res://scenes/weapons/weapon_plasma.tscn" id="8_plasma"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 radius = 0.4
 height = 1.8
 
-[node name="Player" type="CharacterBody3D" groups=["player"]]
+[node name="Player" type="CharacterBody3D" unique_id=982291988 groups=["player"]]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_ctrl")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1609628860]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_body")
 
-[node name="Head" type="Node3D" parent="."]
+[node name="Head" type="Node3D" parent="." unique_id=233769593]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Head"]
-fov = 75.0
-near = 0.05
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=1481388694]
 
-[node name="WeaponManager" type="Node3D" parent="Head/Camera3D"]
+[node name="WeaponManager" type="Node3D" parent="Head/Camera3D" unique_id=674124190]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, -0.18, -0.45)
 script = ExtResource("2_wm")
 
-[node name="Pistol" parent="Head/Camera3D/WeaponManager" instance=ExtResource("3_pistol")]
+[node name="Pistol" parent="Head/Camera3D/WeaponManager" unique_id=815290731 instance=ExtResource("3_pistol")]
 
-[node name="Shotgun" parent="Head/Camera3D/WeaponManager" instance=ExtResource("4_shotgun")]
+[node name="Shotgun" parent="Head/Camera3D/WeaponManager" unique_id=934948949 instance=ExtResource("4_shotgun")]
 visible = false
 
-[node name="Launcher" parent="Head/Camera3D/WeaponManager" instance=ExtResource("5_launcher")]
+[node name="Launcher" parent="Head/Camera3D/WeaponManager" unique_id=1992361729 instance=ExtResource("5_launcher")]
 visible = false
 
-[node name="Plasma" parent="Head/Camera3D/WeaponManager" instance=ExtResource("8_plasma")]
+[node name="Plasma" parent="Head/Camera3D/WeaponManager" unique_id=912964152 instance=ExtResource("8_plasma")]
 visible = false
 
-[node name="StepSound" type="AudioStreamPlayer" parent="."]
+[node name="StepSound" type="AudioStreamPlayer" parent="." unique_id=685002619]
 stream = ExtResource("6_step")
 volume_db = -8.0
 bus = &"SFX"
 
-[node name="LandSound" type="AudioStreamPlayer" parent="."]
+[node name="LandSound" type="AudioStreamPlayer" parent="." unique_id=849955153]
 stream = ExtResource("7_land")
 volume_db = -4.0
 bus = &"SFX"

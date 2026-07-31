@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://dqdi76jc4clf0"]
 
 [sub_resource type="Gradient" id="Gradient_dot"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -25,7 +25,7 @@ size = Vector2(0.045, 0.045)
 offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
 colors = PackedColorArray(0.85, 0.8, 0.7, 0, 0.85, 0.8, 0.7, 0.32, 0.85, 0.8, 0.7, 0.28, 0.85, 0.8, 0.7, 0)
 
-[node name="DustMotes" type="CPUParticles3D"]
+[node name="DustMotes" type="CPUParticles3D" unique_id=792336561]
 amount = 24
 lifetime = 10.0
 preprocess = 10.0
@@ -33,7 +33,7 @@ randomness = 0.5
 lifetime_randomness = 0.3
 mesh = SubResource("QuadMesh_mote")
 emission_shape = 2
-emission_box_extents = Vector3(7, 2, 5.5)
+emission_sphere_radius = 1.0
 direction = Vector3(0, 1, 0)
 spread = 180.0
 gravity = Vector3(0, 0, 0)
