@@ -28,8 +28,11 @@ func _initialize() -> void:
 	_reset_player(Vector3(0, 1.0, 2))
 
 
+## Uses local position, not global: during _initialize() even SceneTree.root
+## is not inside the tree yet, so get_global_transform() errors out and
+## returns identity. _world never moves, so local == global here anyway.
 func _reset_player(pos: Vector3) -> void:
-	_player.global_position = pos
+	_player.position = pos
 	_player.rotation.y = 0.0  # faces -Z (forward)
 	_player.velocity = Vector3.ZERO
 
@@ -42,7 +45,7 @@ func _add_box(pos: Vector3, box_size: Vector3) -> void:
 	col.shape = shape
 	body.add_child(col)
 	_world.add_child(body)
-	body.global_position = pos
+	body.position = pos  # local, see _reset_player
 
 
 func _process(_delta: float) -> bool:
