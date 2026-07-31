@@ -88,17 +88,21 @@ dither/quantize filter; settings persist to `user://settings.cfg`.
   external CC0 models (`models/`, see CREDITS.md); `scenes/props/` wraps the
   models as placeable props (PS1 materials applied by `tools/import_prop.gd`)
 - `tools/` — headless dev scripts (`-s` runnable): `gen_textures.gd`/
-  `gen_audio.gd` (deterministic asset generators), `probe_level.gd`
-  (CSG collision probe), `screenshot_tour.gd`/`screenshot_ui.gd` (visual
-  capture — run without `--headless`), and 18 smoke tests covering level
-  flow (`test_flow`, `test_progression`, `test_cheat`, `test_pause`,
-  `test_settings`),
+  `gen_audio.gd` (deterministic asset generators), `probe_level.gd`/
+  `probe_model.gd` (CSG collision and imported-model probes),
+  `screenshot_tour.gd`/`screenshot_ui.gd`/`screenshot_projectiles.gd`
+  (visual capture — run without `--headless`), and 22 headless smoke tests
+  covering level flow (`test_flow`, `test_progression`, `test_cheat`,
+  `test_pause`, `test_settings`),
   combat/AI (`test_enemy`, `test_spitter`, `test_wake` (cross-type
   wake-on-death), `test_rogue`, `test_boss`, `test_weapons`),
-  movement/hazards/stats (`test_crouch`, `test_feel`, `test_ice`,
-  `test_lava`, `test_void`, `test_pickups`, `test_stats`), and the
-  external-model props (`test_props`) — all sharing their boot/wait/step
-  boilerplate via `test_base.gd`
+  movement/hazards/stats (`test_crouch`, `test_feel`, `test_step`,
+  `test_ice`, `test_lava`, `test_void`, `test_pickups`, `test_stats`),
+  treasure/score (`test_gold`, `test_treasure`), and the
+  external-model props (`test_props`) — most sharing their boot/wait/step
+  boilerplate via `test_base.gd`. Two audio checks (`test_audio`,
+  `test_sfx_bus`) must run WITHOUT `--headless`, which swaps in the dummy
+  audio driver
 - `project.godot` uses `rendering_method="forward_plus"`. The mobile renderer
   caps omni lights per object, and since each level is one big CSG mesh, its
   many torch/room lights exceeded the cap and flickered as the renderer
