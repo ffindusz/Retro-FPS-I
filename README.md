@@ -74,51 +74,18 @@ The **options menu** (O on the title or pause screen) adjusts mouse
 sensitivity, music and SFX volume (separate audio buses), and the PS1
 dither/quantize filter; settings persist to `user://settings.cfg`.
 
-## Editing in the Godot editor
+## Editing
 
-- **Play one level.** Open `scenes/levels/level_0X.tscn` and press **F6**. A
-  level holds no camera, player or lighting of its own — those live in
-  `main.tscn` — so `LevelRoot` hands off to `main.tscn` and asks it to boot
-  that level. You get the real HUD, PS1 viewport and enemies, not an
-  approximation.
-- **Add or reorder a level.** Edit `assets/level_catalog.tres` in the
-  Inspector: drop the scene into `levels` (campaign, in play order) or
-  `extras` (reachable only by cheat, like the model test stage). No script
-  changes. Note the level-warp cheat stops at **F7** however long the campaign
-  gets, because F8 is the debug overlay.
-- **Every level root needs `Spawns/PlayerSpawn`** — `LevelRoot` shows a
-  configuration warning in the scene tree if it is missing.
-- **Build a room** by instancing `scenes/level_blocks/room_block.tscn` into a
-  level's `LevelCSG` and dragging its `room_size` handles. It generates the
-  Shell/Cut/Floor brushes the hand-built levels spell out by hand, so a room
-  is one node with one wall-material slot instead of three brushes to keep in
-  sync. Its origin sits at the centre of the floor. Cut doorways as usual,
-  with a `CSGBox3D` set to Subtraction as a *sibling* of the block. The
-  generated brushes are deliberately not saved into the level file — they are
-  rebuilt on load, so the `.tscn` stores a room rather than three boxes.
-  Existing levels are untouched flat CSG and keep working as they are.
-- **Scene files are in Godot's canonical format** (uids and per-node
-  `unique_id`), so a GUI save produces a diff of only what you changed. If a
-  scene ever needs re-normalizing, `tools/normalize_scenes.gd` does it — it
-  must run with `--editor`, and its header explains why the obvious
-  `PackedScene.pack()` shortcut is wrong. Verify any bulk scene change by
-  diffing `tools/dump_scenes.gd` output from before and after.
-- `.gitattributes` pins these text formats to LF. Do not remove it: CRLF
-  checkouts make the editor bake stray carriage returns into multi-line
-  string properties.
-- **Add a texture** by dropping a PNG into `assets/textures/`. No generator
-  function needed — `tools/gen_textures.gd` only overwrites its own twelve
-  filenames — and `[importer_defaults]` in `project.godot` gives new textures
-  the house import settings (lossless, no Detect 3D, mipmaps), so they don't
-  silently re-import to VRAM compression the first time they appear in 3D.
-  Mipmaps are on for world tiles and off for the FX sprite sheets, where they
-  would bleed neighbouring frames together.
-- **Make a material** by duplicating `assets/materials/mat_template_ps1.tres`
-  in the FileSystem dock and pointing `albedo_texture` at your PNG. It carries
-  the house values (`snap_resolution 240`, `affine_strength 0`, `world_uv 1`,
-  `uv_scale 0.5`). `world_uv = 1` is what makes level geometry project its UVs
-  in world space, so resizing a CSG brush retiles correctly with no UV work;
-  prop materials made by `tools/import_prop.gd` deliberately use `0`.
+The project is set up to be worked on in the Godot editor as well as by hand:
+press **F6** on a level scene to play it, build rooms from
+`scenes/level_blocks/room_block.tscn`, add levels by dropping them into
+`assets/level_catalog.tres`, and add textures by dropping a PNG into
+`assets/textures/`.
+
+See **[EDITING.md](EDITING.md)** for the full workflow — geometry, entity
+placement and tuning, level wiring, the texture and material pipeline, which
+smoke tests to run after a change, and the gotchas worth knowing before you
+hit save.
 
 ## Project layout
 
