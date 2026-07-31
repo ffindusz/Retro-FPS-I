@@ -19,6 +19,19 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 GameState="*res://scripts/autoload/game_state.gd"
 Settings="*res://scripts/autoload/settings.gd"
 
+[importer_defaults]
+
+; So a PNG dropped in through the editor arrives with the house settings
+; instead of Godot's. detect_3d/compress_to defaults to 1, which silently
+; re-imports a texture to VRAM/S3TC the first time it is used in 3D --
+; block artifacts on 128px retro art, and a rewritten .import file on every
+; run. See commits 68a0e40 and d67839e, which cleaned that up twice by hand.
+texture={
+"compress/mode": 0,
+"detect_3d/compress_to": 0,
+"mipmaps/generate": true
+}
+
 [display]
 
 window/size/viewport_width=1280

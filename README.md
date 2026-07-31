@@ -97,6 +97,19 @@ dither/quantize filter; settings persist to `user://settings.cfg`.
 - `.gitattributes` pins these text formats to LF. Do not remove it: CRLF
   checkouts make the editor bake stray carriage returns into multi-line
   string properties.
+- **Add a texture** by dropping a PNG into `assets/textures/`. No generator
+  function needed — `tools/gen_textures.gd` only overwrites its own twelve
+  filenames — and `[importer_defaults]` in `project.godot` gives new textures
+  the house import settings (lossless, no Detect 3D, mipmaps), so they don't
+  silently re-import to VRAM compression the first time they appear in 3D.
+  Mipmaps are on for world tiles and off for the FX sprite sheets, where they
+  would bleed neighbouring frames together.
+- **Make a material** by duplicating `assets/materials/mat_template_ps1.tres`
+  in the FileSystem dock and pointing `albedo_texture` at your PNG. It carries
+  the house values (`snap_resolution 240`, `affine_strength 0`, `world_uv 1`,
+  `uv_scale 0.5`). `world_uv = 1` is what makes level geometry project its UVs
+  in world space, so resizing a CSG brush retiles correctly with no UV work;
+  prop materials made by `tools/import_prop.gd` deliberately use `0`.
 
 ## Project layout
 

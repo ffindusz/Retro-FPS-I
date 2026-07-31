@@ -3,6 +3,22 @@ extends SceneTree
 ## Run from the project root:
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/gen_textures.gd
 ## Deterministic (fixed seeds) so regeneration produces identical files.
+##
+## Two things to know before editing a generator:
+##
+## - Fixed seeds do NOT make a generator edit-proof. Each _gen_* draws from one
+##   RNG stream, interleaving _make_noise() lattice fills with per-pixel grain,
+##   so inserting a noise layer or reordering draws re-rolls that texture's
+##   whole appearance even though the seed is unchanged. Append rather than
+##   splice, and re-run the screenshot tour if you do.
+## - Tiling is by construction: _noise_at() wraps modulo `cells`, and _gen_metal
+##   builds its streaks from sin() terms for the same reason. A new generator
+##   that ignores this will seam.
+##
+## Adding a texture does NOT require writing a generator. Hand-authored PNGs
+## are first class -- this script only ever overwrites its own twelve
+## filenames, so anything else dropped in assets/textures/ is left alone, and
+## project.godot's [importer_defaults] gives it the right import settings.
 
 const SIZE := 128
 
