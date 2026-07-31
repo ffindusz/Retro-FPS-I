@@ -74,6 +74,30 @@ The **options menu** (O on the title or pause screen) adjusts mouse
 sensitivity, music and SFX volume (separate audio buses), and the PS1
 dither/quantize filter; settings persist to `user://settings.cfg`.
 
+## Editing in the Godot editor
+
+- **Play one level.** Open `scenes/levels/level_0X.tscn` and press **F6**. A
+  level holds no camera, player or lighting of its own — those live in
+  `main.tscn` — so `LevelRoot` hands off to `main.tscn` and asks it to boot
+  that level. You get the real HUD, PS1 viewport and enemies, not an
+  approximation.
+- **Add or reorder a level.** Edit `assets/level_catalog.tres` in the
+  Inspector: drop the scene into `levels` (campaign, in play order) or
+  `extras` (reachable only by cheat, like the model test stage). No script
+  changes. Note the level-warp cheat stops at **F7** however long the campaign
+  gets, because F8 is the debug overlay.
+- **Every level root needs `Spawns/PlayerSpawn`** — `LevelRoot` shows a
+  configuration warning in the scene tree if it is missing.
+- **Scene files are in Godot's canonical format** (uids and per-node
+  `unique_id`), so a GUI save produces a diff of only what you changed. If a
+  scene ever needs re-normalizing, `tools/normalize_scenes.gd` does it — it
+  must run with `--editor`, and its header explains why the obvious
+  `PackedScene.pack()` shortcut is wrong. Verify any bulk scene change by
+  diffing `tools/dump_scenes.gd` output from before and after.
+- `.gitattributes` pins these text formats to LF. Do not remove it: CRLF
+  checkouts make the editor bake stray carriage returns into multi-line
+  string properties.
+
 ## Project layout
 
 - `scenes/` — main scene + levels, player, weapons, enemies, UI screens, and
@@ -91,9 +115,12 @@ dither/quantize filter; settings persist to `user://settings.cfg`.
   `gen_audio.gd` (deterministic asset generators), `probe_level.gd`/
   `probe_model.gd` (CSG collision and imported-model probes),
   `screenshot_tour.gd`/`screenshot_ui.gd`/`screenshot_projectiles.gd`
-  (visual capture — run without `--headless`), and 22 headless smoke tests
+  (visual capture — run without `--headless`), `normalize_scenes.gd`/
+  `dump_scenes.gd` (scene-format maintenance and a structural dump for
+  diffing bulk scene changes — see "Editing in the Godot editor"), and 24
+  headless smoke tests
   covering level flow (`test_flow`, `test_progression`, `test_cheat`,
-  `test_pause`, `test_settings`),
+  `test_pause`, `test_settings`, `test_solo_level`, `test_catalog`),
   combat/AI (`test_enemy`, `test_spitter`, `test_wake` (cross-type
   wake-on-death), `test_rogue`, `test_boss`, `test_weapons`),
   movement/hazards/stats (`test_crouch`, `test_feel`, `test_step`,

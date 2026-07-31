@@ -1,14 +1,14 @@
 extends AnyKeyScreen
-## Title screen: any key or click starts the game at level 1; the number
-## keys 1-7 are the level-select cheat for testing, and 0 loads the model
-## test stage.
+## Title screen: any key or click starts the game at level 1; the number keys
+## are the level-select cheat for testing (one per campaign level, counting
+## from 1), and 0 loads the model test stage.
 
 signal start_requested(level_index: int)
 signal options_requested
 
-## Matches Main.TEST_STAGE_INDEX (the extra entry after the 7 campaign
-## levels in Main.LEVEL_SCENES).
-const TEST_STAGE_INDEX := 7
+## Same catalog main.gd plays from, so the digit range and the test stage
+## index follow it instead of being restated here.
+const CATALOG := preload("res://assets/level_catalog.tres")
 
 @onready var _best: Label = $Layout/BestLabel
 
@@ -26,13 +26,16 @@ func _on_special_key(event: InputEvent) -> bool:
 		get_viewport().set_input_as_handled()
 		options_requested.emit()
 		return true
-	if event.physical_keycode >= KEY_1 and event.physical_keycode <= KEY_7:
+	# One digit per campaign level, starting at 1. KEY_0 is the test stage, so
+	# a campaign of 9 or more levels would need a different scheme.
+	if event.physical_keycode >= KEY_1 \
+			and event.physical_keycode < mini(KEY_1 + CATALOG.campaign_count(), KEY_0 + 10):
 		get_viewport().set_input_as_handled()
 		start_requested.emit(event.physical_keycode - KEY_1)
 		return true
-	if event.physical_keycode == KEY_0:
+	if event.physical_keycode == KEY_0 and not CATALOG.extras.is_empty():
 		get_viewport().set_input_as_handled()
-		start_requested.emit(TEST_STAGE_INDEX)
+		start_requested.emit(CATALOG.campaign_count())
 		return true
 	return false
 
