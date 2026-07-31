@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://hiihv4d4q7wg"]
+
+[ext_resource type="Script" uid="uid://clsk3s743e1a0" path="res://scripts/level_blocks/room_block.gd" id="1_script"]
+[ext_resource type="Material" uid="uid://cj5agp183d14c" path="res://assets/materials/mat_stone.tres" id="2_wall"]
+[ext_resource type="Material" uid="uid://bjenlij0mum81" path="res://assets/materials/mat_floor.tres" id="3_floor"]
+
+[node name="RoomBlock" type="CSGCombiner3D" unique_id=1761555361]
+script = ExtResource("1_script")
+wall_material = ExtResource("2_wall")
+floor_material = ExtResource("3_floor")

@@ -88,6 +88,15 @@ dither/quantize filter; settings persist to `user://settings.cfg`.
   gets, because F8 is the debug overlay.
 - **Every level root needs `Spawns/PlayerSpawn`** — `LevelRoot` shows a
   configuration warning in the scene tree if it is missing.
+- **Build a room** by instancing `scenes/level_blocks/room_block.tscn` into a
+  level's `LevelCSG` and dragging its `room_size` handles. It generates the
+  Shell/Cut/Floor brushes the hand-built levels spell out by hand, so a room
+  is one node with one wall-material slot instead of three brushes to keep in
+  sync. Its origin sits at the centre of the floor. Cut doorways as usual,
+  with a `CSGBox3D` set to Subtraction as a *sibling* of the block. The
+  generated brushes are deliberately not saved into the level file — they are
+  rebuilt on load, so the `.tscn` stores a room rather than three boxes.
+  Existing levels are untouched flat CSG and keep working as they are.
 - **Scene files are in Godot's canonical format** (uids and per-node
   `unique_id`), so a GUI save produces a diff of only what you changed. If a
   scene ever needs re-normalizing, `tools/normalize_scenes.gd` does it — it
@@ -113,7 +122,8 @@ dither/quantize filter; settings persist to `user://settings.cfg`.
 
 ## Project layout
 
-- `scenes/` — main scene + levels, player, weapons, enemies, UI screens, and
+- `scenes/` — main scene + levels, player, weapons, enemies, UI screens,
+  `level_blocks/` (reusable `@tool` geometry, e.g. `room_block.tscn`), and
   `level_objects/` (switch, teleporter, secret door, gold pile)
 - `scripts/` — gameplay code (`autoload/game_state.gd` is the flow singleton,
   `autoload/settings.gd` the persistent user settings — sensitivity, volumes,
@@ -130,10 +140,11 @@ dither/quantize filter; settings persist to `user://settings.cfg`.
   `screenshot_tour.gd`/`screenshot_ui.gd`/`screenshot_projectiles.gd`
   (visual capture — run without `--headless`), `normalize_scenes.gd`/
   `dump_scenes.gd` (scene-format maintenance and a structural dump for
-  diffing bulk scene changes — see "Editing in the Godot editor"), and 24
+  diffing bulk scene changes — see "Editing in the Godot editor"), and 25
   headless smoke tests
   covering level flow (`test_flow`, `test_progression`, `test_cheat`,
   `test_pause`, `test_settings`, `test_solo_level`, `test_catalog`),
+  level building (`test_room_block`),
   combat/AI (`test_enemy`, `test_spitter`, `test_wake` (cross-type
   wake-on-death), `test_rogue`, `test_boss`, `test_weapons`),
   movement/hazards/stats (`test_crouch`, `test_feel`, `test_step`,
