@@ -103,7 +103,10 @@ dither/quantize filter; settings persist to `user://settings.cfg`.
   boilerplate via `test_base.gd`. Two audio checks (`test_audio`,
   `test_sfx_bus`) must run WITHOUT `--headless`, which swaps in the dummy
   audio driver
-- `project.godot` uses `rendering_method="forward_plus"`. The mobile renderer
+- The game runs on the **Forward+** renderer (recorded in `project.godot`'s
+  `config/features`; the explicit `rendering_method` line is absent because
+  Forward+ is the desktop default, and the editor strips settings that match
+  their default). The mobile renderer
   caps omni lights per object, and since each level is one big CSG mesh, its
   many torch/room lights exceeded the cap and flickered as the renderer
   swapped which ones were active; Forward+ (clustered lighting, no per-object
