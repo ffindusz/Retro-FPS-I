@@ -161,6 +161,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, 1)
 size = Vector3(1.2, 6, 1.2)
 material = ExtResource("1_metal")
 
+[node name="CeilArrival" type="CSGBox3D" parent="LevelCSG" unique_id=1118910536]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.075, 15)
+size = Vector3(10, 0.25, 10)
+material = ExtResource("2_floor")
+
+[node name="CeilCorr1" type="CSGBox3D" parent="LevelCSG" unique_id=564944131]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.075, 7)
+size = Vector3(3, 0.25, 8)
+material = ExtResource("2_floor")
+
+[node name="CeilHall" type="CSGBox3D" parent="LevelCSG" unique_id=1835148143]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.075, -2)
+size = Vector3(18, 0.25, 12)
+material = ExtResource("2_floor")
+
+[node name="CeilCorr2" type="CSGBox3D" parent="LevelCSG" unique_id=532593118]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 3.075, 0)
+size = Vector3(8, 0.25, 3)
+material = ExtResource("2_floor")
+
+[node name="CeilPitRoom" type="CSGBox3D" parent="LevelCSG" unique_id=1693166440]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 6.075, 0)
+size = Vector3(14, 0.25, 14)
+material = ExtResource("2_floor")
+
 [node name="Switch" parent="." unique_id=767872294 instance=ExtResource("6_switch")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 29.02, 1.3, 0)
 teleporter_path = NodePath("../Teleporter")

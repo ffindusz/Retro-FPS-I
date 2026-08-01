@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://uyul8lb8e6rs" path="res://scenes/level_objects/shootable_chest.tscn" id="41_chest"]
 [ext_resource type="PackedScene" uid="uid://cmajw6mkbr1kb" path="res://scenes/enemies/enemy_rogue.tscn" id="42_rogue"]
 [ext_resource type="PackedScene" uid="uid://thg5uy2vm4sm" path="res://scenes/props/box.tscn" id="44_box"]
+[ext_resource type="Material" uid="uid://fypkf18eam4m" path="res://assets/materials/mat_dirt.tres" id="90_ceil"]
 [ext_resource type="Script" uid="uid://djut4agw0ji75" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
 [node name="Level07" type="Node3D" unique_id=826784242]
@@ -101,6 +102,26 @@ material = ExtResource("2_floor")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, -28)
 size = Vector3(8.1, 0.25, 6.1)
 material = ExtResource("2_floor")
+
+[node name="CeilEntry" type="CSGBox3D" parent="LevelCSG" unique_id=1041424519]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.075, 12)
+size = Vector3(8, 0.25, 8)
+material = ExtResource("90_ceil")
+
+[node name="CeilCorr" type="CSGBox3D" parent="LevelCSG" unique_id=503217248]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.075, 4.25)
+size = Vector3(3, 0.25, 9.5)
+material = ExtResource("90_ceil")
+
+[node name="CeilSecret" type="CSGBox3D" parent="LevelCSG" unique_id=1237584387]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.575, -28)
+size = Vector3(8, 0.25, 6)
+material = ExtResource("90_ceil")
+
+[node name="CeilDoorway" type="CSGBox3D" parent="LevelCSG" unique_id=721394578]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.075, -24.5)
+size = Vector3(4, 0.25, 2)
+material = ExtResource("90_ceil")
 
 [node name="SecretDoor" parent="." unique_id=924842789 instance=ExtResource("7_door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, -24.5)
