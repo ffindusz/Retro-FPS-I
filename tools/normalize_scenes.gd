@@ -25,6 +25,9 @@ extends SceneTree
 ## change completely, the scenes it describes are not.
 ##
 ## ONLY=<substring>  restrict to matching paths (trial one scene first)
+## MATERIALS=1       also re-save assets/materials/*.tres. Off by default:
+##                   re-saving a material can give it a new uid, which would
+##                   invalidate the uid every referring scene has recorded.
 
 ## Frames given to the editor to settle before the first open, and per scene
 ## between open_scene_from_path() and save_scene(). Both are deferred inside
@@ -71,7 +74,14 @@ func _process(_delta: float) -> bool:
 	if index >= _paths.size():
 		if not _materials_done:
 			_materials_done = true
-			_save_materials()
+			# Opt-in: this pass used to run on every invocation, including
+			# ONLY= runs aimed at a single scene, and re-saving a material can
+			# mint it a NEW uid (it silently did that to mat_gunmetal.tres).
+			# For a material scenes actually reference, that invalidates the
+			# uid recorded in every referring file. The materials already have
+			# their uids, so this is only needed for a newly added one.
+			if OS.get_environment("MATERIALS") != "":
+				_save_materials()
 		print("saved %d scene(s), %d failure(s)" % [_saved, _failed])
 		quit(1 if _failed > 0 else 0)
 		return true
