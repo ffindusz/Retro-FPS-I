@@ -4,6 +4,7 @@
 [ext_resource type="Material" uid="uid://bjenlij0mum81" path="res://assets/materials/mat_floor.tres" id="2_floor"]
 [ext_resource type="Material" uid="uid://bvamktjbuf6n" path="res://assets/materials/mat_metal.tres" id="3_metal"]
 [ext_resource type="Material" uid="uid://3lbaglogsqvc" path="res://assets/materials/mat_crate.tres" id="4_crate"]
+[ext_resource type="Material" uid="uid://fypkf18eam4m" path="res://assets/materials/mat_dirt.tres" id="5_dirt"]
 [ext_resource type="PackedScene" uid="uid://dbvkhofjimn0d" path="res://scenes/enemies/enemy_grunt.tscn" id="5_grunt"]
 [ext_resource type="PackedScene" uid="uid://c4hxka6hh4tgm" path="res://scenes/level_objects/switch.tscn" id="8_switch"]
 [ext_resource type="PackedScene" uid="uid://b1rirpfqr5cp0" path="res://scenes/level_objects/teleporter.tscn" id="9_teleporter"]
@@ -247,6 +248,46 @@ material = ExtResource("1_wall")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 31.5)
 size = Vector3(6.1, 0.25, 5.1)
 material = ExtResource("2_floor")
+
+[node name="CeilRoomA" type="CSGBox3D" parent="LevelCSG" unique_id=2115362122]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.075, 20)
+size = Vector3(12, 0.25, 12)
+material = ExtResource("5_dirt")
+
+[node name="CeilCorr1" type="CSGBox3D" parent="LevelCSG" unique_id=28399729]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.075, 10)
+size = Vector3(3, 0.25, 9)
+material = ExtResource("5_dirt")
+
+[node name="CeilRoomB" type="CSGBox3D" parent="LevelCSG" unique_id=1013074984]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.075, 0)
+size = Vector3(16, 0.25, 12)
+material = ExtResource("5_dirt")
+
+[node name="CeilCorr2" type="CSGBox3D" parent="LevelCSG" unique_id=2091493721]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 3.025, 0)
+size = Vector3(9, 0.15, 3)
+material = ExtResource("5_dirt")
+
+[node name="CeilWalkway" type="CSGBox3D" parent="LevelCSG" unique_id=1316885703]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 5.575, 0)
+size = Vector3(9, 0.25, 3)
+material = ExtResource("5_dirt")
+
+[node name="CeilRoomC" type="CSGBox3D" parent="LevelCSG" unique_id=1981669243]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 5.575, 0)
+size = Vector3(12, 0.25, 12)
+material = ExtResource("5_dirt")
+
+[node name="CeilCorr3" type="CSGBox3D" parent="LevelCSG" unique_id=1936273038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.075, -10)
+size = Vector3(3, 0.25, 9)
+material = ExtResource("5_dirt")
+
+[node name="CeilVault" type="CSGBox3D" parent="LevelCSG" unique_id=689779980]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.075, 31.5)
+size = Vector3(6, 0.25, 5)
+material = ExtResource("5_dirt")
 
 [node name="Lights" type="Node3D" parent="." unique_id=2056400191]
 
