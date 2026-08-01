@@ -198,7 +198,7 @@ size = Vector3(3, 0.3, 7.5)
 material = ExtResource("3_metal")
 
 [node name="Balcony" type="CSGBox3D" parent="LevelCSG" unique_id=1175120890]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3.05, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3.0792427, 0)
 size = Vector3(2, 0.3, 8)
 material = ExtResource("3_metal")
 
@@ -561,7 +561,9 @@ transform = Transform3D(2, 0, 0, 0, 1.2, 0, 0, 0, 2, 0, 1, 31.5)
 
 [node name="DustRoomB" parent="." unique_id=2091921768 instance=ExtResource("28_dust")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
+emission_sphere_radius = 1.0
 
 [node name="DustArena" parent="." unique_id=1558373329 instance=ExtResource("28_dust")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -24)
 amount = 32
+emission_sphere_radius = 1.0
