@@ -30,7 +30,7 @@ const LOS_MASK := 0b11
 ## Dying wakes dormant skeletons within this radius: the death rattle
 ## alerts them regardless of line of sight (sound carries), so clearing a
 ## room quietly one sleeper at a time doesn't stay free.
-const WAKE_RADIUS := 8.0
+@export var wake_radius := 8.0
 
 const HIT_SOUND := preload("res://assets/audio/bone_hit.wav")
 const DIE_SOUND := preload("res://assets/audio/bone_die.wav")
@@ -276,7 +276,7 @@ func _wake_nearby() -> void:
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		var other := enemy as EnemyBase
 		if other != null and other.state == State.IDLE \
-				and other.global_position.distance_to(global_position) <= WAKE_RADIUS:
+				and other.global_position.distance_to(global_position) <= wake_radius:
 			other._enter(State.NOTICE)
 
 

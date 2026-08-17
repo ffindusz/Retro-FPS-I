@@ -1,9 +1,10 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cg2i826l8j7oi"]
 
-[ext_resource type="Shader" path="res://shaders/ps1_vertex_snap.gdshader" id="1_shader"]
-[ext_resource type="Texture2D" path="res://assets/textures/rock.png" id="2_tex"]
+[ext_resource type="Shader" uid="uid://cuhclhxdrj3t8" path="res://shaders/ps1_vertex_snap.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" uid="uid://bybtv3nj1tmb1" path="res://assets/textures/rock.png" id="2_tex"]
 
 [resource]
+render_priority = 0
 shader = ExtResource("1_shader")
 shader_parameter/albedo_color = Color(1, 1, 1, 1)
 shader_parameter/albedo_texture = ExtResource("2_tex")

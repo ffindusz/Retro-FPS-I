@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://ceegoklnyv8sk"]
 
-[ext_resource type="PackedScene" path="res://assets/models/torch_mounted/torch_mounted.glb" id="1_model"]
+[ext_resource type="PackedScene" uid="uid://v7vp6f73h0ph" path="res://assets/models/torch_mounted/torch_mounted.glb" id="1_model"]
 
 [sub_resource type="Gradient" id="Gradient_falloff"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -13,15 +13,14 @@ fill_to = Vector2(0.5, 0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_glow"]
 transparency = 1
+blend_mode = 1
 shading_mode = 0
 albedo_color = Color(1, 0.55, 0.2, 0.4)
 albedo_texture = SubResource("GradientTexture2D_falloff")
-blend_mode = 1
 billboard_mode = 1
 billboard_keep_scale = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_glow"]
-size = Vector2(1, 1)
 
 [sub_resource type="Animation" id="Animation_flicker"]
 resource_name = "flicker"
@@ -42,20 +41,18 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_flicker"]
 _data = {
-"flicker": SubResource("Animation_flicker")
+&"flicker": SubResource("Animation_flicker")
 }
 
-[node name="TorchUnlit" type="Node3D"]
+[node name="TorchUnlit" type="Node3D" unique_id=2001474746]
 
-[node name="Model" parent="." instance=ExtResource("1_model")]
+[node name="Model" parent="." unique_id=1579276073 instance=ExtResource("1_model")]
 
-[node name="Glow" type="MeshInstance3D" parent="."]
+[node name="Glow" type="MeshInstance3D" parent="." unique_id=359723201]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.42)
-mesh = SubResource("QuadMesh_glow")
 material_override = SubResource("StandardMaterial3D_glow")
+mesh = SubResource("QuadMesh_glow")
 
-[node name="Flicker" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_flicker")
-}
-autoplay = "flicker"
+[node name="Flicker" type="AnimationPlayer" parent="." unique_id=658919340]
+libraries/ = SubResource("AnimationLibrary_flicker")
+autoplay = &"flicker"

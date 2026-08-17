@@ -1,53 +1,52 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene format=3 uid="uid://cjjmop4eg4wbu"]
 
-[ext_resource type="Script" path="res://scripts/weapons/projectile_weapon.gd" id="1_script"]
-[ext_resource type="PackedScene" path="res://assets/models/staff/staff.gltf" id="2_model"]
-[ext_resource type="PackedScene" path="res://scenes/weapons/projectile_staff_fireball.tscn" id="4_fireball"]
-[ext_resource type="AudioStream" path="res://assets/audio/staff_fire.wav" id="5_shot"]
-[ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="6_click"]
-
-[ext_resource type="Texture2D" path="res://assets/textures/muzzle_flash.png" id="9_flash_tex"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flash"]
-shading_mode = 0
-blend_mode = 1
-albedo_texture = ExtResource("9_flash_tex")
-albedo_color = Color(1, 0.7, 0.3, 1)
-billboard_mode = 1
+[ext_resource type="Script" uid="uid://ctl7i2og71ijb" path="res://scripts/weapons/projectile_weapon.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://cwcthso6mvcnm" path="res://assets/models/staff/staff.gltf" id="2_model"]
+[ext_resource type="PackedScene" uid="uid://cfnkn7axsnp28" path="res://scenes/weapons/projectile_staff_fireball.tscn" id="4_rocket"]
+[ext_resource type="AudioStream" uid="uid://bqaogogjutonv" path="res://assets/audio/staff_fire.wav" id="5_shot"]
+[ext_resource type="AudioStream" uid="uid://c80owpd04xbf1" path="res://assets/audio/click.wav" id="6_click"]
+[ext_resource type="Texture2D" uid="uid://br8sskif0017s" path="res://assets/textures/muzzle_flash.png" id="9_flash_tex"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_flash"]
 size = Vector2(0.55, 0.55)
 
-[node name="Staff" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flash"]
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(1, 0.7, 0.3, 1)
+albedo_texture = ExtResource("9_flash_tex")
+billboard_mode = 1
+
+[node name="Launcher" type="Node3D" unique_id=1735236849]
 script = ExtResource("1_script")
 weapon_label = "STAFF"
 ammo_type = 3
 fire_interval = 1.1
 max_ammo = 10
-projectile_scene = ExtResource("4_fireball")
+projectile_scene = ExtResource("4_rocket")
 
-[node name="Model" parent="." instance=ExtResource("2_model")]
+[node name="Model" parent="." unique_id=1391851701 instance=ExtResource("2_model")]
 transform = Transform3D(0.32, 0, 0, 0, 0, 0.32, 0, -0.32, 0, 0, -0.02, 0.02)
 
-[node name="MuzzleFlash" type="Node3D" parent="."]
+[node name="MuzzleFlash" type="Node3D" parent="." unique_id=229788852]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.42)
 visible = false
 
-[node name="Light" type="OmniLight3D" parent="MuzzleFlash"]
+[node name="Light" type="OmniLight3D" parent="MuzzleFlash" unique_id=1366418296]
 light_color = Color(1, 0.7, 0.3, 1)
 light_energy = 2.5
 omni_range = 4.0
 
-[node name="Quad" type="MeshInstance3D" parent="MuzzleFlash"]
+[node name="Quad" type="MeshInstance3D" parent="MuzzleFlash" unique_id=1241945709]
 mesh = SubResource("QuadMesh_flash")
 surface_material_override/0 = SubResource("StandardMaterial3D_flash")
 
-[node name="ShotSound" type="AudioStreamPlayer" parent="."]
+[node name="ShotSound" type="AudioStreamPlayer" parent="." unique_id=1593856796]
 stream = ExtResource("5_shot")
 volume_db = -4.0
 bus = &"SFX"
 
-[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+[node name="ClickSound" type="AudioStreamPlayer" parent="." unique_id=407160547]
 stream = ExtResource("6_click")
 volume_db = -8.0
 bus = &"SFX"

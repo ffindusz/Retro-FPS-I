@@ -74,9 +74,23 @@ The **options menu** (O on the title or pause screen) adjusts mouse
 sensitivity, music and SFX volume (separate audio buses), and the PS1
 dither/quantize filter; settings persist to `user://settings.cfg`.
 
+## Editing
+
+The project is set up to be worked on in the Godot editor as well as by hand:
+press **F6** on a level scene to play it, build rooms from
+`scenes/level_blocks/room_block.tscn`, add levels by dropping them into
+`assets/level_catalog.tres`, and add textures by dropping a PNG into
+`assets/textures/`.
+
+See **[EDITING.md](EDITING.md)** for the full workflow — geometry, entity
+placement and tuning, level wiring, the texture and material pipeline, which
+smoke tests to run after a change, and the gotchas worth knowing before you
+hit save.
+
 ## Project layout
 
-- `scenes/` — main scene + levels, player, weapons, enemies, UI screens, and
+- `scenes/` — main scene + levels, player, weapons, enemies, UI screens,
+  `level_blocks/` (reusable `@tool` geometry, e.g. `room_block.tscn`), and
   `level_objects/` (switch, teleporter, secret door, gold pile)
 - `scripts/` — gameplay code (`autoload/game_state.gd` is the flow singleton,
   `autoload/settings.gd` the persistent user settings — sensitivity, volumes,
@@ -88,19 +102,31 @@ dither/quantize filter; settings persist to `user://settings.cfg`.
   external CC0 models (`models/`, see CREDITS.md); `scenes/props/` wraps the
   models as placeable props (PS1 materials applied by `tools/import_prop.gd`)
 - `tools/` — headless dev scripts (`-s` runnable): `gen_textures.gd`/
-  `gen_audio.gd` (deterministic asset generators), `probe_level.gd`
-  (CSG collision probe), `screenshot_tour.gd`/`screenshot_ui.gd` (visual
-  capture — run without `--headless`), and 24 smoke tests covering level
-  flow (`test_flow`, `test_progression`, `test_cheat`, `test_pause`,
-  `test_settings`),
+  `gen_audio.gd` (deterministic asset generators), `probe_level.gd`/
+  `probe_model.gd` (CSG collision and imported-model probes),
+  `screenshot_tour.gd`/`screenshot_ui.gd`/`screenshot_projectiles.gd`
+  (visual capture — run without `--headless`), `normalize_scenes.gd`/
+  `dump_scenes.gd` (scene-format maintenance and a structural dump for
+  diffing bulk scene changes — see "Editing in the Godot editor"), and 27
+  smoke tests
+  covering level flow (`test_flow`, `test_progression`, `test_cheat`,
+  `test_pause`, `test_settings`, `test_solo_level`, `test_catalog`),
+  level building (`test_room_block`),
   combat/AI (`test_enemy`, `test_spitter`, `test_wake` (cross-type
   wake-on-death), `test_rogue`, `test_boss`, `test_weapons`),
   movement/hazards/stats (`test_crouch`, `test_feel`, `test_step`,
-  `test_ice`, `test_lava`, `test_void`, `test_pickups`, `test_stats`,
-  `test_gold`, `test_treasure`), audio (`test_audio`, `test_sfx_bus`), and
-  the external-model props (`test_props`) — all sharing their boot/wait/step
-  boilerplate **and their assertions** via `test_base.gd`
-- `project.godot` uses `rendering_method="forward_plus"`. The mobile renderer
+  `test_ice`, `test_lava`, `test_void`, `test_pickups`, `test_stats`),
+  treasure/score (`test_gold`, `test_treasure`), audio (`test_audio`,
+  `test_sfx_bus`), and the external-model props (`test_props`) — most
+  sharing their boot/wait/step boilerplate **and their assertions** via
+  `test_base.gd`. Two audio checks (`test_audio`, `test_sfx_bus`) must run
+  WITHOUT `--headless`, which swaps in the dummy audio driver.
+  `test_solo_level`, `test_catalog` and `test_room_block` predate the
+  assertion harness and still only print
+- The game runs on the **Forward+** renderer (recorded in `project.godot`'s
+  `config/features`; the explicit `rendering_method` line is absent because
+  Forward+ is the desktop default, and the editor strips settings that match
+  their default). The mobile renderer
   caps omni lights per object, and since each level is one big CSG mesh, its
   many torch/room lights exceeded the cap and flickered as the renderer
   swapped which ones were active; Forward+ (clustered lighting, no per-object

@@ -1,13 +1,13 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://bkoexs5x5qj8s"]
 
-[ext_resource type="Script" path="res://scripts/enemies/boss.gd" id="1_script"]
-[ext_resource type="PackedScene" path="res://assets/models/skeleton_warrior/skeleton_warrior.glb" id="2_model"]
+[ext_resource type="Script" uid="uid://wugwar0ooobj" path="res://scripts/enemies/boss.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://c3crl5pnqiij5" path="res://assets/models/skeleton_warrior/skeleton_warrior.glb" id="2_model"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 radius = 0.85
 height = 3.2
 
-[node name="Boss" type="CharacterBody3D"]
+[node name="Boss" type="CharacterBody3D" unique_id=1885771661]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_script")
@@ -18,12 +18,13 @@ attack_range = 14.0
 attack_interval = 1.7
 notice_delay = 0.7
 turn_speed = 5.0
+voice_pitch = 0.7
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=327094626]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
 shape = SubResource("CapsuleShape3D_body")
 
-[node name="Visual" type="Node3D" parent="."]
+[node name="Visual" type="Node3D" parent="." unique_id=732457406]
 
-[node name="Model" parent="Visual" instance=ExtResource("2_model")]
+[node name="Model" parent="Visual" unique_id=782006633 instance=ExtResource("2_model")]
 transform = Transform3D(-1.55, 0, 0, 0, 1.55, 0, 0, 0, -1.55, 0, 0, 0)

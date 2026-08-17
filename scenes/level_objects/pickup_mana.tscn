@@ -1,23 +1,23 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://d4nqed72apr37"]
 
-[ext_resource type="Script" path="res://scripts/level_objects/pickup.gd" id="1_script"]
-[ext_resource type="PackedScene" path="res://assets/models/bottle_C_green/bottle_C_green.glb" id="2_model"]
+[ext_resource type="Script" uid="uid://gv4vqtpksp2i" path="res://scripts/level_objects/pickup.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://bhusk78a23tir" path="res://assets/models/bottle_C_green/bottle_C_green.glb" id="2_model"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_touch"]
 radius = 0.55
 
-[node name="PickupCells" type="Area3D"]
+[node name="PickupCells" type="Area3D" unique_id=695113828]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_script")
 type = 4
 amount = 20
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1952544267]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("SphereShape3D_touch")
 
-[node name="Visual" type="Node3D" parent="."]
+[node name="Visual" type="Node3D" parent="." unique_id=1917761388]
 
-[node name="Model" parent="Visual" instance=ExtResource("2_model")]
+[node name="Model" parent="Visual" unique_id=1856837909 instance=ExtResource("2_model")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

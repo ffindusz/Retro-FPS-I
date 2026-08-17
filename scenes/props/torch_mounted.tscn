@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://cg0q85rmartgj"]
 
-[ext_resource type="PackedScene" path="res://assets/models/torch_mounted/torch_mounted.glb" id="1_model"]
+[ext_resource type="PackedScene" uid="uid://v7vp6f73h0ph" path="res://assets/models/torch_mounted/torch_mounted.glb" id="1_model"]
 
 [sub_resource type="Animation" id="Animation_flicker"]
 resource_name = "flicker"
@@ -21,21 +21,19 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_flicker"]
 _data = {
-"flicker": SubResource("Animation_flicker")
+&"flicker": SubResource("Animation_flicker")
 }
 
-[node name="TorchMounted" type="Node3D"]
+[node name="TorchMounted" type="Node3D" unique_id=681581205]
 
-[node name="Model" parent="." instance=ExtResource("1_model")]
+[node name="Model" parent="." unique_id=636842514 instance=ExtResource("1_model")]
 
-[node name="Flame" type="OmniLight3D" parent="."]
+[node name="Flame" type="OmniLight3D" parent="." unique_id=123579058]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0.4)
 light_color = Color(1, 0.62, 0.28, 1)
 light_energy = 1.1
 omni_range = 6.0
 
-[node name="Flicker" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_flicker")
-}
-autoplay = "flicker"
+[node name="Flicker" type="AnimationPlayer" parent="." unique_id=52646158]
+libraries/ = SubResource("AnimationLibrary_flicker")
+autoplay = &"flicker"

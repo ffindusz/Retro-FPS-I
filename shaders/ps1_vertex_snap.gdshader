@@ -12,10 +12,12 @@ uniform vec2 uv_scale = vec2(1.0, 1.0);
 // changes, or the wobble grid stops lining up with the actual pixel grid.
 uniform float snap_resolution = 240.0;
 // 0 = normal perspective-correct UVs, 1 = full PS1 affine warping. Every
-// shipped material (assets/materials/*.tres) currently overrides this to
-// 0.0 — the wobble read as more legible without it — so this default of 1.0
-// only takes effect for a ShaderMaterial that doesn't set the parameter.
-uniform float affine_strength : hint_range(0.0, 1.0) = 1.0;
+// shipped material (assets/materials/*.tres) sets this to 0.0 — the wobble
+// read as more legible without it — so the default is 0.0 too: a material
+// created fresh in the Inspector then matches the rest of the game instead
+// of warping visibly differently. Turn it up per material for the full
+// PS1 texture swim.
+uniform float affine_strength : hint_range(0.0, 1.0) = 0.0;
 // 1 = ignore mesh UVs and project world-space planar UVs per face.
 // Used on CSG level geometry so texel density is uniform (1 tile per
 // 1/uv_scale meters) regardless of how CSG generates its UVs.

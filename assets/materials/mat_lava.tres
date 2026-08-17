@@ -1,10 +1,10 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ccnhudl4td3g0"]
 
-[ext_resource type="Texture2D" path="res://assets/textures/lava.png" id="1_tex"]
+[ext_resource type="Texture2D" uid="uid://ci01ionrne4c8" path="res://assets/textures/lava.png" id="1_tex"]
 
 [resource]
 shading_mode = 0
 albedo_texture = ExtResource("1_tex")
-uv1_triplanar = true
 uv1_scale = Vector3(0.3, 0.3, 0.3)
+uv1_triplanar = true
 texture_filter = 2

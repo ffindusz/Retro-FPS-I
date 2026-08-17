@@ -1,53 +1,52 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene format=3 uid="uid://srfotoac0j6q"]
 
-[ext_resource type="Script" path="res://scripts/weapons/projectile_weapon.gd" id="1_script"]
-[ext_resource type="PackedScene" path="res://assets/models/spellbook_open/spellbook_open.gltf" id="2_model"]
-[ext_resource type="PackedScene" path="res://scenes/weapons/projectile_tome_bolt.tscn" id="3_tome_bolt"]
-[ext_resource type="AudioStream" path="res://assets/audio/tome_pulse.wav" id="4_shot"]
-[ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="5_click"]
-
-[ext_resource type="Texture2D" path="res://assets/textures/muzzle_flash.png" id="9_flash_tex"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flash"]
-shading_mode = 0
-blend_mode = 1
-albedo_texture = ExtResource("9_flash_tex")
-albedo_color = Color(0.5, 0.95, 1, 1)
-billboard_mode = 1
+[ext_resource type="Script" uid="uid://ctl7i2og71ijb" path="res://scripts/weapons/projectile_weapon.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://c3gc2kckxcedi" path="res://assets/models/spellbook_open/spellbook_open.gltf" id="2_model"]
+[ext_resource type="PackedScene" uid="uid://douakgnn52vwx" path="res://scenes/weapons/projectile_tome_bolt.tscn" id="3_bolt"]
+[ext_resource type="AudioStream" uid="uid://d1u25foqpkuam" path="res://assets/audio/tome_pulse.wav" id="4_shot"]
+[ext_resource type="AudioStream" uid="uid://c80owpd04xbf1" path="res://assets/audio/click.wav" id="5_click"]
+[ext_resource type="Texture2D" uid="uid://br8sskif0017s" path="res://assets/textures/muzzle_flash.png" id="9_flash_tex"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_flash"]
 size = Vector2(0.34, 0.34)
 
-[node name="Tome" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flash"]
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(0.5, 0.95, 1, 1)
+albedo_texture = ExtResource("9_flash_tex")
+billboard_mode = 1
+
+[node name="Plasma" type="Node3D" unique_id=1685423187]
 script = ExtResource("1_script")
 weapon_label = "TOME"
 ammo_type = 4
 fire_interval = 0.11
 max_ammo = 60
-projectile_scene = ExtResource("3_tome_bolt")
+projectile_scene = ExtResource("3_bolt")
 
-[node name="Model" parent="." instance=ExtResource("2_model")]
+[node name="Model" parent="." unique_id=591176623 instance=ExtResource("2_model")]
 transform = Transform3D(0.3, 0, 0, 0, 0.172, 0.246, 0, -0.246, 0.172, 0.02, -0.17, -0.3)
 
-[node name="MuzzleFlash" type="Node3D" parent="."]
+[node name="MuzzleFlash" type="Node3D" parent="." unique_id=820498541]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, -0.5)
 visible = false
 
-[node name="Light" type="OmniLight3D" parent="MuzzleFlash"]
+[node name="Light" type="OmniLight3D" parent="MuzzleFlash" unique_id=2072015573]
 light_color = Color(0.5, 0.95, 1, 1)
 light_energy = 2.0
 omni_range = 3.5
 
-[node name="Quad" type="MeshInstance3D" parent="MuzzleFlash"]
+[node name="Quad" type="MeshInstance3D" parent="MuzzleFlash" unique_id=708132990]
 mesh = SubResource("QuadMesh_flash")
 surface_material_override/0 = SubResource("StandardMaterial3D_flash")
 
-[node name="ShotSound" type="AudioStreamPlayer" parent="."]
+[node name="ShotSound" type="AudioStreamPlayer" parent="." unique_id=439469696]
 stream = ExtResource("4_shot")
 volume_db = -9.0
 bus = &"SFX"
 
-[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+[node name="ClickSound" type="AudioStreamPlayer" parent="." unique_id=1151283588]
 stream = ExtResource("5_click")
 volume_db = -8.0
 bus = &"SFX"

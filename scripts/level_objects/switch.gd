@@ -1,3 +1,4 @@
+@tool
 class_name ShootableSwitch
 extends StaticBody3D
 ## Emerald crystal cluster, gated on combat: it starts as dull dark stone
@@ -14,13 +15,22 @@ const SWITCH_SOUND := preload("res://assets/audio/switch.wav")
 const DUD_SOUND := preload("res://assets/audio/click.wav")
 const ARM_SOUND := preload("res://assets/audio/crystal_arm.wav")
 
-const ALBEDO_LOCKED := Color(0.17, 0.19, 0.23)
-const ALBEDO_ARMED := Color(0.16, 0.45, 0.3)
-const ALBEDO_FLIPPED := Color(0.6, 0.95, 0.75)
-const EMISSION_ARMED := Color(0.12, 0.95, 0.45)
-const EMISSION_FLIPPED := Color(0.75, 1.0, 0.85)
-
+## The teleporter this crystal powers when shot. Without it the level can be
+## cleared but never left, so it is the one wiring mistake worth catching in
+## the editor -- see _get_configuration_warnings().
 @export var teleporter_path: NodePath
+
+@export_group("Crystal colors")
+@export var albedo_locked := Color(0.17, 0.19, 0.23)
+@export var albedo_armed := Color(0.16, 0.45, 0.3)
+@export var albedo_flipped := Color(0.6, 0.95, 0.75)
+@export var emission_armed := Color(0.12, 0.95, 0.45)
+@export var emission_flipped := Color(0.75, 1.0, 0.85)
+@export_group("")
+
+## How often the LOCKED state re-checks whether the level is clear. Coarse on
+## purpose; it only has to feel prompt, not be frame-exact.
+@export var poll_interval := 0.3
 
 var _state := State.LOCKED
 var _crystal_mat: StandardMaterial3D
@@ -33,26 +43,40 @@ var _poll := 0.0
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return  # @tool only for the wiring warning; keep the editor inert.
 	# All shards share one material; duplicate it so state changes stay
 	# per-instance.
 	var shards := _crystal.find_children("*", "MeshInstance3D", true, false)
 	_crystal_mat = shards[0].get_surface_override_material(0).duplicate()
 	for shard: MeshInstance3D in shards:
 		shard.set_surface_override_material(0, _crystal_mat)
-	_crystal_mat.albedo_color = ALBEDO_LOCKED
+	_crystal_mat.albedo_color = albedo_locked
 	_glow.visible = false
 	_light.visible = false
 
 
 func _process(delta: float) -> void:
-	if _state != State.LOCKED:
+	if Engine.is_editor_hint() or _state != State.LOCKED:
 		return
 	# Coarse poll; corpses leave the "enemies" group the moment they die.
 	_poll -= delta
 	if _poll <= 0.0:
-		_poll = 0.3
+		_poll = poll_interval
 		if get_tree().get_nodes_in_group("enemies").is_empty():
 			_arm()
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	if teleporter_path.is_empty():
+		return PackedStringArray([
+			"teleporter_path is unset: shooting this crystal will not open"
+			+ " anything, so the level cannot be finished."])
+	if get_node_or_null(teleporter_path) == null:
+		return PackedStringArray([
+			"teleporter_path points at nothing: \"%s\" does not resolve."
+			% teleporter_path])
+	return PackedStringArray()
 
 
 func take_damage(_amount: float, _from: Vector3 = Vector3.ZERO) -> void:
@@ -67,11 +91,11 @@ func take_damage(_amount: float, _from: Vector3 = Vector3.ZERO) -> void:
 
 func _arm() -> void:
 	_state = State.ARMED
-	_crystal_mat.albedo_color = ALBEDO_ARMED
+	_crystal_mat.albedo_color = albedo_armed
 	_crystal_mat.emission_enabled = true
-	_crystal_mat.emission = EMISSION_ARMED
+	_crystal_mat.emission = emission_armed
 	_crystal_mat.emission_energy_multiplier = 1.5
-	_light.light_color = EMISSION_ARMED
+	_light.light_color = emission_armed
 	_light.visible = true
 	_glow.visible = true
 	_pulse.play("pulse")
@@ -83,10 +107,10 @@ func _arm() -> void:
 func _flip() -> void:
 	_state = State.FLIPPED
 	_pulse.stop()
-	_crystal_mat.albedo_color = ALBEDO_FLIPPED
-	_crystal_mat.emission = EMISSION_FLIPPED
+	_crystal_mat.albedo_color = albedo_flipped
+	_crystal_mat.emission = emission_flipped
 	_crystal_mat.emission_energy_multiplier = 2.2
-	_light.light_color = EMISSION_FLIPPED
+	_light.light_color = emission_flipped
 	_light.light_energy = 1.5
 	_glow.scale = Vector3.ONE * 1.25
 	Fx.spawn_sound(self, global_position, SWITCH_SOUND, 2.0)

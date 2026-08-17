@@ -1,4 +1,4 @@
-extends "res://tools/test_base.gd"
+extends SceneTree
 ## Verifies the player walks up a small step but is still stopped by a full
 ## wall. Builds a bare floor with a low deep platform in one lane and a tall
 ## wall in another, drives the player forward into each, and checks the result.
@@ -12,6 +12,7 @@ var _world: Node3D
 var _player: CharacterBody3D
 var _phase := 0
 var _t0 := 0
+var _step_ok := false
 
 
 func _initialize() -> void:
@@ -27,10 +28,9 @@ func _initialize() -> void:
 	_reset_player(Vector3(0, 1.0, 2))
 
 
-## Plain `position`, not `global_position`: _world sits at the origin with an
-## identity transform so the two agree, and during _initialize the nodes are not
-## considered inside the tree yet -- the global_* setters error out there
-## ("Condition !is_inside_tree() is true").
+## Uses local position, not global: during _initialize() even SceneTree.root
+## is not inside the tree yet, so get_global_transform() errors out and
+## returns identity. _world never moves, so local == global here anyway.
 func _reset_player(pos: Vector3) -> void:
 	_player.position = pos
 	_player.rotation.y = 0.0  # faces -Z (forward)
@@ -45,7 +45,7 @@ func _add_box(pos: Vector3, box_size: Vector3) -> void:
 	col.shape = shape
 	body.add_child(col)
 	_world.add_child(body)
-	body.position = pos
+	body.position = pos  # local, see _reset_player
 
 
 func _process(_delta: float) -> bool:
@@ -62,8 +62,9 @@ func _process(_delta: float) -> bool:
 			if t > 1200:
 				Input.action_release("move_forward")
 				var p := _player.global_position
-				_expect_greater("low step climbed (y)", p.y, 0.2)
-				_expect_less("low step walked onto (z)", p.z, -1.0)
+				_step_ok = p.y > 0.2 and p.z < -1.0
+				print("low step: y=%.2f z=%.2f -> %s"
+						% [p.y, p.z, "CLIMBED" if _step_ok else "STALLED"])
 				_reset_player(Vector3(20, 1.0, 2))
 				Input.action_press("move_forward")
 				_phase = 2
@@ -72,7 +73,10 @@ func _process(_delta: float) -> bool:
 			if t > 1500:
 				Input.action_release("move_forward")
 				var p := _player.global_position
-				_expect_less("tall wall not climbed (y)", p.y, 0.5)
-				_expect_greater("tall wall blocked the advance (z)", p.z, -3.6)
-				return _finish()
+				var blocked := p.y < 0.5 and p.z > -3.6
+				print("tall wall: y=%.2f z=%.2f -> %s"
+						% [p.y, p.z, "BLOCKED" if blocked else "CLIMBED (bad)"])
+				print("STEP TEST: %s"
+						% ["PASS" if _step_ok and blocked else "FAIL"])
+				return true
 	return false

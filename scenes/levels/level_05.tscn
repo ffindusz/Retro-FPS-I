@@ -1,521 +1,577 @@
-[gd_scene load_steps=29 format=3]
+[gd_scene format=3 uid="uid://cycyssx1ulq7e"]
 
-[ext_resource type="Material" path="res://assets/materials/mat_stone.tres" id="1_stone"]
-[ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
-[ext_resource type="Material" path="res://assets/materials/mat_wall.tres" id="3_wall"]
-[ext_resource type="PackedScene" path="res://scenes/props/box.tscn" id="44_box"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_grunt.tscn" id="5_grunt"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_spitter.tscn" id="6_spitter"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_rogue.tscn" id="7_rogue"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/switch.tscn" id="8_switch"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/teleporter.tscn" id="9_teleporter"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/secret_area.tscn" id="10_secret"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_potion.tscn" id="11_health"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_crystals.tscn" id="12_bullets"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_quarrels.tscn" id="13_quarrels"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_embers.tscn" id="14_embers"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_mana.tscn" id="15_cells"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/barrel.tscn" id="16_barrel"]
-[ext_resource type="PackedScene" path="res://scenes/props/torch_mounted.tscn" id="17_torch"]
-[ext_resource type="PackedScene" path="res://scenes/props/torch_unlit.tscn" id="18_torch_unlit"]
-[ext_resource type="PackedScene" path="res://scenes/props/banner_red.tscn" id="19_banner_red"]
-[ext_resource type="PackedScene" path="res://scenes/props/banner_blue.tscn" id="20_banner_blue"]
-[ext_resource type="PackedScene" path="res://scenes/props/pillar_decorated.tscn" id="21_pillar_dec"]
-[ext_resource type="PackedScene" path="res://scenes/props/crates_stacked.tscn" id="22_crates"]
-[ext_resource type="PackedScene" path="res://scenes/props/rubble_half.tscn" id="23_rubble_half"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/rubble_blockade.tscn" id="24_rubble_blockade"]
-[ext_resource type="PackedScene" path="res://scenes/props/remains_prop.tscn" id="25_remains"]
-[ext_resource type="PackedScene" path="res://scenes/props/dust_motes.tscn" id="26_dust"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_gold.tscn" id="27_gold"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/shootable_chest.tscn" id="28_chest"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/secret_door.tscn" id="29_door"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/secret_lever.tscn" id="30_lever"]
+[ext_resource type="Material" uid="uid://cj5agp183d14c" path="res://assets/materials/mat_stone.tres" id="1_stone"]
+[ext_resource type="Material" uid="uid://bjenlij0mum81" path="res://assets/materials/mat_floor.tres" id="2_floor"]
+[ext_resource type="Material" uid="uid://de0uifvgk2lr7" path="res://assets/materials/mat_wall.tres" id="3_wall"]
+[ext_resource type="PackedScene" uid="uid://dbvkhofjimn0d" path="res://scenes/enemies/enemy_grunt.tscn" id="5_grunt"]
+[ext_resource type="PackedScene" uid="uid://ily2yc62crjo" path="res://scenes/enemies/enemy_spitter.tscn" id="6_spitter"]
+[ext_resource type="PackedScene" uid="uid://cmajw6mkbr1kb" path="res://scenes/enemies/enemy_rogue.tscn" id="7_rogue"]
+[ext_resource type="PackedScene" uid="uid://c4hxka6hh4tgm" path="res://scenes/level_objects/switch.tscn" id="8_switch"]
+[ext_resource type="PackedScene" uid="uid://b1rirpfqr5cp0" path="res://scenes/level_objects/teleporter.tscn" id="9_teleporter"]
+[ext_resource type="PackedScene" uid="uid://c6635ko8lxquk" path="res://scenes/level_objects/secret_area.tscn" id="10_secret"]
+[ext_resource type="PackedScene" uid="uid://c4w5gmsdttg8" path="res://scenes/level_objects/pickup_potion.tscn" id="11_health"]
+[ext_resource type="PackedScene" uid="uid://c5b218yktxcmt" path="res://scenes/level_objects/pickup_crystals.tscn" id="12_bullets"]
+[ext_resource type="PackedScene" uid="uid://cex7mrd5iiyfg" path="res://scenes/level_objects/pickup_quarrels.tscn" id="13_quarrels"]
+[ext_resource type="PackedScene" uid="uid://bp65ced70v7s1" path="res://scenes/level_objects/pickup_embers.tscn" id="14_embers"]
+[ext_resource type="PackedScene" uid="uid://d4nqed72apr37" path="res://scenes/level_objects/pickup_mana.tscn" id="15_cells"]
+[ext_resource type="PackedScene" uid="uid://dnfmqhdoe7mx6" path="res://scenes/level_objects/barrel.tscn" id="16_barrel"]
+[ext_resource type="PackedScene" uid="uid://cg0q85rmartgj" path="res://scenes/props/torch_mounted.tscn" id="17_torch"]
+[ext_resource type="PackedScene" uid="uid://ceegoklnyv8sk" path="res://scenes/props/torch_unlit.tscn" id="18_torch_unlit"]
+[ext_resource type="PackedScene" uid="uid://dloyfma3kitfj" path="res://scenes/props/banner_red.tscn" id="19_banner_red"]
+[ext_resource type="PackedScene" uid="uid://ciuv5jhwuw4c2" path="res://scenes/props/banner_blue.tscn" id="20_banner_blue"]
+[ext_resource type="PackedScene" uid="uid://dcykufcv3i7c4" path="res://scenes/props/pillar_decorated.tscn" id="21_pillar_dec"]
+[ext_resource type="PackedScene" uid="uid://kur4axmba685" path="res://scenes/props/crates_stacked.tscn" id="22_crates"]
+[ext_resource type="PackedScene" uid="uid://d1o38vmf62vlq" path="res://scenes/props/rubble_half.tscn" id="23_rubble_half"]
+[ext_resource type="PackedScene" uid="uid://dwfq7sl73ox4y" path="res://scenes/level_objects/rubble_blockade.tscn" id="24_rubble_blockade"]
+[ext_resource type="PackedScene" uid="uid://bsa3xiy0imyo8" path="res://scenes/props/remains_prop.tscn" id="25_remains"]
+[ext_resource type="PackedScene" uid="uid://dqdi76jc4clf0" path="res://scenes/props/dust_motes.tscn" id="26_dust"]
+[ext_resource type="PackedScene" uid="uid://bt7u6o7tty2gv" path="res://scenes/level_objects/pickup_gold.tscn" id="27_gold"]
+[ext_resource type="PackedScene" uid="uid://uyul8lb8e6rs" path="res://scenes/level_objects/shootable_chest.tscn" id="28_chest"]
+[ext_resource type="PackedScene" uid="uid://c7ldqxgdjspag" path="res://scenes/level_objects/secret_door.tscn" id="29_door"]
+[ext_resource type="PackedScene" uid="uid://cebbx5in4mu0a" path="res://scenes/level_objects/secret_lever.tscn" id="30_lever"]
+[ext_resource type="PackedScene" uid="uid://thg5uy2vm4sm" path="res://scenes/props/box.tscn" id="44_box"]
+[ext_resource type="Material" uid="uid://fypkf18eam4m" path="res://assets/materials/mat_dirt.tres" id="90_ceil"]
+[ext_resource type="Script" uid="uid://djut4agw0ji75" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
-[node name="Level05" type="Node3D"]
+[node name="Level05" type="Node3D" unique_id=2116621024]
+script = ExtResource("99_levelroot")
 
-[node name="LevelCSG" type="CSGCombiner3D" parent="."]
+[node name="LevelCSG" type="CSGCombiner3D" parent="." unique_id=206447087]
 use_collision = true
 
-[node name="ShellArrival" type="CSGBox3D" parent="LevelCSG"]
+[node name="ShellArrival" type="CSGBox3D" parent="LevelCSG" unique_id=501999940]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 16)
 size = Vector3(12, 5, 12)
 material = ExtResource("1_stone")
 
-[node name="ShellCorr1" type="CSGBox3D" parent="LevelCSG"]
+[node name="ShellCorr1" type="CSGBox3D" parent="LevelCSG" unique_id=1913016493]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.5)
 size = Vector3(5, 4, 7)
 material = ExtResource("1_stone")
 
-[node name="ShellHall" type="CSGBox3D" parent="LevelCSG"]
+[node name="ShellHall" type="CSGBox3D" parent="LevelCSG" unique_id=74228948]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.25, 0)
 size = Vector3(22, 7.5, 14)
 material = ExtResource("1_stone")
 
-[node name="ShellCellN" type="CSGBox3D" parent="LevelCSG"]
+[node name="ShellCellN" type="CSGBox3D" parent="LevelCSG" unique_id=61058443]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 1.75, -3)
 size = Vector3(6, 4.5, 6)
 material = ExtResource("1_stone")
 
-[node name="ShellCellS" type="CSGBox3D" parent="LevelCSG"]
+[node name="ShellCellS" type="CSGBox3D" parent="LevelCSG" unique_id=1322226443]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 1.75, 3)
 size = Vector3(6, 4.5, 6)
 material = ExtResource("1_stone")
 
-[node name="ShellCorr2" type="CSGBox3D" parent="LevelCSG"]
+[node name="ShellCorr2" type="CSGBox3D" parent="LevelCSG" unique_id=1265559594]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 1.5, 0)
 size = Vector3(6, 4, 5)
 material = ExtResource("1_stone")
 
-[node name="ShellCata" type="CSGBox3D" parent="LevelCSG"]
+[node name="ShellCata" type="CSGBox3D" parent="LevelCSG" unique_id=189676918]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1.85, 1)
 size = Vector3(12, 4.7, 14)
 material = ExtResource("1_stone")
 
-[node name="ShellNook" type="CSGBox3D" parent="LevelCSG"]
+[node name="ShellNook" type="CSGBox3D" parent="LevelCSG" unique_id=1708049724]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 1.5, 4)
 size = Vector3(5, 4, 5)
 material = ExtResource("1_stone")
 
-[node name="ShellCorr3" type="CSGBox3D" parent="LevelCSG"]
+[node name="ShellCorr3" type="CSGBox3D" parent="LevelCSG" unique_id=1479936514]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1.5, -8)
 size = Vector3(5, 4, 8)
 material = ExtResource("1_stone")
 
-[node name="ShellTreasury" type="CSGBox3D" parent="LevelCSG"]
+[node name="ShellTreasury" type="CSGBox3D" parent="LevelCSG" unique_id=1872787931]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 2.5, -16)
 size = Vector3(12, 6, 12)
 material = ExtResource("1_stone")
 
-[node name="QuarrelSecret" type="CSGBox3D" parent="LevelCSG"]
+[node name="QuarrelSecret" type="CSGBox3D" parent="LevelCSG" unique_id=966896636]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 25.5)
 size = Vector3(9, 5, 7)
 material = ExtResource("1_stone")
 
-[node name="CutArrival" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutArrival" type="CSGBox3D" parent="LevelCSG" unique_id=145407259]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 16)
 operation = 2
 size = Vector3(10, 3.7, 10)
 material = ExtResource("1_stone")
 
-[node name="CutCorr1" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutCorr1" type="CSGBox3D" parent="LevelCSG" unique_id=1925102363]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 8.5)
 operation = 2
 size = Vector3(3, 2.7, 7)
 material = ExtResource("1_stone")
 
-[node name="CutHall" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutHall" type="CSGBox3D" parent="LevelCSG" unique_id=1303030164]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 operation = 2
 size = Vector3(20, 6, 12)
 material = ExtResource("1_stone")
 
-[node name="CutCellN" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutCellN" type="CSGBox3D" parent="LevelCSG" unique_id=657855018]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.6, -3)
 operation = 2
 size = Vector3(5, 3.2, 4)
 material = ExtResource("1_stone")
 
-[node name="CutCellS" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutCellS" type="CSGBox3D" parent="LevelCSG" unique_id=748204171]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.6, 3)
 operation = 2
 size = Vector3(5, 3.2, 4)
 material = ExtResource("1_stone")
 
-[node name="CutCorr2" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutCorr2" type="CSGBox3D" parent="LevelCSG" unique_id=1364149414]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 1.35, 0)
 operation = 2
 size = Vector3(6, 2.7, 3)
 material = ExtResource("1_stone")
 
-[node name="CutCata" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutCata" type="CSGBox3D" parent="LevelCSG" unique_id=1677917144]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1.7, 1)
 operation = 2
 size = Vector3(10, 3.4, 12)
 material = ExtResource("1_stone")
 
-[node name="CutNook" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutNook" type="CSGBox3D" parent="LevelCSG" unique_id=1807303986]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.5, 1.4, 4)
 operation = 2
 size = Vector3(5, 2.8, 3)
 material = ExtResource("1_stone")
 
-[node name="CutCorr3" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutCorr3" type="CSGBox3D" parent="LevelCSG" unique_id=864556771]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1.35, -8)
 operation = 2
 size = Vector3(3, 2.7, 8)
 material = ExtResource("1_stone")
 
-[node name="CutTreasury" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutTreasury" type="CSGBox3D" parent="LevelCSG" unique_id=317607502]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 2.35, -16)
 operation = 2
 size = Vector3(10, 4.7, 10)
 material = ExtResource("1_stone")
 
-[node name="CutSecret" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutSecret" type="CSGBox3D" parent="LevelCSG" unique_id=802720822]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 25.8)
 operation = 2
 size = Vector3(6, 3.7, 5.6)
 material = ExtResource("1_stone")
 
-[node name="CutSecretDoor" type="CSGBox3D" parent="LevelCSG"]
+[node name="CutSecretDoor" type="CSGBox3D" parent="LevelCSG" unique_id=1603300380]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 21.9)
 operation = 2
 size = Vector3(2.4, 2.9, 2.4)
 material = ExtResource("1_stone")
 
-[node name="FloorArrival" type="CSGBox3D" parent="LevelCSG"]
+[node name="FloorArrival" type="CSGBox3D" parent="LevelCSG" unique_id=538007031]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 16)
 size = Vector3(10.1, 0.25, 10.1)
 material = ExtResource("2_floor")
 
-[node name="FloorCorr1" type="CSGBox3D" parent="LevelCSG"]
+[node name="FloorCorr1" type="CSGBox3D" parent="LevelCSG" unique_id=1480228057]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08, 8.5)
 size = Vector3(3.1, 0.22, 7)
 material = ExtResource("2_floor")
 
-[node name="FloorHall" type="CSGBox3D" parent="LevelCSG"]
+[node name="FloorHall" type="CSGBox3D" parent="LevelCSG" unique_id=1111149167]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 0)
 size = Vector3(20.1, 0.25, 12.1)
 material = ExtResource("2_floor")
 
-[node name="FloorCellN" type="CSGBox3D" parent="LevelCSG"]
+[node name="FloorCellN" type="CSGBox3D" parent="LevelCSG" unique_id=1723773289]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -0.08, -3)
 size = Vector3(5.1, 0.22, 4.1)
 material = ExtResource("2_floor")
 
-[node name="FloorCellS" type="CSGBox3D" parent="LevelCSG"]
+[node name="FloorCellS" type="CSGBox3D" parent="LevelCSG" unique_id=49076566]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -0.08, 3)
 size = Vector3(5.1, 0.22, 4.1)
 material = ExtResource("2_floor")
 
-[node name="FloorCorr2" type="CSGBox3D" parent="LevelCSG"]
+[node name="FloorCorr2" type="CSGBox3D" parent="LevelCSG" unique_id=1811019446]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, -0.08, 0)
 size = Vector3(6.1, 0.22, 3.1)
 material = ExtResource("2_floor")
 
-[node name="FloorCata" type="CSGBox3D" parent="LevelCSG"]
+[node name="FloorCata" type="CSGBox3D" parent="LevelCSG" unique_id=841569904]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, -0.075, 1)
 size = Vector3(10.1, 0.25, 12.1)
 material = ExtResource("2_floor")
 
-[node name="FloorNook" type="CSGBox3D" parent="LevelCSG"]
+[node name="FloorNook" type="CSGBox3D" parent="LevelCSG" unique_id=37989035]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.5, -0.08, 4)
 size = Vector3(5.1, 0.22, 3.1)
 material = ExtResource("2_floor")
 
-[node name="FloorCorr3" type="CSGBox3D" parent="LevelCSG"]
+[node name="FloorCorr3" type="CSGBox3D" parent="LevelCSG" unique_id=1378380623]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, -0.08, -8)
 size = Vector3(3.1, 0.22, 8.1)
 material = ExtResource("2_floor")
 
-[node name="FloorTreasury" type="CSGBox3D" parent="LevelCSG"]
+[node name="FloorTreasury" type="CSGBox3D" parent="LevelCSG" unique_id=1113313757]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, -0.075, -16)
 size = Vector3(10.1, 0.25, 10.1)
 material = ExtResource("2_floor")
 
-[node name="FloorSecret" type="CSGBox3D" parent="LevelCSG"]
+[node name="FloorSecret" type="CSGBox3D" parent="LevelCSG" unique_id=128295258]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 25.8)
 size = Vector3(6.1, 0.25, 5.7)
 material = ExtResource("2_floor")
 
-[node name="PillarHall1" type="CSGBox3D" parent="LevelCSG"]
+[node name="PillarHall1" type="CSGBox3D" parent="LevelCSG" unique_id=1678604983]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3, -3)
 size = Vector3(1.2, 6, 1.2)
 material = ExtResource("3_wall")
 
-[node name="PillarHall2" type="CSGBox3D" parent="LevelCSG"]
+[node name="PillarHall2" type="CSGBox3D" parent="LevelCSG" unique_id=751438618]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, -3)
 size = Vector3(1.2, 6, 1.2)
 material = ExtResource("3_wall")
 
-[node name="PillarHall3" type="CSGBox3D" parent="LevelCSG"]
+[node name="PillarHall3" type="CSGBox3D" parent="LevelCSG" unique_id=1358739377]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3, 3)
 size = Vector3(1.2, 6, 1.2)
 material = ExtResource("3_wall")
 
-[node name="PillarHall4" type="CSGBox3D" parent="LevelCSG"]
+[node name="PillarHall4" type="CSGBox3D" parent="LevelCSG" unique_id=1276916549]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, 3)
 size = Vector3(1.2, 6, 1.2)
 material = ExtResource("3_wall")
 
-[node name="Switch" parent="." instance=ExtResource("8_switch")]
+[node name="CeilArrival" type="CSGBox3D" parent="LevelCSG" unique_id=1002055989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.775, 16)
+size = Vector3(10, 0.25, 10)
+material = ExtResource("90_ceil")
+
+[node name="CeilCorr1" type="CSGBox3D" parent="LevelCSG" unique_id=1672874430]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.775, 8.5)
+size = Vector3(3, 0.25, 7)
+material = ExtResource("90_ceil")
+
+[node name="CeilHall" type="CSGBox3D" parent="LevelCSG" unique_id=140748081]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.075, 0)
+size = Vector3(20, 0.25, 12)
+material = ExtResource("90_ceil")
+
+[node name="CeilCellN" type="CSGBox3D" parent="LevelCSG" unique_id=1044866858]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 3.275, -3)
+size = Vector3(5, 0.25, 4)
+material = ExtResource("90_ceil")
+
+[node name="CeilCellS" type="CSGBox3D" parent="LevelCSG" unique_id=283958435]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 3.275, 3)
+size = Vector3(5, 0.25, 4)
+material = ExtResource("90_ceil")
+
+[node name="CeilCorr2" type="CSGBox3D" parent="LevelCSG" unique_id=1434528717]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2.775, 0)
+size = Vector3(6, 0.25, 3)
+material = ExtResource("90_ceil")
+
+[node name="CeilCata" type="CSGBox3D" parent="LevelCSG" unique_id=431981821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 3.475, 1)
+size = Vector3(10, 0.25, 12)
+material = ExtResource("90_ceil")
+
+[node name="CeilNook" type="CSGBox3D" parent="LevelCSG" unique_id=995115509]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.5, 2.875, 4)
+size = Vector3(5, 0.25, 3)
+material = ExtResource("90_ceil")
+
+[node name="CeilCorr3" type="CSGBox3D" parent="LevelCSG" unique_id=1859398388]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 2.775, -8)
+size = Vector3(3, 0.25, 8)
+material = ExtResource("90_ceil")
+
+[node name="CeilTreasury" type="CSGBox3D" parent="LevelCSG" unique_id=821507983]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 4.775, -16)
+size = Vector3(10, 0.25, 10)
+material = ExtResource("90_ceil")
+
+[node name="CeilSecret" type="CSGBox3D" parent="LevelCSG" unique_id=475080005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.775, 25.8)
+size = Vector3(6, 0.25, 5.6)
+material = ExtResource("90_ceil")
+
+[node name="Switch" parent="." unique_id=1779234742 instance=ExtResource("8_switch")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -24.02, 1.3, -16)
 teleporter_path = NodePath("../Teleporter")
 
-[node name="Teleporter" parent="." instance=ExtResource("9_teleporter")]
+[node name="Teleporter" parent="." unique_id=863726449 instance=ExtResource("9_teleporter")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -16)
 
-[node name="Enemies" type="Node3D" parent="."]
+[node name="Enemies" type="Node3D" parent="." unique_id=511468143]
 
-[node name="Grunt1" parent="Enemies" instance=ExtResource("5_grunt")]
+[node name="Grunt1" parent="Enemies" unique_id=2000911509 instance=ExtResource("5_grunt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.1, 0)
 
-[node name="Grunt2" parent="Enemies" instance=ExtResource("5_grunt")]
+[node name="Grunt2" parent="Enemies" unique_id=1618176333 instance=ExtResource("5_grunt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.1, 2)
 
-[node name="Grunt3" parent="Enemies" instance=ExtResource("5_grunt")]
+[node name="Grunt3" parent="Enemies" unique_id=154751990 instance=ExtResource("5_grunt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.1, 3)
 
-[node name="Grunt4" parent="Enemies" instance=ExtResource("5_grunt")]
+[node name="Grunt4" parent="Enemies" unique_id=1623542163 instance=ExtResource("5_grunt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0.1, -14)
 
-[node name="Rogue1" parent="Enemies" instance=ExtResource("7_rogue")]
+[node name="Rogue1" parent="Enemies" unique_id=433816665 instance=ExtResource("7_rogue")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -4)
 
-[node name="Rogue2" parent="Enemies" instance=ExtResource("7_rogue")]
+[node name="Rogue2" parent="Enemies" unique_id=743725309 instance=ExtResource("7_rogue")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0.1, 4)
 
-[node name="Rogue3" parent="Enemies" instance=ExtResource("7_rogue")]
+[node name="Rogue3" parent="Enemies" unique_id=1498444372 instance=ExtResource("7_rogue")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.5, 0.1, -2.5)
 
-[node name="Spitter1" parent="Enemies" instance=ExtResource("6_spitter")]
+[node name="Spitter1" parent="Enemies" unique_id=1002988045 instance=ExtResource("6_spitter")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0.1, -4)
 
-[node name="Spitter2" parent="Enemies" instance=ExtResource("6_spitter")]
+[node name="Spitter2" parent="Enemies" unique_id=215459046 instance=ExtResource("6_spitter")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.5, 0.1, -18.5)
 
-[node name="Pickups" type="Node3D" parent="."]
+[node name="Pickups" type="Node3D" parent="." unique_id=1287329206]
 
-[node name="HealthArrival" parent="Pickups" instance=ExtResource("11_health")]
+[node name="HealthArrival" parent="Pickups" unique_id=108563436 instance=ExtResource("11_health")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.05, 18.5)
 
-[node name="QuarrelsCorr1" parent="Pickups" instance=ExtResource("13_quarrels")]
+[node name="QuarrelsCorr1" parent="Pickups" unique_id=1534572332 instance=ExtResource("13_quarrels")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 8.5)
 
-[node name="BulletsHall" parent="Pickups" instance=ExtResource("12_bullets")]
+[node name="BulletsHall" parent="Pickups" unique_id=1835550385 instance=ExtResource("12_bullets")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.05, 4)
 
-[node name="QuarrelsHall" parent="Pickups" instance=ExtResource("13_quarrels")]
+[node name="QuarrelsHall" parent="Pickups" unique_id=1534391277 instance=ExtResource("13_quarrels")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.05, -4.5)
 
-[node name="CellsCellN" parent="Pickups" instance=ExtResource("15_cells")]
+[node name="CellsCellN" parent="Pickups" unique_id=1162094762 instance=ExtResource("15_cells")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2, 0.05, -3.5)
 
-[node name="BulletsCrateTop" parent="Pickups" instance=ExtResource("12_bullets")]
+[node name="BulletsCrateTop" parent="Pickups" unique_id=360122815 instance=ExtResource("12_bullets")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.2, 2.45, -5.05)
 
-[node name="HealthCata" parent="Pickups" instance=ExtResource("11_health")]
+[node name="HealthCata" parent="Pickups" unique_id=654957057 instance=ExtResource("11_health")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0.05, 6)
 
-[node name="BulletsCata" parent="Pickups" instance=ExtResource("12_bullets")]
+[node name="BulletsCata" parent="Pickups" unique_id=10225028 instance=ExtResource("12_bullets")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.05, -3)
 
-[node name="HealthNook" parent="Pickups" instance=ExtResource("11_health")]
+[node name="HealthNook" parent="Pickups" unique_id=1164352435 instance=ExtResource("11_health")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.5, 0.05, 4)
 
-[node name="EmbersNook" parent="Pickups" instance=ExtResource("14_embers")]
+[node name="EmbersNook" parent="Pickups" unique_id=754818033 instance=ExtResource("14_embers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.2, 0.05, 4.6)
 
-[node name="GoldNook1" parent="Pickups" instance=ExtResource("27_gold")]
+[node name="GoldNook1" parent="Pickups" unique_id=2136547041 instance=ExtResource("27_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.3, 0.4, 3.2)
 
-[node name="GoldNook2" parent="Pickups" instance=ExtResource("27_gold")]
+[node name="GoldNook2" parent="Pickups" unique_id=1686556092 instance=ExtResource("27_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.6, 0.4, 4.6)
 
-[node name="GoldNook3" parent="Pickups" instance=ExtResource("27_gold")]
+[node name="GoldNook3" parent="Pickups" unique_id=1814606918 instance=ExtResource("27_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.8, 0.4, 5.4)
 
-[node name="GoldNook4" parent="Pickups" instance=ExtResource("27_gold")]
+[node name="GoldNook4" parent="Pickups" unique_id=1738602969 instance=ExtResource("27_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.6, 0.4, 3.2)
 
-[node name="GoldNook5" parent="Pickups" instance=ExtResource("27_gold")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.4, 0.4, 4.0)
+[node name="GoldNook5" parent="Pickups" unique_id=2033443443 instance=ExtResource("27_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.4, 0.4, 4)
 
-[node name="GoldVault1" parent="Pickups" instance=ExtResource("27_gold")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 0.4, 25.0)
+[node name="GoldVault1" parent="Pickups" unique_id=1894317465 instance=ExtResource("27_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 0.4, 25)
 
-[node name="GoldVault2" parent="Pickups" instance=ExtResource("27_gold")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, 0.4, 25.0)
+[node name="GoldVault2" parent="Pickups" unique_id=58229039 instance=ExtResource("27_gold")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, 0.4, 25)
 
-[node name="GoldVault3" parent="Pickups" instance=ExtResource("27_gold")]
+[node name="GoldVault3" parent="Pickups" unique_id=1700813608 instance=ExtResource("27_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 26.8)
 
-[node name="GoldVault4" parent="Pickups" instance=ExtResource("27_gold")]
+[node name="GoldVault4" parent="Pickups" unique_id=950823258 instance=ExtResource("27_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.4, 27.5)
 
-[node name="QuarrelsTreasury" parent="Pickups" instance=ExtResource("13_quarrels")]
+[node name="QuarrelsTreasury" parent="Pickups" unique_id=25729022 instance=ExtResource("13_quarrels")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 0.05, -12.5)
 
-[node name="CellsTreasury" parent="Pickups" instance=ExtResource("15_cells")]
+[node name="CellsTreasury" parent="Pickups" unique_id=1619672498 instance=ExtResource("15_cells")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5, 0.05, -19.5)
 
-[node name="Barrels" type="Node3D" parent="."]
+[node name="Barrels" type="Node3D" parent="." unique_id=1140878230]
 
-[node name="Barrel1" parent="Barrels" instance=ExtResource("16_barrel")]
+[node name="Barrel1" parent="Barrels" unique_id=1928264067 instance=ExtResource("16_barrel")]
 transform = Transform3D(0.766, 0, 0.6428, 0, 1, 0, -0.6428, 0, 0.766, 4.2, 0, 13)
 
-[node name="Barrel2" parent="Barrels" instance=ExtResource("16_barrel")]
+[node name="Barrel2" parent="Barrels" unique_id=1400530437 instance=ExtResource("16_barrel")]
 transform = Transform3D(-0.8338, 0, 0.3888, 0, 0.92, 0, -0.3888, 0, -0.8338, 13.9, 0, 4.3)
 
-[node name="Barrel3" parent="Barrels" instance=ExtResource("16_barrel")]
+[node name="Barrel3" parent="Barrels" unique_id=1653236978 instance=ExtResource("16_barrel")]
 transform = Transform3D(0.09413, 0, -1.076, 0, 1.08, 0, 1.076, 0, 0.09413, -22.7, 0, -19.3)
 
-[node name="Secrets" type="Node3D" parent="."]
+[node name="Secrets" type="Node3D" parent="." unique_id=1562263255]
 
-[node name="SecretNook" parent="Secrets" instance=ExtResource("10_secret")]
+[node name="SecretNook" parent="Secrets" unique_id=54482892 instance=ExtResource("10_secret")]
 transform = Transform3D(2.5, 0, 0, 0, 1.2, 0, 0, 0, 2, -25.5, 1, 4)
 
-[node name="SecretVaultArea" parent="Secrets" instance=ExtResource("10_secret")]
+[node name="SecretVaultArea" parent="Secrets" unique_id=495948624 instance=ExtResource("10_secret")]
 transform = Transform3D(2.5, 0, 0, 0, 1.2, 0, 0, 0, 2, 0, 1, 25.8)
 
-[node name="SecretCrateTop" parent="Secrets" instance=ExtResource("10_secret")]
+[node name="SecretCrateTop" parent="Secrets" unique_id=1871886545 instance=ExtResource("10_secret")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.2, 3, -5.05)
 
-[node name="Props" type="Node3D" parent="."]
+[node name="Props" type="Node3D" parent="." unique_id=1190475244]
 
-[node name="BoxHall1" parent="Props" instance=ExtResource("44_box")]
+[node name="BoxHall1" parent="Props" unique_id=988817326 instance=ExtResource("44_box")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.8, 0, -4.8)
 
-[node name="BoxHall2" parent="Props" instance=ExtResource("44_box")]
+[node name="BoxHall2" parent="Props" unique_id=1494188343 instance=ExtResource("44_box")]
 transform = Transform3D(0.906, 0, 0.423, 0, 1, 0, -0.423, 0, 0.906, -7.5, 0, -5.3)
 
-[node name="BoxHall3" parent="Props" instance=ExtResource("44_box")]
+[node name="BoxHall3" parent="Props" unique_id=1507993397 instance=ExtResource("44_box")]
 transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, -8.2, 1.19, -5.05)
 
-[node name="BannerRedArrival1" parent="Props" instance=ExtResource("19_banner_red")]
+[node name="BannerRedArrival1" parent="Props" unique_id=1698022527 instance=ExtResource("19_banner_red")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -3, 0, 20.98)
 
-[node name="BannerRedArrival2" parent="Props" instance=ExtResource("19_banner_red")]
+[node name="BannerRedArrival2" parent="Props" unique_id=262552160 instance=ExtResource("19_banner_red")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 3, 0, 20.98)
 
-[node name="TorchArrivalW" parent="Props" instance=ExtResource("17_torch")]
+[node name="TorchArrivalW" parent="Props" unique_id=151546653 instance=ExtResource("17_torch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2.2, 11.02)
 
-[node name="TorchArrivalE" parent="Props" instance=ExtResource("17_torch")]
+[node name="TorchArrivalE" parent="Props" unique_id=2020689996 instance=ExtResource("17_torch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.2, 11.02)
 
-[node name="RemainsArrival" parent="Props" instance=ExtResource("25_remains")]
+[node name="RemainsArrival" parent="Props" unique_id=1824723623 instance=ExtResource("25_remains")]
 transform = Transform3D(-0.671, 0, -0.742, 0, 1, 0, 0.742, 0, -0.671, 1.6, 0, 17.4)
 
-[node name="CratesArrival" parent="Props" instance=ExtResource("22_crates")]
+[node name="CratesArrival" parent="Props" unique_id=68106653 instance=ExtResource("22_crates")]
 transform = Transform3D(0.94, 0, 0.342, 0, 1, 0, -0.342, 0, 0.94, -3.6, 0, 12.6)
 
-[node name="TorchHallSW" parent="Props" instance=ExtResource("17_torch")]
+[node name="TorchHallSW" parent="Props" unique_id=574979607 instance=ExtResource("17_torch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 2.2, -5.98)
 
-[node name="TorchHallSE" parent="Props" instance=ExtResource("17_torch")]
+[node name="TorchHallSE" parent="Props" unique_id=250723575 instance=ExtResource("17_torch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 2.2, -5.98)
 
-[node name="TorchHallNW" parent="Props" instance=ExtResource("17_torch")]
+[node name="TorchHallNW" parent="Props" unique_id=99320584 instance=ExtResource("17_torch")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -6.5, 2.2, 5.98)
 
-[node name="TorchHallNE" parent="Props" instance=ExtResource("17_torch")]
+[node name="TorchHallNE" parent="Props" unique_id=1122301973 instance=ExtResource("17_torch")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 6.5, 2.2, 5.98)
 
-[node name="TorchCellS" parent="Props" instance=ExtResource("17_torch")]
+[node name="TorchCellS" parent="Props" unique_id=984706577 instance=ExtResource("17_torch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2.2, 1.02)
 
-[node name="BannerBlueHall1" parent="Props" instance=ExtResource("20_banner_blue")]
+[node name="BannerBlueHall1" parent="Props" unique_id=1738882823 instance=ExtResource("20_banner_blue")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -9.98, 0, -2)
 
-[node name="BannerBlueHall2" parent="Props" instance=ExtResource("20_banner_blue")]
+[node name="BannerBlueHall2" parent="Props" unique_id=482025469 instance=ExtResource("20_banner_blue")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -9.98, 0, 2)
 
-[node name="PillarDecHall1" parent="Props" instance=ExtResource("21_pillar_dec")]
+[node name="PillarDecHall1" parent="Props" unique_id=1524810749 instance=ExtResource("21_pillar_dec")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, 5)
 
-[node name="PillarDecHall2" parent="Props" instance=ExtResource("21_pillar_dec")]
+[node name="PillarDecHall2" parent="Props" unique_id=144955564 instance=ExtResource("21_pillar_dec")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 5)
 
-[node name="RemainsCellS" parent="Props" instance=ExtResource("25_remains")]
+[node name="RemainsCellS" parent="Props" unique_id=83712854 instance=ExtResource("25_remains")]
 transform = Transform3D(0.5, 0, 0.866, 0, 1, 0, -0.866, 0, 0.5, 11, 0, 2.5)
 
-[node name="RubbleHalfCata" parent="Props" instance=ExtResource("23_rubble_half")]
+[node name="RubbleHalfCata" parent="Props" unique_id=1441113354 instance=ExtResource("23_rubble_half")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 5.5)
 
-[node name="RubbleBlockade" parent="Props" instance=ExtResource("24_rubble_blockade")]
+[node name="RubbleBlockade" parent="Props" unique_id=788277548 instance=ExtResource("24_rubble_blockade")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -23.6, 0, 4)
 
-[node name="RemainsCata1" parent="Props" instance=ExtResource("25_remains")]
+[node name="RemainsCata1" parent="Props" unique_id=1491357513 instance=ExtResource("25_remains")]
 transform = Transform3D(-0.259, 0, 0.966, 0, 1, 0, -0.966, 0, -0.259, -20.2, 0, 6.2)
 
-[node name="RemainsCata2" parent="Props" instance=ExtResource("25_remains")]
+[node name="RemainsCata2" parent="Props" unique_id=15533027 instance=ExtResource("25_remains")]
 transform = Transform3D(0.866, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866, -15.4, 0, -3.8)
 
-[node name="TorchUnlitCataW" parent="Props" instance=ExtResource("18_torch_unlit")]
+[node name="TorchUnlitCataW" parent="Props" unique_id=520749398 instance=ExtResource("18_torch_unlit")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -24.02, 2.2, 0)
 
-[node name="TorchUnlitCataE" parent="Props" instance=ExtResource("18_torch_unlit")]
+[node name="TorchUnlitCataE" parent="Props" unique_id=779003515 instance=ExtResource("18_torch_unlit")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -14.02, 2.2, -2)
 
-[node name="BannerRedTreasury1" parent="Props" instance=ExtResource("19_banner_red")]
+[node name="BannerRedTreasury1" parent="Props" unique_id=556494745 instance=ExtResource("19_banner_red")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -20.98)
 
-[node name="BannerRedTreasury2" parent="Props" instance=ExtResource("19_banner_red")]
+[node name="BannerRedTreasury2" parent="Props" unique_id=1668908222 instance=ExtResource("19_banner_red")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -20.98)
 
-[node name="TorchTreasuryW" parent="Props" instance=ExtResource("17_torch")]
+[node name="TorchTreasuryW" parent="Props" unique_id=241527382 instance=ExtResource("17_torch")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -21.5, 2.2, -11.02)
 
-[node name="TorchTreasuryE" parent="Props" instance=ExtResource("17_torch")]
+[node name="TorchTreasuryE" parent="Props" unique_id=946608811 instance=ExtResource("17_torch")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -16.5, 2.2, -11.02)
 
-[node name="CratesTreasury" parent="Props" instance=ExtResource("22_crates")]
+[node name="CratesTreasury" parent="Props" unique_id=1992075294 instance=ExtResource("22_crates")]
 transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, -15.7, 0, -19.4)
 
-[node name="ChestTreasury" parent="Props" instance=ExtResource("28_chest")]
+[node name="ChestTreasury" parent="Props" unique_id=1352576430 instance=ExtResource("28_chest")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -20)
 
-[node name="SecretDoorVault" parent="Props" instance=ExtResource("29_door")]
+[node name="SecretDoorVault" parent="Props" unique_id=630985266 instance=ExtResource("29_door")]
 transform = Transform3D(0.55, 0, 0, 0, 0.75, 0, 0, 0, 1, 0, 1.35, 22)
 open_on_boss_death = false
 
-[node name="SecretLeverArrival" parent="Props" instance=ExtResource("30_lever")]
+[node name="SecretLeverArrival" parent="Props" unique_id=406779771 instance=ExtResource("30_lever")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -4.98, 0, 16)
 door_path = NodePath("../SecretDoorVault")
 
-[node name="Lights" type="Node3D" parent="."]
+[node name="Lights" type="Node3D" parent="." unique_id=592084635]
 
-[node name="OmniSecretVault" type="OmniLight3D" parent="Lights"]
+[node name="OmniSecretVault" type="OmniLight3D" parent="Lights" unique_id=1308166102]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, 25.8)
 light_color = Color(1, 0.9, 0.72, 1)
 light_energy = 1.1
 omni_range = 8.0
 
-[node name="OmniArrival" type="OmniLight3D" parent="Lights"]
+[node name="OmniArrival" type="OmniLight3D" parent="Lights" unique_id=697257399]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 16)
 light_color = Color(1, 0.85, 0.65, 1)
 omni_range = 11.0
 
-[node name="OmniHall" type="OmniLight3D" parent="Lights"]
+[node name="OmniHall" type="OmniLight3D" parent="Lights" unique_id=2143672194]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8, 0)
 light_color = Color(1, 0.87, 0.68, 1)
 light_energy = 1.3
 omni_range = 16.0
 
-[node name="OmniCorr2" type="OmniLight3D" parent="Lights"]
+[node name="OmniCorr2" type="OmniLight3D" parent="Lights" unique_id=2063523728]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2.3, 0)
 light_color = Color(1, 0.8, 0.6, 1)
 light_energy = 0.8
 omni_range = 7.0
 
-[node name="OmniCata" type="OmniLight3D" parent="Lights"]
+[node name="OmniCata" type="OmniLight3D" parent="Lights" unique_id=1082890095]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 2.6, 1)
 light_color = Color(1, 0.72, 0.5, 1)
 light_energy = 0.55
 omni_range = 9.0
 
-[node name="OmniNook" type="OmniLight3D" parent="Lights"]
+[node name="OmniNook" type="OmniLight3D" parent="Lights" unique_id=642630887]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.5, 2, 4)
 light_color = Color(1, 0.8, 0.55, 1)
 light_energy = 0.7
-omni_range = 5.0
 
-[node name="OmniTreasury" type="OmniLight3D" parent="Lights"]
+[node name="OmniTreasury" type="OmniLight3D" parent="Lights" unique_id=2060062043]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 4, -16)
 light_color = Color(1, 0.88, 0.7, 1)
 light_energy = 1.2
 omni_range = 13.0
 
-[node name="DustHall" parent="." instance=ExtResource("26_dust")]
+[node name="DustHall" parent="." unique_id=1100747748 instance=ExtResource("26_dust")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 amount = 28
-emission_box_extents = Vector3(9, 2.8, 5.5)
 
-[node name="DustCata" parent="." instance=ExtResource("26_dust")]
+[node name="DustCata" parent="." unique_id=444439147 instance=ExtResource("26_dust")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1.7, 1)
 
-[node name="Spawns" type="Node3D" parent="."]
+[node name="Spawns" type="Node3D" parent="." unique_id=1683116376]
 
-[node name="PlayerSpawn" type="Marker3D" parent="Spawns"]
+[node name="PlayerSpawn" type="Marker3D" parent="Spawns" unique_id=1075736417]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 18.5)

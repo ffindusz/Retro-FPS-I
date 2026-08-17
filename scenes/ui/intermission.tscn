@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://t8dcbtrp4c5y"]
 
-[ext_resource type="Script" path="res://scripts/ui/intermission.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://db87on4w62ldm" path="res://scripts/ui/intermission.gd" id="1_script"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font_size = 56
@@ -19,7 +19,7 @@ shadow_offset = Vector2(2, 2)
 font_size = 18
 font_color = Color(0.6, 0.62, 0.7, 1)
 
-[node name="Intermission" type="Control"]
+[node name="Intermission" type="Control" unique_id=1376471408]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,7 +29,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_script")
 
-[node name="Bg" type="ColorRect" parent="."]
+[node name="Bg" type="ColorRect" parent="." unique_id=102901387]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,7 +39,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.03, 0.04, 0.06, 0.85)
 
-[node name="Layout" type="VBoxContainer" parent="."]
+[node name="Layout" type="VBoxContainer" parent="." unique_id=1322901572]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,23 +50,20 @@ mouse_filter = 2
 theme_override_constants/separation = 34
 alignment = 1
 
-[node name="TitleLabel" type="Label" parent="Layout"]
+[node name="TitleLabel" type="Label" parent="Layout" unique_id=326376545]
 layout_mode = 2
-mouse_filter = 2
 text = "LEVEL 1 CLEAR"
 label_settings = SubResource("LabelSettings_title")
 horizontal_alignment = 1
 
-[node name="StatsLabel" type="Label" parent="Layout"]
+[node name="StatsLabel" type="Label" parent="Layout" unique_id=380692331]
 layout_mode = 2
-mouse_filter = 2
 text = "KILLS 0/0   ·   SECRETS 0/0   ·   TIME 0:00"
 label_settings = SubResource("LabelSettings_stats")
 horizontal_alignment = 1
 
-[node name="Hint" type="Label" parent="Layout"]
+[node name="Hint" type="Label" parent="Layout" unique_id=1107582283]
 layout_mode = 2
-mouse_filter = 2
 text = "PRESS ANY KEY TO CONTINUE"
 label_settings = SubResource("LabelSettings_hint")
 horizontal_alignment = 1

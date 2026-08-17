@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://b0f43tuwrd2qo"]
 
 [sub_resource type="Gradient" id="Gradient_dot"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -25,7 +25,7 @@ size = Vector2(0.055, 0.055)
 offsets = PackedFloat32Array(0, 0.1, 0.9, 1)
 colors = PackedColorArray(0.95, 0.97, 1, 0, 0.95, 0.97, 1, 0.9, 0.9, 0.94, 1, 0.8, 0.9, 0.94, 1, 0)
 
-[node name="Snowfall" type="CPUParticles3D"]
+[node name="Snowfall" type="CPUParticles3D" unique_id=2085273862]
 amount = 55
 lifetime = 9.0
 preprocess = 9.0
@@ -33,7 +33,7 @@ randomness = 0.3
 lifetime_randomness = 0.2
 mesh = SubResource("QuadMesh_flake")
 emission_shape = 2
-emission_box_extents = Vector3(7.5, 0.5, 5.5)
+emission_sphere_radius = 1.0
 direction = Vector3(0, -1, 0)
 spread = 10.0
 gravity = Vector3(0.12, -0.25, 0)

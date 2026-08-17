@@ -1,22 +1,23 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://ddt3mwkawvdme"]
 
-[ext_resource type="Script" path="res://scripts/weapons/projectile.gd" id="1_script"]
-[ext_resource type="Shader" path="res://shaders/projectile_flame.gdshader" id="2_flame"]
-[ext_resource type="Texture2D" path="res://assets/textures/flame_sheet.png" id="3_sheet"]
+[ext_resource type="Script" uid="uid://bjyha8unavlko" path="res://scripts/weapons/projectile.gd" id="1_script"]
+[ext_resource type="Shader" uid="uid://gsnr4escgsk1" path="res://shaders/projectile_flame.gdshader" id="2_flame"]
+[ext_resource type="Texture2D" uid="uid://bwyib6kbxgpl1" path="res://assets/textures/flame_sheet.png" id="3_sheet"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_hit"]
 radius = 0.18
 
+[sub_resource type="QuadMesh" id="QuadMesh_body"]
+size = Vector2(0.55, 0.55)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_flame"]
+render_priority = 0
 shader = ExtResource("2_flame")
 shader_parameter/sheet = ExtResource("3_sheet")
 shader_parameter/tint = Color(0.42, 1, 0.5, 1)
 shader_parameter/fps = 12.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_body"]
-size = Vector2(0.55, 0.55)
-
-[node name="MageBolt" type="Area3D"]
+[node name="Plasma" type="Area3D" unique_id=694144458]
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_script")
@@ -26,13 +27,13 @@ splash_damage = 5.0
 splash_radius = 1.2
 lifetime = 4.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1659231429]
 shape = SubResource("SphereShape3D_hit")
 
-[node name="Body" type="MeshInstance3D" parent="."]
+[node name="Body" type="MeshInstance3D" parent="." unique_id=1065772029]
 mesh = SubResource("QuadMesh_body")
 surface_material_override/0 = SubResource("ShaderMaterial_flame")
 
-[node name="Glow" type="OmniLight3D" parent="."]
+[node name="Glow" type="OmniLight3D" parent="." unique_id=1307966119]
 light_color = Color(0.4, 1, 0.5, 1)
 omni_range = 4.0

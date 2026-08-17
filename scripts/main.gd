@@ -5,21 +5,15 @@ extends Control
 ## level the player died on; the player node persists across level
 ## transitions so health and ammo carry over.
 
-const LEVEL_SCENES: Array[PackedScene] = [
-	preload("res://scenes/levels/level_01.tscn"),
-	preload("res://scenes/levels/level_02.tscn"),
-	preload("res://scenes/levels/level_03.tscn"),
-	preload("res://scenes/levels/level_04.tscn"),
-	preload("res://scenes/levels/level_05.tscn"),
-	preload("res://scenes/levels/level_06.tscn"),
-	preload("res://scenes/levels/level_07.tscn"),
-	preload("res://scenes/levels/level_test.tscn"),
-]
-## Model test stage (0 on the title screen). Outside the campaign flow:
-## _advance_level refuses to advance into it, and it has no switch/teleporter
-## of its own, so it can never advance or complete.
-const TEST_STAGE_INDEX := 7
+## The campaign, in play order, plus the cheat-only extras after it. Edit the
+## arrays in assets/level_catalog.tres to add or reorder levels; nothing here
+## needs to change.
+const CATALOG := preload("res://assets/level_catalog.tres")
 const PLAYER_SCENE := preload("res://scenes/player/player.tscn")
+
+## F8 is the debug overlay, so the warp cheat stops at F7 however long the
+## campaign gets.
+const WARP_KEY_END := KEY_F8
 
 ## Grace between touching the gold and accepting the end-screen confirm, so
 ## a shot fired (or key mashed) at the winning moment can't skip the payoff.
@@ -62,8 +56,23 @@ func _ready() -> void:
 	_options_screen.closed.connect(_on_options_closed)
 	Settings.changed.connect(_apply_video_settings)
 	_apply_video_settings()
-	_start_screen.show_best(GameState.high_score)
-	_show_only(_start_screen)
+	# A level run on its own (F6 in the editor) bounces through here rather
+	# than rigging up its own player/HUD/viewport; see LevelRoot.
+	var standalone := LevelRoot.take_pending_scene_path()
+	if standalone.is_empty():
+		_start_screen.show_best(GameState.high_score)
+		_show_only(_start_screen)
+	else:
+		start_game(_index_of_scene(standalone))
+
+
+## Maps a level scene path back to its catalog index, for standalone runs.
+func _index_of_scene(path: String) -> int:
+	var index := CATALOG.index_of_path(path)
+	if index < 0:
+		push_warning("Level %s is not in the catalog; starting the campaign." % path)
+		return 0
+	return index
 
 
 ## Refreshes the debug stats overlay a few times a second (readable, not
@@ -107,9 +116,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		_set_paused(true)
 	elif event is InputEventKey and event.pressed and not event.echo \
-			and event.physical_keycode >= KEY_F1 and event.physical_keycode <= KEY_F7:
-		# Level-warp cheat for testing: F1-F7 jump to that level from
-		# anywhere (gameplay, pause, screens) with a fresh loadout.
+			and event.physical_keycode >= KEY_F1 \
+			and event.physical_keycode < mini(KEY_F1 + CATALOG.campaign_count(), WARP_KEY_END):
+		# Level-warp cheat for testing: one F-key per campaign level, jumping
+		# there from anywhere (gameplay, pause, screens) with a fresh loadout.
 		get_viewport().set_input_as_handled()
 		_warp(event.physical_keycode - KEY_F1)
 	elif event is InputEventKey and event.pressed and not event.echo \
@@ -194,7 +204,7 @@ func _on_pause_quit() -> void:
 
 
 func start_game(level_index := 0) -> void:
-	level_index = clampi(level_index, 0, LEVEL_SCENES.size() - 1)
+	level_index = clampi(level_index, 0, CATALOG.total_count() - 1)
 	_win_pending = false
 	_clear_game()
 	GameState.reset()
@@ -217,7 +227,7 @@ func start_game(level_index := 0) -> void:
 
 
 func _load_level() -> void:
-	_level = LEVEL_SCENES[_level_index].instantiate()
+	_level = CATALOG.scene_at(_level_index).instantiate()
 	_world.add_child(_level)
 	GameState.begin_level_stats(
 			_count_in_level("enemies"), _count_in_level("secret_areas"),
@@ -266,9 +276,9 @@ func _on_intermission_continue() -> void:
 
 
 func _advance_level() -> void:
-	# Bounded by TEST_STAGE_INDEX, not LEVEL_SCENES.size(): the test stage
-	# rides along in the scene list but is never part of the campaign.
-	if not _game_active or _level_index + 1 >= TEST_STAGE_INDEX:
+	# Bounded by the campaign length, not the catalog total: the extras ride
+	# along in the same index space but are never part of the campaign.
+	if not _game_active or _level_index + 1 >= CATALOG.campaign_count():
 		return
 	_level_index += 1
 	_restart_index = _level_index
@@ -282,7 +292,10 @@ func _advance_level() -> void:
 
 
 func _level_banner() -> String:
-	if _level_index == TEST_STAGE_INDEX:
+	var root := _level as LevelRoot
+	if root and not root.display_name.is_empty():
+		return root.display_name
+	if not CATALOG.is_campaign(_level_index):
 		return "TEST STAGE"
 	return "LEVEL %d" % (_level_index + 1)
 

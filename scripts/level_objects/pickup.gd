@@ -10,10 +10,6 @@ const HEAL_SOUND := preload("res://assets/audio/heal.wav")
 const PICKUP_SOUND := preload("res://assets/audio/pickup.wav")
 const COIN_SOUND := preload("res://assets/audio/coin.wav")
 
-const SPIN_SPEED := 2.2  ## Radians/sec.
-const FLOAT_SPEED := 0.003  ## Sine input scale applied to msec.
-const FLOAT_MIN_HEIGHT := 0.05
-const FLOAT_AMPLITUDE := 0.05
 
 ## Per-type glow halo (an unshaded additive billboard, NOT a light: the
 ## whole level is one CSG mesh, so per-mesh light limits on the mobile
@@ -29,8 +25,6 @@ const TYPE_GLOW := {
 	Type.MANA: Color(0.4, 0.85, 1.0),
 	Type.GOLD: Color(1.0, 0.82, 0.3),
 }
-const GLOW_ALPHA := 0.3
-const GLOW_SIZE := 0.9
 
 ## Pickup-notice labels for the non-gold types (gold speaks for itself via
 ## collect_gold). Ammo names match the pickup legend in TYPE_GLOW.
@@ -45,6 +39,19 @@ const TYPE_NAME := {
 @export var type := Type.POTION
 @export var amount := 25
 
+@export_group("Bob")
+@export var spin_speed := 2.2  ## Radians/sec.
+@export var float_speed := 0.003  ## Sine input scale applied to msec.
+@export var float_min_height := 0.05
+@export var float_amplitude := 0.05
+@export_group("Glow")
+## Size and opacity of the halo billboard. Its colour comes from TYPE_GLOW,
+## which is a legend shared by every pickup of that type rather than a
+## per-instance knob.
+@export var glow_alpha := 0.3
+@export var glow_size := 0.9
+@export_group("")
+
 var _taken := false
 
 @onready var _visual: Node3D = $Visual
@@ -58,14 +65,14 @@ func _ready() -> void:
 	body_entered.connect(_try_collect)
 	var glow := MeshInstance3D.new()
 	var quad := QuadMesh.new()
-	quad.size = Vector2(GLOW_SIZE, GLOW_SIZE)
+	quad.size = Vector2(glow_size, glow_size)
 	glow.mesh = quad
 	var mat := StandardMaterial3D.new()
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	mat.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
 	mat.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
-	mat.albedo_color = Color(TYPE_GLOW[type], GLOW_ALPHA)
+	mat.albedo_color = Color(TYPE_GLOW[type], glow_alpha)
 	# Radial falloff so the quad reads as a soft halo, not a colored card.
 	var gradient := Gradient.new()
 	gradient.colors = PackedColorArray([Color.WHITE, Color(1, 1, 1, 0)])
@@ -81,9 +88,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	_visual.rotate_y(delta * SPIN_SPEED)
-	_visual.position.y = FLOAT_MIN_HEIGHT \
-			+ (sin(Time.get_ticks_msec() * FLOAT_SPEED) + 1.0) * FLOAT_AMPLITUDE
+	_visual.rotate_y(delta * spin_speed)
+	_visual.position.y = float_min_height \
+			+ (sin(Time.get_ticks_msec() * float_speed) + 1.0) * float_amplitude
 
 
 func _physics_process(_delta: float) -> void:

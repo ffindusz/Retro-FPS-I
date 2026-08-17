@@ -1,17 +1,13 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene format=3 uid="uid://c4hxka6hh4tgm"]
 
-[ext_resource type="Script" path="res://scripts/level_objects/switch.gd" id="1_script"]
-[ext_resource type="Material" path="res://assets/materials/mat_stone.tres" id="2_stone"]
+[ext_resource type="Script" uid="uid://dwnjxfwjbdqe8" path="res://scripts/level_objects/switch.gd" id="1_script"]
+[ext_resource type="Material" uid="uid://cj5agp183d14c" path="res://assets/materials/mat_stone.tres" id="2_stone"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_body"]
-size = Vector3(0.8, 1.0, 0.7)
+size = Vector3(0.8, 1, 0.7)
 
 [sub_resource type="BoxMesh" id="BoxMesh_base"]
 size = Vector3(0.7, 0.32, 0.55)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_crystal"]
-albedo_color = Color(0.17, 0.19, 0.23, 1)
-roughness = 0.25
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_shard_body"]
 top_radius = 0.13
@@ -19,6 +15,10 @@ bottom_radius = 0.19
 height = 0.6
 radial_segments = 6
 rings = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_crystal"]
+albedo_color = Color(0.17, 0.19, 0.23, 1)
+roughness = 0.25
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_shard_tip"]
 top_radius = 0.0
@@ -38,10 +38,10 @@ fill_to = Vector2(0.5, 0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_glow"]
 transparency = 1
+blend_mode = 1
 shading_mode = 0
 albedo_color = Color(0.35, 1, 0.55, 0.45)
 albedo_texture = SubResource("GradientTexture2D_falloff")
-blend_mode = 1
 billboard_mode = 1
 billboard_keep_scale = true
 
@@ -79,75 +79,73 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pulse"]
 _data = {
-"pulse": SubResource("Animation_pulse")
+&"pulse": SubResource("Animation_pulse")
 }
 
-[node name="Switch" type="StaticBody3D"]
+[node name="Switch" type="StaticBody3D" unique_id=10865862]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_script")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1094415425]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
 shape = SubResource("BoxShape3D_body")
 
-[node name="Base" type="MeshInstance3D" parent="."]
+[node name="Base" type="MeshInstance3D" parent="." unique_id=93816375]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42, -0.14)
 mesh = SubResource("BoxMesh_base")
 surface_material_override/0 = ExtResource("2_stone")
 
-[node name="Crystal" type="Node3D" parent="."]
+[node name="Crystal" type="Node3D" parent="." unique_id=1438074292]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.28, -0.28)
 
-[node name="MainBody" type="MeshInstance3D" parent="Crystal"]
+[node name="MainBody" type="MeshInstance3D" parent="Crystal" unique_id=2067502631]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 mesh = SubResource("CylinderMesh_shard_body")
 surface_material_override/0 = SubResource("StandardMaterial3D_crystal")
 
-[node name="MainTip" type="MeshInstance3D" parent="Crystal"]
+[node name="MainTip" type="MeshInstance3D" parent="Crystal" unique_id=1899038609]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 mesh = SubResource("CylinderMesh_shard_tip")
 surface_material_override/0 = SubResource("StandardMaterial3D_crystal")
 
-[node name="ShardL" type="Node3D" parent="Crystal"]
+[node name="ShardL" type="Node3D" parent="Crystal" unique_id=2104762052]
 transform = Transform3D(0.5896, -0.1916, 0, 0.1916, 0.5896, 0, 0, 0, 0.62, -0.19, 0.02, 0)
 
-[node name="Body" type="MeshInstance3D" parent="Crystal/ShardL"]
+[node name="Body" type="MeshInstance3D" parent="Crystal/ShardL" unique_id=2009081559]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 mesh = SubResource("CylinderMesh_shard_body")
 surface_material_override/0 = SubResource("StandardMaterial3D_crystal")
 
-[node name="Tip" type="MeshInstance3D" parent="Crystal/ShardL"]
+[node name="Tip" type="MeshInstance3D" parent="Crystal/ShardL" unique_id=393859678]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 mesh = SubResource("CylinderMesh_shard_tip")
 surface_material_override/0 = SubResource("StandardMaterial3D_crystal")
 
-[node name="ShardR" type="Node3D" parent="Crystal"]
+[node name="ShardR" type="Node3D" parent="Crystal" unique_id=96864700]
 transform = Transform3D(0.4999, 0.1433, 0, -0.1433, 0.4999, 0, 0, 0, 0.52, 0.2, 0, 0.03)
 
-[node name="Body" type="MeshInstance3D" parent="Crystal/ShardR"]
+[node name="Body" type="MeshInstance3D" parent="Crystal/ShardR" unique_id=1192848848]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 mesh = SubResource("CylinderMesh_shard_body")
 surface_material_override/0 = SubResource("StandardMaterial3D_crystal")
 
-[node name="Tip" type="MeshInstance3D" parent="Crystal/ShardR"]
+[node name="Tip" type="MeshInstance3D" parent="Crystal/ShardR" unique_id=697917186]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 mesh = SubResource("CylinderMesh_shard_tip")
 surface_material_override/0 = SubResource("StandardMaterial3D_crystal")
 
-[node name="Glow" type="MeshInstance3D" parent="."]
+[node name="Glow" type="MeshInstance3D" parent="." unique_id=93320573]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.35)
 visible = false
-mesh = SubResource("QuadMesh_glow")
 material_override = SubResource("StandardMaterial3D_glow")
+mesh = SubResource("QuadMesh_glow")
 
-[node name="Light" type="OmniLight3D" parent="."]
+[node name="Light" type="OmniLight3D" parent="." unique_id=176711594]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -0.5)
 visible = false
 light_color = Color(0.25, 1, 0.5, 1)
 omni_range = 4.0
 
-[node name="Pulse" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_pulse")
-}
+[node name="Pulse" type="AnimationPlayer" parent="." unique_id=1115519168]
+libraries/ = SubResource("AnimationLibrary_pulse")

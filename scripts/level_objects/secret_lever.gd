@@ -1,3 +1,4 @@
+@tool
 class_name SecretLever
 extends StaticBody3D
 ## A wall lever you shoot to open a linked secret door. Sits on the world +
@@ -21,7 +22,19 @@ var _plate_mat: StandardMaterial3D
 @onready var _base: MeshInstance3D = $Base
 
 
+func _get_configuration_warnings() -> PackedStringArray:
+	if door_path.is_empty():
+		return PackedStringArray([
+			"door_path is unset: throwing this lever will not open anything."])
+	if get_node_or_null(door_path) == null:
+		return PackedStringArray([
+			"door_path points at nothing: \"%s\" does not resolve." % door_path])
+	return PackedStringArray()
+
+
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return  # @tool only for the wiring warning; keep the editor inert.
 	# Own copy of the plate material so recoloring it on throw stays per-lever.
 	var plate := _base.mesh.surface_get_material(0)
 	if plate != null:
