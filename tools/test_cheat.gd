@@ -23,15 +23,15 @@ func _tick(_delta: float) -> bool:
 			_key(KEY_3)  # on the title screen
 			_next(500)
 		1:
-			print("after pressing 3 on title: %s (expect Level03)" % _level_name())
+			_expect("pressing 3 on title loads", _level_name(), "Level03")
 			_key(KEY_F5)
 			_next(500)
 		2:
-			print("after F5 in game: %s (expect Level05)" % _level_name())
+			_expect("F5 in game warps to", _level_name(), "Level05")
 			_key(KEY_F1)
 			_next(500)
 		3:
-			print("after F1 in game: %s (expect Level01)" % _level_name())
+			_expect("F1 in game warps to", _level_name(), "Level01")
 			_key(KEY_ESCAPE)  # pause...
 			_next(400)
 		4:
@@ -41,7 +41,6 @@ func _tick(_delta: float) -> bool:
 			_key(KEY_0)  # test stage from the title
 			_next(500)
 		6:
-			print("after pressing 0 on title: %s (expect LevelTest)" % _level_name())
-			print("cheat test done")
-			return true
+			_expect("pressing 0 on title loads", _level_name(), "LevelTest")
+			return _finish()
 	return false

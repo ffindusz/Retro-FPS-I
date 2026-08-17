@@ -265,7 +265,7 @@ func _gen_burst_sheet() -> void:
 ## Projectile flame spritesheet: 8 looping frames (4x2 grid of 64px cells)
 ## of a roiling flame ball on black. shaders/projectile_flame.gdshader
 ## cycles the frames additively (black = transparent) with a per-projectile
-## tint — orange boss fireballs, green spitter plasma, cyan player bolts.
+## tint — orange boss fireballs, green mage bolts, cyan tome bolts.
 func _gen_flame_sheet() -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 4004

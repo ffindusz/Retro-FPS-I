@@ -88,7 +88,7 @@ func _process(delta: float) -> void:
 
 func _physics_process(_delta: float) -> void:
 	# body_entered alone misses a player who is ALREADY standing on the
-	# pickup when they become eligible (e.g. take damage while on a medkit
+	# pickup when they become eligible (e.g. take damage while on a potion
 	# they were too healthy to grab), so re-check overlaps continuously.
 	if _taken:
 		return

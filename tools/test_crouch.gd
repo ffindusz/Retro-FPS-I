@@ -10,18 +10,20 @@ func _tick(_delta: float) -> bool:
 	var shape: CapsuleShape3D = player.get_node("CollisionShape3D").shape
 	match _step:
 		0:
-			print("standing: height=%.2f head_y=%.2f (expect 1.80 1.60)"
-					% [shape.height, player.head.position.y])
+			_expect_near("standing capsule height", shape.height, 1.80)
+			_expect_near("standing head y", player.head.position.y, 1.60)
 			Input.action_press("crouch")
 			_next(600)
 		1:
-			print("crouched: height=%.2f head_y=%.2f crouching=%s (expect 1.20 ~1.00 true)"
-					% [shape.height, player.head.position.y, player._crouching])
+			_expect_near("crouched capsule height", shape.height, 1.20)
+			# The head eases down over a few frames, so allow a little slack.
+			_expect_near("crouched head y", player.head.position.y, 1.00, 0.05)
+			_expect_true("crouching flag set", player._crouching)
 			Input.action_release("crouch")
 			_next(600)
 		2:
-			print("released: height=%.2f head_y=%.2f crouching=%s (expect 1.80 ~1.60 false)"
-					% [shape.height, player.head.position.y, player._crouching])
-			print("crouch test done")
-			return true
+			_expect_near("stood capsule height", shape.height, 1.80)
+			_expect_near("stood head y", player.head.position.y, 1.60, 0.05)
+			_expect_false("crouching flag cleared", player._crouching)
+			return _finish()
 	return false

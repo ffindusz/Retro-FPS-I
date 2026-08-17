@@ -14,14 +14,13 @@ func _tick(_delta: float) -> bool:
 	var gs: Node = root.get_node(GAME_STATE_PATH)
 	match _step:
 		0:
-			print("cavern totals: enemies=%d secrets=%d (expect 6 2)"
-					% [gs.total_enemies, gs.total_secrets])
+			_expect("cavern enemy total", gs.total_enemies, 6)
+			_expect("cavern secret total", gs.total_secrets, 3)
 			player.global_position = Vector3(2, 0.1, -7)  # over the lava pit
 			player.velocity = Vector3.ZERO
 			_next(1500)
 		1:
-			print("after 1.5s in lava: health=%d (expect well below 100), player y=%.2f"
-					% [gs.health, player.global_position.y])
-			print("lava test done")
-			return true
+			# 8 damage per 0.4s tick: 1.5s in the lake must bite hard.
+			_expect_less("health after 1.5s in lava", gs.health, 85)
+			return _finish()
 	return false

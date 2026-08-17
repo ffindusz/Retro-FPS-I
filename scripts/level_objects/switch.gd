@@ -4,7 +4,7 @@ extends StaticBody3D
 ## (LOCKED) and begins to glow and pulse (ARMED, shootable) once every
 ## enemy in the level is dead. Shooting it then makes it surge bright and
 ## powers the wired teleporter. Sits on the enemy collision layer so
-## hitscan rays and rockets register hits via take_damage().
+## hitscan rays and fireballs register hits via take_damage().
 
 signal activated
 

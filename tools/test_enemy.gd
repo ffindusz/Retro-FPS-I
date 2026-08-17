@@ -19,22 +19,21 @@ func _tick(_delta: float) -> bool:
 		_start_ms = Time.get_ticks_msec()
 		player.global_position = Vector3(19, 0.1, 2)
 		player.velocity = Vector3.ZERO
-		print("t=0.0s grunt state=%d (expect 0 IDLE)" % grunt.state)
+		_expect("t=0.0s grunt dormant", grunt.state, STATE_IDLE)
 		return false
 	var t := (Time.get_ticks_msec() - _start_ms) / 1000.0
-	if t > 0.8 and grunt and not _killed:
-		_report_once("t1", "t=0.8s grunt state=%d (expect 1-2 NOTICE/CHASE)" % grunt.state)
-	if t > 2.5 and grunt and not _killed:
-		_report_once("t2", "t=2.5s grunt state=%d dist=%.2f" % [grunt.state,
-				grunt.global_position.distance_to(player.global_position)])
+	if t > 0.8 and grunt and not _killed and not _reported.has("t1"):
+		_reported["t1"] = true
+		# Either side of the notice_delay hand-off is fine this early.
+		_expect_between("t=0.8s grunt noticed", grunt.state, STATE_NOTICE, STATE_CHASE)
 	if t > 5.0 and not _killed:
 		_killed = true
-		print("t=5.0s grunt state=%d (expect 3 ATTACK) player health=%d (expect <100)"
-				% [grunt.state, root.get_node(GAME_STATE_PATH).health])
+		_expect("t=5.0s grunt attacking", grunt.state, STATE_ATTACK)
+		_expect_less("player took melee damage",
+				root.get_node(GAME_STATE_PATH).health, 100)
 		grunt.take_damage(100.0)
-		print("after 100 dmg: state=%d (expect 4 DEAD)" % grunt.state)
+		_expect("grunt dead after 100 dmg", grunt.state, STATE_DEAD)
 	if t > 7.5:
-		print("grunt freed after death: %s (expect true)" % str(not is_instance_valid(grunt)))
-		print("enemy test done")
-		return true
+		_expect_true("grunt freed after death", not is_instance_valid(grunt))
+		return _finish()
 	return false

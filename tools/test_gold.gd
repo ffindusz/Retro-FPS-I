@@ -24,20 +24,20 @@ func _tick(_delta: float) -> bool:
 	var gs: Node = root.get_node(GAME_STATE_PATH)
 	match _step:
 		0:
-			print("level 5 gold total: total_gold=%d score=%d (expect 10 0)"
-					% [gs.total_gold, gs.score])
+			_expect("level 5 gold total", gs.total_gold, 10)
+			_expect("score starts at zero", gs.score, 0)
 			player.global_position = GEM1
 			player.velocity = Vector3.ZERO
 			_next(400)
 		1:
-			print("after 1 gem: score=%d gold_found=%d (expect 100 1)"
-					% [gs.score, gs.gold_found])
+			_expect("score after 1 gem", gs.score, 100)
+			_expect("gold_found after 1 gem", gs.gold_found, 1)
 			player.global_position = GEM2
 			player.velocity = Vector3.ZERO
 			_next(400)
 		2:
-			print("after 2 gems: score=%d gold_found=%d/%d (expect 200 2/10)"
-					% [gs.score, gs.gold_found, gs.total_gold])
+			_expect("score after 2 gems", gs.score, 200)
+			_expect("gold_found after 2 gems", gs.gold_found, 2)
 			# Shoot the chest from the +z (room) side; a gem pops toward there.
 			var chest: Node3D = world.get_node("Level05/Props/ChestTreasury")
 			chest.take_damage(999.0, chest.global_position + Vector3(0, 1, 2))
@@ -47,8 +47,8 @@ func _tick(_delta: float) -> bool:
 			player.velocity = Vector3.ZERO
 			_next(900)
 		3:
-			print("after chest gem collected: score=%d gold_found=%d (expect 500 3)"
-					% [gs.score, gs.gold_found])
+			_expect("score after the chest gem", gs.score, 500)
+			_expect("gold_found after the chest gem", gs.gold_found, 3)
 			# Shoot the arrival lever; its linked secret door should open.
 			var door: Node3D = world.get_node("Level05/Props/SecretDoorVault")
 			_door_y0 = door.position.y
@@ -56,15 +56,14 @@ func _tick(_delta: float) -> bool:
 			_next(1400)
 		4:
 			var door: Node3D = world.get_node("Level05/Props/SecretDoorVault")
-			print("secret door opened: y %.2f -> %.2f (expect lower)"
-					% [_door_y0, door.position.y])
+			_expect_less("lever slid the secret door down", door.position.y,
+					_door_y0)
 			player.global_position = VAULT_GEM
 			player.velocity = Vector3.ZERO
 			_next(400)
 		5:
-			print("after vault gem: score=%d gold_found=%d/%d (expect 600 4/10)"
-					% [gs.score, gs.gold_found, gs.total_gold])
+			_expect("score after the vault gem", gs.score, 600)
+			_expect("gold_found after the vault gem", gs.gold_found, 4)
 			print("stats_line: %s" % gs.stats_line())
-			print("gold test done")
-			return true
+			return _finish()
 	return false

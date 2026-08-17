@@ -14,9 +14,9 @@ func _init() -> void:
 	# after the music (wand_zap etc.), but their generators still run
 	# (unsaved) to burn their share of the RNG stream so everything below
 	# regenerates byte-identical. _gen_plasma consumed no RNG and is gone.
-	_gen_pistol()
-	_gen_shotgun()
-	_gen_launcher()
+	_gen_legacy_pistol()
+	_gen_legacy_shotgun()
+	_gen_legacy_launcher()
 	_save("explosion", _gen_explosion())
 	_save("click", _gen_click())
 	_save("hurt", _gen_hurt())
@@ -79,7 +79,7 @@ func _env(t: float, dur: float, power := 2.0) -> float:
 
 
 ## Short punchy square-wave blip with a downward pitch kick.
-func _gen_pistol() -> PackedFloat32Array:
+func _gen_legacy_pistol() -> PackedFloat32Array:
 	var dur := 0.09
 	var out := PackedFloat32Array()
 	for i in int(dur * RATE):
@@ -91,7 +91,7 @@ func _gen_pistol() -> PackedFloat32Array:
 
 
 ## Heavier noise boom.
-func _gen_shotgun() -> PackedFloat32Array:
+func _gen_legacy_shotgun() -> PackedFloat32Array:
 	var dur := 0.28
 	var out := PackedFloat32Array()
 	var low := 0.0
@@ -104,7 +104,7 @@ func _gen_shotgun() -> PackedFloat32Array:
 
 
 ## Whoosh: noise plus a falling sine thump.
-func _gen_launcher() -> PackedFloat32Array:
+func _gen_legacy_launcher() -> PackedFloat32Array:
 	var dur := 0.35
 	var out := PackedFloat32Array()
 	var low := 0.0

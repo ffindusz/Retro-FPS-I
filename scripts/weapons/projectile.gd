@@ -1,8 +1,8 @@
 class_name Projectile
 extends Area3D
-## Straight-flying projectile (rocket, fireball, plasma bolt). Detonates on
-## contact (world or enemy) with direct damage plus radial splash. Splash
-## can hurt the shooter too — classic rocket-jump-adjacent danger.
+## Straight-flying projectile (staff fireball, boss fireball, mage/tome bolt).
+## Detonates on contact (world or enemy) with direct damage plus radial splash.
+## Splash can hurt the shooter too — classic rocket-jump-adjacent danger.
 
 @export var speed := 18.0
 @export var direct_damage := 60.0
@@ -28,7 +28,7 @@ func setup(dir: Vector3, shooter: PhysicsBody3D) -> void:
 
 
 func _ready() -> void:
-	# Main frees this group on level teardown: rockets are parented to the
+	# Main frees this group on level teardown: player projectiles are parented to the
 	# viewport rather than the level, so they'd otherwise outlive it.
 	add_to_group("projectiles")
 	body_entered.connect(_on_body_entered)

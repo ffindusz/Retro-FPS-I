@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tools/test_base.gd"
 ## Audio-mix regression check: proves Fx.spawn_sound (positional SFX) reaches
 ## the SFX bus. Boots level 1, fires a pickup sound near the player via the
 ## real Fx.spawn_sound path, and samples the SFX/Music bus peak levels --
@@ -10,7 +10,6 @@ extends SceneTree
 
 const PLAYER_PATH := "ViewportContainer/GameViewport/World/Player"
 
-var _started := false
 var _t0 := 0
 var _spawned := false
 var _sfx_peak := -200.0
@@ -46,7 +45,9 @@ func _process(_delta: float) -> bool:
 		_sfx_peak = maxf(_sfx_peak, AudioServer.get_bus_peak_volume_left_db(sfx, 0))
 		_music_peak = maxf(_music_peak, AudioServer.get_bus_peak_volume_left_db(mus, 0))
 	if t > 1600:
-		print("SFX bus peak during spawn_sound: %.1f dB (audible if > -50)" % _sfx_peak)
-		print("Music bus peak:                  %.1f dB" % _music_peak)
-		return true
+		# -50 dB is the "actually mixed" threshold: a bus that never received
+		# the sound sits at the -200 floor.
+		_expect_greater("SFX bus peak during spawn_sound (dB)", _sfx_peak, -50.0)
+		_expect_greater("Music bus peak (dB)", _music_peak, -50.0)
+		return _finish()
 	return false

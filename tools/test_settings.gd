@@ -36,12 +36,12 @@ func _tick(_delta: float) -> bool:
 			_key(KEY_O)
 			_next(300)
 		1:
-			print("after O on title: options=%s title=%s (expect true false)"
-					% [options.visible, start.visible])
+			_expect_true("O on title opens options", options.visible)
+			_expect_false("O on title hides the title", start.visible)
 			_key(KEY_D)  # sensitivity row starts selected: +10%
 			_next(200)
 		2:
-			print("sensitivity after D: %.2f (expect 1.10)" % settings.sensitivity)
+			_expect_near("sensitivity after D", settings.sensitivity, 1.10)
 			_key(KEY_S)  # down to music row
 			_key(KEY_A)
 			_key(KEY_A)
@@ -50,8 +50,8 @@ func _tick(_delta: float) -> bool:
 		3:
 			var music_db := AudioServer.get_bus_volume_db(
 					AudioServer.get_bus_index("Music"))
-			print("music after 3xA: %.1f bus_db=%.1f (expect 0.7, ~-3.1)"
-					% [settings.music_volume, music_db])
+			_expect_near("music volume after 3xA", settings.music_volume, 0.7)
+			_expect_near("music bus reflects the volume", music_db, -3.1, 0.2)
 			_key(KEY_S)  # down to sfx row
 			_key(KEY_A)  # sfx to 0.9
 			_key(KEY_S)  # down to dither row
@@ -59,42 +59,47 @@ func _tick(_delta: float) -> bool:
 			_next(300)
 		4:
 			var mat: ShaderMaterial = current_scene.get_node("ViewportContainer").material
-			print("dither after toggle: %s strength=%.1f levels=%.0f (expect false 0.0 256)"
-					% [settings.dither,
-					float(mat.get_shader_parameter("dither_strength")),
-					float(mat.get_shader_parameter("color_levels"))])
+			_expect_false("dither toggled off", settings.dither)
+			_expect_near("post shader dither_strength",
+					float(mat.get_shader_parameter("dither_strength")), 0.0)
+			_expect_near("post shader color_levels",
+					float(mat.get_shader_parameter("color_levels")), 256.0)
 			_key(KEY_ESCAPE)
 			_next(400)
 		5:
-			print("after ESC: options=%s title=%s (expect false true)"
-					% [options.visible, start.visible])
+			_expect_false("ESC closes options", options.visible)
+			_expect_true("ESC returns to the title", start.visible)
 			var cfg := ConfigFile.new()
-			var err := cfg.load(SETTINGS_PATH)
-			print("cfg reload: err=%d sens=%.2f music=%.1f sfx=%.1f dither=%s (expect 0 1.10 0.7 0.9 false)"
-					% [err, float(cfg.get_value("input", "sensitivity", -1.0)),
-					float(cfg.get_value("audio", "music_volume", -1.0)),
-					float(cfg.get_value("audio", "sfx_volume", -1.0)),
-					str(cfg.get_value("video", "dither", true))])
+			_expect("settings.cfg written", cfg.load(SETTINGS_PATH), OK)
+			_expect_near("persisted sensitivity",
+					float(cfg.get_value("input", "sensitivity", -1.0)), 1.10)
+			_expect_near("persisted music volume",
+					float(cfg.get_value("audio", "music_volume", -1.0)), 0.7)
+			_expect_near("persisted sfx volume",
+					float(cfg.get_value("audio", "sfx_volume", -1.0)), 0.9)
+			_expect_false("persisted dither",
+					bool(cfg.get_value("video", "dither", true)))
 			current_scene.start_game(0)
 			_next(1000)
 		6:
 			_key(KEY_ESCAPE)  # open pause
 			_next(400)
 		7:
-			print("paused: overlay=%s (expect true)" % pause.visible)
+			_expect_true("pause overlay shown", pause.visible)
 			_key(KEY_O)
 			_next(300)
 		8:
-			print("after O in pause: options=%s pause=%s paused=%s (expect true false true)"
-					% [options.visible, pause.visible, paused])
+			_expect_true("O in pause opens options", options.visible)
+			_expect_false("O in pause hides the pause screen", pause.visible)
+			_expect_true("tree stays paused under options", paused)
 			_key(KEY_ESCAPE)
 			_next(300)
 		9:
-			print("after ESC in options: options=%s pause=%s paused=%s (expect false true true)"
-					% [options.visible, pause.visible, paused])
+			_expect_false("ESC closes options", options.visible)
+			_expect_true("ESC returns to the pause screen", pause.visible)
+			_expect_true("tree still paused after closing options", paused)
 			_restore_backup()
-			print("settings test done")
-			return true
+			return _finish()
 	return false
 
 

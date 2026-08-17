@@ -40,8 +40,8 @@ func _tick(_delta: float) -> bool:
 		# notice range 15 but well outside decloak range 4.
 		player.global_position = Vector3(0, 0.1, 8)
 		player.velocity = Vector3.ZERO
-		print("t=0.0s rogue state=%d cloaked=%s (expect 0 false)"
-				% [rogue.state, rogue.cloaked])
+		_expect("t=0.0s rogue dormant", rogue.state, STATE_IDLE)
+		_expect_false("t=0.0s rogue uncloaked", rogue.cloaked)
 		# Clear the rest of the level so grunts/spitters can't pile onto the
 		# player and muddy the rogue-only assertions (their death rattles
 		# wake the rogue early, which is harmless).
@@ -54,47 +54,45 @@ func _tick(_delta: float) -> bool:
 	# (before it reaches decloak range) can't be missed between steps.
 	if rogue != null and rogue.cloaked and not _saw_cloaked:
 		_saw_cloaked = true
-		print("t=%.1fs rogue cloaked while chasing: transparency=%.2f (expect 0.94)"
-				% [t, _mesh_transparency(rogue)])
+		_expect_near("rogue cloaked while chasing (mesh transparency)",
+				_mesh_transparency(rogue), 0.94)
 		# Freeze it in place (well outside decloak range) so the hit-reveal
 		# check below isn't raced by its approach.
 		rogue.move_speed = 0.0
 		rogue.take_damage(5.0)
-		print("after hit: cloaked=%s transparency=%.2f (expect false 0.00)"
-				% [rogue.cloaked, _mesh_transparency(rogue)])
+		_expect_false("a hit rips the cloak away", rogue.cloaked)
+		_expect_near("revealed rogue is fully opaque",
+				_mesh_transparency(rogue), 0.0)
 	if t > 4.0 and not _hit_done and _saw_cloaked:
 		_hit_done = true
-		print("t=%.1fs after reveal_time: cloaked=%s (expect true, recloaked)"
-				% [t, rogue.cloaked])
+		_expect_true("rogue recloaks after reveal_time", rogue.cloaked)
 		# Release it to close in: inside decloak_range it must drop the
 		# cloak and start stabbing.
 		rogue.move_speed = 5.2
 	if t > 7.0 and not _killed:
 		_killed = true
-		print("t=%.1fs rogue state=%d cloaked=%s (expect 3 ATTACK, false) "
-				% [t, rogue.state, rogue.cloaked]
-				+ "player health=%d (expect <100000 from stabs)" % gs.health)
+		_expect("rogue attacking in strike range", rogue.state, STATE_ATTACK)
+		_expect_false("rogue decloaked to strike", rogue.cloaked)
+		_expect_less("rogue stabs damaged the player", gs.health, 100000)
 		rogue.take_damage(999.0)
-		print("after kill: state=%d cloaked=%s (expect 4 DEAD, false)"
-				% [rogue.state, rogue.cloaked])
+		_expect("rogue dead after kill blow", rogue.state, STATE_DEAD)
+		_expect_false("dead rogue is not left invisible", rogue.cloaked)
 	if t > 9.5 and not _blasted:
 		_blasted = true
-		print("rogue freed after death: %s (expect true)" % str(not is_instance_valid(rogue)))
+		_expect_true("rogue freed after death", not is_instance_valid(rogue))
 		var rubble: Node = world.get_node("Level05/Props/RubbleBlockade")
 		rubble.take_damage(30.0)
-		print("rubble after 30 dmg: alive=%s (expect true, takes 60)"
-				% str(is_instance_valid(rubble) and not rubble.is_queued_for_deletion()))
+		_expect_true("rubble survives 30 dmg (takes 60)",
+				is_instance_valid(rubble) and not rubble.is_queued_for_deletion())
 		rubble.take_damage(999.0)
 	if t > 10.3 and not _entered_nook:
 		_entered_nook = true
 		var rubble: Node = world.get_node_or_null("Level05/Props/RubbleBlockade")
-		print("rubble after blast: freed=%s (expect true)" % str(rubble == null))
+		_expect_true("rubble cleared by the blast", rubble == null)
 		# Walk into the opened nook; the secret area should trigger.
 		player.global_position = Vector3(-25.5, 0.1, 4)
 		player.velocity = Vector3.ZERO
 	if t > 11.3:
-		print("secret behind rubble found: %d/%d (expect 1/2)"
-				% [gs.secrets_found, gs.total_secrets])
-		print("rogue test done")
-		return true
+		_expect("secret behind the rubble found", gs.secrets_found, 1)
+		return _finish()
 	return false

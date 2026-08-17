@@ -30,12 +30,11 @@ func _tick(_delta: float) -> bool:
 			spitter.velocity = Vector3.ZERO
 			_next(500)
 		1:
-			print("both dormant: grunt state=%d spitter state=%d (expect 0 0 IDLE)"
-					% [grunt.state, spitter.state])
+			_expect("grunt dormant", grunt.state, STATE_IDLE)
+			_expect("spitter dormant", spitter.state, STATE_IDLE)
 			grunt.take_damage(999.0)
 			_next(300)
 		2:
-			print("grunt death woke the spitter: state=%d (expect 1 NOTICE)" % spitter.state)
-			print("wake test done")
-			return true
+			_expect("grunt death woke the spitter", spitter.state, STATE_NOTICE)
+			return _finish()
 	return false

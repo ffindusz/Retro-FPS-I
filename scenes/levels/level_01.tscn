@@ -22,8 +22,8 @@
 [ext_resource type="PackedScene" path="res://scenes/level_objects/secret_lever.tscn" id="43_lever"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_potion.tscn" id="10_health"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_crystals.tscn" id="11_bullets"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_quarrels.tscn" id="12_shells"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_embers.tscn" id="13_rockets"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_quarrels.tscn" id="12_quarrels"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_embers.tscn" id="13_embers"]
 [ext_resource type="Material" path="res://assets/materials/mat_wall.tres" id="1_wall"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_grunt.tscn" id="5_grunt"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/switch.tscn" id="8_switch"]
@@ -376,7 +376,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 33.5)
 [node name="HealthA" parent="Pickups" instance=ExtResource("10_health")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.05, 19)
 
-[node name="ShellsA" parent="Pickups" instance=ExtResource("12_shells")]
+[node name="QuarrelsA" parent="Pickups" instance=ExtResource("12_quarrels")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7, 0.05, 19.5)
 
 [node name="HealthB" parent="Pickups" instance=ExtResource("10_health")]
@@ -385,10 +385,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8, 0.05, -1.5)
 [node name="BulletsCorr2" parent="Pickups" instance=ExtResource("11_bullets")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.05, 0)
 
-[node name="RocketsBalcony" parent="Pickups" instance=ExtResource("13_rockets")]
+[node name="EmbersBalcony" parent="Pickups" instance=ExtResource("13_embers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3.26, -2.5)
 
-[node name="ShellsC" parent="Pickups" instance=ExtResource("12_shells")]
+[node name="QuarrelsC" parent="Pickups" instance=ExtResource("12_quarrels")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0.05, 1)
 
 [node name="HealthArena" parent="Pickups" instance=ExtResource("10_health")]
@@ -397,7 +397,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.05, -28)
 [node name="HealthSecretC" parent="Pickups" instance=ExtResource("10_health")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0.05, -4.5)
 
-[node name="ShellsSecretB" parent="Pickups" instance=ExtResource("12_shells")]
+[node name="QuarrelsSecretB" parent="Pickups" instance=ExtResource("12_quarrels")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 2.45, -2.55)
 
 [node name="CellsRoomC" parent="Pickups" instance=ExtResource("16_cells")]

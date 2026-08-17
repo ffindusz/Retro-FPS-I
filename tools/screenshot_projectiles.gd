@@ -1,7 +1,7 @@
 extends SceneTree
 ## Debug helper: projectile-visual check. Boots the boss arena (level 7),
 ## parks the invincible player in front of the boss, fires the player's own
-## bolt, and saves timed screenshots so boss fireballs and player plasma are
+## bolt, and saves timed screenshots so boss fireballs and tome bolts are
 ## caught mid-flight. Run WITHOUT --headless:
 ##   Godot_v4.7-stable_win64_console.exe --path . -s tools/screenshot_projectiles.gd
 ## Output: tmp_shots/proj_<i>.png in the project root.

@@ -2,7 +2,7 @@ extends "res://tools/test_base.gd"
 ## Debug helper: headless spitter AI test. Boots level 3 (the magic skeletons'
 ## debut) and relocates a cavern spitter + the player into the open entry room,
 ## then verifies it: notices, enters ATTACK (state 3), BACKPEDALS (distance
-## grows), spits plasma that damages the player, and dies. The player is kept
+## grows), spits arcane bolts that damage the player, and dies. The player is kept
 ## topped up so a long pummel can't end the run and free the spitter mid-test.
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/test_spitter.gd
 
@@ -34,26 +34,27 @@ func _tick(_delta: float) -> bool:
 		player.global_position = Vector3(0, 0.1, 15)
 		player.velocity = Vector3.ZERO
 		_dist0 = spitter.global_position.distance_to(player.global_position)
-		print("t=0.0s spitter state=%d dist=%.2f (expect 0 IDLE, ~3.0)" % [spitter.state, _dist0])
+		_expect("t=0.0s spitter dormant", spitter.state, STATE_IDLE)
+		_expect_near("t=0.0s spitter distance", _dist0, 3.0, 0.1)
 		return false
 	if is_instance_valid(spitter):
 		_max_dist = maxf(_max_dist, spitter.global_position.distance_to(player.global_position))
-	# Keep the player alive: note the plasma hit, then top health back up so a
+	# Keep the player alive: note the bolt hit, then top health back up so a
 	# freed level can't null the spitter before the kill check.
 	if gs.health < 100:
 		_took_damage = true
 		gs.health = 100
 	var t := (Time.get_ticks_msec() - _start_ms) / 1000.0
-	if t > 3.0 and spitter and not _killed:
-		_report_once("t1", "t=3.0s state=%d max_dist=%.2f (expect 3 ATTACK, max_dist > %.2f = backpedaled)"
-				% [spitter.state, _max_dist, _dist0])
+	if t > 3.0 and spitter and not _killed and not _reported.has("t1"):
+		_reported["t1"] = true
+		_expect("t=3.0s spitter attacking", spitter.state, STATE_ATTACK)
+		_expect_greater("spitter backpedaled", _max_dist, _dist0)
 	if t > 6.0 and not _killed:
 		_killed = true
-		print("plasma hit the player: %s (expect true)" % _took_damage)
+		_expect_true("spitter bolt hit the player", _took_damage)
 		spitter.take_damage(50.0)
-		print("after 50 dmg: state=%d (expect 4 DEAD)" % spitter.state)
+		_expect("spitter dead after 50 dmg", spitter.state, STATE_DEAD)
 	if t > 8.5:
-		print("spitter freed: %s (expect true)" % str(not is_instance_valid(spitter)))
-		print("spitter test done")
-		return true
+		_expect_true("spitter freed after death", not is_instance_valid(spitter))
+		return _finish()
 	return false

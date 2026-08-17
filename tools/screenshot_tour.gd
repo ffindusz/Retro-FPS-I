@@ -47,7 +47,13 @@ const LEVEL_WAYPOINTS := {
 	5: [
 		[Vector3(0, 0.1, 20), 0.0],      # Spawn platform, obelisks + bridge ahead
 		[Vector3(0, 0.3, 5), 0.0],       # Plaza with crenellations, tower right
-		[Vector3(0, 0.3, -7), 0.0],      # Long bridge to the switch tower
+		# Shot from the switch platform (z -26..-18) looking back up the long
+		# bridge, NOT from the plaza end looking down it: Rogue1 is a fast melee
+		# stalker that has been chasing since the earlier stops, so a
+		# forward-facing stop on its side of the bridge just fills the frame
+		# with its cloak. Teleporting past it puts the whole span between them
+		# again, and it reads as a silhouette closing down the bridge.
+		[Vector3(0, 0.3, -19), 180.0],   # Long bridge, from the switch tower
 		[Vector3(-10, 0.3, 0), 90.0],    # Bridge 3 toward the teleporter platform
 	],
 	6: [

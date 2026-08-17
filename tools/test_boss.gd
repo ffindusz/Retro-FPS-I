@@ -29,27 +29,27 @@ func _tick(_delta: float) -> bool:
 		gs.boss_died.connect(func() -> void: _win_signaled = true)
 		player.global_position = Vector3(0, 0.1, -4)
 		player.velocity = Vector3.ZERO
-		print("t=0.0s boss state=%d health=%.0f" % [boss.state, boss.health])
+		_expect("t=0.0s boss dormant", boss.state, STATE_IDLE)
+		_expect_near("t=0.0s boss health", boss.health, 400.0, 0.5)
 		return false
 	var t := (Time.get_ticks_msec() - _start_ms) / 1000.0
-	if t > 2.0 and boss and player and not _killed:
-		_report_once("t1", "t=2.0s boss state=%d (expect 2-3) dist=%.1f" % [boss.state,
-				boss.global_position.distance_to(player.global_position)])
+	if t > 2.0 and boss and player and not _killed and not _reported.has("t1"):
+		_reported["t1"] = true
+		_expect_between("t=2.0s boss engaged", boss.state, STATE_CHASE, STATE_ATTACK)
 	if t > 6.0 and boss and not _phase2_done:
 		_phase2_done = true
-		print("t=6.0s boss state=%d player health=%d (expect <100 from fireballs)"
-				% [boss.state, gs.health])
+		_expect_less("player hit by fireballs from range", gs.health, 100)
 		# Heal so the stationary test player can't die before the boss does.
 		gs.health = 100
 		boss.take_damage(210.0)
-		print("after 210 dmg: health=%.0f enraged=%s (expect true)" % [boss.health, boss._enraged])
+		_expect_true("boss enraged below half health", boss._enraged)
+		_expect_near("boss health after 210 dmg", boss.health, 190.0, 0.5)
 	if t > 8.0 and not _killed:
 		_killed = true
 		boss.take_damage(500.0)
-		print("after kill: state=%d (expect 4 DEAD)" % boss.state)
+		_expect("boss dead after kill blow", boss.state, STATE_DEAD)
 	if t > 10.5:
-		print("boss freed: %s, win signal fired: %s (expect true true)"
-				% [str(not is_instance_valid(boss)), str(_win_signaled)])
-		print("boss test done")
-		return true
+		_expect_true("boss freed after death", not is_instance_valid(boss))
+		_expect_true("boss_died signal fired", _win_signaled)
+		return _finish()
 	return false

@@ -1,7 +1,7 @@
 extends Control
 ## Entry point and game-flow controller. Hosts the low-res PS1 SubViewport
-## and routes: start screen -> level 1 -> (switch + teleporter) -> level 2
-## -> level 3 boss -> secret gold room -> win screen. Death restarts the
+## and routes: start screen -> level 1 -> (switch + teleporter) -> ... ->
+## level 7 boss -> secret gold room -> win screen. Death restarts the
 ## level the player died on; the player node persists across level
 ## transitions so health and ammo carry over.
 
@@ -202,8 +202,13 @@ func start_game(level_index := 0) -> void:
 	_restart_index = level_index
 	_load_level()
 	_player = PLAYER_SCENE.instantiate() as PlayerController
-	_world.add_child(_player)
+	# Place BEFORE adding to the tree: a player that enters at the world origin
+	# and is only then moved registers with the physics space at the origin, so
+	# any Area3D covering it fires body_entered (level 4's ice zone spans the
+	# origin) and the paired body_exited can land a frame later -- arriving on
+	# the ice level already counted as standing on ice.
 	_place_player_at_spawn()
+	_world.add_child(_player)
 	_game_active = true
 	_show_only(_hud)
 	_hud.bind_player(_player)
@@ -231,10 +236,15 @@ func _count_in_level(group: String) -> int:
 
 func _place_player_at_spawn() -> void:
 	var spawn: Node3D = _level.get_node_or_null("Spawns/PlayerSpawn")
-	if spawn and is_instance_valid(_player):
-		_player.global_position = spawn.global_position
-		_player.velocity = Vector3.ZERO
-		_player.rotation.y = spawn.global_rotation.y
+	if spawn == null or not is_instance_valid(_player):
+		return
+	# Plain position/rotation rather than the global_* pair: World sits at the
+	# origin with an identity transform so the two are equivalent, and these
+	# work on a player that has not entered the tree yet (see start_game),
+	# where the global_* setters would error out.
+	_player.position = spawn.global_position
+	_player.rotation.y = spawn.global_rotation.y
+	_player.velocity = Vector3.ZERO
 
 
 func _on_level_completed() -> void:
@@ -331,8 +341,8 @@ func _clear_game() -> void:
 
 
 func _clear_projectiles() -> void:
-	# Player rockets are parented to the game viewport (not the level), so
-	# without this a rocket in flight would survive level teardown and keep
+	# Player projectiles are parented to the game viewport (not the level), so
+	# without this a fireball in flight would survive level teardown and keep
 	# flying — and exploding — into the next level or the menus.
 	for projectile in get_tree().get_nodes_in_group("projectiles"):
 		projectile.queue_free()

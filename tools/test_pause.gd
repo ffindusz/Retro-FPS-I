@@ -15,37 +15,40 @@ func _tick(_delta: float) -> bool:
 			_key(KEY_ESCAPE)
 			_next(400)
 		1:
-			print("after ESC: paused=%s overlay=%s (expect true true)"
-					% [paused, pause_screen.visible])
+			_expect_true("ESC pauses the tree", paused)
+			_expect_true("ESC shows the pause overlay", pause_screen.visible)
 			_key(KEY_ESCAPE)
 			_next(400)
 		2:
-			print("after ESC again: paused=%s overlay=%s health=%d (expect false false 70)"
-					% [paused, pause_screen.visible, gs.health])
+			_expect_false("ESC again unpauses", paused)
+			_expect_false("ESC again hides the overlay", pause_screen.visible)
+			_expect("health survives the pause", gs.health, 70)
 			_key(KEY_ESCAPE)
 			_next(400)
 		3:
 			_click()
 			_next(400)
 		4:
-			print("after click in pause: paused=%s overlay=%s (expect false false)"
-					% [paused, pause_screen.visible])
+			_expect_false("click in pause unpauses", paused)
+			_expect_false("click in pause hides the overlay", pause_screen.visible)
 			_key(KEY_ESCAPE)
 			_next(400)
 		5:
 			_key(KEY_R)
 			_next(500)
 		6:
-			print("after R in pause: paused=%s hud=%s health=%d (expect false true 100)"
-					% [paused, current_scene.get_node("Hud").visible, gs.health])
+			_expect_false("R in pause unpauses", paused)
+			_expect_true("R in pause returns to the hud",
+					current_scene.get_node("Hud").visible)
+			_expect("R in pause resets health", gs.health, 100)
 			_key(KEY_ESCAPE)
 			_next(400)
 		7:
 			_key(KEY_Q)
 			_next(500)
 		8:
-			print("after Q in pause: paused=%s start screen=%s (expect false true)"
-					% [paused, current_scene.get_node("StartScreen").visible])
-			print("pause test done")
-			return true
+			_expect_false("Q in pause unpauses", paused)
+			_expect_true("Q in pause returns to the title",
+					current_scene.get_node("StartScreen").visible)
+			return _finish()
 	return false

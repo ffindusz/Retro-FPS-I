@@ -90,15 +90,16 @@ dither/quantize filter; settings persist to `user://settings.cfg`.
 - `tools/` — headless dev scripts (`-s` runnable): `gen_textures.gd`/
   `gen_audio.gd` (deterministic asset generators), `probe_level.gd`
   (CSG collision probe), `screenshot_tour.gd`/`screenshot_ui.gd` (visual
-  capture — run without `--headless`), and 18 smoke tests covering level
+  capture — run without `--headless`), and 24 smoke tests covering level
   flow (`test_flow`, `test_progression`, `test_cheat`, `test_pause`,
   `test_settings`),
   combat/AI (`test_enemy`, `test_spitter`, `test_wake` (cross-type
   wake-on-death), `test_rogue`, `test_boss`, `test_weapons`),
-  movement/hazards/stats (`test_crouch`, `test_feel`, `test_ice`,
-  `test_lava`, `test_void`, `test_pickups`, `test_stats`), and the
-  external-model props (`test_props`) — all sharing their boot/wait/step
-  boilerplate via `test_base.gd`
+  movement/hazards/stats (`test_crouch`, `test_feel`, `test_step`,
+  `test_ice`, `test_lava`, `test_void`, `test_pickups`, `test_stats`,
+  `test_gold`, `test_treasure`), audio (`test_audio`, `test_sfx_bus`), and
+  the external-model props (`test_props`) — all sharing their boot/wait/step
+  boilerplate **and their assertions** via `test_base.gd`
 - `project.godot` uses `rendering_method="forward_plus"`. The mobile renderer
   caps omni lights per object, and since each level is one big CSG mesh, its
   many torch/room lights exceeded the cap and flickered as the renderer
@@ -113,6 +114,23 @@ Example headless test run:
 ```
 godot --headless --path . -s tools/test_flow.gd
 ```
+
+Each test prints a `PASS`/`FAIL` line per check and a closing
+`RESULT: PASS (n checks)`, and **exits non-zero if any check failed** — so the
+suite can be run in a loop and trusted to go red on a regression:
+
+```
+for t in tools/test_*.gd; do
+  [ "$(basename "$t")" = test_base.gd ] && continue   # abstract harness, never ends
+  godot --headless --path . -s "$t" || echo "FAILED: $t"
+done
+```
+
+Skip `test_base.gd`: it is the shared harness, not a test, and its default
+`_tick` never returns true, so running it directly spins forever. `test_audio`
+and `test_sfx_bus` are meant to be run **without** `--headless` (the headless
+dummy audio driver makes listening impossible, and `test_audio` is a
+listen-by-ear check — it only asserts that every stream still loads).
 
 All textures and SFX are generated deterministically by `tools/gen_textures.gd`
 and `tools/gen_audio.gd`; the outputs are committed, so a clean clone needs no

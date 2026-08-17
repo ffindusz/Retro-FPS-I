@@ -11,7 +11,7 @@ top_radius = 0.06
 bottom_radius = 0.06
 height = 0.3
 
-[node name="Rocket" type="Area3D"]
+[node name="StaffFireball" type="Area3D"]
 collision_layer = 0
 collision_mask = 5
 script = ExtResource("1_script")

@@ -9,8 +9,8 @@
 [ext_resource type="PackedScene" path="res://scenes/level_objects/shootable_chest.tscn" id="41_chest"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_potion.tscn" id="10_health"]
 [ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_crystals.tscn" id="11_bullets"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_quarrels.tscn" id="12_shells"]
-[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_embers.tscn" id="13_rockets"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_quarrels.tscn" id="12_quarrels"]
+[ext_resource type="PackedScene" path="res://scenes/level_objects/pickup_embers.tscn" id="13_embers"]
 [ext_resource type="Material" path="res://assets/materials/mat_metal.tres" id="1_metal"]
 [ext_resource type="Material" path="res://assets/materials/mat_floor.tres" id="2_floor"]
 [ext_resource type="PackedScene" path="res://scenes/props/box.tscn" id="44_box"]
@@ -218,16 +218,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -2.95, 0)
 [node name="HealthArrival" parent="Pickups" instance=ExtResource("10_health")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.05, 18.5)
 
-[node name="ShellsCorr1" parent="Pickups" instance=ExtResource("12_shells")]
+[node name="QuarrelsCorr1" parent="Pickups" instance=ExtResource("12_quarrels")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 7)
 
 [node name="BulletsHall" parent="Pickups" instance=ExtResource("11_bullets")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0.05, -1)
 
-[node name="ShellsHall" parent="Pickups" instance=ExtResource("12_shells")]
+[node name="QuarrelsHall" parent="Pickups" instance=ExtResource("12_quarrels")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0.05, -6)
 
-[node name="RocketsPit" parent="Pickups" instance=ExtResource("13_rockets")]
+[node name="EmbersPit" parent="Pickups" instance=ExtResource("13_embers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, -2.9, -2)
 
 [node name="HealthRim" parent="Pickups" instance=ExtResource("10_health")]

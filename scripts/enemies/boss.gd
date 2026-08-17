@@ -4,7 +4,7 @@ extends EnemyBase
 ## health it enrages: faster movement, shorter attack interval, wider
 ## volleys, and an eye flare — the phase change.
 
-const FIREBALL := preload("res://scenes/weapons/projectile_fireball.tscn")
+const FIREBALL := preload("res://scenes/weapons/projectile_boss_fireball.tscn")
 const ROAR_SOUND := preload("res://assets/audio/boss_roar.wav")
 
 ## Throw clip is 1.4s; sped up so a volley windup fits inside even the

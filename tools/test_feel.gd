@@ -19,20 +19,19 @@ func _tick(_delta: float) -> bool:
 	var player: CharacterBody3D = world.get_node_or_null("Player")
 	match _step:
 		0:
-			print("music playing: %s (expect true)" % current_scene.get_node("Music").playing)
+			_expect_true("music playing", current_scene.get_node("Music").playing)
 			# Strafe within the tall spawn room so the later drop stays indoors.
 			Input.action_press("move_left")
 			_next(1500)
 		1:
 			Input.action_release("move_left")
-			print("after 1.5s walk: steps=%d (expect >=2) bob_phase=%.2f (expect >0)"
-					% [player.step_count, player._bob_phase])
+			_expect_greater("footsteps after 1.5s walk", player.step_count, 1)
+			_expect_greater("bob phase advanced", player._bob_phase, 0.0)
 			player.global_position = Vector3(0, 2.1, 22)
 			player.velocity = Vector3.ZERO
 			_next(1200)
 		2:
-			print("after 4m drop: max land dip=%.3f (expect >=0.15), on floor=%s"
-					% [_max_dip, player.is_on_floor()])
-			print("feel test done")
-			return true
+			_expect_greater("landing dip after 2m drop", _max_dip, 0.15)
+			_expect_true("back on the floor after landing", player.is_on_floor())
+			return _finish()
 	return false

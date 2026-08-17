@@ -8,7 +8,7 @@ const BURST_SHADER := preload("res://shaders/burst.gdshader")
 const BURST_SHEET := preload("res://assets/textures/burst_sheet.png")
 
 ## Cap on concurrent flash lights: the Mobile renderer clips per-mesh light
-## counts, so e.g. a shotgun blast's seven impact omnis could silently knock
+## counts, so e.g. a crossbow volley's seven impact omnis could silently knock
 ## out level lighting. Past the cap, flashes spawn without their light.
 const MAX_LIGHTS := 6
 static var _live_lights := 0
@@ -52,7 +52,7 @@ static func spawn(context: Node3D, pos: Vector3, color: Color, size: float, life
 
 
 ## One-shot positional sound that outlives its emitter (e.g. exploding
-## rockets, dying enemies).
+## fireballs, dying enemies).
 static func spawn_sound(context: Node3D, pos: Vector3, stream: AudioStream,
 		volume_db := 0.0, pitch := 1.0) -> void:
 	var vp := context.get_viewport()

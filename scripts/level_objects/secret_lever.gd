@@ -1,7 +1,7 @@
 class_name SecretLever
 extends StaticBody3D
 ## A wall lever you shoot to open a linked secret door. Sits on the world +
-## enemy collision layers so hitscan rays and rocket splash register hits via
+## enemy collision layers so hitscan rays and fireball splash register hits via
 ## take_damage(). Unlike the crystal exit switch it is NOT gated on clearing
 ## the level -- it is a hidden bonus, live from the start. One shot throws the
 ## handle, recolors its glow, and opens the door it points at.

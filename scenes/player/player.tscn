@@ -1,13 +1,13 @@
 [gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_ctrl"]
-[ext_resource type="PackedScene" path="res://scenes/weapons/weapon_plasma.tscn" id="8_plasma"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/weapon_tome.tscn" id="8_tome"]
 [ext_resource type="AudioStream" path="res://assets/audio/step.wav" id="6_step"]
 [ext_resource type="AudioStream" path="res://assets/audio/land.wav" id="7_land"]
 [ext_resource type="Script" path="res://scripts/player/weapon_manager.gd" id="2_wm"]
-[ext_resource type="PackedScene" path="res://scenes/weapons/weapon_pistol.tscn" id="3_pistol"]
-[ext_resource type="PackedScene" path="res://scenes/weapons/weapon_shotgun.tscn" id="4_shotgun"]
-[ext_resource type="PackedScene" path="res://scenes/weapons/weapon_launcher.tscn" id="5_launcher"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/weapon_wand.tscn" id="3_wand"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/weapon_crossbow.tscn" id="4_crossbow"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/weapon_staff.tscn" id="5_staff"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 radius = 0.4
@@ -33,15 +33,15 @@ near = 0.05
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, -0.18, -0.45)
 script = ExtResource("2_wm")
 
-[node name="Pistol" parent="Head/Camera3D/WeaponManager" instance=ExtResource("3_pistol")]
+[node name="Wand" parent="Head/Camera3D/WeaponManager" instance=ExtResource("3_wand")]
 
-[node name="Shotgun" parent="Head/Camera3D/WeaponManager" instance=ExtResource("4_shotgun")]
+[node name="Crossbow" parent="Head/Camera3D/WeaponManager" instance=ExtResource("4_crossbow")]
 visible = false
 
-[node name="Launcher" parent="Head/Camera3D/WeaponManager" instance=ExtResource("5_launcher")]
+[node name="Staff" parent="Head/Camera3D/WeaponManager" instance=ExtResource("5_staff")]
 visible = false
 
-[node name="Plasma" parent="Head/Camera3D/WeaponManager" instance=ExtResource("8_plasma")]
+[node name="Tome" parent="Head/Camera3D/WeaponManager" instance=ExtResource("8_tome")]
 visible = false
 
 [node name="StepSound" type="AudioStreamPlayer" parent="."]

@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3]
 
-[ext_resource type="Script" path="res://scripts/weapons/launcher.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/weapons/projectile_weapon.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://assets/models/staff/staff.gltf" id="2_model"]
-[ext_resource type="PackedScene" path="res://scenes/weapons/projectile_rocket.tscn" id="4_rocket"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/projectile_staff_fireball.tscn" id="4_fireball"]
 [ext_resource type="AudioStream" path="res://assets/audio/staff_fire.wav" id="5_shot"]
 [ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="6_click"]
 
@@ -18,13 +18,13 @@ billboard_mode = 1
 [sub_resource type="QuadMesh" id="QuadMesh_flash"]
 size = Vector2(0.55, 0.55)
 
-[node name="Launcher" type="Node3D"]
+[node name="Staff" type="Node3D"]
 script = ExtResource("1_script")
 weapon_label = "STAFF"
 ammo_type = 3
 fire_interval = 1.1
 max_ammo = 10
-projectile_scene = ExtResource("4_rocket")
+projectile_scene = ExtResource("4_fireball")
 
 [node name="Model" parent="." instance=ExtResource("2_model")]
 transform = Transform3D(0.32, 0, 0, 0, 0, 0.32, 0, -0.32, 0, 0, -0.02, 0.02)

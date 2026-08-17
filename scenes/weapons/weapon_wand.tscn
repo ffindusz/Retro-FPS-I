@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3]
 
-[ext_resource type="Script" path="res://scripts/weapons/pistol.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/weapons/wand.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://assets/models/wand/wand.gltf" id="2_model"]
 [ext_resource type="AudioStream" path="res://assets/audio/wand_zap.wav" id="4_shot"]
 [ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="5_click"]
@@ -17,7 +17,7 @@ billboard_mode = 1
 [sub_resource type="QuadMesh" id="QuadMesh_flash"]
 size = Vector2(0.3, 0.3)
 
-[node name="Pistol" type="Node3D"]
+[node name="Wand" type="Node3D"]
 script = ExtResource("1_script")
 weapon_label = "WAND"
 ammo_type = 1

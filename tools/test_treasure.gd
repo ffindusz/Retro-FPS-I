@@ -25,13 +25,10 @@ func _tick(_delta: float) -> bool:
 		_loaded = true
 		_next(300)
 		return false
-	var tag := "" if gs.total_gold == EXPECTED[_lvl] else "   <-- MISMATCH!"
-	print("level %d gold total: total_gold=%d (expect %d)%s"
-			% [_lvl + 1, gs.total_gold, EXPECTED[_lvl], tag])
+	_expect("level %d gold total" % [_lvl + 1], gs.total_gold, EXPECTED[_lvl])
 	_lvl += 1
 	if _lvl >= EXPECTED.size():
-		print("treasure test done")
-		return true
+		return _finish()
 	_loaded = false
 	_next(300)
 	return false

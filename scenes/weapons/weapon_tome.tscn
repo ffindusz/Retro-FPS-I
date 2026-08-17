@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3]
 
-[ext_resource type="Script" path="res://scripts/weapons/launcher.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/weapons/projectile_weapon.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://assets/models/spellbook_open/spellbook_open.gltf" id="2_model"]
-[ext_resource type="PackedScene" path="res://scenes/weapons/projectile_plasma_player.tscn" id="3_bolt"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/projectile_tome_bolt.tscn" id="3_tome_bolt"]
 [ext_resource type="AudioStream" path="res://assets/audio/tome_pulse.wav" id="4_shot"]
 [ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="5_click"]
 
@@ -18,13 +18,13 @@ billboard_mode = 1
 [sub_resource type="QuadMesh" id="QuadMesh_flash"]
 size = Vector2(0.34, 0.34)
 
-[node name="Plasma" type="Node3D"]
+[node name="Tome" type="Node3D"]
 script = ExtResource("1_script")
 weapon_label = "TOME"
 ammo_type = 4
 fire_interval = 0.11
 max_ammo = 60
-projectile_scene = ExtResource("3_bolt")
+projectile_scene = ExtResource("3_tome_bolt")
 
 [node name="Model" parent="." instance=ExtResource("2_model")]
 transform = Transform3D(0.3, 0, 0, 0, 0.172, 0.246, 0, -0.246, 0.172, 0.02, -0.17, -0.3)

@@ -1,7 +1,7 @@
 extends StaticBody3D
 ## A gold chest you shoot open. Sits on BOTH the world and enemy collision
 ## layers (like the rubble blockade): the enemy layer lets hitscan rays and
-## rocket splash register hits via take_damage(), the world layer makes it
+## fireball splash register hits via take_damage(), the world layer makes it
 ## solid. One hit flips the lid up, bursts coins, and tosses a gold gem out --
 ## the reward only counts once the player walks over and picks that gem up.
 

@@ -27,18 +27,18 @@ func _tick(_delta: float) -> bool:
 			var props: Node3D = world.get_node_or_null("Level01/Props")
 			var torch := props.get_node_or_null("TorchCorr3West")
 			var remains := props.get_node_or_null("RemainsArena")
-			print("props placed: torches=%s remains=%s (expect true true)"
-					% [torch != null and props.get_node_or_null("TorchCorr3East") != null,
-					remains != null])
+			_expect_true("torch props placed",
+					torch != null and props.get_node_or_null("TorchCorr3East") != null)
+			_expect_true("remains prop placed", remains != null)
 			var flicker: AnimationPlayer = torch.get_node("Flicker")
-			print("torch flicker: playing=%s anim=%s (expect true flicker)"
-					% [flicker.is_playing(), flicker.current_animation])
+			_expect_true("torch flicker running", flicker.is_playing())
+			_expect("torch flicker clip", flicker.current_animation, "flicker")
 			# The remains prop is now a static rubble pile (no AnimationPlayer),
 			# swapped off the skeleton_rogue model that enemy_rogue uses. Still
 			# verify its imported mesh carries a PS1 ShaderMaterial.
 			var meshes := remains.find_children("*", "MeshInstance3D", true, false)
 			var mat := (meshes[0] as MeshInstance3D).mesh.surface_get_material(0)
-			print("imported material: %s (expect ShaderMaterial)" % mat.get_class())
+			_expect("imported remains material", mat.get_class(), "ShaderMaterial")
 			current_scene.start_game(7)
 			_next(500)
 		2:
@@ -46,23 +46,22 @@ func _tick(_delta: float) -> bool:
 			for display_name: String in STAGE_CLIPS:
 				var ap: AnimationPlayer = displays.get_node(display_name) \
 						.find_child("AnimationPlayer", true, false)
-				print("%s: playing=%s anim=%s (expect true %s)" % [display_name,
-						ap.is_playing(), ap.current_animation, STAGE_CLIPS[display_name]])
+				_expect_true("%s animating" % display_name, ap.is_playing())
+				_expect("%s clip" % display_name, ap.current_animation,
+						STAGE_CLIPS[display_name])
 			var stage_props: Node3D = world.get_node_or_null("LevelTest/Props")
 			var missing := []
 			for prop_name in STAGE_PROPS:
 				if stage_props.get_node_or_null(prop_name) == null:
 					missing.append(prop_name)
-			print("stage props: %d placed, missing=%s (expect %d [])"
-					% [STAGE_PROPS.size() - missing.size(), missing, STAGE_PROPS.size()])
+			_expect("stage props missing", missing, [])
 			var pillar_mesh: MeshInstance3D = stage_props.get_node("Pillar") \
 					.find_child("pillar", true, false)
-			print("pillar material: %s (expect ShaderMaterial)"
-					% pillar_mesh.mesh.surface_get_material(0).get_class())
+			_expect("pillar material",
+					pillar_mesh.mesh.surface_get_material(0).get_class(),
+					"ShaderMaterial")
 			var unlit_flicker: AnimationPlayer = \
 					stage_props.get_node("TorchUnlit").get_node("Flicker")
-			print("torch_unlit flicker: playing=%s (expect true)"
-					% unlit_flicker.is_playing())
-			print("props test done")
-			return true
+			_expect_true("torch_unlit flicker running", unlit_flicker.is_playing())
+			return _finish()
 	return false
