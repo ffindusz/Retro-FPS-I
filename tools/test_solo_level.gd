@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tools/test_base.gd"
 ## Verifies the standalone-level path (pressing F6 on a level scene in the
 ## editor). Running a level on its own used to give a black, unplayable scene
 ## -- no camera, no player, no lighting. LevelRoot now hands off to main.tscn
@@ -13,27 +13,31 @@ extends SceneTree
 ## produce a player and a HUD, so only a mid-campaign level proves the index
 ## lookup worked.
 const LEVEL_PATH := "res://scenes/levels/level_03.tscn"
-const WORLD_PATH := "ViewportContainer/GameViewport/World"
 
 var _t0 := 0
 
 
+## Opens the level directly instead of main.tscn -- that handoff is the thing
+## under test.
 func _initialize() -> void:
 	change_scene_to_file(LEVEL_PATH)
 	_t0 = Time.get_ticks_msec()
 
 
-func _process(_delta: float) -> bool:
+## LevelRoot boots the game itself, so the harness must not call start_game.
+func _skip_auto_start() -> bool:
+	return true
+
+
+func _tick(_delta: float) -> bool:
 	# One wait covers the level's own _ready, the deferred scene change and
-	# main.gd's boot.
+	# main.gd's boot. Gated here rather than through _wait_until because
+	# _skip_auto_start() hands us the very first frame.
 	if Time.get_ticks_msec() - _t0 < 2500:
 		return false
 
 	var scene := current_scene
-	print("current scene: %s (expect Main)" % (scene.name if scene else "<null>"))
-	if scene == null:
-		print("SOLO LEVEL TEST: FAIL")
-		return true
+	_expect("handed off to the main scene", scene.name, "Main")
 
 	var world := scene.get_node_or_null(WORLD_PATH)
 	var level: Node = null
@@ -42,16 +46,9 @@ func _process(_delta: float) -> bool:
 			if child.scene_file_path != "":
 				level = child
 				break
-	var loaded := level.scene_file_path if level else "<none>"
-	print("level loaded: %s (expect %s)" % [loaded, LEVEL_PATH])
+	_expect("level booted", level.scene_file_path if level else "<none>", LEVEL_PATH)
 
-	var player := get_first_node_in_group("player")
 	var hud := scene.get_node_or_null("Hud")
-	var hud_visible: bool = hud != null and hud.visible
-	print("player: %s  hud visible: %s (expect true true)"
-			% [player != null, hud_visible])
-
-	var ok: bool = scene.name == "Main" and loaded == LEVEL_PATH \
-			and player != null and hud_visible
-	print("SOLO LEVEL TEST: %s" % ["PASS" if ok else "FAIL"])
-	return true
+	_expect_true("player exists", get_first_node_in_group("player") != null)
+	_expect_true("HUD is visible", hud != null and hud.visible)
+	return _finish()

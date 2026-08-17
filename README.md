@@ -117,12 +117,10 @@ hit save.
   movement/hazards/stats (`test_crouch`, `test_feel`, `test_step`,
   `test_ice`, `test_lava`, `test_void`, `test_pickups`, `test_stats`),
   treasure/score (`test_gold`, `test_treasure`), audio (`test_audio`,
-  `test_sfx_bus`), and the external-model props (`test_props`) — most
+  `test_sfx_bus`), and the external-model props (`test_props`) — all
   sharing their boot/wait/step boilerplate **and their assertions** via
   `test_base.gd`. Two audio checks (`test_audio`, `test_sfx_bus`) must run
-  WITHOUT `--headless`, which swaps in the dummy audio driver.
-  `test_solo_level`, `test_catalog` and `test_room_block` predate the
-  assertion harness and still only print
+  WITHOUT `--headless`, which swaps in the dummy audio driver
 - The game runs on the **Forward+** renderer (recorded in `project.godot`'s
   `config/features`; the explicit `rendering_method` line is absent because
   Forward+ is the desktop default, and the editor strips settings that match
