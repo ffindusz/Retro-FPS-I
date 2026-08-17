@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tools/test_base.gd"
 ## Verifies the player walks up a small step but is still stopped by a full
 ## wall. Builds a bare floor with a low deep platform in one lane and a tall
 ## wall in another, drives the player forward into each, and checks the result.
@@ -12,7 +12,6 @@ var _world: Node3D
 var _player: CharacterBody3D
 var _phase := 0
 var _t0 := 0
-var _step_ok := false
 
 
 func _initialize() -> void:
@@ -62,9 +61,8 @@ func _process(_delta: float) -> bool:
 			if t > 1200:
 				Input.action_release("move_forward")
 				var p := _player.global_position
-				_step_ok = p.y > 0.2 and p.z < -1.0
-				print("low step: y=%.2f z=%.2f -> %s"
-						% [p.y, p.z, "CLIMBED" if _step_ok else "STALLED"])
+				_expect_greater("low step climbed (y)", p.y, 0.2)
+				_expect_less("low step walked onto (z)", p.z, -1.0)
 				_reset_player(Vector3(20, 1.0, 2))
 				Input.action_press("move_forward")
 				_phase = 2
@@ -73,10 +71,7 @@ func _process(_delta: float) -> bool:
 			if t > 1500:
 				Input.action_release("move_forward")
 				var p := _player.global_position
-				var blocked := p.y < 0.5 and p.z > -3.6
-				print("tall wall: y=%.2f z=%.2f -> %s"
-						% [p.y, p.z, "BLOCKED" if blocked else "CLIMBED (bad)"])
-				print("STEP TEST: %s"
-						% ["PASS" if _step_ok and blocked else "FAIL"])
-				return true
+				_expect_less("tall wall not climbed (y)", p.y, 0.5)
+				_expect_greater("tall wall blocked the advance (z)", p.z, -3.6)
+				return _finish()
 	return false
