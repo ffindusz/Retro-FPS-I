@@ -478,7 +478,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, 5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 5)
 
 [node name="BedCellS" parent="Props" unique_id=5273361 instance=ExtResource("23_bed")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 3)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 12, 0, 1.75)
 
 [node name="BedCata" parent="Props" unique_id=517981373 instance=ExtResource("23_bed")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0, 5.2)
