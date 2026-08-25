@@ -3,7 +3,7 @@ extends "res://tools/test_base.gd"
 ## player across the great hall from Rogue1, watches it wake and cloak while
 ## chasing (mesh transparency up), verifies damage rips the cloak away, that
 ## it decloaks inside strike range and stabs (player health drops), then
-## kills it. Afterwards blasts the rubble blockade sealing the secret nook
+## kills it. Afterwards blasts the junk barricade sealing the secret nook
 ## and confirms the freed passage lets the secret trigger.
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/test_rogue.gd
 
@@ -80,19 +80,19 @@ func _tick(_delta: float) -> bool:
 	if t > 9.5 and not _blasted:
 		_blasted = true
 		_expect_true("rogue freed after death", not is_instance_valid(rogue))
-		var rubble: Node = world.get_node("Level05/Props/RubbleBlockade")
-		rubble.take_damage(30.0)
-		_expect_true("rubble survives 30 dmg (takes 60)",
-				is_instance_valid(rubble) and not rubble.is_queued_for_deletion())
-		rubble.take_damage(999.0)
+		var barricade: Node = world.get_node("Level05/Props/Barricade")
+		barricade.take_damage(30.0)
+		_expect_true("barricade survives 30 dmg (takes 60)",
+				is_instance_valid(barricade) and not barricade.is_queued_for_deletion())
+		barricade.take_damage(999.0)
 	if t > 10.3 and not _entered_nook:
 		_entered_nook = true
-		var rubble: Node = world.get_node_or_null("Level05/Props/RubbleBlockade")
-		_expect_true("rubble cleared by the blast", rubble == null)
+		var barricade: Node = world.get_node_or_null("Level05/Props/Barricade")
+		_expect_true("barricade cleared by the blast", barricade == null)
 		# Walk into the opened nook; the secret area should trigger.
 		player.global_position = Vector3(-25.5, 0.1, 4)
 		player.velocity = Vector3.ZERO
 	if t > 11.3:
-		_expect("secret behind the rubble found", gs.secrets_found, 1)
+		_expect("secret behind the barricade found", gs.secrets_found, 1)
 		return _finish()
 	return false

@@ -7,6 +7,10 @@ Godot_v*.exe
 # Debug screenshot output
 tmp_shots/
 
+# Upstream asset packs unzipped in place. The models the game uses are
+# extracted into assets/models/ and committed; the source pack is not.
+KayKit_*/
+
 # Export artifacts
 export/
 *.pck

@@ -16,15 +16,15 @@
 [ext_resource type="PackedScene" uid="uid://c6635ko8lxquk" path="res://scenes/level_objects/secret_area.tscn" id="15_secret"]
 [ext_resource type="PackedScene" uid="uid://d4nqed72apr37" path="res://scenes/level_objects/pickup_mana.tscn" id="16_cells"]
 [ext_resource type="PackedScene" uid="uid://cg0q85rmartgj" path="res://scenes/props/torch_mounted.tscn" id="17_torch"]
-[ext_resource type="PackedScene" uid="uid://bsa3xiy0imyo8" path="res://scenes/props/remains_prop.tscn" id="18_remains"]
+[ext_resource type="PackedScene" uid="uid://c25eo0swkt5uv" path="res://scenes/props/table_broken.tscn" id="18_table_broken"]
 [ext_resource type="PackedScene" uid="uid://dloyfma3kitfj" path="res://scenes/props/banner_red.tscn" id="19_banner_red"]
 [ext_resource type="PackedScene" uid="uid://ciuv5jhwuw4c2" path="res://scenes/props/banner_blue.tscn" id="20_banner_blue"]
 [ext_resource type="PackedScene" uid="uid://c1wwbsjyl2pc7" path="res://scenes/props/pillar.tscn" id="21_pillar"]
 [ext_resource type="PackedScene" uid="uid://dcykufcv3i7c4" path="res://scenes/props/pillar_decorated.tscn" id="22_pillar_dec"]
 [ext_resource type="PackedScene" uid="uid://kur4axmba685" path="res://scenes/props/crates_stacked.tscn" id="23_crates"]
 [ext_resource type="PackedScene" uid="uid://blnu30s4xnj6u" path="res://scenes/props/sword_shield.tscn" id="24_sword_shield"]
-[ext_resource type="PackedScene" uid="uid://d1o38vmf62vlq" path="res://scenes/props/rubble_half.tscn" id="25_rubble_half"]
-[ext_resource type="PackedScene" uid="uid://ur4kwwuvw6p3" path="res://scenes/props/rubble_large.tscn" id="26_rubble_large"]
+[ext_resource type="PackedScene" uid="uid://crpcg7wbq5o0g" path="res://scenes/props/shelves.tscn" id="25_shelves"]
+[ext_resource type="PackedScene" uid="uid://bo0uh025r5ped" path="res://scenes/props/table_broken_long.tscn" id="26_table_broken_long"]
 [ext_resource type="PackedScene" uid="uid://ceegoklnyv8sk" path="res://scenes/props/torch_unlit.tscn" id="27_torch_unlit"]
 [ext_resource type="PackedScene" uid="uid://dqdi76jc4clf0" path="res://scenes/props/dust_motes.tscn" id="28_dust"]
 [ext_resource type="PackedScene" uid="uid://bt7u6o7tty2gv" path="res://scenes/level_objects/pickup_gold.tscn" id="40_gold"]
@@ -32,6 +32,10 @@
 [ext_resource type="PackedScene" uid="uid://c7ldqxgdjspag" path="res://scenes/level_objects/secret_door.tscn" id="42_door"]
 [ext_resource type="PackedScene" uid="uid://cebbx5in4mu0a" path="res://scenes/level_objects/secret_lever.tscn" id="43_lever"]
 [ext_resource type="PackedScene" uid="uid://thg5uy2vm4sm" path="res://scenes/props/box.tscn" id="44_box"]
+[ext_resource type="PackedScene" uid="uid://bstnrx7kgm8t8" path="res://scenes/props/chair.tscn" id="45_chair"]
+[ext_resource type="PackedScene" uid="uid://d1r84v3qp7ko2" path="res://scenes/props/barrel_large.tscn" id="46_barrel_large"]
+[ext_resource type="PackedScene" uid="uid://sbgrqso6f3cg" path="res://scenes/props/barrel_stack.tscn" id="47_barrel_stack"]
+[ext_resource type="PackedScene" uid="uid://dt5rusi5faim0" path="res://scenes/props/box_stacked.tscn" id="48_box_stacked"]
 [ext_resource type="Script" uid="uid://djut4agw0ji75" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
 [node name="Level01" type="Node3D" unique_id=1662139044]
@@ -454,7 +458,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 2.2, -5.98)
 [node name="TorchCorr3East" parent="Props" unique_id=1880102645 instance=ExtResource("17_torch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 2.2, -5.98)
 
-[node name="RemainsArena" parent="Props" unique_id=73544118 instance=ExtResource("18_remains")]
+[node name="TableBrokenArena" parent="Props" unique_id=48018852 instance=ExtResource("18_table_broken")]
 transform = Transform3D(-0.671, 0, -0.742, 0, 1, 0, 0.742, 0, -0.671, -8.2, 0, -31.3)
 
 [node name="BannerRedA1" parent="Props" unique_id=1954984717 instance=ExtResource("19_banner_red")]
@@ -519,11 +523,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -24)
 [node name="PillarDecArena2" parent="Props" unique_id=320792874 instance=ExtResource("22_pillar_dec")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -24)
 
-[node name="RubbleLargeArena" parent="Props" unique_id=7280878 instance=ExtResource("26_rubble_large")]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 9.2, 0, -28)
+[node name="BoxStackedArenaE" parent="Props" unique_id=1000231705 instance=ExtResource("48_box_stacked")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.1, 0, -32)
 
-[node name="RubbleHalfArena" parent="Props" unique_id=1187999301 instance=ExtResource("25_rubble_half")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.6, 0, -16.2)
+[node name="TableBrokenLongArenaE" parent="Props" unique_id=413024071 instance=ExtResource("26_table_broken_long")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.6, 0, -27.6)
+
+[node name="ChairArenaE1" parent="Props" unique_id=1539402073 instance=ExtResource("45_chair")]
+transform = Transform3D(-0.94, 0, 0.342, 0, 1, 0, -0.342, 0, -0.94, 7.2, 0, -24.8)
+
+[node name="ChairArenaE2" parent="Props" unique_id=1089879169 instance=ExtResource("45_chair")]
+transform = Transform3D(0.866, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866, 9.4, 0, -24.6)
+
+[node name="BarrelLargeArenaE" parent="Props" unique_id=2142302017 instance=ExtResource("46_barrel_large")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -23)
+
+[node name="ShelvesArenaW" parent="Props" unique_id=1760429257 instance=ExtResource("25_shelves")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -10, 0, -16.2)
+
+[node name="CratesArenaW" parent="Props" unique_id=745569279 instance=ExtResource("23_crates")]
+transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, -8.7, 0, -18.4)
+
+[node name="BarrelStackArenaW" parent="Props" unique_id=1741934630 instance=ExtResource("47_barrel_stack")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -9, 0, -15)
 
 [node name="TorchUnlitArenaW" parent="Props" unique_id=344657784 instance=ExtResource("27_torch_unlit")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -2.2, 2.2, -14.02)
@@ -561,9 +583,7 @@ transform = Transform3D(2, 0, 0, 0, 1.2, 0, 0, 0, 2, 0, 1, 31.5)
 
 [node name="DustRoomB" parent="." unique_id=2091921768 instance=ExtResource("28_dust")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
-emission_sphere_radius = 1.0
 
 [node name="DustArena" parent="." unique_id=1558373329 instance=ExtResource("28_dust")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -24)
 amount = 32
-emission_sphere_radius = 1.0

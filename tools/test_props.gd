@@ -1,6 +1,6 @@
 extends "res://tools/test_base.gd"
 ## Debug helper: external-model prop check in level 1.
-## - prop wrapper scenes are placed and load (torches, rubble remains)
+## - prop wrapper scenes are placed and load (torches, smashed furniture)
 ## - the torch flicker AnimationPlayer is running
 ## - imported meshes carry PS1 ShaderMaterials (tools/import_prop.gd ran)
 ## Then loads the model test stage and checks all four skeleton displays
@@ -15,7 +15,8 @@ const STAGE_CLIPS := {
 }
 
 const STAGE_PROPS := ["BannerRed", "BannerBlue", "SwordShield", "TorchUnlit",
-		"Pillar", "PillarDecorated", "CratesStacked", "RubbleHalf", "RubbleLarge"]
+		"Pillar", "PillarDecorated", "CratesStacked", "TableBrokenLong", "TableBroken",
+		"Chair", "Stool", "Shelves", "BoxStacked", "Bed", "BarrelLarge", "BarrelStack"]
 
 
 func _tick(_delta: float) -> bool:
@@ -26,19 +27,18 @@ func _tick(_delta: float) -> bool:
 		1:
 			var props: Node3D = world.get_node_or_null("Level01/Props")
 			var torch := props.get_node_or_null("TorchCorr3West")
-			var remains := props.get_node_or_null("RemainsArena")
+			var wreck := props.get_node_or_null("TableBrokenArena")
 			_expect_true("torch props placed",
 					torch != null and props.get_node_or_null("TorchCorr3East") != null)
-			_expect_true("remains prop placed", remains != null)
+			_expect_true("smashed-table prop placed", wreck != null)
 			var flicker: AnimationPlayer = torch.get_node("Flicker")
 			_expect_true("torch flicker running", flicker.is_playing())
 			_expect("torch flicker clip", flicker.current_animation, "flicker")
-			# The remains prop is now a static rubble pile (no AnimationPlayer),
-			# swapped off the skeleton_rogue model that enemy_rogue uses. Still
-			# verify its imported mesh carries a PS1 ShaderMaterial.
-			var meshes := remains.find_children("*", "MeshInstance3D", true, false)
+			# A static prop (no AnimationPlayer): just verify its imported
+			# mesh carries a PS1 ShaderMaterial, i.e. import_prop.gd ran.
+			var meshes := wreck.find_children("*", "MeshInstance3D", true, false)
 			var mat := (meshes[0] as MeshInstance3D).mesh.surface_get_material(0)
-			_expect("imported remains material", mat.get_class(), "ShaderMaterial")
+			_expect("imported furniture material", mat.get_class(), "ShaderMaterial")
 			current_scene.start_game(7)
 			_next(500)
 		2:

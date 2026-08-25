@@ -18,12 +18,13 @@
 [ext_resource type="PackedScene" uid="uid://dcykufcv3i7c4" path="res://scenes/props/pillar_decorated.tscn" id="18_pillar_dec"]
 [ext_resource type="PackedScene" uid="uid://ceegoklnyv8sk" path="res://scenes/props/torch_unlit.tscn" id="19_torch_unlit"]
 [ext_resource type="PackedScene" uid="uid://blnu30s4xnj6u" path="res://scenes/props/sword_shield.tscn" id="20_sword_shield"]
-[ext_resource type="PackedScene" uid="uid://ur4kwwuvw6p3" path="res://scenes/props/rubble_large.tscn" id="21_rubble_large"]
+[ext_resource type="PackedScene" uid="uid://bo0uh025r5ped" path="res://scenes/props/table_broken_long.tscn" id="21_table_broken_long"]
 [ext_resource type="PackedScene" uid="uid://dqdi76jc4clf0" path="res://scenes/props/dust_motes.tscn" id="22_dust"]
 [ext_resource type="PackedScene" uid="uid://bt7u6o7tty2gv" path="res://scenes/level_objects/pickup_gold.tscn" id="40_gold"]
 [ext_resource type="PackedScene" uid="uid://uyul8lb8e6rs" path="res://scenes/level_objects/shootable_chest.tscn" id="41_chest"]
 [ext_resource type="PackedScene" uid="uid://cmajw6mkbr1kb" path="res://scenes/enemies/enemy_rogue.tscn" id="42_rogue"]
 [ext_resource type="PackedScene" uid="uid://thg5uy2vm4sm" path="res://scenes/props/box.tscn" id="44_box"]
+[ext_resource type="PackedScene" uid="uid://bstnrx7kgm8t8" path="res://scenes/props/chair.tscn" id="45_chair"]
 [ext_resource type="Material" uid="uid://fypkf18eam4m" path="res://assets/materials/mat_dirt.tres" id="90_ceil"]
 [ext_resource type="Script" uid="uid://djut4agw0ji75" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
@@ -174,8 +175,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -12)
 [node name="PillarDecArenaE" parent="Props" unique_id=733248896 instance=ExtResource("18_pillar_dec")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -12)
 
-[node name="RubbleLargeCorner" parent="Props" unique_id=1368058803 instance=ExtResource("21_rubble_large")]
-transform = Transform3D(0.707, 0, -0.707, 0, 1, 0, 0.707, 0, 0.707, 9.8, 0, -21.8)
+[node name="TableBrokenLongCorner" parent="Props" unique_id=918207168 instance=ExtResource("21_table_broken_long")]
+transform = Transform3D(0.707, 0, -0.707, 0, 1, 0, 0.707, 0, 0.707, 9.4, 0, -21.4)
+
+[node name="ChairCorner1" parent="Props" unique_id=95281100 instance=ExtResource("45_chair")]
+transform = Transform3D(-0.643, 0, -0.766, 0, 1, 0, 0.766, 0, -0.643, 7, 0, -19.6)
+
+[node name="ChairCorner2" parent="Props" unique_id=148746275 instance=ExtResource("45_chair")]
+transform = Transform3D(0.342, 0, -0.94, 0, 1, 0, 0.94, 0, 0.342, 11.4, 0, -23.4)
 
 [node name="Pickups" type="Node3D" parent="." unique_id=1849477766]
 

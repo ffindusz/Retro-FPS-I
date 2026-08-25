@@ -93,7 +93,7 @@ static func apply_splash_damage(context: Node3D, origin: Vector3, radius: float,
 		var target: Vector3 = (body as Node3D).global_position
 		# Occlusion: splash doesn't wrap around world geometry (layer 1). The
 		# ray aims at mid-height (body origins sit at the feet); a hit on the
-		# target itself (bodies that also occupy layer 1, e.g. rubble) still
+		# target itself (bodies that also occupy layer 1, e.g. the barricade) still
 		# counts as visible.
 		var ray := PhysicsRayQueryParameters3D.create(
 				origin, target + Vector3(0, 0.9, 0), 1, exclude_rids)

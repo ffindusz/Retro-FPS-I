@@ -21,15 +21,17 @@
 [ext_resource type="PackedScene" uid="uid://ciuv5jhwuw4c2" path="res://scenes/props/banner_blue.tscn" id="20_banner_blue"]
 [ext_resource type="PackedScene" uid="uid://dcykufcv3i7c4" path="res://scenes/props/pillar_decorated.tscn" id="21_pillar_dec"]
 [ext_resource type="PackedScene" uid="uid://kur4axmba685" path="res://scenes/props/crates_stacked.tscn" id="22_crates"]
-[ext_resource type="PackedScene" uid="uid://d1o38vmf62vlq" path="res://scenes/props/rubble_half.tscn" id="23_rubble_half"]
-[ext_resource type="PackedScene" uid="uid://dwfq7sl73ox4y" path="res://scenes/level_objects/rubble_blockade.tscn" id="24_rubble_blockade"]
-[ext_resource type="PackedScene" uid="uid://bsa3xiy0imyo8" path="res://scenes/props/remains_prop.tscn" id="25_remains"]
+[ext_resource type="PackedScene" uid="uid://dlojw6gphkdl8" path="res://scenes/props/bed.tscn" id="23_bed"]
+[ext_resource type="PackedScene" uid="uid://dwfq7sl73ox4y" path="res://scenes/level_objects/barricade.tscn" id="24_barricade"]
+[ext_resource type="PackedScene" uid="uid://c25eo0swkt5uv" path="res://scenes/props/table_broken.tscn" id="25_table_broken"]
 [ext_resource type="PackedScene" uid="uid://dqdi76jc4clf0" path="res://scenes/props/dust_motes.tscn" id="26_dust"]
 [ext_resource type="PackedScene" uid="uid://bt7u6o7tty2gv" path="res://scenes/level_objects/pickup_gold.tscn" id="27_gold"]
 [ext_resource type="PackedScene" uid="uid://uyul8lb8e6rs" path="res://scenes/level_objects/shootable_chest.tscn" id="28_chest"]
 [ext_resource type="PackedScene" uid="uid://c7ldqxgdjspag" path="res://scenes/level_objects/secret_door.tscn" id="29_door"]
 [ext_resource type="PackedScene" uid="uid://cebbx5in4mu0a" path="res://scenes/level_objects/secret_lever.tscn" id="30_lever"]
 [ext_resource type="PackedScene" uid="uid://thg5uy2vm4sm" path="res://scenes/props/box.tscn" id="44_box"]
+[ext_resource type="PackedScene" uid="uid://dor6iw4tmqblo" path="res://scenes/props/stool.tscn" id="45_stool"]
+[ext_resource type="PackedScene" uid="uid://crpcg7wbq5o0g" path="res://scenes/props/shelves.tscn" id="46_shelves"]
 [ext_resource type="Material" uid="uid://fypkf18eam4m" path="res://assets/materials/mat_dirt.tres" id="90_ceil"]
 [ext_resource type="Script" uid="uid://djut4agw0ji75" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
@@ -442,7 +444,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2.2, 11.02)
 [node name="TorchArrivalE" parent="Props" unique_id=2020689996 instance=ExtResource("17_torch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.2, 11.02)
 
-[node name="RemainsArrival" parent="Props" unique_id=1824723623 instance=ExtResource("25_remains")]
+[node name="TableBrokenArrival" parent="Props" unique_id=2035913804 instance=ExtResource("25_table_broken")]
 transform = Transform3D(-0.671, 0, -0.742, 0, 1, 0, 0.742, 0, -0.671, 1.6, 0, 17.4)
 
 [node name="CratesArrival" parent="Props" unique_id=68106653 instance=ExtResource("22_crates")]
@@ -475,19 +477,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, 5)
 [node name="PillarDecHall2" parent="Props" unique_id=144955564 instance=ExtResource("21_pillar_dec")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 5)
 
-[node name="RemainsCellS" parent="Props" unique_id=83712854 instance=ExtResource("25_remains")]
-transform = Transform3D(0.5, 0, 0.866, 0, 1, 0, -0.866, 0, 0.5, 11, 0, 2.5)
+[node name="BedCellS" parent="Props" unique_id=5273361 instance=ExtResource("23_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 3)
 
-[node name="RubbleHalfCata" parent="Props" unique_id=1441113354 instance=ExtResource("23_rubble_half")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 5.5)
+[node name="BedCata" parent="Props" unique_id=517981373 instance=ExtResource("23_bed")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0, 5.2)
 
-[node name="RubbleBlockade" parent="Props" unique_id=788277548 instance=ExtResource("24_rubble_blockade")]
+[node name="StoolCata" parent="Props" unique_id=1367636797 instance=ExtResource("45_stool")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8, 0, 6.2)
+
+[node name="ShelvesCata" parent="Props" unique_id=1181315864 instance=ExtResource("46_shelves")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -17.5, 0, 7)
+
+[node name="Barricade" parent="Props" unique_id=1032438366 instance=ExtResource("24_barricade")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -23.6, 0, 4)
 
-[node name="RemainsCata1" parent="Props" unique_id=1491357513 instance=ExtResource("25_remains")]
+[node name="TableBrokenCata1" parent="Props" unique_id=1962470658 instance=ExtResource("25_table_broken")]
 transform = Transform3D(-0.259, 0, 0.966, 0, 1, 0, -0.966, 0, -0.259, -20.2, 0, 6.2)
 
-[node name="RemainsCata2" parent="Props" unique_id=15533027 instance=ExtResource("25_remains")]
+[node name="TableBrokenCata2" parent="Props" unique_id=1154537893 instance=ExtResource("25_table_broken")]
 transform = Transform3D(0.866, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866, -15.4, 0, -3.8)
 
 [node name="TorchUnlitCataW" parent="Props" unique_id=520749398 instance=ExtResource("18_torch_unlit")]

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dt5rusi5faim0"]
+
+[ext_resource type="PackedScene" uid="uid://cwvcoxbuaoqo" path="res://assets/models/furniture/box_stacked.gltf" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_stack"]
+size = Vector3(3.48, 3.31, 3.63)
+
+[node name="BoxStacked" type="StaticBody3D" unique_id=1401783251]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1791298956]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01, 1.655, 0.045)
+shape = SubResource("BoxShape3D_stack")
+
+[node name="Model" parent="." unique_id=1431144519 instance=ExtResource("1_model")]

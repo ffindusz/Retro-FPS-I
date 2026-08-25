@@ -115,7 +115,7 @@ Select an instance and edit it. Available knobs include:
 | Pickup | `type`, `amount`, spin/bob, glow size and alpha |
 | Chest | `value` |
 | Secret door | `slide_distance`, `slide_time`, `open_on_boss_death` |
-| Rubble | `max_health`, `dust_color` |
+| Barricade | `max_health`, `dust_color` |
 | Player | look, movement, crouch and feel groups |
 | Hazards | `damage_per_tick`, `tick_interval` |
 

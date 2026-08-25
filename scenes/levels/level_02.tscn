@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://c6635ko8lxquk" path="res://scenes/level_objects/secret_area.tscn" id="15_secret"]
 [ext_resource type="PackedScene" uid="uid://d4nqed72apr37" path="res://scenes/level_objects/pickup_mana.tscn" id="16_cells"]
 [ext_resource type="PackedScene" uid="uid://kur4axmba685" path="res://scenes/props/crates_stacked.tscn" id="17_crates"]
-[ext_resource type="PackedScene" uid="uid://d1o38vmf62vlq" path="res://scenes/props/rubble_half.tscn" id="18_rubble_half"]
+[ext_resource type="PackedScene" uid="uid://sbgrqso6f3cg" path="res://scenes/props/barrel_stack.tscn" id="18_barrel_stack"]
 [ext_resource type="PackedScene" uid="uid://bt7u6o7tty2gv" path="res://scenes/level_objects/pickup_gold.tscn" id="40_gold"]
 [ext_resource type="PackedScene" uid="uid://uyul8lb8e6rs" path="res://scenes/level_objects/shootable_chest.tscn" id="41_chest"]
 [ext_resource type="PackedScene" uid="uid://thg5uy2vm4sm" path="res://scenes/props/box.tscn" id="44_box"]
@@ -213,8 +213,14 @@ transform = Transform3D(0.966, 0, 0.259, 0, 1, 0, -0.259, 0, 0.966, 4.2, 0, 11.5
 [node name="CratesHall" parent="Props" unique_id=434276146 instance=ExtResource("17_crates")]
 transform = Transform3D(0.94, 0, -0.342, 0, 1, 0, 0.342, 0, 0.94, -7.5, 0, 2.8)
 
-[node name="RubbleHalfPit" parent="Props" unique_id=548355696 instance=ExtResource("18_rubble_half")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.2, -2.95, -4.8)
+[node name="CratesPit" parent="Props" unique_id=1542493846 instance=ExtResource("17_crates")]
+transform = Transform3D(0.94, 0, 0.342, 0, 1, 0, -0.342, 0, 0.94, 18.5, -2.95, 2.2)
+
+[node name="BarrelStackPit" parent="Props" unique_id=328615683 instance=ExtResource("18_barrel_stack")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 18.1, -2.95, -1.2)
+
+[node name="BoxPit" parent="Props" unique_id=1669864194 instance=ExtResource("44_box")]
+transform = Transform3D(0.966, 0, 0.259, 0, 1, 0, -0.259, 0, 0.966, 20.3, -2.95, 3.6)
 
 [node name="Pickups" type="Node3D" parent="." unique_id=1459630057]
 

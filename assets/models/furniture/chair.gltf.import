@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://c0ofxcre3u8hk"
-path="res://.godot/imported/rubble_half.glb-4c012d5e4b9e20366fac113ab25be6c3.scn"
+uid="uid://ct8snd1glcm5e"
+path="res://.godot/imported/chair.gltf-a1e4a168d8837a809554752eff0f097b.scn"
 
 [deps]
 
-source_file="res://assets/models/rubble_half/rubble_half.glb"
-dest_files=["res://.godot/imported/rubble_half.glb-4c012d5e4b9e20366fac113ab25be6c3.scn"]
+source_file="res://assets/models/furniture/chair.gltf"
+dest_files=["res://.godot/imported/chair.gltf-a1e4a168d8837a809554752eff0f097b.scn"]
 
 [params]
 

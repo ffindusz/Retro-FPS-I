@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://sbgrqso6f3cg"]
+
+[ext_resource type="PackedScene" uid="uid://cq10c7c4hkjcc" path="res://assets/models/barrels/barrel_small_stack.gltf" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_stack"]
+size = Vector3(1.85, 1.77, 1)
+
+[node name="BarrelStack" type="StaticBody3D" unique_id=128202330]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=951458161]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.885, 0)
+shape = SubResource("BoxShape3D_stack")
+
+[node name="Model" parent="." unique_id=1853440907 instance=ExtResource("1_model")]

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bbx3ptxqun0qn"
-path="res://.godot/imported/rubble_large.glb-ba06ab195f0d1e27b0d97423c3e4cc8c.scn"
+uid="uid://cwvcoxbuaoqo"
+path="res://.godot/imported/box_stacked.gltf-b1df7d3558d9c80ffd4f678fe7f67164.scn"
 
 [deps]
 
-source_file="res://assets/models/rubble_large/rubble_large.glb"
-dest_files=["res://.godot/imported/rubble_large.glb-ba06ab195f0d1e27b0d97423c3e4cc8c.scn"]
+source_file="res://assets/models/furniture/box_stacked.gltf"
+dest_files=["res://.godot/imported/box_stacked.gltf-b1df7d3558d9c80ffd4f678fe7f67164.scn"]
 
 [params]
 

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dor6iw4tmqblo"]
+
+[ext_resource type="PackedScene" uid="uid://xbsyvygx4sqv" path="res://assets/models/furniture/stool.gltf" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_stool"]
+size = Vector3(0.75, 0.5, 0.75)
+
+[node name="Stool" type="StaticBody3D" unique_id=420469175]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=494749030]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_stool")
+
+[node name="Model" parent="." unique_id=1078643204 instance=ExtResource("1_model")]

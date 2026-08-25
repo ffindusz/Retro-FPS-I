@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c25eo0swkt5uv"]
+
+[ext_resource type="PackedScene" uid="uid://b306mcsx3wagp" path="res://assets/models/furniture/table_medium_broken.gltf" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_table"]
+size = Vector3(2.28, 0.97, 2.43)
+
+[node name="TableBroken" type="StaticBody3D" unique_id=1542531562]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=835907022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, 0.485, 0.255)
+shape = SubResource("BoxShape3D_table")
+
+[node name="Model" parent="." unique_id=240064574 instance=ExtResource("1_model")]
