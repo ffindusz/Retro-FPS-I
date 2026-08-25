@@ -242,18 +242,27 @@ Godot is not on PATH; run it from the repo root.
 TOUR_LEVEL=2 ./Godot_v4.7-stable_win64.exe --path . -s tools/screenshot_tour.gd
 ```
 
-There are 25 headless smoke tests in `tools/`; `test_audio` and `test_sfx_bus`
+There are 26 headless smoke tests in `tools/`; `test_audio` and `test_sfx_bus`
 need a real audio driver and so must run without `--headless`. Worth running
 after edits:
 
 | You changed | Run |
 | --- | --- |
-| A level's layout | `test_progression`, `test_treasure`, `probe_level` |
+| A level's layout | `test_progression`, `test_treasure`, `test_spawns`, `probe_level` |
 | The catalog | `test_catalog`, `test_cheat`, `test_solo_level` |
 | An enemy | `test_enemy`, `test_spitter`, `test_boss`, `test_rogue`, `test_wake` |
 | A room block | `test_room_block` |
-| Props or models | `test_props` |
+| Props or models | `test_props`, `test_spawns` |
 | Anything in the boot path | `test_flow`, `test_progression` |
+| Where an enemy stands | `test_spawns` |
+
+`test_spawns` is the one to reach for after moving a solid prop: it walks every
+campaign level and checks no enemy is authored inside geometry and none is
+walled into a pocket it cannot leave. Both failures have shipped here -- a bed
+laid across the mouth of level 5's south cell sealed a grunt in, and level 7's
+Rogue1 spawned inside a crate. It carries a short baseline of spawns that were
+already overlapping when it was written; clearing one means deleting its line
+from `KNOWN_EMBEDDED` / `KNOWN_WALLED`, which the test asks for by failing.
 
 ### Maintenance tools
 
