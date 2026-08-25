@@ -107,7 +107,7 @@ hit save.
   `screenshot_tour.gd`/`screenshot_ui.gd`/`screenshot_projectiles.gd`
   (visual capture — run without `--headless`), `normalize_scenes.gd`/
   `dump_scenes.gd` (scene-format maintenance and a structural dump for
-  diffing bulk scene changes — see "Editing in the Godot editor"), and 27
+  diffing bulk scene changes — see "Editing in the Godot editor"), and 28
   smoke tests
   covering level flow (`test_flow`, `test_progression`, `test_cheat`,
   `test_pause`, `test_settings`, `test_solo_level`, `test_catalog`),
@@ -117,7 +117,8 @@ hit save.
   movement/hazards/stats (`test_crouch`, `test_feel`, `test_step`,
   `test_ice`, `test_lava`, `test_void`, `test_pickups`, `test_stats`),
   treasure/score (`test_gold`, `test_treasure`), audio (`test_audio`,
-  `test_sfx_bus`), and the external-model props (`test_props`) — all
+  `test_sfx_bus`), the external-model props (`test_props`), and enemy
+  placement (`test_spawns` — no spawn inside geometry or walled off) — all
   sharing their boot/wait/step boilerplate **and their assertions** via
   `test_base.gd`. Two audio checks (`test_audio`, `test_sfx_bus`) must run
   WITHOUT `--headless`, which swaps in the dummy audio driver

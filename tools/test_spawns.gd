@@ -23,24 +23,17 @@ extends "res://tools/test_base.gd"
 const LEVELS := ["level_01", "level_02", "level_03", "level_04",
 		"level_05", "level_06", "level_07"]
 
-## Spawns that were already overlapping something when this test was written,
-## with what each one is inside. They are asserted EXACTLY, not merely
-## tolerated: a new overlap fails the run, and so does clearing one of these
-## without deleting its line, which is the nudge to keep the list shrinking.
-## None of them is fatal in play -- the solver shoves the body clear on the
-## first frame -- but each is the same defect as the level-7 rogue that read
-## as "stuck on the crates", so they are debt, not policy.
-const KNOWN_EMBEDDED := {
-	"level_03": ["Grunt4 in ChestGallery"],
-	"level_04": ["Grunt3 in ChestWing"],
-}
+## Accepted spawn overlaps, as {level: ["Enemy in Body, Body"]}. EMPTY, and
+## worth keeping that way: every entry is an enemy that starts inside
+## something and gets shoved out on frame one, which is what read in play as
+## the level-7 rogue being "stuck on the crates". Entries are asserted
+## EXACTLY, so adding one is a deliberate act and clearing one without
+## deleting its line fails too.
+const KNOWN_EMBEDDED := {}
 
-## level_04's Grunt3 is walled off as a CONSEQUENCE of being embedded in
-## ChestWing above: the fill cannot sample the cells it is standing in. Clear
-## that overlap and this line goes too.
-const KNOWN_WALLED := {
-	"level_04": ["Grunt3"],
-}
+## Accepted unreachable spawns, same contract as above. Also empty: an enemy
+## that cannot leave its pocket cannot fight, so this one should stay so.
+const KNOWN_WALLED := {}
 
 ## Grid pitch for the flood fill. Half the narrowest gap worth resolving.
 const STEP := 0.5

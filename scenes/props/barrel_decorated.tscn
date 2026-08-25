@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://d03xdqb7hbgxv"]
+
+[ext_resource type="PackedScene" uid="uid://ci3nkw28dadp6" path="res://assets/models/barrels/barrel_large_decorated.gltf" id="1_model"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_body"]
+height = 2.56
+radius = 0.95
+
+[node name="BarrelDecorated" type="StaticBody3D" unique_id=466020434]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1271763818]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28, 0)
+shape = SubResource("CylinderShape3D_body")
+
+[node name="Model" parent="." unique_id=138106778 instance=ExtResource("1_model")]

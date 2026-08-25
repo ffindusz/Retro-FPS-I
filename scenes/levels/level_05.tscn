@@ -32,6 +32,10 @@
 [ext_resource type="PackedScene" uid="uid://thg5uy2vm4sm" path="res://scenes/props/box.tscn" id="44_box"]
 [ext_resource type="PackedScene" uid="uid://dor6iw4tmqblo" path="res://scenes/props/stool.tscn" id="45_stool"]
 [ext_resource type="PackedScene" uid="uid://crpcg7wbq5o0g" path="res://scenes/props/shelves.tscn" id="46_shelves"]
+[ext_resource type="PackedScene" uid="uid://4avoe34c1ivj" path="res://scenes/props/keg.tscn" id="47_keg"]
+[ext_resource type="PackedScene" uid="uid://d03xdqb7hbgxv" path="res://scenes/props/barrel_decorated.tscn" id="48_barrel_dec"]
+[ext_resource type="PackedScene" uid="uid://c8d8fxi5x2k7r" path="res://scenes/props/box_small.tscn" id="49_box_small"]
+[ext_resource type="PackedScene" uid="uid://cqpdlin0p8m7i" path="res://scenes/props/box_small_decorated.tscn" id="50_box_small_dec"]
 [ext_resource type="Material" uid="uid://fypkf18eam4m" path="res://assets/materials/mat_dirt.tres" id="90_ceil"]
 [ext_resource type="Script" uid="uid://djut4agw0ji75" path="res://scripts/levels/level_root.gd" id="99_levelroot"]
 
@@ -518,6 +522,18 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -16.5, 2.2, -11.02)
 
 [node name="CratesTreasury" parent="Props" unique_id=1992075294 instance=ExtResource("22_crates")]
 transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, -15.7, 0, -19.4)
+
+[node name="KegTreasury" parent="Props" unique_id=1969311464 instance=ExtResource("47_keg")]
+transform = Transform3D(0.94, 0, 0.342, 0, 1, 0, -0.342, 0, 0.94, -23, 0, -20)
+
+[node name="BarrelDecTreasury" parent="Props" unique_id=985511681 instance=ExtResource("48_barrel_dec")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6, 0, -14.5)
+
+[node name="BoxSmallTreasury" parent="Props" unique_id=2017940577 instance=ExtResource("49_box_small")]
+transform = Transform3D(0.966, 0, 0.259, 0, 1, 0, -0.259, 0, 0.966, -22.8, 0, -16.5)
+
+[node name="BoxSmallDecTreasury" parent="Props" unique_id=211079417 instance=ExtResource("50_box_small_dec")]
+transform = Transform3D(0.906, 0, -0.423, 0, 1, 0, 0.423, 0, 0.906, -20.9, 0, -19.9)
 
 [node name="ChestTreasury" parent="Props" unique_id=1352576430 instance=ExtResource("28_chest")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -20)

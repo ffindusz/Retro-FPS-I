@@ -242,7 +242,7 @@ Godot is not on PATH; run it from the repo root.
 TOUR_LEVEL=2 ./Godot_v4.7-stable_win64.exe --path . -s tools/screenshot_tour.gd
 ```
 
-There are 26 headless smoke tests in `tools/`; `test_audio` and `test_sfx_bus`
+There are 28 headless smoke tests in `tools/`; `test_audio` and `test_sfx_bus`
 need a real audio driver and so must run without `--headless`. Worth running
 after edits:
 
