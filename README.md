@@ -134,6 +134,31 @@ hit save.
   and `ambient_light_energy` down to keep the original PS1 gloom.
   `export_presets.cfg` only defines a Windows Desktop export
 
+## Exporting
+
+`export_presets.cfg` defines one preset, **Windows Desktop**, writing a
+single self-contained ~131 MB exe (`binary_format/embed_pck=true`) to
+`export/RetroFPS/`, which is gitignored.
+
+Export needs Godot's export templates, which are a **separate ~1.2 GB
+download** and are not part of a Godot install — without them the export
+fails with "No export template found". Get them via *Editor → Manage Export
+Templates* in the GUI, then:
+
+```
+godot --headless --path . --export-release "Windows Desktop" export/RetroFPS/RetroFPS.exe
+```
+
+The exported binary does **not** accept `-s tools/test_*.gd`; `--script` is an
+editor entry point, so a packaged build just boots the game and ignores it.
+To smoke-test a build, run it with `--verbose` and read the output: the two
+PS1 shaders should both report `Completed load`, and nothing referencing
+`res://` should error. Expect 13 benign `Image format RGB8 not supported by
+hardware, converting to RGBA8` warnings — every texture in `assets/textures/`
+is stored without an alpha channel, and the GPU wants RGBA8. Any Vulkan
+*loader* complaints about GOG/ReShade/OBS layers come from overlays installed
+on the machine, not from the game.
+
 Example headless test run:
 
 ```
