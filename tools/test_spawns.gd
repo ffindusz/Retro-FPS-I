@@ -31,11 +31,8 @@ const LEVELS := ["level_01", "level_02", "level_03", "level_04",
 ## first frame -- but each is the same defect as the level-7 rogue that read
 ## as "stuck on the crates", so they are debt, not policy.
 const KNOWN_EMBEDDED := {
-	"level_01": ["GruntRoomC in ChestRoomC, CratesRoomC"],
-	"level_02": ["Grunt3 in LevelCSG"],
 	"level_03": ["Grunt4 in ChestGallery"],
 	"level_04": ["Grunt3 in ChestWing"],
-	"level_05": ["Grunt2 in LevelCSG"],
 }
 
 ## level_04's Grunt3 is walled off as a CONSEQUENCE of being embedded in
