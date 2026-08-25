@@ -277,7 +277,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.1, -8)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -8)
 
 [node name="Rogue1" parent="Enemies" unique_id=1686016921 instance=ExtResource("42_rogue")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0.1, -18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.3, 0.1, -18)
 
 [node name="Rogue2" parent="Enemies" unique_id=1684828305 instance=ExtResource("42_rogue")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.1, -18)
