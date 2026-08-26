@@ -168,7 +168,7 @@ banner with a real name. Empty means the default.
 ## Textures and materials
 
 **Add a texture**: drop a PNG into `assets/textures/`. No generator function
-needed — `tools/gen_textures.gd` only ever overwrites its own twelve filenames,
+needed — `tools/gen_textures.gd` only ever overwrites its own eleven filenames,
 so anything else you put there is left alone. `[importer_defaults]` in
 `project.godot` gives new textures the house import settings (lossless, Detect
 3D off, mipmaps on), so they will not silently re-import to VRAM compression

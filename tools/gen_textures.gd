@@ -16,7 +16,7 @@ extends SceneTree
 ##   that ignores this will seam.
 ##
 ## Adding a texture does NOT require writing a generator. Hand-authored PNGs
-## are first class -- this script only ever overwrites its own twelve
+## are first class -- this script only ever overwrites its own eleven
 ## filenames, so anything else dropped in assets/textures/ is left alone, and
 ## project.godot's [importer_defaults] gives it the right import settings.
 
@@ -27,7 +27,6 @@ func _init() -> void:
 	_gen_wall()
 	_gen_floor()
 	_gen_metal()
-	_gen_crate()
 	_gen_rock()
 	_gen_lava()
 	_gen_stone()
@@ -411,46 +410,3 @@ func _gen_lava() -> void:
 				b = 14.0
 			_put(img, x, y, r + rng.randf_range(-6, 6), g, b)
 	img.save_png("res://assets/textures/lava.png")
-
-
-## Wooden crate: vertical planks with grain and knots, two riveted metal
-## bands.
-func _gen_crate() -> void:
-	var rng := RandomNumberGenerator.new()
-	rng.seed = 5005
-	var grain := _make_noise(rng, 32)
-	# Deterministic knot placement: one knot on some planks.
-	var knot_y := PackedInt32Array()
-	for p in 8:
-		knot_y.append(rng.randi_range(35, 95) if rng.randf() < 0.5 else -100)
-	var img := Image.create(SIZE, SIZE, false, Image.FORMAT_RGB8)
-	for y in SIZE:
-		for x in SIZE:
-			var plank := x / 16
-			var lx := x % 16
-			var in_band := (y >= 14 and y <= 27) or (y >= 100 and y <= 113)
-			if in_band:
-				var edge := (y == 14 or y == 27 or y == 100 or y == 113)
-				var rivet := (lx >= 7 and lx <= 9) \
-						and ((y >= 19 and y <= 21) or (y >= 105 and y <= 107))
-				var m := 74.0 + rng.randf_range(-4, 4)
-				if edge:
-					m *= 0.6
-				if rivet:
-					m *= 1.5
-				_put(img, x, y, m * 0.95, m, m * 1.1)
-				continue
-			if lx < 2:
-				_put(img, x, y, 43 + rng.randi_range(-4, 4), 31, 21)
-				continue
-			var tint := float((plank * 2654435761) % 31) - 15.0
-			var g := _noise_at(grain, 32, float(x) / SIZE, float(y) / SIZE)
-			var streaks := sin(float(y) * 0.35 + float(plank) * 2.1) * 6.0
-			var base := 118.0 + tint + streaks + g * 14.0 + rng.randf_range(-5, 5)
-			# Knot: dark radial blob.
-			var ky := knot_y[plank]
-			var d := Vector2(lx - 8, y - ky).length()
-			if d < 5.0:
-				base *= 0.55 + 0.09 * d
-			_put(img, x, y, base, base * 0.68, base * 0.42)
-	img.save_png("res://assets/textures/crate.png")
