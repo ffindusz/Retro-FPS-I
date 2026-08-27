@@ -132,13 +132,39 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, -24.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -28)
 pads = Array[NodePath]([NodePath("../PadLoop"), NodePath("../PadMonument")])
 
-[node name="PadLoop" parent="." unique_id=1243785259 instance=ExtResource("9_teleporter")]
+[node name="PadLoop" parent="." unique_id=1335213607 instance=ExtResource("9_teleporter")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -28)
 destination = 1
+tint_a = Color(1, 0.32, 0.2, 1)
+tint_b = Color(0.72, 0.1, 0.28, 1)
+portal_color = Color(1, 0.36, 0.24, 1)
 
-[node name="PadMonument" parent="." unique_id=101125124 instance=ExtResource("9_teleporter")]
+[node name="SignLoop" type="Label3D" parent="." unique_id=1924453352]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.55, -28)
+pixel_size = 0.003
+billboard = 1
+modulate = Color(1, 0.55, 0.4, 1)
+text = "DESCEND
+HARDER · RICHER"
+font_size = 64
+outline_size = 0
+
+[node name="PadMonument" parent="." unique_id=1565178072 instance=ExtResource("9_teleporter")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -28)
 destination = 2
+tint_a = Color(1, 0.88, 0.5, 1)
+tint_b = Color(1, 0.7, 0.3, 1)
+portal_color = Color(1, 0.86, 0.55, 1)
+
+[node name="SignMonument" type="Label3D" parent="." unique_id=1729140691]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.55, -28)
+pixel_size = 0.003
+billboard = 1
+modulate = Color(1, 0.9, 0.6, 1)
+text = "THE MONUMENT
+END YOUR RUN"
+font_size = 64
+outline_size = 0
 
 [node name="Props" type="Node3D" parent="." unique_id=474520736]
 

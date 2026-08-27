@@ -40,6 +40,18 @@ func _tick(_delta: float) -> bool:
 			_expect_true("level 7 has both endgame pads",
 					level != null and level.get_node_or_null("PadLoop") != null
 					and level.get_node_or_null("PadMonument") != null)
+			# The two pads sit side by side, so they must not look alike:
+			# distinct portal colours and a sign naming each destination.
+			var loop_pad: Node = level.get_node("PadLoop")
+			var mon_pad: Node = level.get_node("PadMonument")
+			_expect_true("the pads are different colours",
+					loop_pad.portal_color != mon_pad.portal_color)
+			var loop_sign := level.get_node_or_null("SignLoop") as Label3D
+			var mon_sign := level.get_node_or_null("SignMonument") as Label3D
+			_expect_true("the descend pad is signed",
+					loop_sign != null and loop_sign.text.contains("DESCEND"))
+			_expect_true("the monument pad is signed",
+					mon_sign != null and mon_sign.text.contains("MONUMENT"))
 			_expect("run starts at loop 0", gs.loop, 0)
 			_expect_near("loop 0 leaves gold alone", gs.gold_scale(), 1.0)
 			_expect_near("loop 0 leaves enemy health alone",

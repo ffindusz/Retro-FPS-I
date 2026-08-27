@@ -13,6 +13,17 @@ const TELEPORT_SOUND := preload("res://assets/audio/teleport.wav")
 
 @export var destination: Destination = Destination.NEXT_LEVEL
 
+@export_group("Colour")
+## Recolours the portal so two pads in the same room can be told apart at a
+## glance -- the endgame pair in level 7 is red for "descend, harder" and gold
+## for "the monument". The defaults reproduce the campaign teleporter exactly,
+## so every existing pad is untouched.
+@export var tint_a := Color(0.2, 1.0, 0.9)
+@export var tint_b := Color(0.45, 0.3, 1.0)
+## Drives the point light and the halo glow (the halo keeps its own alpha).
+@export var portal_color := Color(0.4, 1.0, 0.9)
+@export_group("")
+
 @export_group("Departure")
 ## How long the vortex swells and the screen whites out before the level
 ## actually completes. Headless tests pad their waits around this (see
@@ -35,10 +46,28 @@ var _used := false
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
+	_apply_colour()
 	_pool.visible = false
 	_vortex.visible = false
 	_halo.visible = false
 	_light.visible = false
+
+
+## Materials defined inside teleporter.tscn are SHARED between every instance
+## of it, so setting a shader parameter straight on one pad would recolour all
+## of them -- including the six campaign teleporters. Duplicate first, then
+## tint, so each pad owns its look.
+func _apply_colour() -> void:
+	for mesh: MeshInstance3D in [_pool, _vortex]:
+		var mat := (mesh.material_override as ShaderMaterial).duplicate() as ShaderMaterial
+		mat.set_shader_parameter("tint_a", tint_a)
+		mat.set_shader_parameter("tint_b", tint_b)
+		mesh.material_override = mat
+	var halo := (_halo.material_override as StandardMaterial3D).duplicate() as StandardMaterial3D
+	halo.albedo_color = Color(portal_color.r, portal_color.g, portal_color.b,
+			halo.albedo_color.a)
+	_halo.material_override = halo
+	_light.light_color = portal_color
 
 
 func activate() -> void:
