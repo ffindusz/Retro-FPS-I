@@ -15,6 +15,7 @@ var _t0 := 0
 
 
 func _initialize() -> void:
+	_snapshot_save()  # this test does not call super(); protect the save anyway
 	_world = Node3D.new()
 	root.add_child(_world)
 	_add_box(Vector3(10, -0.5, -10), Vector3(80, 1, 80))            # floor, top y=0

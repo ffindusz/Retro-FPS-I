@@ -52,7 +52,18 @@ a torch-lit **dungeon** whose dark catacombs crawl with **cloaked rogues**
 strike (tag the shimmer to rip the cloak away) — and a **sky citadel** of
 floating stone platforms where one wrong step off a bridge is the end.
 Level 7 is the **boss** — it enrages at half health.
-Killing it opens a secret room; claim the **chest of gold** inside to win.
+Killing it opens a secret room; claim the **chest of gold** inside.
+
+Claiming it does not end the run — it powers **two portals** flanking the
+chest, and which one you step into decides how your story ends:
+
+- **Descend again** — back to level 1 one loop deeper. Enemies gain health and
+  hit harder, gold pays more, and your score keeps accumulating; only your
+  health and ammo reset. The banner reads `LEVEL 1 · LOOP 1`, and the
+  difficulty keeps climbing for five loops before it levels off.
+- **The monument** — a stone chamber where the five best runs are engraved,
+  each with the loop it reached. Your run is banked and marked on the slab
+  before the credits.
 Dying restarts the level you died on. Staff fireballs splash — including on you.
 
 **Pickups** are scattered through every level: POTION (+25 HP), CRYSTALS
@@ -107,7 +118,7 @@ hit save.
   `screenshot_tour.gd`/`screenshot_ui.gd`/`screenshot_projectiles.gd`
   (visual capture — run without `--headless`), `normalize_scenes.gd`/
   `dump_scenes.gd` (scene-format maintenance and a structural dump for
-  diffing bulk scene changes — see "Editing in the Godot editor"), and 28
+  diffing bulk scene changes — see "Editing in the Godot editor"), and 29
   smoke tests
   covering level flow (`test_flow`, `test_progression`, `test_cheat`,
   `test_pause`, `test_settings`, `test_solo_level`, `test_catalog`),

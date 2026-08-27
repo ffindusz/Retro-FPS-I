@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bkoexs5x5qj8s" path="res://scenes/enemies/boss.tscn" id="6_boss"]
 [ext_resource type="PackedScene" uid="uid://c7ldqxgdjspag" path="res://scenes/level_objects/secret_door.tscn" id="7_door"]
 [ext_resource type="PackedScene" uid="uid://bmvkkbvgxkdr6" path="res://scenes/level_objects/gold_pile.tscn" id="8_gold"]
+[ext_resource type="PackedScene" uid="uid://b1rirpfqr5cp0" path="res://scenes/level_objects/teleporter.tscn" id="9_teleporter"]
 [ext_resource type="PackedScene" uid="uid://c4w5gmsdttg8" path="res://scenes/level_objects/pickup_potion.tscn" id="10_health"]
 [ext_resource type="PackedScene" uid="uid://c5b218yktxcmt" path="res://scenes/level_objects/pickup_crystals.tscn" id="11_bullets"]
 [ext_resource type="PackedScene" uid="uid://cex7mrd5iiyfg" path="res://scenes/level_objects/pickup_quarrels.tscn" id="12_quarrels"]
@@ -129,6 +130,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, -24.5)
 
 [node name="GoldPile" parent="." unique_id=336662867 instance=ExtResource("8_gold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -28)
+pads = Array[NodePath]([NodePath("../PadLoop"), NodePath("../PadMonument")])
+
+[node name="PadLoop" parent="." unique_id=1243785259 instance=ExtResource("9_teleporter")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -28)
+destination = 1
+
+[node name="PadMonument" parent="." unique_id=101125124 instance=ExtResource("9_teleporter")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -28)
+destination = 2
 
 [node name="Props" type="Node3D" parent="." unique_id=474520736]
 

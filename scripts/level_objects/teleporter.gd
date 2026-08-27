@@ -5,7 +5,13 @@ extends Area3D
 ## swirling vortex (shaders/vortex.gdshader) appears above a slowly
 ## churning pool, and stepping in completes the level.
 
+## Where stepping in leads. NEXT_LEVEL is the campaign teleporter every level
+## uses; the other two are the pair flanking the treasure in level 7.
+enum Destination { NEXT_LEVEL, NEW_LOOP, MONUMENT }
+
 const TELEPORT_SOUND := preload("res://assets/audio/teleport.wav")
+
+@export var destination: Destination = Destination.NEXT_LEVEL
 
 @export_group("Departure")
 ## How long the vortex swells and the screen whites out before the level
@@ -63,4 +69,14 @@ func _on_body_entered(body: Node3D) -> void:
 	tween.tween_property(_halo, "scale", Vector3.ONE * halo_swell, departure_time) \
 			.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	tween.tween_property(_light, "light_energy", flare_energy, departure_time)
-	tween.chain().tween_callback(GameState.complete_level)
+	tween.chain().tween_callback(_depart)
+
+
+func _depart() -> void:
+	match destination:
+		Destination.NEW_LOOP:
+			GameState.begin_new_loop()
+		Destination.MONUMENT:
+			GameState.enter_monument()
+		_:
+			GameState.complete_level()

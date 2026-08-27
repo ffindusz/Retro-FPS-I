@@ -78,6 +78,11 @@ var _anim: AnimationPlayer
 
 
 func _ready() -> void:
+	# New Game+ scaling. These MULTIPLY the exported values rather than
+	# replacing them, so per-instance Inspector tuning survives; both scales
+	# are exactly 1.0 on the first way through the campaign.
+	max_health *= GameState.enemy_health_scale()
+	attack_damage *= GameState.enemy_damage_scale()
 	health = max_health
 	add_to_group("enemies")
 	_anim = visual.find_child("AnimationPlayer", true, false)

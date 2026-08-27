@@ -38,7 +38,45 @@ var _reported := {}
 
 
 func _initialize() -> void:
+	_snapshot_save()
 	change_scene_to_file("res://scenes/main.tscn")
+
+
+# --- Protecting user://scores.cfg -------------------------------------------
+#
+# Finishing a run banks it to the player's real save file, and these tests
+# finish runs. Snapshot it on the way in and put it back in _finish(), so a
+# suite run cannot rewrite somebody's high scores. A test that crashes or
+# hangs before _finish() leaves the snapshot unrestored.
+
+const SAVE_PATH := "user://scores.cfg"
+
+var _saved_cfg := ""
+var _had_cfg := false
+var _snapshot_taken := false
+
+
+func _snapshot_save() -> void:
+	_snapshot_taken = true
+	_had_cfg = FileAccess.file_exists(SAVE_PATH)
+	_saved_cfg = FileAccess.get_file_as_string(SAVE_PATH) if _had_cfg else ""
+
+
+## Puts the save back, and does NOTHING unless there is a snapshot with real
+## content to put back.
+##
+## It is deliberately unable to delete. Several tests (test_catalog,
+## test_room_block, test_solo_level, test_step) override _initialize() without
+## calling super, so the snapshot never runs for them -- and an earlier version
+## of this that treated "no snapshot" as "there was no file, so remove it"
+## deleted a real save on the first full-suite run. Restoring nothing is
+## always safe; deleting never is.
+func _restore_save() -> void:
+	if not _snapshot_taken or not _had_cfg:
+		return
+	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	f.store_string(_saved_cfg)
+	f.close()
 
 
 func _process(delta: float) -> bool:
@@ -123,6 +161,7 @@ func _expect_between(label: String, actual: float, low: float,
 ## Prints the tally and sets the process exit code: 0 all-clear, 1 if any check
 ## failed. Returns true so callers can `return _finish()` from _tick.
 func _finish() -> bool:
+	_restore_save()
 	if _failures.is_empty():
 		print("RESULT: PASS (%d checks)" % _checks)
 		quit(0)

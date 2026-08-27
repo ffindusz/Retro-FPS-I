@@ -18,6 +18,7 @@ const TEST_STAGE := "res://scenes/levels/level_test.tscn"
 ## changes scene and current_scene stays null. That also means the inherited
 ## _process would idle forever, hence the override below.
 func _initialize() -> void:
+	_snapshot_save()  # this test does not call super(); protect the save anyway
 	var catalog: Resource = load(CATALOG_PATH)
 	if catalog == null:
 		_expect_true("catalog loads (%s)" % CATALOG_PATH, false)
@@ -26,7 +27,15 @@ func _initialize() -> void:
 	var campaign: int = catalog.campaign_count()
 	var total: int = catalog.total_count()
 	_expect("campaign levels", campaign, 7)
-	_expect("total entries", total, 8)
+	# 7 campaign + 2 extras: the model test stage and the endgame monument.
+	_expect("total entries", total, 9)
+
+	# The monument is reached by the portal beside the treasure, not by
+	# playing forward, so it must be an extra that main can still address.
+	var monument: int = catalog.monument_index()
+	_expect_true("monument is registered", monument >= 0)
+	_expect_false("monument is not part of the campaign",
+			catalog.is_campaign(monument))
 
 	# The campaign must come first and be contiguous, or the teleporter walks
 	# into an extra stage.

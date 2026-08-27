@@ -16,9 +16,15 @@ class_name LevelCatalog
 ## Campaign levels, in play order. The teleporter walks this list.
 @export var levels: Array[PackedScene] = []
 
-## Reachable only by cheat, never by finishing a level: the model test stage.
-## Kept out of `levels` so _advance_level() cannot wander into it.
+## Reachable only by cheat, never by finishing a level: the model test stage
+## and the endgame monument. Kept out of `levels` so _advance_level() cannot
+## wander into either.
 @export var extras: Array[PackedScene] = []
+
+## The monument reached by the portal beside the treasure. Must also appear in
+## `extras`, which is what gives it an index; this field just names WHICH extra
+## it is, so main does not have to guess at "the last one".
+@export var monument: PackedScene
 
 
 ## Number of levels the campaign actually plays through; the upper bound for
@@ -39,6 +45,13 @@ func scene_at(index: int) -> PackedScene:
 
 func is_campaign(index: int) -> bool:
 	return index >= 0 and index < levels.size()
+
+
+## Index of the monument in the shared level/extras index space, or -1 when
+## it has not been assigned (in which case the endgame portal has nowhere to
+## go and main falls back to ending the run outright).
+func monument_index() -> int:
+	return index_of_path(monument.resource_path) if monument != null else -1
 
 
 ## Maps a level scene's res:// path back to its index, for the standalone-run

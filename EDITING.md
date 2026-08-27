@@ -111,7 +111,7 @@ Select an instance and edit it. Available knobs include:
 | Boss | volley size, enraged volley size, spread |
 | Rogue | cloak/decloak range and reveal time |
 | Switch | five crystal state colours, `poll_interval` |
-| Teleporter | `departure_time`, `vortex_swell`, `halo_swell`, `flare_energy` |
+| Teleporter | `destination` (next level / new loop / monument), `departure_time`, `vortex_swell`, `halo_swell`, `flare_energy` |
 | Pickup | `type`, `amount`, spin/bob, glow size and alpha |
 | Chest | `value` |
 | Secret door | `slide_distance`, `slide_time`, `open_on_boss_death` |
@@ -242,7 +242,7 @@ Godot is not on PATH; run it from the repo root.
 TOUR_LEVEL=2 ./Godot_v4.7-stable_win64.exe --path . -s tools/screenshot_tour.gd
 ```
 
-There are 28 headless smoke tests in `tools/`; `test_audio` and `test_sfx_bus`
+There are 29 headless smoke tests in `tools/`; `test_audio` and `test_sfx_bus`
 need a real audio driver and so must run without `--headless`. Worth running
 after edits:
 
@@ -254,6 +254,7 @@ after edits:
 | A room block | `test_room_block` |
 | Props or models | `test_props`, `test_spawns` |
 | Anything in the boot path | `test_flow`, `test_progression` |
+| The endgame or difficulty scaling | `test_loop`, `test_progression` |
 | Where an enemy stands | `test_spawns` |
 
 `test_spawns` is the one to reach for after moving a solid prop: it walks every

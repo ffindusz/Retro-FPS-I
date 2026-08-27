@@ -1,7 +1,12 @@
 extends Area3D
-## The treasure at the end of the campaign: a gold-filled chest. Touching
-## it flings the lid open and wins the game (the end screen arrives after
-## main.gd's one-second savor beat, so the opening plays out on screen).
+## The treasure at the end of the campaign: a gold-filled chest. Touching it
+## flings the lid open and powers the two portals flanking it -- one back to
+## level 1 a loop deeper, one to the monument. Claiming it no longer ends the
+## game by itself; which portal you step into decides how the run finishes.
+
+## The pads this chest powers. Wired in the level file rather than found by
+## name, so the connection is visible where the pads are placed.
+@export var pads: Array[NodePath] = []
 
 var _claimed := false
 
@@ -22,4 +27,8 @@ func _on_body_entered(body: Node3D) -> void:
 		tween.tween_property(lid, "rotation:x", -1.9, 0.45) \
 				.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	Fx.spawn(self, global_position + Vector3(0, 0.8, 0), Color(1.0, 0.85, 0.3), 1.6, 0.5)
-	GameState.win_game()
+	for path in pads:
+		var pad := get_node_or_null(path) as Teleporter
+		if pad != null:
+			pad.activate()
+	GameState.announce("THE TREASURE IS YOURS")

@@ -20,6 +20,7 @@ var _t0 := 0
 ## Opens the level directly instead of main.tscn -- that handoff is the thing
 ## under test.
 func _initialize() -> void:
+	_snapshot_save()  # this test does not call super(); protect the save anyway
 	change_scene_to_file(LEVEL_PATH)
 	_t0 = Time.get_ticks_msec()
 

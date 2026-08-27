@@ -8,9 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://cycyssx1ulq7e" path="res://scenes/levels/level_05.tscn" id="6_dw3tx"]
 [ext_resource type="PackedScene" uid="uid://boaumpc6nkag2" path="res://scenes/levels/level_06.tscn" id="7_8sxo4"]
 [ext_resource type="PackedScene" uid="uid://buuh02wuhfv8g" path="res://scenes/levels/level_07.tscn" id="8_lfrb0"]
+[ext_resource type="PackedScene" uid="uid://1c3kl2nxefoh" path="res://scenes/levels/level_monument.tscn" id="9_monument"]
 [ext_resource type="Script" uid="uid://b73y26n6crjn" path="res://scripts/levels/level_catalog.gd" id="9_3owvc"]
 
 [resource]
 script = ExtResource("9_3owvc")
 levels = Array[PackedScene]([ExtResource("2_tmihd"), ExtResource("3_f0mla"), ExtResource("4_ehqut"), ExtResource("5_5icr8"), ExtResource("6_dw3tx"), ExtResource("7_8sxo4"), ExtResource("8_lfrb0")])
-extras = Array[PackedScene]([ExtResource("1_gct56")])
+extras = Array[PackedScene]([ExtResource("1_gct56"), ExtResource("9_monument")])
+monument = ExtResource("9_monument")

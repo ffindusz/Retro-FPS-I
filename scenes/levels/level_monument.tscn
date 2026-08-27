@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://1c3kl2nxefoh"]
+
+[ext_resource type="Material" uid="uid://cj5agp183d14c" path="res://assets/materials/mat_stone.tres" id="1_stone"]
+[ext_resource type="Material" uid="uid://bjenlij0mum81" path="res://assets/materials/mat_floor.tres" id="2_floor"]
+[ext_resource type="PackedScene" uid="uid://cg0q85rmartgj" path="res://scenes/props/torch_mounted.tscn" id="3_torch"]
+[ext_resource type="Script" uid="uid://cn0pwwuy31mdl" path="res://scripts/levels/monument.gd" id="99_monument"]
+
+[node name="LevelMonument" type="Node3D" unique_id=227495514]
+script = ExtResource("99_monument")
+display_name = "THE MONUMENT"
+
+[node name="LevelCSG" type="CSGCombiner3D" parent="." unique_id=1830247509]
+use_collision = true
+
+[node name="Shell" type="CSGBox3D" parent="LevelCSG" unique_id=1193520638]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+size = Vector3(14, 6, 14)
+material = ExtResource("1_stone")
+
+[node name="Cut" type="CSGBox3D" parent="LevelCSG" unique_id=1815631771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+operation = 2
+size = Vector3(12, 5, 12)
+material = ExtResource("1_stone")
+
+[node name="Floor" type="CSGBox3D" parent="LevelCSG" unique_id=625069221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 0)
+size = Vector3(12.1, 0.25, 12.1)
+material = ExtResource("2_floor")
+
+[node name="Slab" type="CSGBox3D" parent="LevelCSG" unique_id=593214803]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, -5.2)
+size = Vector3(6, 4.8, 0.6)
+material = ExtResource("1_stone")
+
+[node name="Step" type="CSGBox3D" parent="LevelCSG" unique_id=1853479582]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -4.5)
+size = Vector3(7, 0.3, 1.6)
+material = ExtResource("1_stone")
+
+[node name="Monolith" type="Node3D" parent="." unique_id=1373277493]
+
+[node name="Face" type="Label3D" parent="Monolith" unique_id=27522106]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, -4.85)
+pixel_size = 0.0035
+modulate = Color(0.95, 0.85, 0.55, 1)
+font_size = 64
+outline_size = 0
+
+[node name="Props" type="Node3D" parent="." unique_id=1738206699]
+
+[node name="TorchW" parent="Props" unique_id=1417654761 instance=ExtResource("3_torch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6, 2.2, -5.98)
+
+[node name="TorchE" parent="Props" unique_id=398493786 instance=ExtResource("3_torch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6, 2.2, -5.98)
+
+[node name="Lights" type="Node3D" parent="." unique_id=725127365]
+
+[node name="OmniRoom" type="OmniLight3D" parent="Lights" unique_id=1524906669]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6, 1)
+light_energy = 1.1
+omni_range = 14.0
+
+[node name="OmniSlab" type="OmniLight3D" parent="Lights" unique_id=1836998047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, -3.2)
+light_color = Color(1, 0.92, 0.75, 1)
+light_energy = 1.4
+omni_range = 9.0
+
+[node name="Spawns" type="Node3D" parent="." unique_id=1463633891]
+
+[node name="PlayerSpawn" type="Marker3D" parent="Spawns" unique_id=447289691]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0.5)

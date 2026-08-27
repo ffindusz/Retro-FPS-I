@@ -2,7 +2,8 @@ extends "res://tools/test_base.gd"
 ## Debug helper: full campaign progression test.
 ## L1: shoot switch -> teleporter activates -> step on pad -> L2 loads with
 ## ammo persisted. Same through L2-L6 (cavern, ice, dungeon, citadel).
-## L7: kill boss -> secret door slides open -> touch the gold -> win screen.
+## L7: kill boss -> secret door slides open -> touch the gold -> the two
+## endgame portals power up -> take the monument one -> win screen.
 ##   Godot_v4.7-stable_win64_console.exe --headless --path . -s tools/test_progression.gd
 
 var _ammo_before := -1
@@ -162,19 +163,33 @@ func _tick(_delta: float) -> bool:
 					door.position.y, _door_y0 - 4.0, 0.2)
 			player.global_position = Vector3(0, 0.3, -28)
 			player.velocity = Vector3.ZERO
-			# Chest-open beat + win-confirm grace, then the savor lingers
-			# until a key press.
+			# Chest-open beat. Claiming the treasure powers the two endgame
+			# portals rather than ending the run; see tools/test_loop.gd for
+			# the descend half.
 			_step = 5
-			_wait_until = Time.get_ticks_msec() + 2200
+			_wait_until = Time.get_ticks_msec() + 1400
 		5:
 			var end := current_scene.get_node("EndScreen")
-			_expect_false("savor beat holds the end screen back", end.visible)
+			_expect_false("the chest alone does not end the run", end.visible)
+			_expect_true("the treasure powered both portals",
+					world.get_node("Level07/PadLoop")._active
+					and world.get_node("Level07/PadMonument")._active)
+			# Take the monument portal to finish the campaign.
+			player.global_position = Vector3(2.5, 0.3, -28)
+			player.velocity = Vector3.ZERO
+			_step = 6
+			_wait_until = Time.get_ticks_msec() + 2200
+		6:
+			_expect_true("monument portal led to the monument",
+					world.get_node_or_null("LevelMonument") != null)
+			_expect_false("the monument holds the end screen back",
+					current_scene.get_node("EndScreen").visible)
 			_key(KEY_SPACE)
 			_step = 4
 			_wait_until = Time.get_ticks_msec() + 400
 		4:
 			var end := current_scene.get_node("EndScreen")
-			_expect_true("end screen shown after gold + confirm", end.visible)
+			_expect_true("end screen shown after the monument", end.visible)
 			_expect("end screen result",
 					end.get_node("Layout/ResultLabel").text, "YOU WIN")
 			_expect_true("credits shown",

@@ -28,6 +28,10 @@ var _options_from_pause := false
 var _fps_accum := 0.0
 var _win_pending := false
 var _win_ready_ms := 0
+## finalize_run() banks the score into the monument table, and the monument
+## route banks on arrival so the slab can show the run just finished. This
+## stops _end_game() banking it a second time on the way out.
+var _run_banked := false
 
 @onready var _world: Node3D = %World
 @onready var _start_screen: Control = %StartScreen
@@ -45,6 +49,8 @@ func _ready() -> void:
 	GameState.player_died.connect(_on_player_died)
 	GameState.level_completed.connect(_on_level_completed)
 	GameState.game_won.connect(_on_game_won)
+	GameState.new_loop_requested.connect(_on_new_loop)
+	GameState.monument_requested.connect(_on_monument)
 	_start_screen.start_requested.connect(start_game)
 	_start_screen.options_requested.connect(_open_options.bind(false))
 	_end_screen.restart_requested.connect(_on_restart)
@@ -203,11 +209,20 @@ func _on_pause_quit() -> void:
 	_show_only(_start_screen)
 
 
-func start_game(level_index := 0) -> void:
+## keep_run leaves the run's score and loop counter alone and only restores
+## the loadout -- the descend portal and the monument both re-enter through
+## here without wiping what the run has earned. Every other caller (title
+## screen, warp cheat, pause restart, the headless tests) takes the default
+## and gets today's behaviour: a clean slate.
+func start_game(level_index := 0, keep_run := false) -> void:
 	level_index = clampi(level_index, 0, CATALOG.total_count() - 1)
 	_win_pending = false
 	_clear_game()
-	GameState.reset()
+	if keep_run:
+		GameState.reset_loadout()
+	else:
+		GameState.reset()
+		_run_banked = false
 	_level_index = level_index
 	_restart_index = level_index
 	_load_level()
@@ -297,6 +312,8 @@ func _level_banner() -> String:
 		return root.display_name
 	if not CATALOG.is_campaign(_level_index):
 		return "TEST STAGE"
+	if GameState.loop > 0:
+		return "LEVEL %d · LOOP %d" % [_level_index + 1, GameState.loop]
 	return "LEVEL %d" % (_level_index + 1)
 
 
@@ -319,11 +336,37 @@ func _on_game_won() -> void:
 		# confirm grace has passed.
 		_win_pending = true
 		_win_ready_ms = Time.get_ticks_msec() + WIN_CONFIRM_GRACE_MS
-		GameState.announce("THE TREASURE IS YOURS")
+		GameState.announce("YOUR RUN IS CARVED HERE")
 		get_tree().create_timer(WIN_CONFIRM_GRACE_MS / 1000.0).timeout.connect(
 				func() -> void:
 					if _win_pending:
 						_hud.show_banner("CLICK OR PRESS ANY KEY"))
+
+
+## Descend portal: one loop deeper, same score, fresh loadout.
+func _on_new_loop() -> void:
+	GameState.loop += 1
+	GameState.announce("THE DUNGEON DEEPENS")
+	start_game(0, true)
+
+
+## Monument portal: bank the run first so the slab includes it, then load the
+## monument and hand off to the ordinary win beat -- the player can walk up and
+## read the table, and any key closes out on the existing YOU WIN + credits
+## screen.
+func _on_monument() -> void:
+	GameState.finalize_run()
+	_run_banked = true
+	var index := CATALOG.monument_index()
+	if index < 0:
+		# No monument assigned in the catalog: still finish the run cleanly
+		# rather than stranding the player on a dead portal.
+		push_warning("No monument scene in the catalog; ending the run.")
+		_game_active = false
+		_end_game(true)
+		return
+	start_game(index, true)
+	GameState.win_game()
 
 
 func _on_restart() -> void:
@@ -332,7 +375,8 @@ func _on_restart() -> void:
 
 func _end_game(win: bool) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	var new_best := GameState.finalize_run()
+	var new_best := false if _run_banked else GameState.finalize_run()
+	_run_banked = true
 	_end_screen.set_result(win)
 	_end_screen.set_stats(GameState.stats_line())
 	_end_screen.set_score(GameState.score, GameState.high_score, new_best)

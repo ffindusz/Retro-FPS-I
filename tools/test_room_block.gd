@@ -27,6 +27,7 @@ var _phase := 0
 ## loading main.tscn, and drives itself off physics_frame because CSG rebuilds
 ## and their collision shapes land on physics steps, not idle frames.
 func _initialize() -> void:
+	_snapshot_save()  # this test does not call super(); protect the save anyway
 	_level = CSGCombiner3D.new()
 	_level.use_collision = true
 	root.add_child(_level)
