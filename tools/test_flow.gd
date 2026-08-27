@@ -47,12 +47,12 @@ func _tick(_delta: float) -> bool:
 			_expect_true("restarted: player respawned", player != null)
 			_expect("restarted: health reset", gs.health, 100)
 			gs.win_game()
-			# The win now lingers on the treasure until a confirm; wait out
-			# the grace, then check the screen hasn't shown on its own.
+			# The end waits on a deliberate confirm rather than a timer, so
+			# check the screen has not shown on its own.
 			_next(1400)
 		4:
 			var end := main.get_node("EndScreen")
-			_expect_false("savor beat holds the end screen back", end.visible)
+			_expect_false("the end screen waits for a confirm", end.visible)
 			_key(KEY_SPACE)
 			_next(400)
 		5:

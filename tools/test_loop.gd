@@ -96,7 +96,11 @@ func _tick(_delta: float) -> bool:
 			_next(700)
 		5:
 			_step_onto(world, Vector3(2.8, 0.3, -32.4))
-			_next(1500)
+			# Deliberately short: this lands roughly 350 ms after the monument
+			# loads, INSIDE the 900 ms confirm grace the endgame used to have.
+			# Pressing a key here proves that grace is gone -- reinstate it and
+			# the "closes out on the win screen" check below fails.
+			_next(800)
 		6:
 			_expect_true("monument loaded",
 					world.get_node_or_null("LevelMonument") != null)
@@ -107,6 +111,9 @@ func _tick(_delta: float) -> bool:
 					face.text.contains("7250"))
 			_expect_false("the monument holds the win screen back",
 					current_scene.get_node("EndScreen").visible)
+			var banner: Label = current_scene.get_node("%Hud").get_node("%BannerLabel")
+			_expect("the prompt is up at once, not after a delay",
+					banner.text, "PRESS ANY KEY TO REST")
 			_key(KEY_SPACE)
 			_next(600)
 		7:

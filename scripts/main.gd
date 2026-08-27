@@ -15,10 +15,6 @@ const PLAYER_SCENE := preload("res://scenes/player/player.tscn")
 ## campaign gets.
 const WARP_KEY_END := KEY_F8
 
-## Grace between touching the gold and accepting the end-screen confirm, so
-## a shot fired (or key mashed) at the winning moment can't skip the payoff.
-const WIN_CONFIRM_GRACE_MS := 900
-
 var _level: Node3D
 var _player: PlayerController
 var _level_index := 0
@@ -27,7 +23,6 @@ var _game_active := false
 var _options_from_pause := false
 var _fps_accum := 0.0
 var _win_pending := false
-var _win_ready_ms := 0
 ## finalize_run() banks the score into the monument table, and the monument
 ## route banks on arrival so the slab can show the run just finished. This
 ## stops _end_game() banking it a second time on the way out.
@@ -133,9 +128,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		# Debug stats overlay toggle, for level and performance checking.
 		get_viewport().set_input_as_handled()
 		_debug_stats.visible = not _debug_stats.visible
-	elif _win_pending and Time.get_ticks_msec() >= _win_ready_ms \
-			and _is_win_confirm(event):
-		# The savor beat ends on a deliberate click/key, not a timer.
+	elif _win_pending and _is_win_confirm(event):
+		# Any key or click finishes the run straight away. There is no
+		# waiting period: the monument is reached by deliberately
+		# stepping into a portal, so no stray input is in flight to
+		# guard against.
 		get_viewport().set_input_as_handled()
 		Input.action_release("fire")
 		_win_pending = false
@@ -330,17 +327,12 @@ func _on_game_won() -> void:
 	if _game_active:
 		_game_active = false
 		_restart_index = 0
-		# Savor the treasure: the world stays live around the opened chest
-		# and the credits screen waits for a deliberate click/key (handled in
-		# _unhandled_input) instead of a timer. A hint appears once the
-		# confirm grace has passed.
+		# The world stays live around the monument so the slab can be
+		# read. The prompt goes up at once and STAYS up -- banners
+		# normally fade after a couple of seconds, and there is no
+		# telling how long someone reads before deciding they are done.
 		_win_pending = true
-		_win_ready_ms = Time.get_ticks_msec() + WIN_CONFIRM_GRACE_MS
-		GameState.announce("YOUR RUN IS CARVED HERE")
-		get_tree().create_timer(WIN_CONFIRM_GRACE_MS / 1000.0).timeout.connect(
-				func() -> void:
-					if _win_pending:
-						_hud.show_banner("CLICK OR PRESS ANY KEY"))
+		_hud.show_banner("PRESS ANY KEY TO REST", true)
 
 
 ## Descend portal: one loop deeper, same score, fresh loadout.

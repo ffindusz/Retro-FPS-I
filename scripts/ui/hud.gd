@@ -41,11 +41,16 @@ func _on_teleport_flash() -> void:
 
 
 ## Fading top-center message: level names, "TELEPORTER ONLINE", etc.
-func show_banner(text: String) -> void:
+## `hold` leaves the banner up instead of fading it out, for a message the
+## player is meant to act on rather than just read -- the monument's "press
+## any key", which they may reach only after a while at the slab.
+func show_banner(text: String, hold := false) -> void:
 	if _banner_tween and _banner_tween.is_valid():
 		_banner_tween.kill()
 	_banner.text = text
 	_banner.modulate.a = 1.0
+	if hold:
+		return
 	# TWEEN_PAUSE_STOP for the same reason as the teleport flash: the HUD
 	# never pauses, but banners shouldn't fade behind pause overlays.
 	_banner_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_STOP)
