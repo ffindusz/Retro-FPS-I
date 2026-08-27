@@ -70,7 +70,7 @@ func _tick(_delta: float) -> bool:
 					current_scene.get_node("EndScreen").visible)
 			gs.score = 4900
 			gs.health = 30
-			_step_onto(world, Vector3(-2.5, 0.3, -28))
+			_step_onto(world, Vector3(-1.8, 0.3, -29.6))
 			_next(1500)
 		3:
 			_expect("descend pad bumped the loop", gs.loop, 1)
@@ -95,7 +95,7 @@ func _tick(_delta: float) -> bool:
 			_claim_treasure(world)
 			_next(700)
 		5:
-			_step_onto(world, Vector3(2.5, 0.3, -28))
+			_step_onto(world, Vector3(1.8, 0.3, -29.6))
 			_next(1500)
 		6:
 			_expect_true("monument loaded",

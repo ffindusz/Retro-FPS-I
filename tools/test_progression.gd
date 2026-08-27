@@ -175,7 +175,7 @@ func _tick(_delta: float) -> bool:
 					world.get_node("Level07/PadLoop")._active
 					and world.get_node("Level07/PadMonument")._active)
 			# Take the monument portal to finish the campaign.
-			player.global_position = Vector3(2.5, 0.3, -28)
+			player.global_position = Vector3(1.8, 0.3, -29.6)
 			player.velocity = Vector3.ZERO
 			_step = 6
 			_wait_until = Time.get_ticks_msec() + 2200
