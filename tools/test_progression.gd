@@ -161,7 +161,7 @@ func _tick(_delta: float) -> bool:
 			# SecretDoor.slide_distance is 4.0; allow slack for the tween easing.
 			_expect_near("boss death slid the secret door open",
 					door.position.y, _door_y0 - 4.0, 0.2)
-			player.global_position = Vector3(0, 0.3, -28)
+			player.global_position = Vector3(0, 0.3, -26.8)
 			player.velocity = Vector3.ZERO
 			# Chest-open beat. Claiming the treasure powers the two endgame
 			# portals rather than ending the run; see tools/test_loop.gd for
@@ -175,7 +175,7 @@ func _tick(_delta: float) -> bool:
 					world.get_node("Level07/PadLoop")._active
 					and world.get_node("Level07/PadMonument")._active)
 			# Take the monument portal to finish the campaign.
-			player.global_position = Vector3(1.8, 0.3, -29.6)
+			player.global_position = Vector3(2.8, 0.3, -32.4)
 			player.velocity = Vector3.ZERO
 			_step = 6
 			_wait_until = Time.get_ticks_msec() + 2200

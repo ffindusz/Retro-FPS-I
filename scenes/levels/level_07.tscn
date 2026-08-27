@@ -51,8 +51,8 @@ size = Vector3(26, 9.95, 26)
 material = ExtResource("1_wall")
 
 [node name="QuarrelSecret" type="CSGBox3D" parent="LevelCSG" unique_id=31091470]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, -28)
-size = Vector3(10, 5.5, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, -29.5)
+size = Vector3(12, 5.5, 11)
 material = ExtResource("1_wall")
 
 [node name="CutEntry" type="CSGBox3D" parent="LevelCSG" unique_id=2039455587]
@@ -74,9 +74,9 @@ size = Vector3(24, 12, 24)
 material = ExtResource("1_wall")
 
 [node name="CutSecret" type="CSGBox3D" parent="LevelCSG" unique_id=814500116]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, -28)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, -29.5)
 operation = 2
-size = Vector3(8, 3.5, 6)
+size = Vector3(10, 3.5, 9)
 material = ExtResource("1_wall")
 
 [node name="CutDoorway" type="CSGBox3D" parent="LevelCSG" unique_id=708131851]
@@ -101,8 +101,8 @@ size = Vector3(24.1, 0.25, 24.1)
 material = ExtResource("2_floor")
 
 [node name="FloorSecret" type="CSGBox3D" parent="LevelCSG" unique_id=1153233790]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, -28)
-size = Vector3(8.1, 0.25, 6.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, -29.5)
+size = Vector3(10.1, 0.25, 9.1)
 material = ExtResource("2_floor")
 
 [node name="CeilEntry" type="CSGBox3D" parent="LevelCSG" unique_id=1041424519]
@@ -116,8 +116,8 @@ size = Vector3(3, 0.25, 9.5)
 material = ExtResource("90_ceil")
 
 [node name="CeilSecret" type="CSGBox3D" parent="LevelCSG" unique_id=1237584387]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.575, -28)
-size = Vector3(8, 0.25, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.575, -29.5)
+size = Vector3(10, 0.25, 9)
 material = ExtResource("90_ceil")
 
 [node name="CeilDoorway" type="CSGBox3D" parent="LevelCSG" unique_id=721394578]
@@ -129,19 +129,19 @@ material = ExtResource("90_ceil")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, -24.5)
 
 [node name="GoldPile" parent="." unique_id=336662867 instance=ExtResource("8_gold")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -28)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -26.8)
 pads = Array[NodePath]([NodePath("../PadLoop"), NodePath("../PadMonument")])
 
 [node name="PadLoop" parent="." unique_id=1335213607 instance=ExtResource("9_teleporter")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 0, -29.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8, 0, -32.4)
 destination = 1
 tint_a = Color(1, 0.32, 0.2, 1)
 tint_b = Color(0.72, 0.1, 0.28, 1)
 portal_color = Color(1, 0.36, 0.24, 1)
 
 [node name="SignLoop" type="Label3D" parent="." unique_id=1924453352]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 2.55, -29.6)
-pixel_size = 0.003
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8, 2.55, -32.4)
+pixel_size = 0.0055
 billboard = 1
 modulate = Color(1, 0.55, 0.4, 1)
 text = "DESCEND
@@ -150,15 +150,15 @@ font_size = 64
 outline_size = 0
 
 [node name="PadMonument" parent="." unique_id=1565178072 instance=ExtResource("9_teleporter")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, 0, -29.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0, -32.4)
 destination = 2
 tint_a = Color(1, 0.88, 0.5, 1)
 tint_b = Color(1, 0.7, 0.3, 1)
 portal_color = Color(1, 0.86, 0.55, 1)
 
 [node name="SignMonument" type="Label3D" parent="." unique_id=1729140691]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, 2.55, -29.6)
-pixel_size = 0.003
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 2.55, -32.4)
+pixel_size = 0.0055
 billboard = 1
 modulate = Color(1, 0.9, 0.6, 1)
 text = "THE MONUMENT
@@ -296,9 +296,14 @@ light_energy = 1.2
 omni_range = 26.0
 
 [node name="OmniSecret" type="OmniLight3D" parent="Lights" unique_id=885753581]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -28)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -27)
 light_color = Color(1, 0.85, 0.5, 1)
 light_energy = 1.3
+
+[node name="OmniSecretBack" type="OmniLight3D" parent="Lights" unique_id=1254783690]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -31.5)
+light_color = Color(1, 0.85, 0.5, 1)
+light_energy = 0.9
 omni_range = 9.0
 
 [node name="Enemies" type="Node3D" parent="." unique_id=590167599]
