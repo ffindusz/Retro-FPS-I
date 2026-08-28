@@ -184,7 +184,7 @@ func _tick(_delta: float) -> bool:
 					world.get_node_or_null("LevelMonument") != null)
 			_expect_false("the monument holds the end screen back",
 					current_scene.get_node("EndScreen").visible)
-			_key(KEY_SPACE)
+			_key(KEY_ENTER)
 			_step = 4
 			_wait_until = Time.get_ticks_msec() + 400
 		4:

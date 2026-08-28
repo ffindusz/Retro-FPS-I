@@ -139,14 +139,36 @@ func _unhandled_input(event: InputEvent) -> void:
 		_end_game(true)
 
 
-## Mirrors AnyKeyScreen's idea of "any key": Esc stays the pause/back key
-## and wheel scrolls don't count as clicks.
+## What counts as "I am done at the monument".
+##
+## NOT any key. The player is standing in a live world here, not looking at a
+## menu overlay, so walking up to read the slab (W/A/S/D), jumping, crouching
+## or switching weapons must not end the run -- which is exactly what an
+## any-key confirm did. Anything bound to a gameplay action is ignored; Enter
+## and right- or middle-click, none of which does anything else here, are
+## the way out. Esc stays the pause key.
+const GAMEPLAY_ACTIONS := ["move_forward", "move_back", "move_left",
+		"move_right", "jump", "crouch", "fire", "weapon_1", "weapon_2",
+		"weapon_3", "weapon_4", "weapon_next", "weapon_prev"]
+
+
 func _is_win_confirm(event: InputEvent) -> bool:
+	var key_press := false
+	var button_press := false
 	if event is InputEventKey:
-		return event.pressed and not event.echo \
-				and event.physical_keycode != KEY_ESCAPE
-	return event is InputEventMouseButton and event.pressed \
-			and event.button_index <= MOUSE_BUTTON_MIDDLE
+		key_press = event.pressed and not event.echo
+		if event.physical_keycode == KEY_ESCAPE:
+			return false
+	elif event is InputEventMouseButton:
+		button_press = event.pressed and event.button_index <= MOUSE_BUTTON_MIDDLE
+	if not (key_press or button_press):
+		return false
+	# The filter covers the mouse too: left-click is `fire`, so without this
+	# a shot loosed at the slab would end the run just as W did.
+	for action: String in GAMEPLAY_ACTIONS:
+		if event.is_action(action):
+			return false
+	return true
 
 
 func _warp(level_index: int) -> void:
@@ -332,7 +354,7 @@ func _on_game_won() -> void:
 		# normally fade after a couple of seconds, and there is no
 		# telling how long someone reads before deciding they are done.
 		_win_pending = true
-		_hud.show_banner("PRESS ANY KEY TO REST", true)
+		_hud.show_banner("PRESS ENTER TO REST", true)
 
 
 ## Descend portal: one loop deeper, same score, fresh loadout.

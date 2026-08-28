@@ -53,7 +53,7 @@ func _tick(_delta: float) -> bool:
 		4:
 			var end := main.get_node("EndScreen")
 			_expect_false("the end screen waits for a confirm", end.visible)
-			_key(KEY_SPACE)
+			_key(KEY_ENTER)
 			_next(400)
 		5:
 			var end := main.get_node("EndScreen")

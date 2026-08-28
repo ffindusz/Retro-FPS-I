@@ -113,11 +113,26 @@ func _tick(_delta: float) -> bool:
 					current_scene.get_node("EndScreen").visible)
 			var banner: Label = current_scene.get_node("%Hud").get_node("%BannerLabel")
 			_expect("the prompt is up at once, not after a delay",
-					banner.text, "PRESS ANY KEY TO REST")
-			_key(KEY_SPACE)
-			_next(600)
+					banner.text, "PRESS ENTER TO REST")
+			# Walking up to read the slab must NOT end the run. W is
+			# move_forward, and an any-key confirm used to finish the game the
+			# moment the player took a step.
+			_key(KEY_W)
+			_next(300)
 		7:
-			_expect_true("any key closes out on the win screen",
+			_expect_false("walking does not end the run",
+					current_scene.get_node("EndScreen").visible)
+			# Jump and a weapon switch are keys too, and equally must not.
+			_key(KEY_SPACE)
+			_key(KEY_2)
+			_next(300)
+		8:
+			_expect_false("jumping and weapon-switching do not end the run",
+					current_scene.get_node("EndScreen").visible)
+			_key(KEY_ENTER)
+			_next(600)
+		9:
+			_expect_true("enter closes out on the win screen",
 					current_scene.get_node("EndScreen").visible)
 			_expect("leaving the monument did not bank the run twice",
 					_count_score(gs.runs, 7250), 1)
