@@ -6,34 +6,46 @@
 radius = 0.55
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_crystal"]
-albedo_color = Color(1, 0.72, 0.28, 1)
-metallic = 0.35
-metallic_specular = 0.8
-roughness = 0.15
+albedo_color = Color(0.55, 0.32, 0.92, 1)
+metallic = 0.25
+metallic_specular = 0.85
+roughness = 0.12
 emission_enabled = true
-emission = Color(1, 0.78, 0.35, 1)
-emission_energy_multiplier = 0.7
+emission = Color(0.72, 0.45, 1, 1)
+emission_energy_multiplier = 0.9
 
-[sub_resource type="SphereMesh" id="SphereMesh_crystal"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_shard"]
 material = SubResource("StandardMaterial3D_crystal")
-radius = 0.13
-height = 0.52
-radial_segments = 5
-rings = 3
+top_radius = 0.02
+bottom_radius = 0.085
+height = 0.34
+radial_segments = 6
+rings = 0
 
-[node name="PickupCrystals" type="Area3D" unique_id=735617610]
+[node name="PickupCrystals" type="Area3D" unique_id=1758119743]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_script")
 type = 1
 amount = 24
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1237737766]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1681930276]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("SphereShape3D_touch")
 
-[node name="Visual" type="Node3D" parent="." unique_id=1498736742]
+[node name="Visual" type="Node3D" parent="." unique_id=2080576713]
 
-[node name="Model" type="MeshInstance3D" parent="Visual" unique_id=1372235038]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.32, 0)
-mesh = SubResource("SphereMesh_crystal")
+[node name="Model" type="Node3D" parent="Visual" unique_id=1654949000]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+
+[node name="Shard1" type="MeshInstance3D" parent="Visual/Model" unique_id=815110162]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17, 0)
+mesh = SubResource("CylinderMesh_shard")
+
+[node name="Shard2" type="MeshInstance3D" parent="Visual/Model" unique_id=401419178]
+transform = Transform3D(0.583, -0.212, 0, 0.212, 0.583, 0, 0, 0, 0.62, -0.1, 0.105, 0.03)
+mesh = SubResource("CylinderMesh_shard")
+
+[node name="Shard3" type="MeshInstance3D" parent="Visual/Model" unique_id=52201936]
+transform = Transform3D(0.507, 0.237, 0, -0.237, 0.507, 0, 0, 0, 0.56, 0.09, 0.095, -0.04)
+mesh = SubResource("CylinderMesh_shard")

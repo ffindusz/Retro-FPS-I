@@ -15,11 +15,12 @@ const COIN_SOUND := preload("res://assets/audio/coin.wav")
 ## whole level is one CSG mesh, so per-mesh light limits on the mobile
 ## renderer would silently drop ten extra omnis). The imported prop models
 ## (bottles, boxes, keg) would otherwise vanish into dark rooms, and the
-## color doubles as a legend — green potion, amber crystals, orange quarrels,
-## red embers, cyan mana, gold treasure.
+## color doubles as a legend — green potion, violet crystals, orange
+## quarrels, red embers, cyan mana, gold treasure. Crystals were amber
+## until they proved indistinguishable from the gold they sit next to.
 const TYPE_GLOW := {
 	Type.POTION: Color(0.45, 1.0, 0.55),
-	Type.CRYSTALS: Color(1.0, 0.85, 0.45),
+	Type.CRYSTALS: Color(0.66, 0.42, 1.0),
 	Type.QUARRELS: Color(1.0, 0.6, 0.3),
 	Type.EMBERS: Color(1.0, 0.35, 0.25),
 	Type.MANA: Color(0.4, 0.85, 1.0),
@@ -122,7 +123,9 @@ func _try_collect(body: Node3D) -> void:
 	# Gold announces itself from collect_gold; the rest post their own notice.
 	if type != Type.GOLD:
 		GameState.notify_pickup("+%d %s" % [amount, TYPE_NAME[type]])
-	var color := Color(0.6, 1.0, 0.7) if type == Type.POTION else Color(1.0, 0.9, 0.5)
+	# Burst in the pickup's own legend colour rather than one amber for
+	# everything: the flash is the last thing seen of it.
+	var color: Color = TYPE_GLOW[type]
 	var sound := PICKUP_SOUND
 	if type == Type.POTION:
 		sound = HEAL_SOUND
