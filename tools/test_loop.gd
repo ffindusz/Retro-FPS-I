@@ -86,22 +86,37 @@ func _tick(_delta: float) -> bool:
 			_expect("loop 1 gold pays 1.5x", gs.score - before, 150)
 			_check_table(gs)
 			_check_migration(gs)
+			# Dying must not undo the loop. Score still goes.
+			gs.damage_player(999)
+			_next(900)
+		4:
+			_expect_true("death shows the end screen",
+					current_scene.get_node("EndScreen").visible)
+			_key(KEY_ENTER)
+			_next(900)
+		5:
+			_expect("death kept the New Game+ depth", gs.loop, 1)
+			_expect("death still cost the score", gs.score, 0)
+			_expect("death restored health", gs.health, 100)
+			var revived: Node = world.get_node("Level01/Enemies/Grunt1")
+			_expect_near("enemies stay scaled after dying", revived.health,
+					BASE_GRUNT_HEALTH * 1.35, 0.1)
 			# Back to level 7 on a clean run for the other pad.
 			current_scene.start_game(6)
 			_next(800)
-		4:
+		6:
 			_expect("a fresh start clears the loop", gs.loop, 0)
 			gs.score = 7250
 			_claim_treasure(world)
 			_next(700)
-		5:
+		7:
 			_step_onto(world, Vector3(2.8, 0.3, -32.4))
 			# Deliberately short: this lands roughly 350 ms after the monument
 			# loads, INSIDE the 900 ms confirm grace the endgame used to have.
 			# Pressing a key here proves that grace is gone -- reinstate it and
 			# the "closes out on the win screen" check below fails.
 			_next(800)
-		6:
+		8:
 			_expect_true("monument loaded",
 					world.get_node_or_null("LevelMonument") != null)
 			_expect("the run was banked once",
@@ -119,19 +134,19 @@ func _tick(_delta: float) -> bool:
 			# moment the player took a step.
 			_key(KEY_W)
 			_next(300)
-		7:
+		9:
 			_expect_false("walking does not end the run",
 					current_scene.get_node("EndScreen").visible)
 			# Jump and a weapon switch are keys too, and equally must not.
 			_key(KEY_SPACE)
 			_key(KEY_2)
 			_next(300)
-		8:
+		10:
 			_expect_false("jumping and weapon-switching do not end the run",
 					current_scene.get_node("EndScreen").visible)
 			_key(KEY_ENTER)
 			_next(600)
-		9:
+		11:
 			_expect_true("enter closes out on the win screen",
 					current_scene.get_node("EndScreen").visible)
 			_expect("leaving the monument did not bank the run twice",

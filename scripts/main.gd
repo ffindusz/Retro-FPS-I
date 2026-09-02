@@ -15,6 +15,20 @@ const PLAYER_SCENE := preload("res://scenes/player/player.tscn")
 ## campaign gets.
 const WARP_KEY_END := KEY_F8
 
+## What survives a (re)start. Two separate booleans for this got confusing
+## fast, because "keep the score" and "keep the New Game+ depth" are not the
+## same question.
+enum Continuity {
+	## A brand-new run: score and loop both zeroed. The title screen and the
+	## warp cheat.
+	FRESH,
+	## Same depth, score gone. Dying or restarting a level does not undo the
+	## loops already earned -- you resume at the difficulty you were playing.
+	KEEP_LOOP,
+	## Score and depth both carried, loadout restored. The endgame portals.
+	KEEP_RUN,
+}
+
 var _level: Node3D
 var _player: PlayerController
 var _level_index := 0
@@ -216,7 +230,7 @@ func _set_paused(paused: bool) -> void:
 
 func _on_pause_restart() -> void:
 	_set_overlay(_pause_screen, false)
-	start_game(_level_index)
+	start_game(_level_index, Continuity.KEEP_LOOP)
 
 
 func _on_pause_quit() -> void:
@@ -228,20 +242,25 @@ func _on_pause_quit() -> void:
 	_show_only(_start_screen)
 
 
-## keep_run leaves the run's score and loop counter alone and only restores
-## the loadout -- the descend portal and the monument both re-enter through
-## here without wiping what the run has earned. Every other caller (title
-## screen, warp cheat, pause restart, the headless tests) takes the default
-## and gets today's behaviour: a clean slate.
-func start_game(level_index := 0, keep_run := false) -> void:
+## See Continuity for what each mode carries over. The default is a clean
+## slate, so the title screen, the warp cheat and every headless test keep
+## behaving as they always did by passing nothing.
+func start_game(level_index := 0,
+		continuity := Continuity.FRESH) -> void:
 	level_index = clampi(level_index, 0, CATALOG.total_count() - 1)
 	_win_pending = false
 	_clear_game()
-	if keep_run:
-		GameState.reset_loadout()
-	else:
-		GameState.reset()
-		_run_banked = false
+	match continuity:
+		Continuity.KEEP_RUN:
+			GameState.reset_loadout()
+		Continuity.KEEP_LOOP:
+			var depth: int = GameState.loop
+			GameState.reset()
+			GameState.loop = depth
+			_run_banked = false
+		_:
+			GameState.reset()
+			_run_banked = false
 	_level_index = level_index
 	_restart_index = level_index
 	_load_level()
@@ -361,7 +380,7 @@ func _on_game_won() -> void:
 func _on_new_loop() -> void:
 	GameState.loop += 1
 	GameState.announce("THE DUNGEON DEEPENS")
-	start_game(0, true)
+	start_game(0, Continuity.KEEP_RUN)
 
 
 ## Monument portal: bank the run first so the slab includes it, then load the
@@ -379,12 +398,15 @@ func _on_monument() -> void:
 		_game_active = false
 		_end_game(true)
 		return
-	start_game(index, true)
+	start_game(index, Continuity.KEEP_RUN)
 	GameState.win_game()
 
 
 func _on_restart() -> void:
-	start_game(_restart_index)
+	# Death keeps the New Game+ depth: the loops are earned, and losing them
+	# to one bad room would make a deep run feel disposable. The score still
+	# goes, so dying is not free.
+	start_game(_restart_index, Continuity.KEEP_LOOP)
 
 
 func _end_game(win: bool) -> void:

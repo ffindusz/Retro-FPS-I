@@ -59,8 +59,12 @@ chest, and which one you step into decides how your story ends:
 
 - **Descend again** — back to level 1 one loop deeper. Enemies gain health and
   hit harder, gold pays more, and your score keeps accumulating; only your
-  health and ammo reset. The banner reads `LEVEL 1 · LOOP 1`, and the
-  difficulty keeps climbing for five loops before it levels off.
+  health and ammo reset. The banner reads `LEVEL 1 · LOOP 1`. You can descend
+  as often as you like, though the difficulty stops climbing after five loops:
+  per loop, enemies get +35% health and +25% damage while gold pays +50%, so
+  the deeper you go the better the trade. **Dying keeps the loop** — you
+  resume at the depth you had earned, on the level you died on — but it does
+  cost you the run's score.
 - **The monument** — a stone chamber where the five best runs are engraved,
   each with the loop it reached. Your run is banked and marked on the slab
   before the credits.
