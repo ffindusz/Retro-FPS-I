@@ -56,6 +56,11 @@ func _init() -> void:
 	_save("bone_die", _gen_bone_die())
 	_save("crystal_arm", _gen_crystal_arm())  # pure tones: no RNG consumed
 	_save("coin", _gen_coin())  # pure tones: no RNG consumed
+	# Appended, never spliced in: the stream above must keep its order or
+	# every sound after the insertion point re-rolls.
+	_save("impact", _gen_impact())
+	_save("step_b", _gen_step_variant(0.075, 0.28, 1.05))
+	_save("step_c", _gen_step_variant(0.105, 0.18, 0.95))
 	print("SFX written to res://assets/audio/")
 	quit()
 
@@ -653,4 +658,34 @@ func _gen_boss_roar() -> PackedFloat32Array:
 		var saw2: float = 2.0 * fmod(f2 * t, 1.0) - 1.0
 		var s := (saw1 + saw2) * 0.4 + _rng.randf_range(-0.2, 0.2)
 		out.append(s * _env(t, dur, 1.1))
+	return out
+
+
+## A hitscan shot striking stone. Missing used to be silent -- the shot went
+## out, a spark appeared, and nothing came back -- so this is the "you hit the
+## wall" answer: a hard tick with a short gritty tail of chipped stone.
+func _gen_impact() -> PackedFloat32Array:
+	var dur := 0.11
+	var out := PackedFloat32Array()
+	out.resize(int(dur * RATE))
+	_add_click(out, 0.0, 1900.0, 0.75)
+	var low := 0.0
+	for i in out.size():
+		var t := float(i) / RATE
+		low = lerpf(low, _rng.randf_range(-1.0, 1.0), 0.45)
+		out[i] = clampf(out[i] + low * 0.5 * _env(t, dur, 4.0), -1.0, 1.0)
+	return out
+
+
+## Alternate footfalls. One sample on repeat reads as a metronome however much
+## its pitch is jittered, because the grain underneath never changes; three
+## different noise shapes break that up. `smooth` is the lowpass coefficient,
+## so a lower value is a duller, heavier step.
+func _gen_step_variant(dur: float, smooth: float, gain: float) -> PackedFloat32Array:
+	var out := PackedFloat32Array()
+	var low := 0.0
+	for i in int(dur * RATE):
+		var t := float(i) / RATE
+		low = lerpf(low, _rng.randf_range(-1.0, 1.0), smooth)
+		out.append(low * gain * _env(t, dur, 2.4))
 	return out

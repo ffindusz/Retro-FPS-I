@@ -7,6 +7,9 @@ signal fired
 signal ammo_changed(ammo: int)
 
 @export var weapon_label := "WEAPON"
+## Shot striking world geometry -- the sound of a miss.
+const IMPACT_SOUND := preload("res://assets/audio/impact.wav")
+
 @export var ammo_type: Pickup.Type = Pickup.Type.CRYSTALS
 @export var damage := 10.0
 @export var fire_interval := 0.2
@@ -65,6 +68,9 @@ func try_fire(camera: Camera3D, shooter: PhysicsBody3D) -> bool:
 	_cooldown = fire_interval
 	_kick = 0.08
 	if _shot_sound:
+		# Every shot played back byte-identical, which turns a fast weapon
+		# into a machine. A few percent of pitch is enough to break it up.
+		_shot_sound.pitch_scale = randf_range(0.94, 1.06)
 		_shot_sound.play()
 	_show_muzzle_flash()
 	_fire(camera, shooter)
@@ -93,6 +99,10 @@ func _fire(camera: Camera3D, shooter: PhysicsBody3D) -> void:
 			Fx.spawn(self, hit.position, Color(1.0, 0.35, 0.25), 0.25)
 		else:
 			Fx.spawn(self, hit.position + hit.normal * 0.05, Color(1.0, 0.85, 0.45), 0.16)
+			# Missing used to be silent: the shot went out and nothing came
+			# back. Positional, so you hear WHERE it landed.
+			Fx.spawn_sound(self, hit.position + hit.normal * 0.05, IMPACT_SOUND,
+					-11.0, randf_range(0.92, 1.12))
 
 
 func _show_muzzle_flash() -> void:

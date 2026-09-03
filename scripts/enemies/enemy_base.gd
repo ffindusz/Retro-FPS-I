@@ -325,7 +325,10 @@ func _can_see_player() -> bool:
 
 func _flash_hit() -> void:
 	Fx.spawn(self, global_position + Vector3(0, 1.1, 0), Color(0.9, 0.2, 0.15), 0.3)
-	Fx.spawn_sound(self, global_position + Vector3(0, 1.1, 0), HIT_SOUND, -4.0, voice_pitch)
+	# Jitter around the type's voice_pitch: a fixed pitch made a burst of
+	# hits on one skeleton read as a single stuttering tone.
+	Fx.spawn_sound(self, global_position + Vector3(0, 1.1, 0), HIT_SOUND, -4.0,
+			voice_pitch * randf_range(0.93, 1.07))
 	if visual == null:
 		return
 	visual.scale = Vector3(1.12, 0.9, 1.12)

@@ -33,6 +33,13 @@ extends CharacterBody3D
 @export var step_distance := 2.1
 
 const HURT_SOUND := preload("res://assets/audio/hurt.wav")
+## Three footfalls rather than one. Pitch jitter alone leaves the same grain
+## underneath every step, which still reads as a metronome at walking pace.
+const STEP_SOUNDS: Array[AudioStream] = [
+	preload("res://assets/audio/step.wav"),
+	preload("res://assets/audio/step_b.wav"),
+	preload("res://assets/audio/step_c.wav"),
+]
 
 var _shake := 0.0
 var _ice_zones := 0
@@ -209,6 +216,7 @@ func _on_landed(fall_speed: float) -> void:
 
 func _play_step() -> void:
 	step_count += 1
+	_step_sound.stream = STEP_SOUNDS[randi() % STEP_SOUNDS.size()]
 	_step_sound.pitch_scale = randf_range(0.85, 1.15)
 	_step_sound.volume_db = -15.0 if _crouching else -8.0
 	_step_sound.play()
