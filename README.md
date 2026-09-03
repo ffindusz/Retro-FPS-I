@@ -168,7 +168,7 @@ The exported binary does **not** accept `-s tools/test_*.gd`; `--script` is an
 editor entry point, so a packaged build just boots the game and ignores it.
 To smoke-test a build, run it with `--verbose` and read the output: the two
 PS1 shaders should both report `Completed load`, and nothing referencing
-`res://` should error. Expect 13 benign `Image format RGB8 not supported by
+`res://` should error. Expect 12 benign `Image format RGB8 not supported by
 hardware, converting to RGBA8` warnings — every texture in `assets/textures/`
 is stored without an alpha channel, and the GPU wants RGBA8. Any Vulkan
 *loader* complaints about GOG/ReShade/OBS layers come from overlays installed
